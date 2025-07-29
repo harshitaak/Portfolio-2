@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Custom Footer Demo</title>
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <style>
+    .custom-footer {
+      background: var(--background-color, #fff);
+      color: var(--default-color, #314862);
+      box-shadow: 0 1px 2px 0 rgba(0,0,0,0.3), 0 1px 3px 1px rgba(0,0,0,0.15);
+      font-size: 14px;
+      padding: 0.5rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+      min-height: 56px;
+      z-index: 10;
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      width: 100%;
+    }
+    .footer-left {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .footer-toggle {
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      user-select: none;
+    }
+    .footer-toggle .bi {
+      transition: transform 0.2s;
+    }
+    .footer-toggle.collapsed .bi {
+      transform: rotate(-90deg);
+    }
+    .footer-extra {
+      display: none;
+      margin-left: 1.5rem;
+      color: #6c757d;
+      font-size: 13px;
+    }
+    .footer-toggle.expanded + .footer-extra {
+      display: inline;
+    }
+    .footer-center {
+      text-align: center;
+      flex: 1 1 auto;
+      color: #acbbc7;
+      font-weight: 500;
+    }
+    .footer-right {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .notification-icon {
+      position: relative;
+      cursor: pointer;
+      font-size: 1.3rem;
+      color: #314862;
+    }
+    .notification-badge {
+      position: absolute;
+      top: -4px;
+      right: -6px;
+      background: #f6695e;
+      color: #fff;
+      border-radius: 50%;
+      font-size: 10px;
+      padding: 2px 5px;
+      line-height: 1;
+    }
+    .notification-tray {
+      display: none;
+      position: absolute;
+      right: 0;
+      bottom: 120%;
+      min-width: 260px;
+      background: #fff;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      border-radius: 8px;
+      padding: 1rem;
+      z-index: 100;
+    }
+    .notification-tray.active {
+      display: block;
+    }
+    .notification-tray h6 {
+      margin-top: 0;
+      font-size: 15px;
+      font-weight: 600;
+      color: #314862;
+    }
+    .notification-item {
+      font-size: 13px;
+      margin-bottom: 0.5rem;
+      color: #314862;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .notification-item:last-child {
+      margin-bottom: 0;
+    }
+    .quick-stats-menu {
+      display: none;
+      position: absolute;
+      left: 0;
+      bottom: 110%;
+      min-width: 220px;
+      background: #fff;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      border-radius: 10px;
+      padding: 0.5rem 0;
+      z-index: 200;
+      font-family: 'Roboto', Arial, sans-serif;
+      animation: fadeInUp 0.18s;
+    }
+    .quick-stats-menu.active {
+      display: block;
+    }
+    .quick-stats-arrow {
+      position: absolute;
+      left: 24px;
+      bottom: -10px;
+      width: 18px;
+      height: 10px;
+      overflow: hidden;
+    }
+    .quick-stats-arrow::after {
+      content: '';
+      display: block;
+      width: 18px;
+      height: 18px;
+      background: #fff;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      transform: rotate(45deg);
+      position: absolute;
+      left: 0;
+      top: 0;
+      border-radius: 2px;
+    }
+    .quick-stats-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.5rem 1.25rem;
+      font-size: 14px;
+      color: #222b36;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .quick-stats-item:hover {
+      background: #f7faff;
+    }
+    .quick-stats-highlight {
+      background: rgba(25,118,210,0.14);
+      font-weight: 500;
+      color: #1976d2;
+      border-radius: 8px 8px 0 0;
+    }
+    .quick-stats-icon {
+      margin-left: 0.5rem;
+      display: flex;
+      align-items: center;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @media (max-width: 600px) {
+      .custom-footer { flex-direction: column; align-items: stretch; padding: 0.5rem 1rem; }
+      .footer-center { margin: 0.5rem 0; }
+    }
+    .task-menu {
+      display: none;
+      position: absolute;
+      right: 0;
+      bottom: 110%;
+      background: #fff;
+      box-shadow: 0 8px 32px rgba(25, 40, 80, 0.18), 0 1.5px 6px rgba(0,0,0,0.10);
+      border-radius: 12px;
+      z-index: 300;
+      font-family: 'Roboto', Arial, sans-serif;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(20px) scale(0.98);
+      transition: opacity 0.32s cubic-bezier(.68,-0.55,.27,1.55), transform 0.32s cubic-bezier(.68,-0.55,.27,1.55);
+      min-width: 340px;
+      max-width: 420px;
+      padding: 0;
+    }
+    .task-menu.active {
+      display: block;
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0) scale(1);
+    }
+    .task-menu-section {
+      width: 100%;
+      display: flex;
+      align-items: flex-start;
+      padding: 0;
+      border-bottom: 1px solid #f0f0f0;
+      background: #fff;
+    }
+    .task-menu-header {
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 20px 12px 20px;
+      border-radius: 12px 12px 0 0;
+      border-bottom: 1px solid #f0f0f0;
+      font-size: 16px;
+      font-weight: 500;
+      color: #222b36;
+    }
+    .task-menu-title {
+      font-size: 16px;
+      font-weight: 500;
+      color: #222b36;
+    }
+    .task-menu-close {
+      background: none;
+      border: none;
+      padding: 0;
+      margin-left: 8px;
+      cursor: pointer;
+      outline: none;
+      display: flex;
+      align-items: center;
+      opacity: 0.7;
+      transition: opacity 0.2s;
+    }
+    .task-menu-close:hover { opacity: 1; }
+    .task-menu-item-row {
+      align-items: flex-start;
+      padding: 18px 20px 18px 20px;
+      border-bottom: 1px solid #f0f0f0;
+      background: #fafbfc;
+      position: relative;
+    }
+    .task-menu-item-content {
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+    .task-menu-item-title {
+      font-size: 15px;
+      font-weight: 500;
+      color: #222b36;
+      margin-bottom: 2px;
+      line-height: 1.3;
+    }
+    .task-menu-item-desc {
+      font-size: 13px;
+      color: #6c757d;
+      margin-bottom: 6px;
+      line-height: 1.4;
+    }
+    .task-menu-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 4px;
+    }
+    .task-menu-btn {
+      font-size: 13px;
+      font-weight: 500;
+      border-radius: 4px;
+      padding: 4px 14px;
+      border: none;
+      cursor: pointer;
+      transition: background 0.18s;
+    }
+    .task-menu-btn-danger {
+      background: #d32f2f;
+      color: #fff;
+      border: none;
+    }
+    .task-menu-btn-danger:hover {
+      background: #b71c1c;
+    }
+    .task-menu-btn-outline {
+      background: #fff;
+      color: #d32f2f;
+      border: 1px solid #d32f2f;
+    }
+    .task-menu-btn-outline:hover {
+      background: #fbe9e7;
+    }
+    .task-menu-close-item {
+      margin-left: 12px;
+      margin-top: 2px;
+      opacity: 0.6;
+      transition: opacity 0.2s;
+    }
+    .task-menu-close-item:hover { opacity: 1; }
+    @media (max-width: 600px) {
+      .task-menu { min-width: 90vw; max-width: 98vw; right: 0; left: auto; }
+    }
+    .task-menu.dark-mode {
+      background: #202529;
+      color: #e4e7eb;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.45), 0 1.5px 6px rgba(0,0,0,0.60);
+      border-radius: 12px;
+    }
+    .task-menu.dark-mode .task-menu-section {
+      background: #202529;
+      border-bottom: 1px solid #282e33;
+    }
+    .task-menu.dark-mode .task-menu-header {
+      color: #e4e7eb;
+      border-bottom: 1px solid #282e33;
+    }
+    .task-menu.dark-mode .task-menu-title {
+      color: #e4e7eb;
+    }
+    .task-menu.dark-mode .task-menu-item-row {
+      background: #23272b;
+      border-bottom: 1px solid #282e33;
+    }
+    .task-menu.dark-mode .task-menu-item-title {
+      color: #e4e7eb;
+    }
+    .task-menu.dark-mode .task-menu-item-desc {
+      color: #acbbc7;
+    }
+    .task-menu.dark-mode .task-menu-actions {
+      /* no change needed */
+    }
+    .task-menu.dark-mode .task-menu-btn-danger {
+      background: #d32f2f;
+      color: #fff;
+    }
+    .task-menu.dark-mode .task-menu-btn-danger:hover {
+      background: #b71c1c;
+    }
+    .task-menu.dark-mode .task-menu-btn-outline {
+      background: #23272b;
+      color: #d32f2f;
+      border: 1px solid #d32f2f;
+    }
+    .task-menu.dark-mode .task-menu-btn-outline:hover {
+      background: #2c3136;
+    }
+    .task-menu.dark-mode .task-menu-close,
+    .task-menu.dark-mode .task-menu-close-item {
+      background: none;
+      filter: invert(0.85);
+    }
+    .task-menu.dark-mode img {
+      background: transparent;
+    }
+    .custom-footer.dark-mode {
+      background: #202529;
+      color: #e4e7eb;
+      box-shadow: 0 1px 2px 0 rgba(0,0,0,0.45), 0 1px 3px 1px rgba(0,0,0,0.30);
+      border-top: 1px solid #282e33;
+    }
+    .custom-footer.dark-mode .footer-left,
+    .custom-footer.dark-mode .footer-center,
+    .custom-footer.dark-mode .footer-right {
+      color: #e4e7eb;
+    }
+    .custom-footer.dark-mode .footer-center {
+      color: #acbbc7;
+    }
+    .custom-footer.dark-mode .footer-toggle,
+    .custom-footer.dark-mode .footer-toggle span {
+      color: #e4e7eb;
+    }
+    .custom-footer.dark-mode .footer-extra {
+      color: #acbbc7;
+    }
+    .custom-footer.dark-mode .task-status-label {
+      color: #acbbc7 !important;
+    }
+    .custom-footer.dark-mode .task-chevron img,
+    .custom-footer.dark-mode .task-status-icon img {
+      filter: invert(0.85);
+    }
+    .custom-footer.dark-mode .task-menu.dark-mode {
+      background: #202529;
+      color: #e4e7eb;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.45), 0 1.5px 6px rgba(0,0,0,0.60);
+      border-radius: 12px;
+    }
+    .custom-footer.dark-mode .task-menu.dark-mode .task-menu-section {
+      background: #202529;
+      border-bottom: 1px solid #282e33;
+    }
+    .custom-footer.dark-mode .task-menu.dark-mode .task-menu-header {
+      color: #e4e7eb;
+      border-bottom: 1px solid #282e33;
+    }
+    .custom-footer.dark-mode .task-menu.dark-mode .task-menu-title {
+      color: #e4e7eb;
+    }
+    .custom-footer.dark-mode .task-menu.dark-mode .task-menu-item-row {
+      background: #23272b;
+      border-bottom: 1px solid #282e33;
+    }
+    .custom-footer.dark-mode .task-menu.dark-mode .task-menu-item-title {
+      color: #e4e7eb;
+    }
+    .custom-footer.dark-mode .task-menu.dark-mode .task-menu-item-desc {
+      color: #acbbc7;
+    }
+    .custom-footer.dark-mode .task-menu.dark-mode .task-menu-btn-danger {
+      background: #d32f2f;
+      color: #fff;
+    }
+    .custom-footer.dark-mode .task-menu.dark-mode .task-menu-btn-danger:hover {
+      background: #b71c1c;
+    }
+    .custom-footer.dark-mode .task-menu.dark-mode .task-menu-btn-outline {
+      background: #23272b;
+      color: #d32f2f;
+      border: 1px solid #d32f2f;
+    }
+    .custom-footer.dark-mode .task-menu.dark-mode .task-menu-btn-outline:hover {
+      background: #2c3136;
+    }
+    .custom-footer.dark-mode .task-menu.dark-mode .task-menu-close,
+    .custom-footer.dark-mode .task-menu.dark-mode .task-menu-close-item {
+      background: none;
+      filter: invert(0.85);
+    }
+    .custom-footer.dark-mode .task-menu.dark-mode img {
+      background: transparent;
+    }
+    .quick-stats-menu.dark-mode {
+      background: #282e33;
+      color: #e4e7eb;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.45), 0 1.5px 6px rgba(0,0,0,0.60);
+      border-radius: 12px;
+      padding: 0.5rem 0;
+      z-index: 200;
+      font-family: 'Roboto', Arial, sans-serif;
+      position: absolute;
+      left: 0;
+      bottom: 110%;
+      display: none;
+      animation: fadeInUp 0.18s;
+    }
+    .quick-stats-menu.dark-mode.active {
+      display: block;
+    }
+    .quick-stats-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.5rem 1.25rem;
+      font-size: 14px;
+      color: #e4e7eb;
+      cursor: pointer;
+      transition: background 0.15s;
+      border-radius: 6px;
+    }
+    .quick-stats-item:hover {
+      background: #202529;
+    }
+    .quick-stats-highlight {
+      background: rgba(25,118,210,0.14);
+      font-weight: 500;
+      color: #90caf9;
+      border-radius: 8px 8px 0 0;
+    }
+    .quick-stats-icon {
+      margin-left: 0.5rem;
+      display: flex;
+      align-items: center;
+    }
+  </style>
+</head>
+<body style="background:#f7faff;min-height:100vh;display:flex;flex-direction:column;">
+
+  <footer class="custom-footer dark-mode">
+    <div class="footer-left" id="footerLeft" style="position:relative;cursor:pointer;">
+      <div class="footer-toggle collapsed" id="footerToggle">
+        <span>Number of pipelines: <span style="color:#e4e7eb;">14</span></span>
+        <i class="bi bi-chevron-down"></i>
+      </div>
+      <span class="footer-extra" id="footerExtra">Last run: 2 hours ago | Success rate: 98%</span>
+      <div class="quick-stats-menu dark-mode" id="quickStatsMenu" style="min-width:260px;max-width:320px;" onclick="event.stopPropagation()">
+        <div class="quick-stats-item quick-stats-highlight">
+          <span>Number of Pipelines</span>
+          <span class="quick-stats-icon">
+            <img src="http://localhost:3845/assets/dab477c6ade2d19b6d463e2d6994e32669d7440c.svg" style="width:18px;height:18px;vertical-align:middle;filter:brightness(0) saturate(100%) invert(72%) sepia(13%) saturate(7492%) hue-rotate(176deg) brightness(102%) contrast(101%);" />
+            <img src="http://localhost:3845/assets/1fe6bc50a8b90485e9dd96a2594272ea98b8cab6.svg" style="width:18px;height:18px;vertical-align:middle;position:relative;left:-14px;filter:brightness(0) saturate(100%) invert(72%) sepia(13%) saturate(7492%) hue-rotate(176deg) brightness(102%) contrast(101%);" />
+          </span>
+        </div>
+        <div class="quick-stats-item">
+          <span>Average Resource used</span>
+        </div>
+        <div class="quick-stats-item">
+          <span>Rejected Pipelines</span>
+        </div>
+        <div class="quick-stats-item">
+          <span>Other KPI required</span>
+        </div>
+      </div>
+    </div>
+    <div class="footer-center">
+      Your changes are autosaved
+    </div>
+    <div class="footer-right" id="footerRight" style="gap:0.5rem;position:relative;cursor:pointer;">
+      <div class="task-status-icon" style="display:flex;align-items:center;">
+        <img src="http://localhost:3845/assets/4885a9ec968bc9f10f7f7723190af09fbf784b20.svg" alt="status" style="width:20px;height:20px;display:block;" />
+      </div>
+      <div class="task-status-label" style="font-family:'Roboto',sans-serif;font-weight:500;font-size:14px;color:#6c757d;white-space:nowrap;">
+        3 ongoing tasks
+      </div>
+      <div class="task-chevron" id="taskChevron" style="display:flex;align-items:center;">
+        <span id="chevronIcon" style="display:inline-block;transition:transform 0.35s cubic-bezier(.68,-0.55,.27,1.55);transform:rotate(-90deg);">
+          <img src="http://localhost:3845/assets/dab477c6ade2d19b6d463e2d6994e32669d7440c.svg" alt="chevron1" style="width:16px;height:16px;vertical-align:middle;" />
+          <img src="http://localhost:3845/assets/109eefb8157ea12134e8b350a2deb8e83c8ef6e9.svg" alt="chevron2" style="width:16px;height:16px;vertical-align:middle;position:relative;left:-12px;" />
+        </span>
+      </div>
+      <div class="task-menu dark-mode" id="taskMenu" style="min-width:340px;max-width:420px;" onclick="event.stopPropagation()">
+        <div class="task-menu-section task-menu-header">
+          <span class="task-menu-title">3 ongoing tasks</span>
+          <button class="task-menu-close" id="taskMenuClose" tabindex="-1">
+            <img src="http://localhost:3845/assets/dab477c6ade2d19b6d463e2d6994e32669d7440c.svg" style="width:16px;height:16px;vertical-align:middle;" />
+            <img src="http://localhost:3845/assets/109eefb8157ea12134e8b350a2deb8e83c8ef6e9.svg" style="width:16px;height:16px;vertical-align:middle;position:relative;left:-12px;" />
+          </button>
+        </div>
+        <div class="task-menu-section task-menu-item-row">
+          <img src="http://localhost:3845/assets/99659135c4d6fc821d635f57985c5d0ab925ef7b.svg" style="width:32px;height:32px;margin-right:12px;" />
+          <div class="task-menu-item-content">
+            <div class="task-menu-item-title">Running P&L pipeline</div>
+            <div class="task-menu-item-desc">30 Hours remaining</div>
+          </div>
+          <button class="task-menu-close task-menu-close-item" tabindex="-1">
+            <img src="http://localhost:3845/assets/dab477c6ade2d19b6d463e2d6994e32669d7440c.svg" style="width:14px;height:14px;vertical-align:middle;" />
+            <img src="http://localhost:3845/assets/8b9496b9c174ce317fa34f7ad9cdd4e910ff5cfd.svg" style="width:14px;height:14px;vertical-align:middle;position:relative;left:-10px;" />
+          </button>
+        </div>
+        <div class="task-menu-section task-menu-item-row">
+          <img src="http://localhost:3845/assets/53923733dcefff99c136e199e07231d9743bda01.svg" style="width:32px;height:32px;margin-right:12px;" />
+          <div class="task-menu-item-content">
+            <div class="task-menu-item-title">Gamma Fund Pipeline failed</div>
+            <div class="task-menu-item-desc">“ReferenceData” dataset found missing</div>
+            <div class="task-menu-actions">
+              <button class="task-menu-btn task-menu-btn-danger">View logs</button>
+              <button class="task-menu-btn task-menu-btn-outline">Dismiss</button>
+            </div>
+          </div>
+          <button class="task-menu-close task-menu-close-item" tabindex="-1">
+            <img src="http://localhost:3845/assets/dab477c6ade2d19b6d463e2d6994e32669d7440c.svg" style="width:14px;height:14px;vertical-align:middle;" />
+            <img src="http://localhost:3845/assets/8b9496b9c174ce317fa34f7ad9cdd4e910ff5cfd.svg" style="width:14px;height:14px;vertical-align:middle;position:relative;left:-10px;" />
+          </button>
+        </div>
+        <div class="task-menu-section task-menu-item-row">
+          <img src="http://localhost:3845/assets/ddcb7550eb92378e8b4472ac374b42435078b6ce.svg" style="width:32px;height:32px;margin-right:12px;" />
+          <div class="task-menu-item-content">
+            <div class="task-menu-item-title">Pipeline successfully executed</div>
+            <div class="task-menu-item-desc">Ran 4 seconds after start time</div>
+          </div>
+          <button class="task-menu-close task-menu-close-item" tabindex="-1">
+            <img src="http://localhost:3845/assets/dab477c6ade2d19b6d463e2d6994e32669d7440c.svg" style="width:14px;height:14px;vertical-align:middle;" />
+            <img src="http://localhost:3845/assets/8b9496b9c174ce317fa34f7ad9cdd4e910ff5cfd.svg" style="width:14px;height:14px;vertical-align:middle;position:relative;left:-10px;" />
+          </button>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/bootstrap-icons/bootstrap-icons.svg"></script>
+  <script>
+    // Toggle left data
+    const toggle = document.getElementById('footerToggle');
+    const extra = document.getElementById('footerExtra');
+    // Quick Stats menu (left)
+    const footerLeft = document.getElementById('footerLeft');
+    const quickStatsMenu = document.getElementById('quickStatsMenu');
+    let quickStatsOpen = false;
+    footerLeft.addEventListener('click', function(e) {
+      if (!quickStatsOpen) {
+        quickStatsMenu.classList.add('active');
+        quickStatsOpen = true;
+      } else {
+        quickStatsMenu.classList.remove('active');
+        quickStatsOpen = false;
+      }
+      e.stopPropagation();
+    });
+    document.addEventListener('click', function(e) {
+      if (quickStatsOpen && !quickStatsMenu.contains(e.target) && !footerLeft.contains(e.target)) {
+        quickStatsMenu.classList.remove('active');
+        quickStatsOpen = false;
+      }
+    });
+    // Notifications tray
+    const notifIcon = document.getElementById('notifIcon');
+    const notifTray = document.getElementById('notifTray');
+    notifIcon.addEventListener('click', function(e) {
+      notifTray.classList.toggle('active');
+      e.stopPropagation();
+    });
+    document.addEventListener('click', function(e) {
+      if (!notifTray.contains(e.target) && !notifIcon.contains(e.target)) {
+        notifTray.classList.remove('active');
+      }
+    });
+    // Task menu (right chevron / right element)
+    const footerRight = document.getElementById('footerRight');
+    const taskMenu = document.getElementById('taskMenu');
+    const chevronIcon = document.getElementById('chevronIcon');
+    const taskMenuClose = document.getElementById('taskMenuClose');
+    let taskMenuOpen = false;
+    function openTaskMenu() {
+      taskMenu.classList.add('active');
+      chevronIcon.style.transform = 'rotate(0deg)';
+      taskMenuOpen = true;
+    }
+    function closeTaskMenu() {
+      taskMenu.classList.remove('active');
+      chevronIcon.style.transform = 'rotate(-90deg)';
+      taskMenuOpen = false;
+    }
+    footerRight.addEventListener('click', function(e) {
+      // Only open/close if not clicking inside the menu
+      if (taskMenu.contains(e.target)) return;
+      if (!taskMenuOpen) {
+        openTaskMenu();
+      } else {
+        closeTaskMenu();
+      }
+      e.stopPropagation();
+    });
+    if (taskMenuClose) {
+      taskMenuClose.addEventListener('click', function(e) {
+        closeTaskMenu();
+        e.stopPropagation();
+      });
+    }
+    // Close menu on close buttons in items
+    document.querySelectorAll('.task-menu-close-item').forEach(btn => {
+      btn.addEventListener('click', function(e) {
+        closeTaskMenu();
+        e.stopPropagation();
+      });
+    });
+    document.addEventListener('click', function(e) {
+      if (taskMenuOpen && !taskMenu.contains(e.target) && !footerRight.contains(e.target)) {
+        closeTaskMenu();
+      }
+    });
+  </script>
+</body>
+</html> 
