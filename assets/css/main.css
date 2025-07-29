@@ -147,7 +147,7 @@ h6 {
   --background-color: rgba(0, 0, 0, 0);
   color: var(--default-color);
   background-color: var(--background-color);
-  padding: 15px 0;
+  padding: 16px 0;
   transition: all 0.5s;
   z-index: 997;
 }
@@ -201,7 +201,7 @@ h6 {
 
   .navmenu>ul>li {
     white-space: nowrap;
-    padding: 15px 14px;
+    padding: 16px 16px;
   }
 
   .navmenu>ul>li:last-child {
@@ -247,7 +247,7 @@ h6 {
   .navmenu li:hover>a:before,
   .navmenu .active:before {
     visibility: visible;
-    width: 25px;
+    width: 100%;
   }
 
   .navmenu li:hover>a,
@@ -467,7 +467,7 @@ h6 {
 }
 
 .footer .social-links {
-  margin: 0 0 30px 0;
+  margin: 0 0 0 0;
 }
 
 .footer .social-links a {
@@ -492,7 +492,7 @@ h6 {
 }
 
 .footer .copyright {
-  padding-top: 25px;
+  padding-top: 4;
   border-top: 1px solid color-mix(in srgb, var(--default-color), transparent 90%);
 }
 
@@ -717,8 +717,8 @@ section,
 }
 
 .hero p {
-  margin: 5px 0 0 0;
-  font-size: 26px;
+  margin: 4px 0 0 0;
+  font-size: 24px;
 }
 
 .hero p span {
@@ -727,15 +727,15 @@ section,
 }
 
 .hero .social-links {
-  margin-top: 25px;
+  margin-top: 24px;
 }
 
 .hero .social-links a {
   /* background-color: color-mix(in srgb, var(--default-color), transparent 90%); */
    color: var(--secondary-color);
    font-size: 24px;
-  width: 40px;
-  height: 40px;
+  width: 24px;
+  height: 24px;
   border-radius: 50px;
   display: inline-flex;
   align-items: center;
@@ -794,7 +794,7 @@ section,
 .stats i {
   background-color: var(--surface-color);
   color: var(--accent-color);
-  box-shadow: 0px 2px 25px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 2px 4 rgba(0, 0, 0, 0.1);
   width: 54px;
   height: 54px;
   font-size: 24px;
@@ -810,7 +810,7 @@ section,
 .stats .stats-item {
   background-color: var(--surface-color);
   margin-top: -27px;
-  padding: 30px 30px 25px 30px;
+  padding: 30px 30px 4 30px;
   width: 100%;
   position: relative;
   text-align: center;
@@ -946,8 +946,8 @@ section,
 
 .testimonials .testimonial-item .quote-icon-left,
 .testimonials .testimonial-item .quote-icon-right {
-  color: color-mix(in srgb, var(--accent-color), transparent 50%);
-  font-size: 26px;
+  color: var(--accent-color);
+  font-size: 24px;
   line-height: 0;
 }
 
