@@ -19,8 +19,9 @@
 
 /* Global Colors - The following color variables are used throughout the website. Updating them here will change the color scheme of the entire website */
 :root { 
-  --background-color: #000000; /* Background color for the entire website, including individual sections */
+  --background-color: #121212; /* Background color for the entire website, including individual sections */
   --default-color: #fafafa; /* Default color used for the majority of the text content across the entire website */
+  --secondary-color: #424242;
   --heading-color: #ffffff; /* Color for headings, subheadings and title throughout the website */
   --accent-color: #58ebe3; /* Accent color that represents your brand on the website. It's used for buttons, links, and other elements that need to stand out */
   --surface-color: #121212; /* The surface color is used as a background of boxed elements within sections, such as cards, icon boxes, or other elements that require a visual separation from the global background. */
@@ -470,12 +471,12 @@ h6 {
 }
 
 .footer .social-links a {
-  font-size: 16px;
+  font-size: 24px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--accent-color);
-  color: var(--contrast-color);
+
+  color: var(--secondary-color);
   line-height: 1;
   margin: 0 4px;
   border-radius: 50%;
@@ -486,7 +487,7 @@ h6 {
 }
 
 .footer .social-links a:hover {
-  background: color-mix(in srgb, var(--accent-color), transparent 20%);
+  color: var(--accent-color);
   text-decoration: none;
 }
 
@@ -730,9 +731,9 @@ section,
 }
 
 .hero .social-links a {
-  background-color: color-mix(in srgb, var(--default-color), transparent 90%);
-  color: var(--default-color);
-  font-size: 14px;
+  /* background-color: color-mix(in srgb, var(--default-color), transparent 90%); */
+   color: var(--secondary-color);
+   font-size: 24px;
   width: 40px;
   height: 40px;
   border-radius: 50px;
@@ -744,7 +745,7 @@ section,
 }
 
 .hero .social-links a:hover {
-  background-color: var(--accent-color);
+  color: var(--accent-color);
 }
 
 @media (max-width: 768px) {
