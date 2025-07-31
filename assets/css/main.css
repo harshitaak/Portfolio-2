@@ -535,6 +535,274 @@ h6 {
     transform: rotate(360deg);
   }
 }
+/*--------------------------------------------------------------
+# Resume Section
+--------------------------------------------------------------*/
+.resume .section-header {
+  margin-bottom: 2.5rem;
+}
+
+.resume .section-header h2 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.resume .section-header h2 i {
+  color: var(--accent-color);
+  font-size: 1.5rem;
+}
+
+.resume .section-header .section-subtitle {
+  color: color-mix(in srgb, var(--default-color), transparent 30%);
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.resume .experience-section {
+  padding-right: 1.5rem;
+}
+
+.resume .experience-section .experience-cards .experience-card {
+  background: var(--surface-color);
+  border: 1px solid color-mix(in srgb, var(--default-color), transparent 90%);
+  border-radius: 12px;
+  padding: 1.8rem;
+  margin-bottom: 1.5rem;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.resume .experience-section .experience-cards .experience-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: linear-gradient(135deg, var(--accent-color), color-mix(in srgb, var(--accent-color), transparent 30%));
+}
+
+.resume .experience-section .experience-cards .experience-card:hover {
+  box-shadow: 0 8px 30px color-mix(in srgb, var(--default-color), transparent 85%);
+  transform: translateY(-5px);
+}
+
+.resume .experience-section .experience-cards .experience-card .card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.resume .experience-section .experience-cards .experience-card .card-header .role-info h3 {
+  color: var(--heading-color);
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.resume .experience-section .experience-cards .experience-card .card-header .role-info h4 {
+  color: var(--accent-color);
+  font-size: 1rem;
+  font-weight: 500;
+  margin: 0;
+}
+
+.resume .experience-section .experience-cards .experience-card .card-header .duration {
+  background: color-mix(in srgb, var(--accent-color), transparent 90%);
+  color: var(--accent-color);
+  padding: 0.4rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.resume .experience-section .experience-cards .experience-card .card-body p {
+  color: color-mix(in srgb, var(--default-color), transparent 25%);
+  margin-bottom: 1rem;
+  line-height: 1.6;
+}
+
+.resume .experience-section .experience-cards .experience-card .card-body .achievements {
+  margin: 0;
+  padding-left: 0;
+  list-style: none;
+}
+
+.resume .experience-section .experience-cards .experience-card .card-body .achievements li {
+  position: relative;
+  padding-left: 1.5rem;
+  margin-bottom: 0.5rem;
+  color: color-mix(in srgb, var(--default-color), transparent 15%);
+  font-size: 0.9rem;
+}
+
+.resume .experience-section .experience-cards .experience-card .card-body .achievements li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: var(--accent-color);
+  font-weight: bold;
+}
+
+.resume .experience-section .experience-cards .experience-card .card-body .achievements li:last-child {
+  margin-bottom: 0;
+}
+
+.resume .education-section {
+  padding-left: 1.5rem;
+}
+
+.resume .education-section .education-timeline {
+  position: relative;
+}
+
+.resume .education-section .education-timeline .timeline-track {
+  position: absolute;
+  left: 1rem;
+  top: 2rem;
+  bottom: 2rem;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--accent-color), color-mix(in srgb, var(--accent-color), transparent 70%));
+}
+
+.resume .education-section .education-timeline .education-item {
+  position: relative;
+  padding-left: 3rem;
+  margin-bottom: 2.5rem;
+}
+
+.resume .education-section .education-timeline .education-item:last-child {
+  margin-bottom: 0;
+}
+
+.resume .education-section .education-timeline .education-item .timeline-marker {
+  position: absolute;
+  left: 0.5rem;
+  top: 1.5rem;
+  width: 1rem;
+  height: 1rem;
+  background: var(--accent-color);
+  border: 3px solid var(--surface-color);
+  border-radius: 50%;
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent-color), transparent 85%);
+}
+
+.resume .education-section .education-timeline .education-item .education-content {
+  background: var(--surface-color);
+  border: 1px solid color-mix(in srgb, var(--default-color), transparent 90%);
+  border-radius: 8px;
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.resume .education-section .education-timeline .education-item .education-content:hover {
+  box-shadow: 0 5px 20px color-mix(in srgb, var(--default-color), transparent 90%);
+}
+
+.resume .education-section .education-timeline .education-item .education-content .degree-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.5rem;
+}
+
+.resume .education-section .education-timeline .education-item .education-content .degree-header h3 {
+  color: var(--heading-color);
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0;
+  line-height: 1.3;
+}
+
+.resume .education-section .education-timeline .education-item .education-content .degree-header .year {
+  background: var(--accent-color);
+  color: var(--contrast-color);
+  padding: 0.3rem 0.7rem;
+  border-radius: 15px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.resume .education-section .education-timeline .education-item .education-content .institution {
+  color: color-mix(in srgb, var(--accent-color), transparent 20%);
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 0.8rem;
+}
+
+.resume .education-section .education-timeline .education-item .education-content p {
+  color: color-mix(in srgb, var(--default-color), transparent 30%);
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+@media (max-width: 992px) {
+
+  .resume .experience-section,
+  .resume .education-section {
+    padding-left: 0;
+    padding-right: 0;
+    margin-bottom: 3rem;
+  }
+
+  .resume .section-header h2 {
+    font-size: 1.6rem;
+  }
+
+  .resume .experience-cards .experience-card .card-header {
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+
+  .resume .experience-cards .experience-card .card-header .duration {
+    align-self: flex-start;
+  }
+
+  .resume .education-timeline .education-item .education-content .degree-header {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .resume .education-timeline .education-item .education-content .degree-header .year {
+    align-self: flex-start;
+  }
+}
+
+@media (max-width: 576px) {
+  .resume .section-header h2 {
+    font-size: 1.4rem;
+  }
+
+  .resume .section-header h2 i {
+    font-size: 1.2rem;
+  }
+
+  .resume .experience-cards .experience-card {
+    padding: 1.3rem;
+  }
+
+  .resume .education-timeline .timeline-track {
+    left: 0.5rem;
+  }
+
+  .resume .education-timeline .education-item {
+    padding-left: 2rem;
+  }
+
+  .resume .education-timeline .education-item .timeline-marker {
+    left: 0;
+  }
+}
 
 /*--------------------------------------------------------------
 # Scroll Top Button
