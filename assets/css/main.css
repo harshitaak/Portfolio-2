@@ -584,11 +584,11 @@ h6 {
   left: 0;
   width: 4px;
   height: 100%;
-  background: linear-gradient(135deg, var(--accent-color), color-mix(in srgb, var(--accent-color), transparent 30%));
+  background: linear-gradient(135deg, var(--accent-color), color-mix(in srgb, var(--accent-color), transparent 80%));
 }
 
 .resume .experience-section .experience-cards .experience-card:hover {
-  box-shadow: 0 8px 30px color-mix(in srgb, var(--default-color), transparent 85%);
+  box-shadow: 0 8px 30px color-mix(in srgb, var(--accent-color), transparent 85%);
   transform: translateY(-5px);
 }
 
@@ -704,7 +704,7 @@ h6 {
 }
 
 .resume .education-section .education-timeline .education-item .education-content:hover {
-  box-shadow: 0 5px 20px color-mix(in srgb, var(--default-color), transparent 90%);
+  box-shadow: 0 5px 20px color-mix(in srgb, var(--accent-color), transparent 80%);
 }
 
 .resume .education-section .education-timeline .education-item .education-content .degree-header {
@@ -723,10 +723,10 @@ h6 {
 }
 
 .resume .education-section .education-timeline .education-item .education-content .degree-header .year {
-  background: var(--accent-color);
-  color: var(--contrast-color);
-  padding: 0.3rem 0.7rem;
-  border-radius: 15px;
+  background: color-mix(in srgb, var(--accent-color), transparent 90%);
+  color: var(--accent-color);
+  padding: 0.4rem 0.8rem;
+  border-radius: 20px;
   font-size: 0.8rem;
   font-weight: 500;
   white-space: nowrap;
@@ -1471,14 +1471,22 @@ section,
 # Portfolio Section
 --------------------------------------------------------------*/
 .portfolio .portfolio-filters {
-  padding: 0;
+  /* padding: 0;
   margin: 0 auto 20px auto;
   list-style: none;
-  text-align: center;
+  text-align: center; */
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 15px;
+  padding: 0;
+  margin: 0 0 40px;
+  list-style: none;
+  
 }
 
 .portfolio .portfolio-filters li {
-  cursor: pointer;
+  /* cursor: pointer;
   display: inline-block;
   padding: 0;
   font-size: 18px;
@@ -1486,12 +1494,28 @@ section,
   margin: 0 10px;
   line-height: 1;
   margin-bottom: 5px;
-  transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out; */
+  font-size: 15px;
+  font-weight: 500;
+  padding: 12px 25px;
+  cursor: pointer;
+  background: var(--surface-color);
+  color: var(--default-color);
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s ease;
 }
 
-.portfolio .portfolio-filters li:hover,
-.portfolio .portfolio-filters li.filter-active {
+.portfolio .portfolio-filters li:hover {
   color: var(--accent-color);
+  transform: translateY(-2px);
+  background: color-mix(in srgb, var(--accent-color), transparent 92%);
+}
+.portfolio .portfolio-filters li.filter-active {
+  background: var(--accent-color);
+  color: var(--contrast-color);
 }
 
 .portfolio .portfolio-filters li:first-child {
