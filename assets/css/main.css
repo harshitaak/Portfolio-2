@@ -2063,3 +2063,46 @@ section,
 .section-gap-80 > * + * {
   margin-top: 200px;
 }
+/* Collage variant of the project */
+
+.image-collage-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.collage-item {
+  overflow: hidden;
+  border-radius: 8px;
+  background: var(--surface-color, #222);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.collage-item img {
+  width: 100%;
+  height: 100%;
+  height: 400px;
+  object-fit: cover;
+  display: block;
+}
+
+/* Custom sizes for collage effect */
+.collage-item-large {
+  grid-column: 2 / span 2;
+  grid-row: 1 / span 2;
+}
+
+.collage-item-tall {
+  grid-column: 1 / span 1;
+  grid-row: 1 / span 2;
+}
+
+.collage-item-wide {
+  grid-column: 4 / span 1;
+  grid-row: 1 / span 2;
+}
+
+/* The rest fill the remaining grid cells */
