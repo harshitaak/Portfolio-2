@@ -21,7 +21,7 @@
 :root { 
   --background-color: #121212; /* Background color for the entire website, including individual sections */
   --default-color: #fafafa; /* Default color used for the majority of the text content across the entire website */
-  --secondary-color: #424242;
+  --secondary-color: #686868;
   --heading-color: #ffffff; /* Color for headings, subheadings and title throughout the website */
   --accent-color: #58ebe3; /* Accent color that represents your brand on the website. It's used for buttons, links, and other elements that need to stand out */
   --surface-color: #121212; /* The surface color is used as a background of boxed elements within sections, such as cards, icon boxes, or other elements that require a visual separation from the global background. */
@@ -53,6 +53,28 @@
   --contrast-color: #000000;
 }
 
+.dot {
+  position: absolute;
+  inset: 0;
+  height: 100%;
+  width: 100%;
+  background-image: radial-gradient(#e5e7eb 1px, transparent 1px);
+  background-size: 16px 16px;
+}
+
+.dots-bg {
+  position: absolute;
+  z-index: -10;
+  inset: 0;
+  height: 100%;
+  width: 100%;
+  background: radial-gradient(circle, var(--secondary-color) 1px, transparent 1px);
+  background-size: 16px 16px;
+  /* Optional: mask for a vignette/fade effect */
+  -webkit-mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, #000 80%, transparent 100%);
+  mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, #000 80%, transparent 100%);
+}
+
 /* Smooth scroll */
 :root {
   scroll-behavior: smooth;
@@ -66,6 +88,7 @@ body {
   background-color: var(--background-color);
   font-family: var(--default-font);
 }
+
 
 a {
   color: var(--accent-color);
@@ -137,6 +160,73 @@ h6 {
 
   100% {
     transform: rotate(360deg);
+  }
+}
+/*--------------------------------------------------------------
+# Responsive Image Grid
+--------------------------------------------------------------*/
+.image-area{
+  max-width: 1200px;
+  width: 90%;
+  margin: auto;
+  padding: 16px 0;
+}
+
+.title{
+  margin-bottom: 1rem;
+}
+
+.photo-gallery{
+  display: flex;
+  gap: 16px;
+}
+
+.image-column{
+  display: flex;
+  width: auto;
+  flex-direction: column;
+  gap: 16px;
+} 
+
+
+.photo-gallery-item img{
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+  object-fit: cover;
+} 
+
+/* 2 columns for small laptops/tablets */
+@media (max-width: 992px) and (min-width: 769px) {
+  .photo-gallery {
+    flex-direction: row;
+    gap: 16px;
+  }
+  .image-column {
+    width: 50%;
+    display: flex;
+  }
+  .photo-gallery > .image-column {
+    flex: 1 1 50%;
+  }
+  .photo-gallery > .image-column:nth-child(n+3) {
+    display: none !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .photo-gallery {
+    flex-direction: column;
+    gap: 0;
+  }
+  .image-column {
+    width: 100%;
+    flex-direction: column;
+    gap: 0;
+  }
+  .photo-gallery-item {
+    width: 100%;
+    margin-bottom: 16px;
   }
 }
 
@@ -1766,4 +1856,210 @@ section,
 
 .contact .php-email-form button[type=submit]:hover {
   background: color-mix(in srgb, var(--accent-color), transparent 20%);
+}
+
+.my-carousel .swiper-button-next,
+.my-carousel .swiper-button-prev {
+  background: color-mix(in srgb, var(--background-color), transparent 50%);
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* box-shadow: 0 2px 8px rgba(0,0,0,0.08); */
+}
+.my-carousel .swiper-button-next:after,
+.my-carousel .swiper-button-prev:after {
+  color: var(--default-color);
+  font-size: 1.8rem;
+}
+
+.my-carousel .swiper-button-next,
+.my-carousel .swiper-button-prev {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+}
+.my-carousel-section:hover .swiper-button-next,
+.my-carousel-section:hover .swiper-button-prev {
+  opacity: 1;
+  pointer-events: auto;
+}
+.my-carousel .swiper-button-next,
+.my-carousel .swiper-button-prev {
+  padding: 4px;
+}
+.my-carousel .swiper-pagination {
+  position: static;
+  margin-top: 1.5rem;
+  text-align: center;
+}
+:root {
+  --carousel-max-width: 700px;
+  --carousel-height: 40vw;
+  --carousel-min-height: 260px;
+  --carousel-max-height: 500px;
+}
+
+.my-carousel-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.my-carousel {
+  max-width: var(--carousel-max-width);
+  width: 100%;
+  height: var(--carousel-height);
+  min-height: var(--carousel-min-height);
+  max-height: var(--carousel-max-height);
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.my-carousel .swiper-slide {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  background: transparent;
+}
+
+.my-carousel .swiper-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+  display: block;
+}
+
+.my-carousel .swiper-button-next,
+.my-carousel .swiper-button-prev {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  padding: 4px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+}
+.my-carousel-section:hover .swiper-button-next,
+.my-carousel-section:hover .swiper-button-prev {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.my-carousel .swiper-button-prev {
+  left: 8px;
+  right: auto;
+}
+.my-carousel .swiper-button-next {
+  right: 8px;
+  left: auto;
+}
+
+.my-carousel .swiper-pagination {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 8px;
+  margin: 0 auto;
+  z-index: 10;
+  text-align: center;
+  width: 100%;
+  pointer-events: none; /* allows clicks to pass through except on bullets */
+}
+.my-carousel .swiper-pagination-bullet {
+  pointer-events: auto; /* keep bullets clickable */
+}
+.my-carousel .swiper-pagination-bullet {
+  background: color-mix(in srgb, var(--background-color), transparent 50%);
+  opacity: 1;
+  width: 12px;
+  height: 12px;
+  margin: 0 4px !important;
+  transition: background 0.2s;
+}
+.my-carousel .swiper-pagination-bullet-active,
+.portfolio-details-slider .swiper-pagination-bullet-active {
+  background: var(--accent-color) !important;
+}
+
+/* Google Material Symbols Outlined */
+@font-face {
+  font-family: 'Material Symbols Outlined';
+  font-style: normal;
+  font-weight: 400;
+  src: url('https://fonts.gstatic.com/s/materialsymbolsoutlined/v164/sylfa-1.ttf') format('truetype');
+}
+.material-symbols-outlined {
+  font-family: 'Material Symbols Outlined';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;  /* Default size, can be overridden */
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  direction: ltr;
+  -webkit-font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+  color: inherit;
+}
+
+/* Material Design Icon Button (from https://m2.material.io/develop/web/components/buttons/icon-buttons) */
+.icon-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--default-color), transparent 50%);
+  cursor: pointer;
+  transition: background 0.2s;
+  outline: none;
+  position: relative;
+}
+.icon-button:focus-visible {
+  outline: 2px solid var(--accent-color);
+  outline-offset: 2px;
+}
+.icon-button:hover {
+  background: color-mix(in srgb, var(--default-color), transparent 30%);
+  box-shadow: 0 2px 8px rgba(60,64,67,0.08);
+  transition: background 0.2s, box-shadow 0.2s;
+}
+.icon-button:active {
+  background: rgba(60, 64, 67, 0.16);
+}
+.icon-button .material-symbols-outlined {
+  font-size: 24px;
+  color: inherit;
+  pointer-events: none;
+}
+.portfolio-details-slider {
+  border-radius: 8px;
+  overflow: hidden;
+}
+.project-title {
+  font-weight: 600;
+  color: var(--default-color);
+  margin-bottom: 1rem;
+}
+.project-title a {
+  color: inherit;
+  text-decoration: underline;
+}
+.project-description {
+  color: var(--secondary-color);
+}
+.section-gap-80 > * + * {
+  margin-top: 200px;
 }

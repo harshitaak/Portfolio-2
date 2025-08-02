@@ -201,4 +201,20 @@
 
   });
 
+  window.addEventListener('load', function() {
+    new Swiper('.my-carousel', {
+      loop: true,
+      navigation: {
+        nextEl: '.my-carousel .swiper-button-next',
+        prevEl: '.my-carousel .swiper-button-prev'
+      },
+      pagination: {
+        el: '.my-carousel .swiper-pagination',
+        clickable: true
+      },
+      slidesPerView: 1,
+      spaceBetween: 30
+    });
+  });
+
 })();
