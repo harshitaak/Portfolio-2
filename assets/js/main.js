@@ -201,6 +201,8 @@
 
   });
 
+
+  
   window.addEventListener('load', function() {
     new Swiper('.my-carousel', {
       loop: true,
@@ -218,3 +220,36 @@
   });
 
 })();
+
+document.addEventListener('DOMContentLoaded', function() {
+  const themeToggle = document.getElementById('theme-toggle');
+  const themeIcon = document.getElementById('theme-icon');
+  const body = document.body;
+
+  function updateIcon() {
+    if (body.classList.contains('light-mode')) {
+      themeIcon.textContent = 'light_mode'; // Sun icon
+    } else {
+      themeIcon.textContent = 'dark_mode'; // Moon icon
+    }
+  }
+
+  // Load saved theme
+  if (localStorage.getItem('theme') === 'light') {
+    body.classList.add('light-mode');
+  }
+  updateIcon();
+
+  if (themeToggle) {
+    themeToggle.addEventListener('click', () => {
+      body.classList.toggle('light-mode');
+      // Save preference
+      if (body.classList.contains('light-mode')) {
+        localStorage.setItem('theme', 'light');
+      } else {
+        localStorage.setItem('theme', 'dark');
+      }
+      updateIcon();
+    });
+  }
+});
