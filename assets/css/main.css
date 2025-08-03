@@ -2053,7 +2053,7 @@ section,
   pointer-events: auto; /* keep bullets clickable */
 }
 .my-carousel .swiper-pagination-bullet {
-  background: color-mix(in srgb, var(--background-color), transparent 50%);
+  background: color-mix(in srgb, var(--shadow-color), transparent 80%);
   opacity: 1;
   width: 12px;
   height: 12px;
@@ -2098,7 +2098,7 @@ section,
   padding: 0;
   border: none;
   border-radius: 50%;
-  background: color-mix(in srgb, var(--default-color), transparent 50%);
+  background: color-mix(in srgb, var(--shadow-color), transparent 88%);
   cursor: pointer;
   transition: background 0.2s;
   outline: none;
@@ -2109,12 +2109,13 @@ section,
   outline-offset: 2px;
 }
 .icon-button:hover {
-  background: color-mix(in srgb, var(--default-color), transparent 30%);
-  box-shadow: 0 2px 8px rgba(60,64,67,0.08);
+  background: color-mix(in srgb, var(--shadow-color), transparent 80%);
+  box-shadow: var(--elevation-1);
   transition: background 0.2s, box-shadow 0.2s;
 }
 .icon-button:active {
-  background: rgba(60, 64, 67, 0.16);
+  background: color-mix(in srgb, var(--shadow-color), transparent 80%);
+  box-shadow: var(--elevation-1);
 }
 .icon-button .material-symbols-outlined {
   font-size: 24px;
@@ -2183,3 +2184,42 @@ section,
 }
 
 /* The rest fill the remaining grid cells */
+/*--------------------------------------------------------------
+# My Section ALL for now
+--------------------------------------------------------------*/
+.my-section {
+  /* padding: 60px 0; */
+  margin: 40px 40px;
+  padding: 40px 40px;
+  background: var(--surface-color); /* or any color you want */
+  border-radius: 16px; /* optional */
+  box-shadow: var(--elevation-1); 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 48px;
+  transition: 0.3s;
+
+  /* Add more styles as needed */
+}
+
+.my-section img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.my-section h2 {
+  font-size: 24px;
+} 
+.my-section:hover {
+  box-shadow: var(--elevation-2);
+  transform: translateY(-5px);
+  transition: 0.3s;
+}
+
+/* .my-section:hover img {
+  transform: scale(1.05);
+  transition: 0.3s;
+} */
