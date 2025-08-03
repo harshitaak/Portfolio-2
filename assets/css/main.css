@@ -274,8 +274,10 @@ h6 {
   color: var(--default-color);
   box-shadow: var(--elevation-1) ;
   background-color: var(--background-color);
-  padding: 16px 0;
+  /* padding: 16px 0; */
+  padding-top: 16px;
   transition: all 0.5s;
+  align-content: bottom;
   z-index: 997;
 }
 
@@ -329,6 +331,7 @@ h6 {
   .navmenu>ul>li {
     white-space: nowrap;
     padding: 16px 16px;
+    /* padding-bottom: 0; */
   }
 
   .navmenu>ul>li:last-child {
