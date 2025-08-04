@@ -285,9 +285,13 @@ h6 {
   line-height: 1;
 }
 
-.header .logo img {
+.header .logo .logo-svg {
   max-height: 32px;
   margin-right: 8px;
+  display: block;
+  object-fit: contain;
+  color: var(--default-color);
+  fill: currentColor;
 }
 
 .header .logo h1 {
@@ -555,6 +559,12 @@ h6 {
     right: 15px;
     margin-right: 0;
     z-index: 9999;
+  }
+  
+  /* Ensure navbar-right container doesn't interfere on mobile */
+  .mobile-nav-active .navbar-right {
+    position: relative;
+    z-index: 9998;
   }
 
   .mobile-nav-active .navmenu {
@@ -2223,3 +2233,148 @@ section,
   transform: scale(1.05);
   transition: 0.3s;
 } */
+
+/*--------------------------------------------------------------
+# Navbar Right Container
+--------------------------------------------------------------*/
+
+.navbar-right {
+  gap: 20px;
+}
+
+/* Desktop: Align theme toggle properly */
+@media (min-width: 1200px) {
+  .theme-toggle {
+    align-items: center;
+    justify-content: center;
+    margin-left: 20px;
+  }
+}
+
+/* Mobile theme toggle styling */
+@media (max-width: 1199px) {
+  .theme-toggle-mobile {
+    transition: color 0.3s;
+  }
+  
+  .theme-toggle-mobile:hover {
+    color: var(--accent-color) !important;
+  }
+}
+
+/*--------------------------------------------------------------
+# Theme Toggle
+--------------------------------------------------------------*/
+
+@import "https://unpkg.com/open-props/easings.min.css";
+
+.theme-toggle {
+  --size: 2rem;
+  background: none;
+  border: none;
+  padding: 0;
+  inline-size: var(--size);
+  block-size: var(--size);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  outline-offset: 5px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s var(--ease-3);
+}
+
+.theme-toggle:is(:hover, :focus-visible) {
+  background-color: var(--surface-color);
+  /* outline: 2px solid var(--accent-color); */
+}
+
+.sun-and-moon {
+  inline-size: 100%;
+  block-size: 100%;
+  stroke-linecap: round;
+}
+
+.sun-and-moon > :is(.moon, .sun, .sun-beams) {
+  transform-origin: center;
+}
+
+/* Icon colors */
+.sun-and-moon > :is(.moon, .sun) {
+  fill: var(--secondary-color);
+  transition: fill 0.3s var(--ease-3);
+}
+
+.theme-toggle:is(:hover, :focus-visible) > .sun-and-moon > :is(.moon, .sun) {
+  fill: #f39c12;
+}
+
+.sun-and-moon > .sun-beams {
+  stroke: var(--secondary-color);
+  stroke-width: 2px;
+  transition: stroke 0.3s var(--ease-3);
+}
+
+.theme-toggle:is(:hover, :focus-visible) .sun-and-moon > .sun-beams {
+  stroke: #f39c12;
+}
+
+/* Dark theme styles (when light-mode class is NOT present) */
+body:not(.light-mode) .sun-and-moon > .sun {
+  transform: scale(1.75);
+}
+
+body:not(.light-mode) .sun-and-moon > .sun-beams {
+  opacity: 0;
+}
+
+body:not(.light-mode) .sun-and-moon > .moon > circle {
+  transform: translateX(-7px);
+}
+
+@supports (cx: 1) {
+  body:not(.light-mode) .sun-and-moon > .moon > circle {
+    cx: 17;
+    transform: translateX(0);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .sun-and-moon > .sun {
+    transition: transform .5s var(--ease-elastic-3);
+  }
+
+  .sun-and-moon > .sun-beams {
+    transition: transform .5s var(--ease-elastic-4), opacity .5s var(--ease-3);
+  }
+
+  .sun-and-moon .moon > circle {
+    transition: transform .25s var(--ease-out-5);
+  }
+
+  @supports (cx: 1) {
+    .sun-and-moon .moon > circle {
+      transition: cx .25s var(--ease-out-5);
+    }
+  }
+
+  body:not(.light-mode) .sun-and-moon > .sun {
+    transition-timing-function: var(--ease-3);
+    transition-duration: .25s;
+    transform: scale(1.75);
+  }
+
+  body:not(.light-mode) .sun-and-moon > .sun-beams {
+    transition-duration: .15s;
+    transform: rotateZ(-25deg);
+  }
+
+  body:not(.light-mode) .sun-and-moon > .moon > circle {
+    transition-duration: .5s;
+    transition-delay: .25s;
+  }
+}

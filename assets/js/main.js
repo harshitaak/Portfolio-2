@@ -221,35 +221,70 @@
 
 })();
 
+// Old theme toggle implementation removed - replaced with modern data-theme approach below
+
+
+// Theme toggle using .light-mode class approach
 document.addEventListener('DOMContentLoaded', function() {
   const themeToggle = document.getElementById('theme-toggle');
-  const themeIcon = document.getElementById('theme-icon');
   const body = document.body;
+  const storageKey = 'theme-preference';
 
-  function updateIcon() {
-    if (body.classList.contains('light-mode')) {
-      themeIcon.textContent = 'light_mode'; // Sun icon
-    } else {
-      themeIcon.textContent = 'dark_mode'; // Moon icon
+  // Get saved theme preference or system preference
+  function getThemePreference() {
+    const saved = localStorage.getItem(storageKey);
+    if (saved) {
+      return saved;
     }
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
   }
 
-  // Load saved theme
-  if (localStorage.getItem('theme') === 'light') {
-    body.classList.add('light-mode');
+  // Apply theme to body class
+  function applyTheme(theme) {
+    if (theme === 'light') {
+      body.classList.add('light-mode');
+    } else {
+      body.classList.remove('light-mode');
+    }
+    
+    // Update aria-label for accessibility
+    if (themeToggle) {
+      themeToggle.setAttribute('aria-label', `Switch to ${theme === 'light' ? 'dark' : 'light'} mode`);
+    }
+    
+    console.log('Theme applied:', theme); // Debug log
   }
-  updateIcon();
 
+  // Save theme preference
+  function saveTheme(theme) {
+    localStorage.setItem(storageKey, theme);
+  }
+
+  // Toggle theme
+  function toggleTheme() {
+    const currentTheme = body.classList.contains('light-mode') ? 'light' : 'dark';
+    const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+    
+    applyTheme(newTheme);
+    saveTheme(newTheme);
+    
+    console.log('Theme toggled from', currentTheme, 'to', newTheme); // Debug log
+  }
+
+  // Initialize theme
+  const initialTheme = getThemePreference();
+  applyTheme(initialTheme);
+
+  // Add click listener
   if (themeToggle) {
-    themeToggle.addEventListener('click', () => {
-      body.classList.toggle('light-mode');
-      // Save preference
-      if (body.classList.contains('light-mode')) {
-        localStorage.setItem('theme', 'light');
-      } else {
-        localStorage.setItem('theme', 'dark');
-      }
-      updateIcon();
-    });
+    themeToggle.addEventListener('click', toggleTheme);
   }
+
+  // Sync with system changes
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+    const systemTheme = e.matches ? 'dark' : 'light';
+    applyTheme(systemTheme);
+    saveTheme(systemTheme);
+  });
 });
+        

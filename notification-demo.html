@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notification Configuration Demo</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .adjustLetterSpacing {
+            letter-spacing: inherit;
+        }
+        
+        /* Custom CSS for missing Tailwind utilities */
+        .content-stretch {
+            align-content: stretch;
+        }
+        
+        .mask-alpha {
+            mask-type: alpha;
+        }
+        
+        .mask-intersect {
+            mask-composite: intersect;
+        }
+        
+        .mask-no-clip {
+            mask-clip: border-box;
+        }
+        
+        .mask-no-repeat {
+            mask-repeat: no-repeat;
+        }
+        
+        /* Font loading */
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap');
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+    
+    <script type="text/babel">
+        const { useState } = React;
+        
+        // Placeholder image components since localhost images won't work
+        function PlaceholderIcon({ className, alt = "", color = "#1976d2" }) {
+            return (
+                <div 
+                    className={`${className} flex items-center justify-center text-xs font-bold`}
+                    style={{ backgroundColor: color, color: 'white' }}
+                >
+                    {alt || "🔔"}
+                </div>
+            );
+        }
+        
+        function ActionButtons({ active = "off", hover = "off" }) {
+            return (
+                <div className="box-border flex flex-row gap-2 items-center justify-start p-1 relative w-full h-full">
+                    <div className="relative shrink-0 w-6 h-6">
+                        <PlaceholderIcon className="w-full h-full rounded" alt="🔔" />
+                    </div>
+                </div>
+            );
+        }
+
+        function Dropdown() {
+            return (
+                <div className="relative w-full h-full flex items-center justify-center">
+                    <PlaceholderIcon className="w-full h-full rounded" alt="▼" color="#64748b" />
+                </div>
+            );
+        }
+
+        function PipelineStatus({ type = "Type6" }) {
+            if (type === 'Type3') {
+                return (
+                    <div className="box-border flex flex-row gap-2 items-center justify-start p-0 relative w-full h-full">
+                        <div className="bg-blue-600 box-border flex flex-row gap-2 items-center justify-center p-0 relative rounded-full shrink-0 w-5 h-5">
+                            <PlaceholderIcon className="w-4 h-4 rounded" alt="📊" color="#4e7ac2" />
+                        </div>
+                        <div className="font-normal text-base text-left text-slate-900">
+                            <p className="leading-6">Usage Monitor</p>
+                        </div>
+                    </div>
+                );
+            }
+            return (
+                <div className="box-border flex flex-row gap-2 items-center justify-start p-0 relative w-full h-full">
+                    <PlaceholderIcon className="w-5 h-5 rounded" alt="⚡" color="#64748b" />
+                    <div className="font-normal text-base text-left text-slate-900">
+                        <p className="leading-6">Pipelines</p>
+                    </div>
+                </div>
+            );
+        }
+
+        function NotificationConfiguration({ type = "Default" }) {
+            if (type === 'Open') {
+                return (
+                    <button className="bg-white border border-slate-200 cursor-pointer flex flex-col gap-2 items-start justify-start pb-2 pt-0 px-0 relative rounded w-full min-h-fit">
+                        <div className="box-border flex flex-row h-10 items-center justify-between px-4 py-0 relative rounded shrink-0 w-full">
+                            {/* Toggle Switch */}
+                            <div className="flex flex-row gap-2 items-center justify-start p-0 relative shrink-0">
+                                <div className="h-6 relative shrink-0 w-10 bg-blue-600 rounded-full p-1">
+                                    <div className="bg-white w-4 h-4 rounded-full ml-auto"></div>
+                                </div>
+                                <div className="font-normal text-base text-left text-slate-900">
+                                    <p>Artifact with trigger type</p>
+                                </div>
+                            </div>
+                            
+                            <div className="font-normal text-sm text-left text-slate-900 w-32">
+                                <p>For each occurrence</p>
+                            </div>
+                            
+                            <div className="w-32">
+                                <PipelineStatus />
+                            </div>
+                            
+                            {/* Avatar */}
+                            <div className="bg-slate-400 flex items-center justify-center rounded-full w-7 h-7">
+                                <span className="text-white text-sm font-medium">TM</span>
+                            </div>
+                            
+                            {/* Action buttons */}
+                            <div className="flex flex-row gap-2 items-center">
+                                <ActionButtons />
+                                <ActionButtons />
+                            </div>
+                            
+                            {/* Edit button */}
+                            <div className="flex items-center gap-2">
+                                <button className="text-blue-600 text-sm font-medium px-3 py-1.5 border border-blue-200 rounded">
+                                    Edit
+                                </button>
+                                <PlaceholderIcon className="w-6 h-6 rounded" alt="⚙️" color="#64748b" />
+                            </div>
+                        </div>
+                        
+                        {/* Expanded Details */}
+                        <div className="flex flex-row items-end justify-between px-4 py-0 w-full">
+                            <div className="flex flex-col items-start justify-start p-0">
+                                <div className="flex flex-row gap-4 items-baseline justify-start p-0 mb-2">
+                                    <div className="text-sm text-slate-600">Notification ID</div>
+                                    <div className="text-base text-slate-900">ABCD1234</div>
+                                </div>
+                                <div className="flex flex-row gap-4 items-baseline justify-start p-0">
+                                    <div className="text-sm text-slate-600 w-24">Trigger Event</div>
+                                    <div className="bg-blue-50 border border-blue-300 text-blue-700 text-xs px-2 py-1 rounded-full">
+                                        Failure
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div className="flex flex-col items-start justify-start p-0">
+                                <div className="flex flex-row gap-8 items-baseline justify-start p-0 mb-2">
+                                    <div className="text-sm text-slate-600">Source</div>
+                                    <div className="bg-blue-50 border border-blue-300 text-blue-700 text-xs px-2 py-1 rounded-full">
+                                        Pipelines
+                                    </div>
+                                </div>
+                                <div className="flex flex-row gap-4 items-baseline justify-start p-0">
+                                    <div className="text-sm text-slate-600 w-16">Trigger</div>
+                                    <div className="text-base text-slate-900">custom_pipeline_1 failure</div>
+                                </div>
+                            </div>
+                            
+                            <div className="flex flex-col items-start justify-start p-0">
+                                <div className="flex flex-row gap-4 items-baseline justify-start p-0 mb-2">
+                                    <div className="text-sm text-slate-600 w-16">Email</div>
+                                    <div className="flex items-center gap-2">
+                                        <div className="bg-blue-50 border border-blue-200 text-blue-800 text-sm px-2 py-1 rounded-full">
+                                            Dave Gordon
+                                        </div>
+                                        <div className="text-blue-600 text-sm">+5</div>
+                                    </div>
+                                </div>
+                                <div className="flex flex-row gap-4 items-baseline justify-start p-0">
+                                    <div className="text-sm text-slate-600 w-16">Platform</div>
+                                    <div className="flex items-center gap-2">
+                                        <div className="bg-blue-50 border border-blue-200 text-blue-800 text-sm px-2 py-1 rounded-full">
+                                            Dave Gordon
+                                        </div>
+                                        <div className="text-blue-600 text-sm">+5</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div className="flex flex-col items-start justify-start p-0">
+                                <div className="flex flex-row gap-4 items-baseline justify-start p-0 mb-2">
+                                    <div className="text-sm text-slate-600">Created</div>
+                                    <div className="text-base text-slate-900">2025/03/05 21:45:32</div>
+                                </div>
+                                <div className="flex flex-row gap-4 items-baseline justify-start p-0">
+                                    <div className="text-sm text-slate-600">Modified</div>
+                                    <div className="text-base text-slate-900">2025/03/05 21:45:32</div>
+                                </div>
+                            </div>
+                        </div>
+                    </button>
+                );
+            }
+
+            if (type === 'Hover') {
+                return (
+                    <button className="bg-white border-2 border-blue-300 cursor-pointer flex flex-row items-center justify-between px-4 py-0 relative rounded w-full h-10 shadow-lg">
+                        {/* Toggle Switch */}
+                        <div className="flex flex-row gap-2 items-center justify-start p-0 relative shrink-0">
+                            <div className="h-6 relative shrink-0 w-10 bg-blue-600 rounded-full p-1">
+                                <div className="bg-white w-4 h-4 rounded-full ml-auto"></div>
+                            </div>
+                            <div className="font-normal text-base text-left text-slate-900">
+                                <p>Artifact with trigger type</p>
+                            </div>
+                        </div>
+                        
+                        <div className="font-normal text-sm text-left text-slate-900 w-32">
+                            <p>For each occurrence</p>
+                        </div>
+                        
+                        <div className="w-32">
+                            <PipelineStatus />
+                        </div>
+                        
+                        {/* Avatar */}
+                        <div className="bg-slate-400 flex items-center justify-center rounded-full w-7 h-7">
+                            <span className="text-white text-sm font-medium">TM</span>
+                        </div>
+                        
+                        {/* Action buttons */}
+                        <div className="flex flex-row gap-2 items-center">
+                            <ActionButtons />
+                            <ActionButtons />
+                        </div>
+                        
+                        {/* Edit button */}
+                        <div className="flex items-center gap-2">
+                            <button className="text-blue-600 text-sm font-medium px-3 py-1.5 border-2 border-blue-300 rounded shadow">
+                                Edit
+                            </button>
+                            <PlaceholderIcon className="w-6 h-6 rounded" alt="⚙️" color="#64748b" />
+                        </div>
+                    </button>
+                );
+            }
+
+            // Default state
+            return (
+                <button className="bg-slate-50 border border-slate-200 cursor-pointer flex flex-row items-center justify-between px-4 py-0 relative rounded w-full h-10">
+                    {/* Toggle Switch */}
+                    <div className="flex flex-row gap-2 items-center justify-start p-0 relative shrink-0">
+                        <div className="h-6 relative shrink-0 w-10 bg-blue-600 rounded-full p-1">
+                            <div className="bg-white w-4 h-4 rounded-full ml-auto"></div>
+                        </div>
+                        <div className="font-normal text-base text-left text-slate-900">
+                            <p>Artifact with trigger type</p>
+                        </div>
+                    </div>
+                    
+                    <div className="font-normal text-sm text-left text-slate-900 w-32">
+                        <p>For each occurrence</p>
+                    </div>
+                    
+                    <div className="w-32">
+                        <PipelineStatus />
+                    </div>
+                    
+                    {/* Avatar */}
+                    <div className="bg-slate-400 flex items-center justify-center rounded-full w-7 h-7">
+                        <span className="text-white text-sm font-medium">TM</span>
+                    </div>
+                    
+                    {/* Action buttons */}
+                    <div className="flex flex-row gap-2 items-center">
+                        <ActionButtons />
+                        <ActionButtons />
+                    </div>
+                    
+                    {/* Edit button */}
+                    <div className="flex items-center gap-2">
+                        <button className="text-blue-600 text-sm font-medium px-3 py-1.5 border border-blue-200 rounded">
+                            Edit
+                        </button>
+                        <PlaceholderIcon className="w-6 h-6 rounded" alt="⚙️" color="#64748b" />
+                    </div>
+                </button>
+            );
+        }
+
+        function NotificationConfigurationDemo() {
+            const [selectedType, setSelectedType] = useState('Default');
+
+            return (
+                <div className="w-full max-w-6xl mx-auto p-8 bg-gray-50 min-h-screen">
+                    <div className="mb-8">
+                        <h1 className="text-3xl font-bold text-gray-900 mb-4">Notification Configuration Component</h1>
+                        <p className="text-gray-600 mb-6">Generated from Figma using MCP (Model Context Protocol)</p>
+                        
+                        <div className="flex gap-2 mb-6">
+                            {['Default', 'Open', 'Hover'].map((type) => (
+                                <button
+                                    key={type}
+                                    onClick={() => setSelectedType(type)}
+                                    className={`px-4 py-2 rounded transition-colors ${
+                                        selectedType === type 
+                                            ? 'bg-blue-600 text-white' 
+                                            : 'bg-white border border-gray-300 text-gray-700 hover:bg-gray-50'
+                                    }`}
+                                >
+                                    {type}
+                                </button>
+                            ))}
+                        </div>
+                    </div>
+
+                    <div className="bg-white rounded-lg shadow-lg p-6">
+                        <h2 className="text-xl font-semibold mb-4 text-gray-800">Current State: {selectedType}</h2>
+                        <div className="w-full" style={{ minHeight: selectedType === 'Open' ? '200px' : '40px' }}>
+                            <NotificationConfiguration type={selectedType} />
+                        </div>
+                    </div>
+
+                    <div className="mt-8 bg-white rounded-lg shadow-lg p-6">
+                        <h2 className="text-xl font-semibold mb-4 text-gray-800">Component Features</h2>
+                        <ul className="list-disc list-inside text-gray-600 space-y-2">
+                            <li><strong>Default State:</strong> Collapsed view with toggle switch, pipeline status, and action buttons</li>
+                            <li><strong>Open State:</strong> Expanded view showing detailed notification configuration</li>
+                            <li><strong>Hover State:</strong> Interactive hover effects with enhanced borders and shadows</li>
+                            <li><strong>Interactive Elements:</strong> Toggle switches, action buttons, avatars, and dropdown menus</li>
+                            <li><strong>Design System:</strong> Uses consistent spacing, colors, and typography</li>
+                        </ul>
+                    </div>
+                </div>
+            );
+        }
+
+        ReactDOM.render(<NotificationConfigurationDemo />, document.getElementById('root'));
+    </script>
+</body>
+</html>
