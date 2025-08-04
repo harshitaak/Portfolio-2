@@ -2106,10 +2106,9 @@ section,
   inset: 0;
   z-index: 3;
   transition: all ease-in-out 0.3s;
-  background: color-mix(in srgb, var(--shadow-color), transparent 80%);
-  /* transform: translateY(-5px); */
-  padding: 15px;
-  border-radius: 16px;
+  padding: 16px;
+  /* border-radius: 16px; */
+  background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.8) 100%);
   box-shadow: var(--elevation-1);
 }
 
@@ -2117,10 +2116,10 @@ section,
   font-size: 14px;
   padding: 5px 10px;
   font-weight: 400;
-  color: var(--default-color);
+  color: var(--contrast-color);
   border-radius: 4px;
   display: inline-block;
-  background-color: color-mix(in srgb, var(--accent-color), transparent 70%);
+  background-color: var(--accent-color);
 }
 
 .portfolio .portfolio-content .portfolio-info p {
@@ -2132,7 +2131,7 @@ section,
   right: 0;
   font-size: 16px;
   font-weight: 600;
-  color: var(--default-color);
+  color: #ffffff;
 }
 
 .portfolio .portfolio-content .portfolio-info .preview-link,
@@ -2141,13 +2140,13 @@ section,
   left: calc(50% - 40px);
   font-size: 36px;
   top: calc(50% - 14px);
-  color: var(--default-color);
+  color: #ffffff;
   transition: 0.3s;
   line-height: 1.2;
   background-color: var(--primary-color) transparent 80%;
   border-radius: 50%;
   padding: 4px;
-  box-shadow: var(--elevation-1);
+ 
 }
 
 .portfolio .portfolio-content .portfolio-info .preview-link:hover,
@@ -2166,7 +2165,7 @@ section,
 .portfolio .portfolio-content:hover .portfolio-info {
   opacity: 1;
   box-shadow: var(--elevation-2);
-  transform: translateY(-5px);
+  /* transform: translateY(-5px); */
 }
 
 .portfolio .portfolio-content:hover img {
@@ -2235,12 +2234,7 @@ section,
   color: color-mix(in srgb, var(--default-color), transparent 30%);
 }
 
-/*--------------------------------------------------------------
-# Starter Section Section
---------------------------------------------------------------*/
-.starter-section {
-  /* Add your styles here */
-}
+
 
 /*--------------------------------------------------------------
 # Contact Section
