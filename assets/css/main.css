@@ -21,7 +21,7 @@
 :root { 
   --background-color: #222222; /* Background color for the entire website, including individual sections */
   --default-color: #fcfcfc; /* Default color used for the majority of the text content across the entire website */
-  --secondary-color: #616161;
+  --secondary-color: #afafaf;
   --heading-color: #fcfcfc; /* Color for headings, subheadings and title throughout the website */
   --accent-color: #1c98d0; /* Accent color that represents your brand on the website. It's used for buttons, links, and other elements that need to stand out */
   --surface-color: #393939; /* The surface color is used as a background of boxed elements within sections, such as cards, icon boxes, or other elements that require a visual separation from the global background. */
