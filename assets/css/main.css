@@ -2601,6 +2601,7 @@ section,
   justify-content: center;
   gap: 48px;
   transition: 0.3s;
+  /* scroll-snap-align: start; */
 
   /* Add more styles as needed */
 }
