@@ -2026,6 +2026,25 @@ section,
 /*--------------------------------------------------------------
 # Portfolio Section
 --------------------------------------------------------------*/
+
+.portfolio .portfolio-item {
+  margin-bottom: 30px;
+}
+
+.portfolio .portfolio-filters .material-icons {
+  font-size: 20px;
+  vertical-align: middle;
+  color: var(--secondary-color);
+}
+
+.portfolio .portfolio-filters li:hover .material-icons {
+  color: var(--accent-color);
+}
+
+.portfolio .portfolio-filters li.filter-active .material-icons {
+  color: var(--contrast-color);
+}
+
 .portfolio .portfolio-filters {
   /* padding: 0;
   margin: 0 auto 20px auto;
