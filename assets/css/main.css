@@ -843,7 +843,7 @@ h6 {
   width: 1rem;
   height: 1rem;
   background: var(--accent-color);
-  border: 3px solid var(--surface-color);
+  border: 2px color-mix(in srgb, color var(--accent-color), color 50%);
   border-radius: 50%;
   box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent-color), transparent 85%);
 }
