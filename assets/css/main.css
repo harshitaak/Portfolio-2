@@ -13,8 +13,29 @@
 /* Fonts */
 :root {
   --default-font: "Roboto",  system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  --heading-font: "Raleway",  sans-serif;
+  --heading-font: "Futura",  sans-serif;
   --nav-font: "Poppins",  sans-serif;
+}
+
+/* Semantic Typography Styles */
+:root {
+  /* Display Text (For the largest, most prominent text, like hero titles) */
+  --text-display-font: 700 72px/1.2 var(--heading-font);
+
+  /* Headline Text (For major section titles) */
+  --text-headline-font: 700 48px/1.25 var(--heading-font);
+
+  /* Title Text (For subsections or card titles) */
+  --text-title-font: 600 1.5rem/1.4 var(--heading-font);
+  
+  /* Subtitle Text (For text that supports a title) */
+  --text-subtitle-font: 500 1.125rem/1.5 var(--default-font);
+
+  /* Body Text (For all default paragraphs) */
+  --text-body-font: 400 1rem/1.6 var(--default-font);
+
+  /* Caption Text (For smaller, secondary information) */
+  --text-caption-font: 400 0.875rem/1.5 var(--default-font);
 }
 
 /* Global Colors - The following color variables are used throughout the website. Updating them here will change the color scheme of the entire website */
@@ -2605,30 +2626,38 @@ section,
 --------------------------------------------------------------*/
 .my-section {
   /* padding: 60px 0; */
-  margin: 40px 40px;
-  padding: 40px 40px;
+  /* margin: 40px 40px; */
+  /* padding: 40px 40px; */
+  padding-right: 48px;
+  /* padding-right: 48px; */
+  max-width: 100%;
+  height: 600px;
   background: var(--surface-color); /* or any color you want */
   border-radius: 16px; /* optional */
   box-shadow: var(--elevation-1); 
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-items: flex-start;
+  justify-content: left;
   gap: 48px;
-  transition: 0.3s;
-  /* scroll-snap-align: start; */
+  transition: 0.3s ease-in-out;
+
+  /* use below 2 on parent div */
+  /* scroll-snap-type: y proximity;
+  scroll-snap-align: center; */
 
   /* Add more styles as needed */
 }
 
 .my-section img {
   width: 100%;
-  height: 100%;
+  /* height: 600px; */
   object-fit: cover;
+ 
   display: block;
 }
 
 .my-section h2 {
-  font-size: 24px;
+  font: var(--text-title-font);
 } 
 .my-section:hover {
   box-shadow: var(--elevation-2);
