@@ -1601,7 +1601,7 @@ section,
 .stats i {
   background-color: var(--surface-color);
   color: var(--accent-color);
-  /* box-shadow: var(--elevation-1); */
+  box-shadow: var(--elevation-1);
   width: 54px;
   height: 54px;
   font-size: 24px;
@@ -1616,8 +1616,8 @@ section,
 
 .stats .stats-item {
   background-color: var(--surface-color);
-  margin-top: -27px;
-  padding: 30px 30px 4 30px;
+  margin-top: -20px;
+  padding: 24px 24px 36px 24px;
   width: 100%;
   position: relative;
   text-align: center;
