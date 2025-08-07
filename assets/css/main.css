@@ -620,7 +620,7 @@ h6 {
   background-color: var(--surface-color);
   font-size: 14px;
   text-align: center;
-  padding: 30px 0;
+  /* padding: 30px 0; */
   position: relative;
   z-index: 10;
 }
@@ -642,6 +642,7 @@ h6 {
 
 .footer .social-links {
   margin: 0 0 0 0;
+  gap: 0.5rem !important;
 }
 
 .footer .social-links a {
@@ -674,6 +675,32 @@ h6 {
   font-size: 13px;
   padding-top: 5px;
 }
+
+/* Minimal footer theme adjustments */
+.minimal-footer .brand,
+.minimal-footer .brand .logo-svg,
+.minimal-footer .social-links a {
+  color: var(--secondary-color) !important;
+  margin: 0 !important;
+}
+.minimal-footer .text-muted {
+  color: var(--secondary-color) !important;
+}
+.minimal-footer .social-links a:hover {
+  color: var(--accent-color) !important;
+}
+
+/* Footer brand sizing */
+.minimal-footer .brand .logo-svg {
+  width: 48px;
+  height: 48px;
+  color: var(--default-color) !important;
+}
+.minimal-footer .brand .small {
+  font-size: 1.5rem; /* larger than Bootstrap .small */
+  font-weight: 600;
+}
+
 
 /*--------------------------------------------------------------
 # Preloader
@@ -2152,6 +2179,10 @@ section,
   box-shadow: var(--elevation-1);
 }
 
+.portfolio .portfolio-content .portfolio-info a {
+  text-decoration: none;
+}
+
 .portfolio .portfolio-content .portfolio-info h4 {
   font-size: 14px;
   padding: 5px 10px;
@@ -2174,41 +2205,29 @@ section,
   color: #ffffff;
 }
 
-.portfolio .portfolio-content .portfolio-info .preview-link,
-.portfolio .portfolio-content .portfolio-info .details-link {
-  position: absolute;
-  left: calc(50% - 40px);
-  font-size: 36px;
-  top: calc(50% - 14px);
-  color: #ffffff;
-  transition: 0.3s;
-  line-height: 1.2;
-  background-color: var(--primary-color) transparent 80%;
-  border-radius: 50%;
-  padding: 4px;
- 
-}
+.po
 
-.portfolio .portfolio-content .portfolio-info .preview-link:hover,
 
-.portfolio .portfolio-content .portfolio-info .details-link:hover {
-  color: var(--accent-color);
 
-}
-
-.portfolio .portfolio-content .portfolio-info .details-link {
-  left: 50%;
-  font-size: 34px;
-  line-height: 0;
-}
 
 .portfolio .portfolio-content:hover .portfolio-info {
+  opacity: 1;
+  box-shadow: var(--elevation-2);
+  transform: translateY(-5px);
+}
+
+.portfolio .portfolio-content:hover img {
+  transform: scale(1.1);
+}
+
+/* Fix for portfolio items with links */
+.portfolio .portfolio-link:hover .portfolio-content .portfolio-info {
   opacity: 1;
   box-shadow: var(--elevation-2);
   /* transform: translateY(-5px); */
 }
 
-.portfolio .portfolio-content:hover img {
+.portfolio .portfolio-link:hover .portfolio-content img {
   transform: scale(1.1);
 }
 
@@ -2520,7 +2539,7 @@ section,
   display: inline-block;
   white-space: nowrap;
   direction: ltr;
-  -webkit-font-feature-settings: 'liga';
+  /* -webkit-font-feature-settings: 'roboto'; */
   -webkit-font-smoothing: antialiased;
   color: inherit;
 }
@@ -2813,4 +2832,87 @@ body:not(.light-mode) .sun-and-moon > .moon > circle {
     transition-duration: .5s;
     transition-delay: .25s;
   }
+}
+
+/* Draw a line from the top left to the bottom right of the page */
+body {
+  /* background-color: #fefaee; */
+  /* font-family: PP Neue Montreal, Arial, sans-serif; */
+  color: var(--accent-color);
+  font-size: 1vw;
+  margin: 0;
+  padding: 0;
+  overscroll-behavior: none;
+  min-height: 100%;
+  cursor: url("https://cdn.prod.website-files.com/6708f85ff3d3cba6aff436fb/671251b239d7aeb290a31ac5_cursor-default%402x.svg")
+      2 0,
+    auto;
+}
+
+a,
+button {
+  cursor: url("https://cdn.prod.website-files.com/6708f85ff3d3cba6aff436fb/671251b212e6b71494aa67ff_cursor-pointer%402x.svg")
+      12 0,
+    pointer;
+}
+
+.cloneable {
+  padding: var(--section-padding) var(--container-padding);
+  justify-content: center;
+  align-items: center;
+  min-height: 100svh;
+  display: flex;
+  position: relative;
+}
+
+.text-draw {
+  color: var(--accent-color);
+  margin-left: 1em;
+  margin-right: 1em;
+  font-size: 3.5vw;
+  text-decoration: none;
+}
+
+/* Draw line container styling */
+[draw-line] {
+  cursor: pointer;
+  padding: 1em;
+  transition: all 0.3s ease;
+  border-radius: 8px;
+  position: relative;
+}
+
+
+
+.text-draw__p {
+  margin-bottom: 0;
+  font-size: 1.5em;
+  font-weight: 500;
+  line-height: 1.1;
+}
+
+.text-draw__box {
+  color: var(--accent-color);
+  width: 100%;
+  height: .625em;
+  position: relative;
+  margin: 2em 0;
+  min-height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.text-draw__box svg {
+  transition: all 1s ease;
+}
+
+
+
+.text-draw__box-svg {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  overflow: visible !important;
 }
