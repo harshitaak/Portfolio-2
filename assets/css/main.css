@@ -2599,6 +2599,7 @@ section,
 }
 .project-description {
   color: var(--secondary-color);
+  font: var(--text-body-font); /* controls size and line-height */
 }
 .section-gap-80 > * + * {
   margin-top: 200px;
@@ -2647,47 +2648,105 @@ section,
 
 /* The rest fill the remaining grid cells */
 /*--------------------------------------------------------------
-# My Section ALL for now
+# My Section (media + text)
 --------------------------------------------------------------*/
 .my-section {
-  /* padding: 60px 0; */
-  /* margin: 40px 40px; */
-  /* padding: 40px 40px; */
-  padding-right: 48px;
-  /* padding-right: 48px; */
+  padding: 0; /* allow media to reach container edges */
   max-width: 100%;
-  height: 600px;
-  background: var(--surface-color); /* or any color you want */
-  border-radius: 16px; /* optional */
-  box-shadow: var(--elevation-1); 
+  height: auto; /* flexible height */
+  background: var(--surface-color);
+  border-radius: 16px;
+  box-shadow: var(--elevation-1);
   display: flex;
-  align-items: flex-start;
-  justify-content: left;
-  gap: 48px;
+  align-items: center; /* center vertically */
+  /* justify-content: center; center horizontally */
+  gap: 32px;
   transition: 0.3s ease-in-out;
-
-  /* use below 2 on parent div */
-  /* scroll-snap-type: y proximity;
-  scroll-snap-align: center; */
-
-  /* Add more styles as needed */
 }
 
-.my-section img {
-  width: 100%;
-  /* height: 600px; */
-  object-fit: cover;
- 
-  display: block;
-}
-
-.my-section h2 {
-  font: var(--text-title-font);
-} 
 .my-section:hover {
   box-shadow: var(--elevation-2);
   transform: translateY(-5px);
   transition: 0.3s;
+}
+
+.my-section__media,
+.my-section__text {
+  min-width: 0; /* prevent overflow */
+  box-sizing: border-box; /* include padding in flex basis */
+}
+
+.my-section__media {
+  flex: 1 1 60%; /* allow shrink to accommodate gap */
+  height: auto; /* let image define height */
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.my-section__image {
+  width: 100%;
+  height: auto; /* natural height -> controls section height */
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+}
+
+.my-section__text {
+  text-align: left;
+  padding: 32px; /* slightly denser spacing */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* valid flex alignment */
+  /* justify-content: flex-start; valid flex alignment */
+  flex: 1 1 40%; /* allow shrink to accommodate gap */
+}
+
+/* Reverse variant */
+.my-section--reverse {
+  flex-direction: row-reverse;
+}
+
+.my-section h2 {
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: var(--default-color);
+  margin-bottom: 1rem;
+}
+
+.my-section:hover {
+  box-shadow: var(--elevation-2);
+  transform: translateY(-5px);
+  transition: 0.3s;
+}
+
+@media (max-width: 1200px) {
+  .my-section {
+    flex-direction: column;
+    height: auto; /* let content define height on small screens */
+  }
+
+  .my-section__media,
+  .my-section__text {
+    width: 100%;
+    flex: 1 1 auto; /* stack naturally on mobile */
+  }
+
+  /* Let image define height on mobile as well */
+  .my-section__media {
+    width: 100%;
+    height: auto;
+  }
+
+  .my-section--reverse {
+    flex-direction: column-reverse; /* reverse order on mobile */
+  }
+
+  .my-section__text {
+    padding: 24px;
+  }
 }
 
 /* .my-section:hover img {
