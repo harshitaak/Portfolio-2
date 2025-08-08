@@ -12,38 +12,39 @@
 --------------------------------------------------------------*/
 /* Fonts */
 :root {
-  --default-font: "Roboto",  system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  --heading-font: "Futura",  sans-serif;
-  --nav-font: "Poppins",  sans-serif;
+  --default-font: "Roboto", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --heading-font: Satoshi-Medium;
+  --nav-font: "Poppins", sans-serif;
 }
 
 /* Semantic Typography Styles */
 :root {
+  
   /* Display Text (For the largest, most prominent text, like hero titles) */
-  --text-display-font: 700 72px/1.2 var(--heading-font);
+  --text-display-font: 700 72px/1.2 Satoshi-Bold;
 
   /* Headline Text (For major section titles) */
-  --text-headline-font: 700 48px/1.25 var(--heading-font);
+  --text-headline-font: 700 48px/1.25 Satoshi-Medium;
 
   /* Title Text (For subsections or card titles) */
-  --text-title-font: 600 1.5rem/1.4 var(--heading-font);
+  --text-title-font: 600 1.5rem/1.4 Satoshi-Medium;
   
   /* Subtitle Text (For text that supports a title) */
-  --text-subtitle-font: 500 1.125rem/1.5 var(--default-font);
+  --text-subtitle-font: 500 1.125rem/1.5 Satoshi-Regular;
 
   /* Body Text (For all default paragraphs) */
-  --text-body-font: 400 1rem/1.6 var(--default-font);
+  --text-body-font: 400 1.25rem/1.6 Satoshi-Regular;
 
   /* Caption Text (For smaller, secondary information) */
-  --text-caption-font: 400 0.875rem/1.5 var(--default-font);
+  --text-caption-font: 400 0.875rem/1.5 Satoshi-Regular;
 }
+
 
 /* Global Colors - The following color variables are used throughout the website. Updating them here will change the color scheme of the entire website */
 :root { 
   --background-color: #222222; /* Background color for the entire website, including individual sections */
   --default-color: #fcfcfc; /* Default color used for the majority of the text content across the entire website */
   --secondary-color: #afafaf;
-  --heading-color: #fcfcfc; /* Color for headings, subheadings and title throughout the website */
   --accent-color: #1c98d0; /* Accent color that represents your brand on the website. It's used for buttons, links, and other elements that need to stand out */
   --surface-color: #393939; /* The surface color is used as a background of boxed elements within sections, such as cards, icon boxes, or other elements that require a visual separation from the global background. */
   --contrast-color: #000000; /* Contrast color for text, ensuring readability against backgrounds of accent, heading, or default colors. */
@@ -64,7 +65,6 @@ body *, body *::before, body *::after {
   --background-color: #fcfcfc;
   --default-color: #222222;
   --secondary-color: #a1a1a1;
-  --heading-color: #1a1a1a;
   --accent-color: #1c98d0;
   --surface-color: #f5f5f5;
   --contrast-color: #ffffff;
@@ -134,8 +134,8 @@ body *, body *::before, body *::after {
   background: radial-gradient(circle, var(--secondary-color) 1px, transparent 1px);
   background-size: 16px 16px;
   /* Optional: mask for a vignette/fade effect */
-  -webkit-mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, #000 80%, transparent 100%);
-  mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, #000 80%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, transparent 70%, #000 100%);
+  mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, transparent 70%, #000 100%);
   opacity: 0.6;
 }
 
@@ -171,8 +171,8 @@ h3,
 h4,
 h5,
 h6 {
-  color: var(--heading-color);
-  font-family: var(--heading-font);
+  color: var(--default-color);
+  font-family: Satoshi-Medium;
 }
 
 /* PHP Email Form Messages
@@ -304,7 +304,7 @@ h6 {
 .header {
   --background-color:var(--surface-color);
   color: var(--default-color);
-  box-shadow: var(--elevation-1) ;
+  box-shadow: var(--elevation-2) ;
   background-color: var(--background-color);
   padding: 0.5rem 0;
   transition: all 0.5s;
@@ -331,11 +331,11 @@ h6 {
   font-size: 30px;
   margin: 0;
   font-weight: 700;
-  color: var(--heading-color);
+  color: var(--default-color);
 }
 
 .scrolled .header {
-  box-shadow: var(--elevation-2) ;
+  box-shadow: var(--elevation-1) ;
 }
 
 /* Global Header on Scroll
@@ -430,12 +430,12 @@ h6 {
   .navmenu .dropdown ul {
     margin: 0;
     padding: 10px 0;
-    background: var(--background-color);
+    background: var(--surface-color);
     display: block;
     position: absolute;
     visibility: hidden;
     left: 14px;
-    top: 130%;
+    top: 200%;
     opacity: 0;
     transition: 0.3s;
     border-radius: 4px;
@@ -621,7 +621,7 @@ h6 {
 # Global Footer
 --------------------------------------------------------------*/
 .footer {
-  color: var(--heading-color);
+  color: var(--default-color);
   background-color: var(--surface-color);
   font-size: 14px;
   text-align: center;
@@ -707,6 +707,38 @@ h6 {
   font-weight: 400;
 }
 
+/* Footer CTA button customization */
+.btn-cta {
+  --cta-bg: var(--accent-color);
+  --cta-fg: var(--background-color);
+  --cta-border: var(--accent-color);
+  --cta-bg-hover: var(--accent-color);
+  --cta-fg-hover: var(--contrast-color);
+
+  color: var(--cta-fg) !important;
+  border-color: var(--cta-border) !important;
+  background: var(--cta-bg) !important;
+  border-width: 1.5px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-weight: 500;
+  transition: color .2s var(--ease-3), background .2s var(--ease-3), border-color .2s var(--ease-3), transform .2s var(--ease-3), box-shadow .2s var(--ease-3);
+}
+.btn-cta:hover {
+  color: var(--cta-fg-hover) !important;
+  background: var(--cta-bg-hover) !important;
+  border-color: var(--cta-border) !important;
+  transform: translateY(-5px);
+  box-shadow: var(--elevation-1);
+}
+.btn-cta:active {
+  transform: translateY(0);
+  box-shadow: var(--elevation-1);
+}
+.light-mode .btn-cta {
+  --cta-fg: var(--contrast-color);
+  --cta-border: var(--accent-color);
+}
 
 /*--------------------------------------------------------------
 # Preloader
@@ -1062,6 +1094,32 @@ h6 {
 }
 
 /*--------------------------------------------------------------
+# Scroll Snap (opt-in per page via .snapscroll on <body>)
+--------------------------------------------------------------*/
+html.snapscroll,
+body.snapscroll {
+  scroll-snap-type: y proximity;
+  scroll-padding-top: 80px; /* accommodate fixed header */
+}
+@media (max-width: 1199px) {
+  html.snapscroll,
+  body.snapscroll {
+    scroll-padding-top: 66px;
+  }
+}
+.snapscroll section,
+.snapscroll .section,
+.snapscroll .page-title {
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+
+/* Utility to make a block fill the viewport for reliable snapping */
+.snapscroll .snap-full {
+  min-height: 100vh;
+}
+
+/*--------------------------------------------------------------
 # Global Page Titles & Breadcrumbs
 --------------------------------------------------------------*/
 .page-title {
@@ -1155,7 +1213,7 @@ section,
 }
 
 .section-title div {
-  color: var(--heading-color);
+  color: var(--default-color);
   margin: 0;
   margin: 0;
   font-size: 28px;
@@ -1706,7 +1764,7 @@ section,
 }
 
 .skills .progress .skill {
-  color: var(--heading-color);
+  color: var(--default-color);
   padding: 0;
   margin: 0 0 6px 0;
   text-transform: uppercase;
@@ -1762,7 +1820,7 @@ section,
 }
 
 .interests .features-item h3 a {
-  color: var(--heading-color);
+  color: var(--default-color);
   transition: 0.3s;
 }
 
@@ -1774,7 +1832,7 @@ section,
 }
 
 .interests .features-item:hover h3 a {
-  color: var(--heading-color);
+  color: var(--default-color);
 }
 
 /*--------------------------------------------------------------
@@ -1878,7 +1936,7 @@ section,
 # Resume Section
 --------------------------------------------------------------*/
 .resume .resume-title {
-  color: var(--heading-color);
+  color: var(--default-color);
   font-size: 26px;
   font-weight: 700;
   margin-top: 20px;
@@ -2032,7 +2090,7 @@ section,
 }
 
 .service-details .services-list a.active {
-  color: var(--heading-color);
+  color: var(--default-color);
   font-weight: 700;
   border-color: var(--accent-color);
 }
@@ -2598,7 +2656,7 @@ section,
   text-decoration: underline;
 }
 .project-description {
-  color: var(--secondary-color);
+  color: var(--default-color);
   font: var(--text-body-font); /* controls size and line-height */
 }
 .section-gap-80 > * + * {
@@ -2710,6 +2768,7 @@ section,
 }
 
 .my-section h2 {
+  font-family: Satoshi-Medium;
   font-size: 2.5rem;
   font-weight: 600;
   color: var(--default-color);
@@ -2759,7 +2818,8 @@ section,
 --------------------------------------------------------------*/
 
 .navbar-right {
-  gap: 0px;
+  gap: 16px;
+  align-items: center;
 }
 
 /* Desktop: Align theme toggle properly */

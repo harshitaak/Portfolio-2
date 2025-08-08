@@ -387,3 +387,84 @@ setTimeout(function() {
   console.log('Delayed initialization of draw line effect...');
   initDrawRandomUnderline();
 }, 100);
+
+// Smooth snap scroll enhancement (applies only on pages with .snapscroll)
+document.addEventListener('DOMContentLoaded', function() {
+  const hasSnapScroll = document.documentElement.classList.contains('snapscroll') || document.body.classList.contains('snapscroll');
+  if (!hasSnapScroll) return;
+
+  let isAnimating = false;
+  let scrollTimeoutId = null;
+
+  const easeOutCubic = (t) => 1 - Math.pow(1 - t, 3);
+
+  function getScrollPaddingTop() {
+    const rootStyle = getComputedStyle(document.documentElement);
+    const bodyStyle = getComputedStyle(document.body);
+    const rootPad = parseInt(rootStyle.scrollPaddingTop || '0', 10);
+    const bodyPad = parseInt(bodyStyle.scrollPaddingTop || '0', 10);
+    return (Number.isNaN(rootPad) ? 0 : rootPad) || (Number.isNaN(bodyPad) ? 0 : bodyPad) || 80;
+  }
+
+  function animateScrollTo(targetY, durationMs) {
+    const startY = window.scrollY;
+    const delta = targetY - startY;
+    if (Math.abs(delta) < 1) return;
+    const duration = Math.max(250, Math.min(durationMs || 650, 1200));
+    isAnimating = true;
+    const startTs = performance.now();
+    function step(now) {
+      const t = Math.min((now - startTs) / duration, 1);
+      const eased = easeOutCubic(t);
+      window.scrollTo(0, startY + delta * eased);
+      if (t < 1) {
+        requestAnimationFrame(step);
+      } else {
+        isAnimating = false;
+      }
+    }
+    requestAnimationFrame(step);
+  }
+
+  function getSnapTargets() {
+    // Match the CSS snap targets
+    return Array.from(document.querySelectorAll('.page-title, section, .section'))
+      .filter((el) => el.offsetParent !== null);
+  }
+
+  function findNearestSnapY() {
+    const y = window.scrollY;
+    const paddingTop = getScrollPaddingTop();
+    let nearestY = null;
+    let nearestDist = Infinity;
+    for (const el of getSnapTargets()) {
+      const elTop = y + el.getBoundingClientRect().top;
+      const targetY = Math.max(0, Math.round(elTop - paddingTop));
+      const dist = Math.abs(targetY - y);
+      if (dist < nearestDist) {
+        nearestDist = dist;
+        nearestY = targetY;
+      }
+    }
+    return nearestY;
+  }
+
+  function scheduleSnap() {
+    if (isAnimating) return;
+    if (scrollTimeoutId) clearTimeout(scrollTimeoutId);
+    scrollTimeoutId = setTimeout(() => {
+      // Avoid snapping while user is interacting with carousels (heuristic)
+      const activeEl = document.activeElement;
+      if (activeEl && (activeEl.closest('.swiper') || activeEl.closest('[contenteditable="true"]'))) return;
+      const targetY = findNearestSnapY();
+      if (targetY == null) return;
+      animateScrollTo(targetY, 650);
+    }, 120);
+  }
+
+  // Listeners
+  window.addEventListener('scroll', scheduleSnap, { passive: true });
+  window.addEventListener('wheel', () => { if (scrollTimeoutId) clearTimeout(scrollTimeoutId); }, { passive: true });
+  window.addEventListener('touchstart', () => { if (scrollTimeoutId) clearTimeout(scrollTimeoutId); }, { passive: true });
+  window.addEventListener('touchend', scheduleSnap, { passive: true });
+});
