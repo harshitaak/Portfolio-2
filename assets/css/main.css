@@ -42,13 +42,17 @@
 
 /* Global Colors - The following color variables are used throughout the website. Updating them here will change the color scheme of the entire website */
 :root { 
-  --background-color: #222222; /* Background color for the entire website, including individual sections */
-  --default-color: #fcfcfc; /* Default color used for the majority of the text content across the entire website */
-  --secondary-color: #afafaf;
-  --accent-color: #1c98d0; /* Accent color that represents your brand on the website. It's used for buttons, links, and other elements that need to stand out */
-  --surface-color: #393939; /* The surface color is used as a background of boxed elements within sections, such as cards, icon boxes, or other elements that require a visual separation from the global background. */
-  --contrast-color: #000000; /* Contrast color for text, ensuring readability against backgrounds of accent, heading, or default colors. */
-  --shadow-color: #000000;
+  /* Core palette */
+  --paper: #252525;  /* background surfaces */
+  --ink: #e3e3e3;    /* primary text */
+  --color: #94c5e4;  /* accent/brand */
+  --shadow-color: #000000; /* keep as is */
+
+  /* Compatibility aliases (will be phased out) */
+  --background-color: var(--paper);
+  --default-color: var(--ink);
+  --accent-color: var(--color);
+  --surface-color: var(--paper);
 }
 
 /* Smooth transition for color changes */
@@ -62,42 +66,21 @@ body *, body *::before, body *::after {
 
 /* Light mode color variables */
 .light-mode {
-  --background-color: #fcfcfc;
-  --default-color: #222222;
-  --secondary-color: #a1a1a1;
-  --accent-color: #1c98d0;
-  --surface-color: #f5f5f5;
-  --contrast-color: #ffffff;
+  /* Core palette */
+  --paper: #fcfcfc;
+  --ink: #181617;
+  --color: #94c5e4;
   --shadow-color: #000000;
+
+  /* Compatibility aliases */
+  --background-color: var(--paper);
+  --default-color: var(--ink);
+  --accent-color: var(--color);
+  --surface-color: var(--paper);
 }
 
-/* Nav Menu Colors - The following color variables are used specifically for the navigation menu. They are separate from the global colors to allow for more customization options */
-:root {
-  --nav-color:var(--default-color);  /* The default color of the main navmenu links */
-  --nav-hover-color: var(--accent-color); /* Applied to main navmenu links when they are hovered over or active */
-  --nav-mobile-background-color: var(--background-color); /* Used as the background color for mobile navigation menu */
-  --nav-dropdown-background-color: var(--background-color); /* Used as the background color for dropdown items that appear when hovering over primary navigation items */
-  --nav-dropdown-color: var(--default-color); /* Used for navigation links of the dropdown items in the navigation menu. */
-  --nav-dropdown-hover-color: var(--accent-color); /* Similar to --nav-hover-color, this color is applied to dropdown navigation links when they are hovered over. */
-}
 
-/* Color Presets - These classes override global colors when applied to any section or element, providing reuse of the same color scheme. */
 
-/* .light-background {
-  --background-color: var(--default-color);
-  --surface-color: var(--surface-color);
-  --default-color: var(--default-color);
-  --heading-color: var(--heading-color);
-  --contrast-color: var(--shadow-color);
-}
-
-.dark-background {
-  --background-color: var(--background-color);
-  --default-color: var(--default-color);
-  --heading-color: var(--heading-color);
-  --surface-color: var(--surface-color);
-  --contrast-color: var(--shadow-color);
-} */
 
 :root {
   /* ...existing variables... */
@@ -127,15 +110,15 @@ body *, body *::before, body *::after {
 
 .dots-bg {
   position: fixed;
-  z-index: 1;
+  z-index: 0;
   inset: 0;
   height: 100%;
   width: 100%;
-  background: radial-gradient(circle, var(--secondary-color) 1px, transparent 1px);
+  background: radial-gradient(circle, color-mix(in srgb, var(--ink), var(--paper) 50%) 1px, transparent 1px);
   background-size: 16px 16px;
   /* Optional: mask for a vignette/fade effect */
-  -webkit-mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, transparent 70%, #000 100%);
-  mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, transparent 70%, #000 100%);
+  -webkit-mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, #000 80%, transparent 100%);
+  mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, #000 80%, transparent 100%);
   opacity: 0.6;
 }
 
@@ -621,8 +604,8 @@ h6 {
 # Global Footer
 --------------------------------------------------------------*/
 .footer {
-  color: var(--default-color);
-  background-color: var(--surface-color);
+  color: var(--ink);
+  background-color: var(--paper);
   font-size: 14px;
   text-align: center;
   /* padding: 30px 0; */
@@ -656,7 +639,7 @@ h6 {
   align-items: center;
   justify-content: center;
 
-  color: var(--secondary-color);
+  color: var(--color);
   line-height: 1;
   margin: 0 4px;
   border-radius: 50%;
@@ -667,13 +650,14 @@ h6 {
 }
 
 .footer .social-links a:hover {
-  color: var(--accent-color);
+  color: var(--color);
   text-decoration: none;
+  cursor: pointer;
 }
 
 .footer .copyright {
   padding-top: 4;
-  border-top: 1px solid color-mix(in srgb, var(--default-color), transparent 90%);
+  border-top: 1px solid color-mix(in srgb, var(--ink), transparent 90%);
 }
 
 .footer .credits {
@@ -685,14 +669,14 @@ h6 {
 .minimal-footer .brand,
 .minimal-footer .brand .logo-svg,
 .minimal-footer .social-links a {
-  color: var(--secondary-color) !important;
+  color: var(--color) !important;
   margin: 0 !important;
 }
 .minimal-footer .text-muted {
-  color: var(--secondary-color) !important;
+  color: color-mix(in srgb, var(--ink), var(--paper) 50%) !important;
 }
 .minimal-footer .social-links a:hover {
-  color: var(--accent-color) !important;
+  color: var(--color) !important;
   cursor: pointer;
 }
 
@@ -705,15 +689,16 @@ h6 {
 .minimal-footer .brand .small {
   font-size: 1.5rem; /* larger than Bootstrap .small */
   font-weight: 400;
+  color: var(--ink) !important;
 }
 
 /* Footer CTA button customization */
 .btn-cta {
-  --cta-bg: var(--accent-color);
-  --cta-fg: var(--background-color);
-  --cta-border: var(--accent-color);
-  --cta-bg-hover: var(--accent-color);
-  --cta-fg-hover: var(--contrast-color);
+  --cta-bg: var(--color);
+  --cta-fg: var(--paper);
+  /* --cta-border: var(--color); */
+  --cta-bg-hover: var(--color);
+  --cta-fg-hover: var(--paper);
 
   color: var(--cta-fg) !important;
   border-color: var(--cta-border) !important;
@@ -736,8 +721,8 @@ h6 {
   box-shadow: var(--elevation-1);
 }
 .light-mode .btn-cta {
-  --cta-fg: var(--contrast-color);
-  --cta-border: var(--accent-color);
+  --cta-fg: var(--paper);
+  --cta-border: var(--color);
 }
 
 /*--------------------------------------------------------------
@@ -748,7 +733,7 @@ h6 {
   inset: 0;
   z-index: 999999;
   overflow: hidden;
-  background: var(--background-color);
+  background: var(--paper);
   transition: all 0.6s ease-out;
 }
 
@@ -758,7 +743,7 @@ h6 {
   top: calc(50% - 30px);
   left: calc(50% - 30px);
   border: 6px solid #ffffff;
-  border-color: var(--accent-color) transparent var(--accent-color) transparent;
+  border-color: var(--color) transparent var(--color) transparent;
   border-radius: 50%;
   width: 60px;
   height: 60px;
@@ -1066,13 +1051,13 @@ h6 {
 
 .scroll-top i {
   font-size: 24px;
-  color: var(--contrast-color);
+  color: var(--ink);
   line-height: 0;
 }
 
 .scroll-top:hover {
   background-color: var(--accent-color);
-  color: var(--contrast-color);
+  color: var(--ink);
   transform: translateY(-5px);
   transition: 0.3s;
   box-shadow: var(--elevation-2);
@@ -1287,7 +1272,7 @@ section,
 
 .hero .social-links a {
   /* background-color: color-mix(in srgb, var(--default-color), transparent 90%); */
-   color: var(--secondary-color);
+   color: color-mix(in srgb, var(--ink), var(--paper) 50%);
    font-size: 24px;
   width: 24px;
   height: 24px;
@@ -1925,7 +1910,7 @@ section,
   height: 12px;
   background-color: var(--background-color);
   opacity: 1;
-  border: 1px solid var(--secondary-color);
+  border: 1px solid color-mix(in srgb, var(--ink), var(--paper) 50%);
 }
 
 .testimonials .swiper-pagination .swiper-pagination-bullet-active {
@@ -2017,7 +2002,7 @@ section,
 }
 
 .services .service-item .icon i {
-  color: var(--contrast-color);
+  color: var(--ink);
   font-size: 28px;
   transition: ease-in-out 0.3s;
 }
@@ -2066,7 +2051,7 @@ section,
 
 .services .service-item:hover h3,
 .services .service-item:hover p {
-  color: var(--contrast-color);
+  color: var(--ink);
 }
 
 /*--------------------------------------------------------------
@@ -2146,7 +2131,7 @@ section,
 .portfolio .portfolio-filters .material-icons {
   font-size: 20px;
   vertical-align: middle;
-  color: var(--secondary-color);
+  color: color-mix(in srgb, var(--ink), var(--paper) 50%);
 }
 
 .portfolio .portfolio-filters li:hover .material-icons {
@@ -2154,7 +2139,7 @@ section,
 }
 
 .portfolio .portfolio-filters li.filter-active .material-icons {
-  color: var(--contrast-color);
+  color: var(--ink);
 }
 
 .portfolio .portfolio-filters {
@@ -2202,7 +2187,7 @@ section,
 }
 .portfolio .portfolio-filters li.filter-active {
   background: var(--accent-color);
-  color: var(--contrast-color);
+  color: var(--ink);
 }
 
 .portfolio .portfolio-filters li:first-child {
@@ -2251,7 +2236,7 @@ section,
   font-size: 14px;
   padding: 5px 10px;
   font-weight: 400;
-  color: var(--contrast-color);
+  color: var(--ink);
   border-radius: 4px;
   display: inline-block;
   background-color: var(--accent-color);
@@ -2368,7 +2353,7 @@ section,
 }
 
 .contact .info-item .icon {
-  color: var(--contrast-color);
+  color: var(--ink);
   background-color: var(--accent-color);
   width: 56px;
   height: 56px;
@@ -2443,7 +2428,7 @@ section,
 }
 
 .contact .php-email-form button[type=submit] {
-  color: var(--contrast-color);
+  color: var(--ink);
   background: var(--accent-color);
   border: 0;
   padding: 10px 30px;
@@ -2885,7 +2870,7 @@ section,
 
 /* Icon colors */
 .sun-and-moon > :is(.moon, .sun) {
-  fill: var(--secondary-color);
+  fill: color-mix(in srgb, var(--ink), var(--paper) 50%);
   transition: fill 0.3s var(--ease-3);
 }
 
@@ -2894,7 +2879,7 @@ section,
 }
 
 .sun-and-moon > .sun-beams {
-  stroke: var(--secondary-color);
+  stroke: color-mix(in srgb, var(--ink), var(--paper) 50%);
   stroke-width: 2px;
   transition: stroke 0.3s var(--ease-3);
 }
