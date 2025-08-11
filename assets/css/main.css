@@ -1,3 +1,25 @@
+
+/* Doodles: 3-column CSS masonry */
+#doodles-grid {
+  column-count: 3;
+  column-gap: 16px;
+}
+#doodles-grid .photo-gallery-item {
+  break-inside: avoid;
+  margin: 0 0 16px;
+  display: block;
+}
+#doodles-grid img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+@media (max-width: 991.98px) {
+  #doodles-grid { column-count: 2; }
+}
+@media (max-width: 575.98px) {
+  #doodles-grid { column-count: 1; }
+}
 /**
 * Template Name: Personal
 * Template URL: https://bootstrapmade.com/personal-free-resume-bootstrap-template/
@@ -33,10 +55,10 @@
   --text-subtitle-font: 500 1.125rem/1.5 Satoshi-Regular;
 
   /* Body Text (For all default paragraphs) */
-  --text-body-font: 400 1.25rem/1.6 Satoshi-Regular;
+  --text-body-font: 400 1.25rem/1.6 Satoshi-Light;
 
   /* Caption Text (For smaller, secondary information) */
-  --text-caption-font: 400 0.875rem/1.5 Satoshi-Regular;
+  --text-caption-font: 400 0.875rem/1.5 Satoshi-Light;
 }
 
 
@@ -79,7 +101,12 @@ body *, body *::before, body *::after {
   --surface-color: var(--paper);
 }
 
-
+/* Responsive body text for project intros */
+.project-intro {
+  color: var(--ink);
+  font: var(--text-body-font); /* weight size/line-height family */
+  font-size: clamp(16px, 1vw + 12px, 24px);
+}
 
 
 :root {
@@ -110,7 +137,7 @@ body *, body *::before, body *::after {
 
 .dots-bg {
   position: fixed;
-  z-index: 0;
+  z-index: -2;
   inset: 0;
   height: 100%;
   width: 100%;
@@ -138,14 +165,16 @@ body {
 
 
 a {
-  color: var(--accent-color);
+  color: var(--color);
   text-decoration: none;
   transition: 0.3s;
+  
 }
 
 a:hover {
-  color: color-mix(in srgb, var(--accent-color), transparent 25%);
+  color: var(--color);
   text-decoration: none;
+  cursor: pointer;
 }
 
 h1,
@@ -155,60 +184,10 @@ h4,
 h5,
 h6 {
   color: var(--default-color);
-  font-family: Satoshi-Medium;
+  font-family: var(--text-headline-font);
 }
 
-/* PHP Email Form Messages
-------------------------------*/
-.php-email-form .error-message {
-  display: none;
-  background: #df1529;
-  color: #ffffff;
-  text-align: left;
-  padding: 15px;
-  margin-bottom: 24px;
-  font-weight: 600;
-}
 
-.php-email-form .sent-message {
-  display: none;
-  color: #ffffff;
-  background: #059652;
-  text-align: center;
-  padding: 15px;
-  margin-bottom: 24px;
-  font-weight: 600;
-}
-
-.php-email-form .loading {
-  display: none;
-  background: var(--surface-color);
-  text-align: center;
-  padding: 15px;
-  margin-bottom: 24px;
-}
-
-.php-email-form .loading:before {
-  content: "";
-  display: inline-block;
-  border-radius: 50%;
-  width: 24px;
-  height: 24px;
-  margin: 0 10px -6px 0;
-  border: 3px solid var(--accent-color);
-  border-top-color: var(--surface-color);
-  animation: php-email-form-loading 1s linear infinite;
-}
-
-@keyframes php-email-form-loading {
-  0% {
-    transform: rotate(0deg);
-  }
-
-  100% {
-    transform: rotate(360deg);
-  }
-}
 /*--------------------------------------------------------------
 # Responsive Image Grid
 --------------------------------------------------------------*/
@@ -223,72 +202,16 @@ h6 {
   margin-bottom: 1rem;
 }
 
-.photo-gallery{
-  display: flex;
-  gap: 16px;
-}
-
-.image-column{
-  display: flex;
-  width: auto;
-  flex-direction: column;
-  gap: 16px;
-} 
-
-
-.photo-gallery-item img{
-  width: 100%;
-  height: 100%;
-  flex-grow: 1;
-  flex-shrink: 1;
-  flex-wrap: wrap;
-  flex-basis: 300px;
-  border-radius: 8px;
-  object-fit: cover;
-} 
-
-/* 2 columns for small laptops/tablets */
-@media (max-width: 992px) and (min-width: 769px) {
-  .photo-gallery {
-    flex-direction: row;
-    gap: 16px;
-  }
-  .image-column {
-    width: 50%;
-    display: flex;
-  }
-  .photo-gallery > .image-column {
-    flex: 1 1 50%;
-  }
-  .photo-gallery > .image-column:nth-child(n+3) {
-    display: none !important;
-  }
-}
-
-@media (max-width: 768px) {
-  .photo-gallery {
-    flex-direction: column;
-    gap: 0;
-  }
-  .image-column {
-    width: 100%;
-    flex-direction: column;
-    gap: 0;
-  }
-  .photo-gallery-item {
-    width: 100%;
-    margin-bottom: 16px;
-  }
-}
+/* Legacy .photo-gallery and .image-column styles removed in favor of #doodles-grid CSS masonry */
 
 /*--------------------------------------------------------------
 # Global Header
 --------------------------------------------------------------*/
 .header {
   --background-color:var(--surface-color);
-  color: var(--default-color);
-  box-shadow: var(--elevation-2) ;
-  background-color: var(--background-color);
+  color: var(--ink);
+  box-shadow: var(--elevation-1) ;
+  background-color: var(--paper);
   padding: 0.5rem 0;
   transition: all 0.5s;
   align-content: bottom;
@@ -306,7 +229,7 @@ h6 {
   margin-right: 8px;
   display: block;
   object-fit: contain;
-  color: var(--default-color);
+  color: var(--ink);
   fill: currentColor;
 }
 
@@ -1092,11 +1015,22 @@ body.snapscroll {
     scroll-padding-top: 66px;
   }
 }
+
+/* Center snap helper: remove top padding when header overlaps content height */
+body.snapscroll.center-snap {
+  scroll-padding-top: 0; /* let center alignment be exact */
+}
+html.snapscroll.center-snap {
+  scroll-padding-top: 0; /* ensure root scroller also has no offset */
+}
 .snapscroll section,
 .snapscroll .section,
 .snapscroll .page-title {
   scroll-snap-align: start;
   scroll-snap-stop: always;
+  /* Add vertical spacing so snapped sections don't feel cramped */
+  margin-top: 12vh;
+  margin-bottom: 12vh;
 }
 
 /* Utility to make a block fill the viewport for reliable snapping */
@@ -1104,18 +1038,26 @@ body.snapscroll {
   min-height: 100vh;
 }
 
-/*--------------------------------------------------------------
-# Global Page Titles & Breadcrumbs
+/* Center snap alignment for print-inspired media/text sections */
+.snapscroll .my-section {
+  scroll-snap-align: center;
+  scroll-snap-stop: always;
+  /* With 80vh section height, use 20vh margins so only one section is visible */
+  margin-top: 20vh;
+  margin-bottom: 20vh;
+  padding-top: 0;
+  padding-bottom: 0;
+}
 --------------------------------------------------------------*/
 .page-title {
-  color: var(--default-color);
-  background-color: var(--background-color);
+  color: var(--ink);
+  /* background-color: var(--background-color); */
   position: relative;
 }
 
 .page-title .heading {
-  padding: 160px 0 80px 0;
-  border-top: 1px solid color-mix(in srgb, var(--default-color), transparent 90%);
+  padding: 80px 0 80px 0;
+  /* border-top: 1px solid color-mix(in srgb, var(--default-color), transparent 90%); */
 }
 
 .page-title .heading h1 {
@@ -1139,6 +1081,7 @@ body.snapscroll {
 
 .page-title nav ol li+li {
   padding-left: 10px;
+  color: var(--ink);
 }
 
 .page-title nav ol li+li::before {
@@ -1154,7 +1097,7 @@ body.snapscroll {
 section,
 .section {
   color: var(--default-color);
-  background-color: var(--background-color);
+  /* background-color: var(--background-color); */
   padding: 60px 0;
   scroll-margin-top: 100px;
   overflow: clip;
@@ -2139,7 +2082,7 @@ section,
 }
 
 .portfolio .portfolio-filters li.filter-active .material-icons {
-  color: var(--ink);
+  color: var(--paper);
 }
 
 .portfolio .portfolio-filters {
@@ -2187,7 +2130,7 @@ section,
 }
 .portfolio .portfolio-filters li.filter-active {
   background: var(--accent-color);
-  color: var(--ink);
+  color: var(--paper);
 }
 
 .portfolio .portfolio-filters li:first-child {
@@ -2226,6 +2169,7 @@ section,
   /* border-radius: 16px; */
   background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.8) 100%);
   box-shadow: var(--elevation-1);
+  cursor: pointer;
 }
 
 .portfolio .portfolio-content .portfolio-info a {
@@ -2236,10 +2180,10 @@ section,
   font-size: 14px;
   padding: 5px 10px;
   font-weight: 400;
-  color: var(--ink);
+  color: var(--paper);
   border-radius: 4px;
   display: inline-block;
-  background-color: var(--accent-color);
+  background-color: var(--color);
 }
 
 .portfolio .portfolio-content .portfolio-info p {
@@ -2251,7 +2195,7 @@ section,
   right: 0;
   font-size: 16px;
   font-weight: 600;
-  color: #ffffff;
+  color: var(--ink);
 }
 
 .po
@@ -2263,6 +2207,7 @@ section,
   opacity: 1;
   box-shadow: var(--elevation-2);
   transform: translateY(-5px);
+  cursor: pointer;
 }
 
 .portfolio .portfolio-content:hover img {
@@ -2440,38 +2385,7 @@ section,
   background: color-mix(in srgb, var(--accent-color), transparent 20%);
 }
 
-.my-carousel .swiper-button-next,
-.my-carousel .swiper-button-prev {
-  background: color-mix(in srgb, var(--background-color), transparent 50%);
-  border-radius: 50%;
-  width: 36px;
-  height: 36px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  /* box-shadow: 0 2px 8px rgba(0,0,0,0.08); */
-}
-.my-carousel .swiper-button-next:after,
-.my-carousel .swiper-button-prev:after {
-  color: var(--default-color);
-  font-size: 1.8rem;
-}
-
-.my-carousel .swiper-button-next,
-.my-carousel .swiper-button-prev {
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.2s;
-}
-.my-carousel-section:hover .swiper-button-next,
-.my-carousel-section:hover .swiper-button-prev {
-  opacity: 1;
-  pointer-events: auto;
-}
-.my-carousel .swiper-button-next,
-.my-carousel .swiper-button-prev {
-  padding: 4px;
-}
+/* Purged default Swiper arrow styling; section carousels use .icon-button */
 .my-carousel .swiper-pagination {
   position: static;
   margin-top: 1.5rem;
@@ -2517,22 +2431,7 @@ section,
   display: block;
 }
 
-.my-carousel .swiper-button-next,
-.my-carousel .swiper-button-prev {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 2;
-  padding: 4px;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.2s;
-}
-.my-carousel-section:hover .swiper-button-next,
-.my-carousel-section:hover .swiper-button-prev {
-  opacity: 1;
-  pointer-events: auto;
-}
+/* Purged positioning for default Swiper arrows */
 
 .my-carousel .swiper-button-prev {
   left: 8px;
@@ -2567,16 +2466,11 @@ section,
 }
 .my-carousel .swiper-pagination-bullet-active,
 .portfolio-details-slider .swiper-pagination-bullet-active {
-  background: var(--accent-color) !important;
+  background: var(--color) !important;
 }
 
-/* Google Material Symbols Outlined */
-@font-face {
-  font-family: 'Material Symbols Outlined';
-  font-style: normal;
-  font-weight: 400;
-  src: url('https://fonts.gstatic.com/s/materialsymbolsoutlined/v164/sylfa-1.ttf') format('truetype');
-}
+/* Google Material Symbols Outlined
+   The font is linked in page <head>; keep only the utility class here. */
 .material-symbols-outlined {
   font-family: 'Material Symbols Outlined';
   font-weight: normal;
@@ -2591,6 +2485,7 @@ section,
   /* -webkit-font-feature-settings: 'roboto'; */
   -webkit-font-smoothing: antialiased;
   color: inherit;
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
 }
 
 /* Material Design Icon Button (from https://m2.material.io/develop/web/components/buttons/icon-buttons) */
@@ -2617,6 +2512,7 @@ section,
   background: color-mix(in srgb, var(--shadow-color), transparent 80%);
   box-shadow: var(--elevation-1);
   transition: background 0.2s, box-shadow 0.2s;
+  cursor: pointer;
 }
 .icon-button:active {
   background: color-mix(in srgb, var(--shadow-color), transparent 80%);
@@ -2693,25 +2589,23 @@ section,
 /*--------------------------------------------------------------
 # My Section (media + text)
 --------------------------------------------------------------*/
+/* Reverse is now the default layout */
 .my-section {
-  padding: 0; /* allow media to reach container edges */
+  margin-top: 10vh ;
+  margin-bottom: 10vh;
   max-width: 100%;
-  height: auto; /* flexible height */
-  background: var(--surface-color);
-  border-radius: 16px;
-  box-shadow: var(--elevation-1);
+  height: auto; /* let media aspect-ratio drive height */
+  /* Default aspect ratio for media; override via inline style or modifier if needed */
+  --media-aspect-ratio: 16 / 9;
+  
   display: flex;
-  align-items: center; /* center vertically */
-  /* justify-content: center; center horizontally */
+  flex-direction: row-reverse; /* default reversed */
+  align-items: stretch; /* let media define height and text match it */
   gap: 32px;
   transition: 0.3s ease-in-out;
 }
 
-.my-section:hover {
-  box-shadow: var(--elevation-2);
-  transform: translateY(-5px);
-  transition: 0.3s;
-}
+/* No hover elevation for print-inspired flat look */
 
 .my-section__media,
 .my-section__text {
@@ -2720,18 +2614,40 @@ section,
 }
 
 .my-section__media {
-  flex: 1 1 60%; /* allow shrink to accommodate gap */
-  height: auto; /* let image define height */
-  border-radius: 12px;
+  flex: 1 1 70%;
+  aspect-ratio: var(--media-aspect-ratio);
+  height: auto; /* compute from width and aspect ratio */
+  border-radius: 0;
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
+/* Carousel inside section media should fill the same box as static image */
+.my-section__carousel {
+  width: 100%;
+  height: 100%;
+}
+.my-section__carousel .swiper-wrapper,
+.my-section__carousel .swiper-slide {
+  width: 100%;
+  height: 100%;
+}
+/* Section carousel navigation (uses .icon-button) */
+.my-section__carousel .my-section-prev,
+.my-section__carousel .my-section-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+}
+.my-section__carousel .my-section-prev { left: 16px; right: auto; }
+.my-section__carousel .my-section-next { right: 16px; left: auto; }
+
 .my-section__image {
   width: 100%;
-  height: auto; /* natural height -> controls section height */
+  height: 100%;
   object-fit: cover;
   object-position: center top;
   display: block;
@@ -2739,37 +2655,43 @@ section,
 
 .my-section__text {
   text-align: left;
-  padding: 32px; /* slightly denser spacing */
+  padding: 0; /* remove padding */
   display: flex;
   flex-direction: column;
-  align-items: flex-start; /* valid flex alignment */
-  /* justify-content: flex-start; valid flex alignment */
-  flex: 1 1 40%; /* allow shrink to accommodate gap */
+  justify-content: flex-end; /* push content to bottom */
+  align-items: flex-start;
+  align-self: stretch; /* match media height */
+  flex: 1 1 30%; /* reduced text width to give media more space */
 }
 
-/* Reverse variant */
-.my-section--reverse {
-  flex-direction: row-reverse;
-}
+/* Reverse variant class no longer needed; keep for backward compatibility */
+.my-section--reverse { flex-direction: row-reverse; }
 
 .my-section h2 {
-  font-family: Satoshi-Medium;
+  font-family: var(--heading-font);
   font-size: 2.5rem;
   font-weight: 600;
   color: var(--default-color);
-  margin-bottom: 1rem;
+  margin-bottom: 0; /* remove gap below title */
 }
 
-.my-section:hover {
-  box-shadow: var(--elevation-2);
-  transform: translateY(-5px);
-  transition: 0.3s;
+/* Project description inside section */
+.my-section .project-description {
+  margin: 0; /* tight to title */
+  color: var(--ink);
 }
+
+/* Override utility and component spacing inside print-style section */
+.my-section .project-title,
+.my-section .project-title.mb-3 {
+  margin-bottom: 0 !important;
+}
+
 
 @media (max-width: 1200px) {
   .my-section {
-    flex-direction: column;
-    height: auto; /* let content define height on small screens */
+    flex-direction: column; /* stack on mobile */
+    height: auto; /* let aspect-ratio drive height on small screens */
   }
 
   .my-section__media,
@@ -2782,21 +2704,18 @@ section,
   .my-section__media {
     width: 100%;
     height: auto;
+    aspect-ratio: var(--media-aspect-ratio); /* lock visual ratio on small screens */
   }
 
-  .my-section--reverse {
-    flex-direction: column-reverse; /* reverse order on mobile */
-  }
+  /* mobile stays stacked regardless of reverse */
 
   .my-section__text {
-    padding: 24px;
+    padding: 0;
+    margin-top: auto; /* place text block at bottom when stacked */
   }
 }
 
-/* .my-section:hover img {
-  transform: scale(1.05);
-  transition: 0.3s;
-} */
+
 
 /*--------------------------------------------------------------
 # Navbar Right Container

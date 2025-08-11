@@ -163,10 +163,47 @@
 
   /**
    * Initiate glightbox
+   * For Doodles (#doodles-grid), override ordering so next follows row-wise visual order
    */
-  const glightbox = GLightbox({
-    selector: '.glightbox'
-  });
+  let glightbox = GLightbox({ selector: '.glightbox' });
+
+  (function setupDoodlesLightbox() {
+    const grid = document.getElementById('doodles-grid');
+    if (!grid || typeof GLightbox !== 'function') return;
+
+    // Destroy generic instance to avoid duplicate handlers on Doodles page
+    if (glightbox && typeof glightbox.destroy === 'function') {
+      glightbox.destroy();
+      glightbox = null;
+    }
+
+    function computeSorted() {
+      const anchors = Array.from(grid.querySelectorAll('.glightbox'));
+      const tolerance = 24; // px threshold to treat same row
+      const items = anchors.map(a => ({ a, rect: a.getBoundingClientRect() }));
+      items.sort((i1, i2) => {
+        const dy = i1.rect.top - i2.rect.top;
+        if (Math.abs(dy) > tolerance) return dy;
+        return i1.rect.left - i2.rect.left;
+      });
+      const elements = items.map(i => ({ href: i.a.getAttribute('href'), type: 'image' }));
+      const orderAnchors = items.map(i => i.a);
+      return { elements, orderAnchors };
+    }
+
+    let sorted = null;
+    let doodlesLightbox = null;
+
+    grid.addEventListener('click', function (e) {
+      const link = e.target.closest('a.glightbox');
+      if (!link || !grid.contains(link)) return;
+      e.preventDefault();
+      if (!sorted) sorted = computeSorted();
+      if (!doodlesLightbox) doodlesLightbox = GLightbox({ elements: sorted.elements });
+      const index = Math.max(0, sorted.orderAnchors.indexOf(link));
+      doodlesLightbox.openAt(index);
+    });
+  })();
 
   /**
    * Init isotope layout and filters

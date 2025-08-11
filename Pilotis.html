@@ -37,7 +37,7 @@
   ======================================================== -->
 </head>
 
-<body class="portfolio-page snapscroll">
+<body class="portfolio-page snapscroll center-snap">
   <div class="dots-bg" style="position: fixed; inset: 0; pointer-events: none;"></div>
 
   <header id="header" class="header d-flex align-items-center fixed-top">
@@ -90,7 +90,7 @@
           <div class="row d-flex justify-content-center text-center">
             <div class="col-lg-8">
               <h1>Pilotis</h1>
-              <p class="mb-0" style="color: var(--ink);">The project started as an attempt of SPIN to integrate crafts into their nordic aesthetic and industrial process. 'Pilotis' was the resultant furniture range after a long process and 5 months of time. This was also my graduation project.</p>
+              <p class="project-intro">The project started as an attempt of SPIN to integrate crafts into their nordic aesthetic and industrial process. 'Pilotis' was the resultant furniture range after a long process and 5 months of time. This was also my graduation project.</p>
             </div>
           </div>
         </div>
@@ -110,7 +110,7 @@
 
 
     <!-- Project Sections Start -->
-    <div class="container section-gap-80" style="scroll-snap-align: start;">
+    <div class="container section-gap-80">
 
 
       <!-- Image and Text Section -->
@@ -121,15 +121,36 @@
           </div>
         </div>
         <div class="col-lg-6">
-          <h2 class="project-title mb-3"><a href="https://www.madewithspin.com/" target="_blank" rel="noopener" style="color: var(--color);">SPIN</a></h2>
+          <h2 class="project-title mb-3"><a href="https://www.madewithspin.com/" target="_blank" rel="noopener">SPIN</a></h2>
           <p class="project-description" style="color: var(--ink);"> is a furniture brand in Delhi which follows Nordic and Japanese design philosophies.</p>
         </div>
       </section>
 
-      <!-- Image and Text Section -->
-      <section class="my-section">
+      <!-- Image and Text Section (reverse default) -->
+      <section class="my-section my-section--reverse">
         <div class="my-section__media">
-          <img class="my-section__image" src="assets/img/Pilotis/unnamed.png" alt="SPIN Portfolio">
+          <div class="my-section__carousel swiper init-swiper">
+            <script type="application/json" class="swiper-config">
+              {
+                "loop": true,
+                "speed": 600,
+                "autoplay": { "delay": 3000 },
+                "pagination": { "el": ".swiper-pagination", "clickable": true },
+                "navigation": { "nextEl": ".my-section-next", "prevEl": ".my-section-prev" }
+              }
+            </script>
+            <div class="swiper-wrapper">
+              <div class="swiper-slide"><img class="my-section__image" src="assets/img/Pilotis/unnamed.png" alt="Slide 1"></div>
+              <div class="swiper-slide"><img class="my-section__image" src="assets/img/Pilotis/unnamed.png" alt="Slide 2"></div>
+            </div>
+            <button class="my-section-prev icon-button" aria-label="Previous" type="button">
+              <span class="material-symbols-outlined">chevron_left</span>
+            </button>
+            <button class="my-section-next icon-button" aria-label="Next" type="button">
+              <span class="material-symbols-outlined">chevron_right</span>
+            </button>
+            <div class="swiper-pagination"></div>
+          </div>
         </div>
         <div class="my-section__text">
           <h2 class="project-title mb-3">SPIN</h2>
@@ -143,7 +164,7 @@
           <img class="my-section__image" src="assets/img/Pilotis/unnamed.png" alt="SPIN Portfolio">
         </div>
         <div class="my-section__text">
-          <h2 class="project-title mb-3"><a href="https://www.madewithspin.com/" target="_blank" rel="noopener" style="color: var(--color);">SPIN</a></h2>
+          <h2 class="project-title mb-3"><a href="https://www.madewithspin.com/" target="_blank" rel="noopener">SPIN</a></h2>
           <p class="project-description" style="color: var(--ink);">is a furniture brand in Delhi which follows Nordic and Japanese design philosophies.</p>
         </div>
       </section>
