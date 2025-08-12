@@ -1,0 +1,74 @@
+:root{
+  /* Colors from Figma */
+  --background: #f8fafc; /* Semantic Colors/Background */
+  --paper: #ffffff; /* Surface (Card) */
+  --ink: #0f172a; /* Primary Text */
+  --ink-secondary: #475569; /* Secondary Text */
+  --color: #1976d2; /* Primary */
+  --color-primary: #1976d2;
+  --color-primary-dark: #145ea8; /* Primary dark (Hover) */
+  --color-primary-light: #a3c8ed; /* Primary light (Border) */
+  --color-info: #64748b; /* Info */
+  --color-secondary: #7c41cc; /* Secondary */
+  --color-success: #01866e; /* Success */
+  --color-warning: #ed6c02; /* Warning */
+  --color-error: #c4343c; /* Error */
+  --color-divider: #e2e8f0; /* Divider */
+
+  --radius: 4px;
+}
+
+html,body{background:var(--background);color:var(--ink);font: 400 16px/1.5 Roboto, system-ui, -apple-system, "Segoe UI", Arial, sans-serif;margin:0;padding:0}
+
+.container{max-width:1100px;margin-inline:auto;padding:24px}
+.bench-header{background:var(--paper);border-bottom:1px solid var(--color-divider)}
+.bench-header h1{margin:0 0 4px 0;font: 500 20px/1.6 Roboto}
+.bench-header .subtitle{margin:0;color:var(--ink-secondary);font:400 14px/1.43 Roboto}
+.bench-footer{border-top:1px solid var(--color-divider);margin-top:40px;background:var(--paper)}
+.bench-footer small{color:var(--ink-secondary)}
+
+.bench-content h2{font: 400 24px/1.334 Roboto;margin:16px 0}
+.bench-content h3{font: 500 20px/1.6 Roboto;margin:8px 0}
+.bench-content h4{font: 500 16px/1.75 Roboto;margin:8px 0}
+.body-1{font: 400 16px/1.5 Roboto;margin:0 0 8px 0}
+.body-2{font: 400 14px/1.43 Roboto;margin:0 0 8px 0}
+.caption{font: 400 12px/1.66 Roboto;margin:0}
+.muted{color:var(--ink-secondary)}
+
+.grid{display:grid;gap:16px}
+.grid.cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.grid.cols-6{grid-template-columns:repeat(6,minmax(0,1fr))}
+.grid .span-3{grid-column:span 3}
+@media (max-width: 900px){.grid.cols-6{grid-template-columns:repeat(3,1fr)}}
+@media (max-width: 600px){.grid.cols-3,.grid.cols-6{grid-template-columns:1fr}}
+
+.row{display:flex;align-items:center}
+.row.gap{gap:12px}
+.row.wrap{flex-wrap:wrap}
+
+.card{background:var(--paper);border:1px solid var(--color-divider);border-radius:var(--radius);padding:16px}
+.divider{height:1px;background:var(--color-divider);margin:16px 0;border-radius:1px}
+
+.btn{font: 500 14px/24px Roboto;display:inline-flex;align-items:center;justify-content:center;border-radius:8px;padding:10px 16px;border:1px solid transparent;transition:.2s;cursor:pointer}
+.btn-primary{background:var(--color-primary);color:#fff;border-color:var(--color-primary)}
+.btn-primary:hover{background:var(--color-primary-dark);border-color:var(--color-primary-dark)}
+.btn-primary.outline{background:transparent;color:var(--color-primary);border-color:var(--color-primary)}
+.btn-primary.outline:hover{background:color-mix(in srgb, var(--color-primary), transparent 90%)}
+.btn-info{background:var(--color-info);color:#fff;border-color:var(--color-info)}
+.btn-success{background:var(--color-success);color:#fff;border-color:var(--color-success)}
+.btn-warning{background:var(--color-warning);color:#fff;border-color:var(--color-warning)}
+.btn-error{background:var(--color-error);color:#fff;border-color:var(--color-error)}
+
+.chip{font: 400 13px/18px Roboto;display:inline-flex;align-items:center;padding:6px 10px;border-radius:999px;background:var(--color-divider);color:var(--ink)}
+.chip-primary{background:color-mix(in srgb, var(--color-primary), transparent 85%);color:var(--color-primary)}
+.chip-secondary{background:color-mix(in srgb, var(--color-secondary), transparent 85%);color:var(--color-secondary)}
+.chip-info{background:color-mix(in srgb, var(--color-info), transparent 85%);color:var(--color-info)}
+
+.alert{padding:10px 12px;border-radius:8px}
+.alert.warning{background:color-mix(in srgb, var(--color-warning), transparent 85%);color:var(--color-warning);border:1px solid color-mix(in srgb, var(--color-warning), transparent 50%)}
+.alert.success{background:color-mix(in srgb, var(--color-success), transparent 85%);color:var(--color-success);border:1px solid color-mix(in srgb, var(--color-success), transparent 50%)}
+
+.swatches .swatch{height:60px;border-radius:8px;background:var(--swatch);display:flex;align-items:center;justify-content:center;color:#fff;border:1px solid color-mix(in srgb, var(--swatch), transparent 80%)}
+.swatches .swatch span{background:rgba(0,0,0,.2);padding:2px 6px;border-radius:4px}
+
+

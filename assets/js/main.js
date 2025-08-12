@@ -23,6 +23,43 @@
   window.addEventListener('load', toggleScrolled);
 
   /**
+   * Hide header on scroll down, show on scroll up
+   */
+  (function setupHideOnScrollHeader() {
+    const bodyEl = document.body;
+    const headerEl = document.getElementById('header');
+    if (!headerEl) return;
+
+    let lastY = window.scrollY;
+    let ticking = false;
+    const threshold = 8; // ignore micro scrolls
+
+    function onScroll() {
+      const y = window.scrollY;
+      const delta = y - lastY;
+      lastY = y;
+
+      if (Math.abs(delta) < threshold) return;
+
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          if (delta > 0 && y > 80) {
+            // scrolling down
+            bodyEl.classList.add('hide-header');
+          } else {
+            // scrolling up
+            bodyEl.classList.remove('hide-header');
+          }
+          ticking = false;
+        });
+        ticking = true;
+      }
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+  })();
+
+  /**
    * Mobile nav toggle
    */
   const mobileNavToggleBtn = document.querySelector('.mobile-nav-toggle');
@@ -59,6 +96,8 @@
       e.stopImmediatePropagation();
     });
   });
+
+
 
   /**
    * Preloader
@@ -436,11 +475,23 @@ document.addEventListener('DOMContentLoaded', function() {
   const easeOutCubic = (t) => 1 - Math.pow(1 - t, 3);
 
   function getScrollPaddingTop() {
+    // For center-snap pages, do not add any top padding offset
+    if (
+      document.documentElement.classList.contains('center-snap') ||
+      document.body.classList.contains('center-snap')
+    ) {
+      return 0;
+    }
     const rootStyle = getComputedStyle(document.documentElement);
     const bodyStyle = getComputedStyle(document.body);
-    const rootPad = parseInt(rootStyle.scrollPaddingTop || '0', 10);
-    const bodyPad = parseInt(bodyStyle.scrollPaddingTop || '0', 10);
-    return (Number.isNaN(rootPad) ? 0 : rootPad) || (Number.isNaN(bodyPad) ? 0 : bodyPad) || 80;
+    const rootVal = rootStyle.scrollPaddingTop;
+    const bodyVal = bodyStyle.scrollPaddingTop;
+    const rootPad = parseFloat(rootVal);
+    const bodyPad = parseFloat(bodyVal);
+    if (!Number.isNaN(rootPad)) return rootPad;
+    if (!Number.isNaN(bodyPad)) return bodyPad;
+    // default fallback when unspecified
+    return 80;
   }
 
   function animateScrollTo(targetY, durationMs) {

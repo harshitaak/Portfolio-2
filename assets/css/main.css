@@ -55,7 +55,7 @@
   --text-subtitle-font: 500 1.125rem/1.5 Satoshi-Regular;
 
   /* Body Text (For all default paragraphs) */
-  --text-body-font: 400 1.25rem/1.6 Satoshi-Light;
+  --text-body-font: 300 1.25rem/1.6 Satoshi-Light;
 
   /* Caption Text (For smaller, secondary information) */
   --text-caption-font: 400 0.875rem/1.5 Satoshi-Light;
@@ -101,12 +101,7 @@ body *, body *::before, body *::after {
   --surface-color: var(--paper);
 }
 
-/* Responsive body text for project intros */
-.project-intro {
-  color: var(--ink);
-  font: var(--text-body-font); /* weight size/line-height family */
-  font-size: clamp(16px, 1vw + 12px, 24px);
-}
+/* (moved) project intro styles now live near .page-title section */
 
 
 :root {
@@ -187,6 +182,12 @@ h6 {
   font-family: var(--text-headline-font);
 }
 
+/* Global list bullet/number color */
+ul li::marker,
+ol li::marker {
+  color: var(--color);
+}
+
 
 /*--------------------------------------------------------------
 # Responsive Image Grid
@@ -216,6 +217,7 @@ h6 {
   transition: all 0.5s;
   align-content: bottom;
   z-index: 997;
+  will-change: transform;
 }
 
 .header .logo {
@@ -248,6 +250,11 @@ h6 {
 ------------------------------*/
 .scrolled .header {
   --background-color: var(--surface-color);
+}
+
+/* Hide-on-scroll header state */
+body.hide-header .header {
+  transform: translateY(-100%);
 }
 
 /*--------------------------------------------------------------
@@ -531,13 +538,13 @@ h6 {
   background-color: var(--paper);
   font-size: 14px;
   text-align: center;
-  /* padding: 30px 0; */
+  /* padding: 40px 0; */
   position: relative;
   z-index: 10;
 }
 
 .footer h3 {
-  font-size: 36px;
+  font-size: clamp(24px, 5vw, 36px);
   font-weight: 700;
   position: relative;
   padding: 0;
@@ -545,7 +552,7 @@ h6 {
 }
 
 .footer p {
-  font-size: 15;
+  font-size: clamp(14px, 3vw, 15px);
   font-style: italic;
   padding: 0;
   margin: 0 0 30px 0;
@@ -553,11 +560,11 @@ h6 {
 
 .footer .social-links {
   margin: 0 0 0 0;
-  gap: 0.5rem !important;
+  gap: clamp(0.25rem, 1vw, 0.5rem) !important;
 }
 
 .footer .social-links a {
-  font-size: 24px;
+  font-size: clamp(18px, 4vw, 24px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -567,8 +574,8 @@ h6 {
   margin: 0 4px;
   border-radius: 50%;
   text-align: center;
-  width: 36px;
-  height: 36px;
+  width: clamp(28px, 6vw, 36px);
+  height: clamp(28px, 6vw, 36px);
   transition: 0.3s;
 }
 
@@ -605,8 +612,8 @@ h6 {
 
 /* Footer brand sizing */
 .minimal-footer .brand .logo-svg {
-  width: 48px;
-  height: 48px;
+  width: 64px;
+  height: 64px;
   color: var(--default-color) !important;
 }
 .minimal-footer .brand .small {
@@ -646,6 +653,37 @@ h6 {
 .light-mode .btn-cta {
   --cta-fg: var(--paper);
   --cta-border: var(--color);
+}
+
+/* Mobile footer layout adjustments */
+@media (max-width: 768px) {
+  .minimal-footer .container {
+    padding: 1rem 0;
+  }
+  
+  .minimal-footer .footer-left {
+    flex: 0 0 auto;
+  }
+  
+  .minimal-footer .footer-right {
+    flex: 0 0 auto;
+    gap: 0.75rem !important;
+  }
+  
+  .minimal-footer .brand .logo-svg {
+    width: 56px;
+    height: 56px;
+  }
+  
+  .minimal-footer .social-links {
+    gap: 0.5rem !important;
+  }
+  
+  .minimal-footer .social-links a {
+    width: 32px;
+    height: 32px;
+    font-size: 16px;
+  }
 }
 
 /*--------------------------------------------------------------
@@ -1026,9 +1064,8 @@ html.snapscroll.center-snap {
 .snapscroll section,
 .snapscroll .section,
 .snapscroll .page-title {
-  scroll-snap-align: start;
+  scroll-snap-align: center;
   scroll-snap-stop: always;
-  /* Add vertical spacing so snapped sections don't feel cramped */
   margin-top: 12vh;
   margin-bottom: 12vh;
 }
@@ -1050,19 +1087,31 @@ html.snapscroll.center-snap {
 }
 --------------------------------------------------------------*/
 .page-title {
-  color: var(--ink);
+  color: var(--paper);
+  font-family: var(--text-title-font); 
+  /* font-size: 56px; */
   /* background-color: var(--background-color); */
   position: relative;
 }
 
 .page-title .heading {
   padding: 80px 0 80px 0;
+  color: var(--ink);
+  background-color: var(--color);
   /* border-top: 1px solid color-mix(in srgb, var(--default-color), transparent 90%); */
 }
 
 .page-title .heading h1 {
-  font-size: 38px;
-  font-weight: 700;
+  font-size: 56px;
+  font-family: var(--text-title-font); 
+  /* font-weight: 700; */
+}
+
+/* Project intro text placed with page-title block for cohesion */
+.project-intro {
+  color: inherit; /* follow .page-title color in headings area */
+  font: var(--text-body-font);
+  font-size: clamp(16px, 1vw + 12px, 24px);
 }
 
 .page-title nav {
@@ -2635,15 +2684,52 @@ section,
   height: 100%;
 }
 /* Section carousel navigation (uses .icon-button) */
-.my-section__carousel .my-section-prev,
-.my-section__carousel .my-section-next {
+.my-section__carousel .carousel-nav {
   position: absolute;
   top: 50%;
+  color: var(--color);
+  background: color-mix(in srgb, var(--color), transparent 80%);
   transform: translateY(-50%);
   z-index: 2;
 }
-.my-section__carousel .my-section-prev { left: 16px; right: auto; }
-.my-section__carousel .my-section-next { right: 16px; left: auto; }
+.my-section__carousel .carousel-nav:hover {
+  cursor: pointer;
+  /* box-shadow: var; */
+}
+.my-section__carousel .carousel-nav[data-dir='prev'] { left: 16px; right: auto; }
+.my-section__carousel .carousel-nav[data-dir='next'] { right: 16px; left: auto; }
+
+/* Rotate icon for prev to reuse the same glyph */
+.my-section__carousel .carousel-nav[data-dir='prev'] .material-symbols-outlined {
+  transform: rotate(180deg);
+}
+
+/* Section carousel pagination */
+.my-section__carousel .swiper-pagination {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 8px;
+  margin: 0 auto;
+  z-index: 10;
+  text-align: center;
+  width: 100%;
+  pointer-events: none;
+}
+
+.my-section__carousel .swiper-pagination-bullet {
+  pointer-events: auto;
+  background: color-mix(in srgb, var(--shadow-color), transparent 80%);
+  opacity: 1;
+  width: 12px;
+  height: 12px;
+  margin: 0 4px !important;
+  transition: background 0.2s;
+}
+
+.my-section__carousel .swiper-pagination-bullet-active {
+  background: var(--color) !important;
+}
 
 .my-section__image {
   width: 100%;

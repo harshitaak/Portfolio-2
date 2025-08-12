@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Popup Form</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+  <link href="assets/css/popup.css" rel="stylesheet">
+</head>
+<body>
+  <button class="btn open-modal" data-open>Open Form</button>
+
+  <div class="od-modal" data-modal hidden>
+    <div class="od-backdrop" data-close></div>
+    <div class="od-dialog" role="dialog" aria-modal="true" aria-labelledby="od-modal-title">
+      <header class="od-dialog__header">
+        <h2 id="od-modal-title" class="od-h2">Contact us</h2>
+        <button class="icon close" aria-label="Close" data-close>✕</button>
+      </header>
+      <form class="od-form">
+        <div class="od-field">
+          <label class="od-label" for="name">Name</label>
+          <input id="name" name="name" type="text" class="od-input" placeholder="Your full name" required>
+        </div>
+        <div class="od-field">
+          <label class="od-label" for="email">Email</label>
+          <input id="email" name="email" type="email" class="od-input" placeholder="name@example.com" required>
+        </div>
+        <div class="od-field">
+          <label class="od-label" for="message">Message</label>
+          <textarea id="message" name="message" rows="4" class="od-input" placeholder="How can we help?" required></textarea>
+        </div>
+        <div class="od-actions">
+          <button type="button" class="btn subtle" data-close>Cancel</button>
+          <button type="submit" class="btn primary">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const modal = document.querySelector('[data-modal]');
+    document.querySelector('[data-open]')?.addEventListener('click', ()=>{ modal.hidden = false; });
+    modal?.addEventListener('click', (e)=>{ if(e.target.matches('[data-close]')) modal.hidden = true; });
+    document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') modal.hidden = true; });
+  </script>
+</body>
+</html>
+
+

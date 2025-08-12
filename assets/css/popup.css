@@ -1,0 +1,35 @@
+:root{
+  /* Dark tokens (from node 641:89674) */
+  --od-bg:#202529; --od-surface:#282e33; --od-text:#e4e7eb; --od-text-2:#acbbc7;
+  --od-primary:#90caf9; --od-primary-border:#567995; --od-secondary:#c9a3fc; --od-divider:#3e4c59;
+  --od-radius:4px;
+}
+html,body{background:var(--od-bg);color:var(--od-text);font:400 16px/1.5 Roboto,system-ui,-apple-system,"Segoe UI",Arial,sans-serif;margin:0;padding:0}
+.btn{font:500 14px/24px Roboto;display:inline-flex;align-items:center;justify-content:center;border-radius:8px;padding:10px 16px;border:1px solid transparent;transition:.2s;cursor:pointer}
+.btn.primary{background:var(--od-primary);color:#0d1b22;border-color:var(--od-primary)}
+.btn.subtle{background:transparent;color:var(--od-text);border:1px solid var(--od-divider)}
+.btn.subtle:hover{background:rgba(255,255,255,.03)}
+
+.open-modal{margin:24px}
+
+.od-modal{position:fixed;inset:0;z-index:1000}
+.od-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.5)}
+.od-dialog{position:relative;z-index:1001;max-width:520px;margin:10vh auto;background:var(--od-surface);border:1px solid var(--od-divider);border-radius:var(--od-radius);box-shadow:0 10px 30px rgba(0,0,0,.4)}
+.od-dialog__header{display:flex;align-items:center;justify-content:space-between;padding:16px 16px;border-bottom:1px solid var(--od-divider)}
+.od-h2{font:400 24px/1.334 Roboto;margin:0;color:var(--od-text)}
+.icon.close{background:transparent;border:none;color:var(--od-text);cursor:pointer;font-size:18px;padding:6px;border-radius:8px}
+.icon.close:hover{background:rgba(255,255,255,.05)}
+
+.od-form{padding:16px}
+.od-field{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
+.od-label{font:500 14px/1.43 Roboto;color:var(--od-text)}
+.od-input{background:transparent;color:var(--od-text);border:1px solid var(--od-divider);border-radius:8px;padding:10px 12px;outline:none;transition:.2s}
+.od-input::placeholder{color:var(--od-text-2)}
+.od-input:focus{border-color:var(--od-primary);box-shadow:0 0 0 3px color-mix(in srgb, var(--od-primary), transparent 80%)}
+.od-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:8px}
+
+@media (max-width: 560px){
+  .od-dialog{margin:0;min-height:100%;max-width:none;border-radius:0;border-left:none;border-right:none}
+}
+
+

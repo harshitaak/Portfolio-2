@@ -1,0 +1,22 @@
+:root{
+  --bg:#202529; --surface:#282e33; --ink:#e4e7eb; --ink-2:#acbbc7; --primary:#90caf9; --divider:#3e4c59; --radius:8px;
+}
+html,body{background:var(--bg);color:var(--ink);font:400 16px/1.5 Roboto,system-ui,-apple-system,"Segoe UI",Arial,sans-serif;margin:0;padding:0}
+.demo-wrap{display:grid;place-items:center;min-height:100vh}
+
+.btn{font:500 14px/24px Roboto;display:inline-flex;align-items:center;gap:8px;justify-content:center;border-radius:10px;padding:10px 14px;border:1px solid var(--divider);background:var(--surface);color:var(--ink);cursor:pointer;transition:.2s}
+.btn:hover{border-color:var(--primary);box-shadow:0 0 0 4px color-mix(in srgb, var(--primary), transparent 85%)}
+.btn .chev{transition:transform .2s}
+
+.dropdown{position:relative}
+.dd-menu{position:absolute;top:calc(100% + 8px);left:0;background:var(--surface);border:1px solid var(--divider);border-radius:var(--radius);box-shadow:0 16px 40px rgba(0,0,0,.4);padding:6px;min-width:200px;opacity:0;transform:translateY(-6px) scale(.98);transform-origin:10% 0%;pointer-events:none;transition:opacity .15s, transform .15s}
+.dropdown[data-open] .dd-menu{opacity:1;transform:translateY(0) scale(1);pointer-events:auto}
+.dropdown[data-open] .dd-trigger .chev{transform:rotate(180deg)}
+
+.dd-item{width:100%;text-align:left;border:none;background:transparent;padding:8px 10px;border-radius:6px;color:var(--ink);font:400 14px/1.43 Roboto;cursor:pointer;display:flex;align-items:center;gap:8px}
+.dd-item:hover,.dd-item:focus{outline:none;background:color-mix(in srgb, var(--ink), transparent 90%)}
+.dd-item.danger{color:#ff8e8e}
+.dd-sep{height:1px;background:var(--divider);margin:6px}
+
+
+

@@ -1,0 +1,83 @@
+/* Orange Design – Mobile Dark App (tokens via MCP) */
+ :root {
+  --bg: #050624; /* Background/Background Dark */
+  --surface: #393938; /* Component/Main */
+  --card: #282e33; /* Surface (Card) fallback */
+   --ink: #e4e7eb; /* Softer primary text with AA contrast on dark */
+   --ink-2: #acb7c6; /* Cooler secondary text */
+  --muted: #9EA5B6; /* Dark/Dark03 */
+  --accent: #F7D046; /* Dark/Active Tab bar */
+  --inactive: #E5E7EB; /* Dark/Inactive tab bar */
+   --blue: #5386fd; /* Secondary Blue */
+   --blue-strong: color-mix(in srgb, var(--blue), black 22%); /* AA contrast for buttons */
+  --pink: #EF89C4; /* Secondary Pink */
+  --divider: #32344B; /* Border and separator */
+  --radius: 16px;
+
+  /* Typography (Apercu – fallback to Inter/System) */
+  --font-display3: 700 32px/1 'Apercu', Inter, system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
+  --font-title2: 700 24px/1.1 'Apercu', Inter, system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
+  --font-label1: 700 16px/18px 'Apercu', Inter, system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
+  --font-paragraph: 400 14px/1.5 'Apercu', Inter, system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
+  --font-label4: 400 12px/16px 'Apercu', Inter, system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
+}
+
+ html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink); font: var(--font-paragraph); }
+
+/* App shell */
+.app { max-width: 420px; margin: 0 auto; min-height: 100svh; display: grid; grid-template-rows: auto 1fr auto; }
+.app-header { position: sticky; top: 0; z-index: 10; background: var(--bg); padding: 16px 16px 8px; border-bottom: 1px solid var(--divider); }
+.greeting { font: var(--font-title2); margin: 0 0 8px; }
+.subtitle { color: var(--ink-2); font: var(--font-label4); margin: 0; }
+
+.search { display: flex; align-items: center; gap: 8px; background: color-mix(in srgb, var(--ink), transparent 92%); border: 1px solid var(--divider); border-radius: 999px; padding: 10px 12px; color: var(--ink-2); }
+.search input { flex: 1; background: transparent; border: 0; outline: none; color: var(--ink); font: var(--font-paragraph); }
+.search .icon { width: 18px; height: 18px; color: var(--muted); }
+ .search input:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+
+.content { padding: 16px; display: grid; gap: 16px; }
+
+/* Horizontal features */
+.h-scroll { display: grid; grid-auto-flow: column; grid-auto-columns: 80%; gap: 12px; overflow-x: auto; scroll-snap-type: x proximity; padding-bottom: 4px; }
+.h-scroll::-webkit-scrollbar { display: none; }
+.card { background: var(--surface); border: 1px solid var(--divider); border-radius: var(--radius); padding: 16px; display: grid; gap: 6px; scroll-snap-align: start; }
+.card .title { font: var(--font-label1); }
+.card .meta { color: var(--ink-2); font: var(--font-label4); }
+.card:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+
+/* Grid section */
+.grid { display: grid; gap: 12px; grid-template-columns: repeat(2, minmax(0,1fr)); }
+.tile { background: var(--surface); border: 1px solid var(--divider); border-radius: 12px; padding: 12px; display: grid; gap: 4px; }
+.tile:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+.badge { display: inline-flex; align-items: center; gap: 6px; border-radius: 999px; padding: 4px 8px; font: var(--font-label4); }
+.badge.blue { background: color-mix(in srgb, var(--blue), transparent 80%); color: var(--ink); border: 1px solid color-mix(in srgb, var(--blue), transparent 60%); }
+.badge.pink { background: color-mix(in srgb, var(--pink), transparent 80%); color: var(--ink); border: 1px solid color-mix(in srgb, var(--pink), transparent 60%); }
+
+/* Bottom tab bar */
+.tabbar { position: sticky; bottom: 0; z-index: 10; border-top: 1px solid var(--divider); background: var(--bg); display: grid; grid-template-columns: repeat(4, 1fr); }
+.tab { display: grid; place-items: center; padding: 12px 0 14px; gap: 4px; color: var(--inactive); text-decoration: none; min-height: 48px; }
+.tab .ico { width: 22px; height: 22px; }
+.tab .label { font: var(--font-label4); }
+.tab[data-active] { color: var(--blue); }
+.tab[data-active] .ico { filter: drop-shadow(0 0 8px color-mix(in srgb, var(--blue), transparent 50%)); }
+.tab:focus-visible { outline: 2px solid var(--blue); outline-offset: -2px; }
+
+/* Helpers */
+.row { display: flex; align-items: center; gap: 8px; }
+.sp-8{height:8px}
+
+@media (min-width: 480px) {
+  .h-scroll { grid-auto-columns: 60%; }
+}
+
+/* Buttons (AA contrast) */
+.btn { font: var(--font-label1); background: var(--blue-strong); color: #fff; border: 1px solid var(--blue-strong); padding: 10px 14px; border-radius: 10px; cursor: pointer; transition: .2s; }
+.btn:hover { background: color-mix(in srgb, var(--blue-strong), white 8%); border-color: color-mix(in srgb, var(--blue-strong), white 8%); }
+.btn:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+
+/* Reduce motion for users pref */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; animation: none !important; }
+}
+
+
