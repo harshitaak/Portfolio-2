@@ -306,10 +306,13 @@ body.hide-header .header {
 
   .navmenu a i,
   .navmenu a:focus i {
-    font-size: 12px;
+    font-size: 16px;
     line-height: 0;
     margin-left: 5px;
     transition: 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .navmenu>ul>li>a:before {
@@ -405,7 +408,11 @@ body.hide-header .header {
     line-height: 0;
     margin-right: 10px;
     cursor: pointer;
-    transition: color 0.3s;
+    transition: all 0.3s;
+  }
+
+  .mobile-nav-toggle.close {
+    transform: rotate(180deg);
   }
 
   .navmenu {
@@ -417,7 +424,10 @@ body.hide-header .header {
     display: none;
     list-style: none;
     position: absolute;
-    inset: 60px 20px 20px 20px;
+    top: 60px;
+    left: 20px;
+    right: 20px;
+    max-height: calc(100vh - 100px);
     padding: 10px 0;
     margin: 0;
     border-radius: 6px;
@@ -427,6 +437,7 @@ body.hide-header .header {
     overflow-y: auto;
     transition: 0.3s;
     z-index: 9998;
+    height: auto;
   }
 
   .navmenu a,
@@ -446,7 +457,7 @@ body.hide-header .header {
 
   .navmenu a i,
   .navmenu a:focus i {
-    font-size: 12px;
+    font-size: 16px;
     line-height: 0;
     margin-left: 5px;
     width: 30px;
@@ -478,23 +489,42 @@ body.hide-header .header {
     transform: rotate(180deg);
   }
 
+  /* Ensure Material Icons work properly in dropdowns */
+  .navmenu .toggle-dropdown {
+    transition: transform 0.3s ease;
+  }
+
+  .navmenu .dropdown.active .toggle-dropdown {
+    transform: rotate(180deg);
+  }
+
   .navmenu .dropdown ul {
     position: static;
     display: none;
     z-index: 99;
-    padding: 10px 0;
-    margin: 10px 20px;
+    padding: 0;
+    margin: 0;
     background-color: var(--background-color);
     transition: all 0.5s ease-in-out;
+    height: auto;
+    max-height: none;
+    overflow: visible;
   }
 
   .navmenu .dropdown ul ul {
     background-color: rgba(33, 37, 41, 0.1);
+    margin-left: 20px;
   }
 
   .navmenu .dropdown>.dropdown-active {
     display: block;
     background-color: rgba(33, 37, 41, 0.03);
+    height: auto;
+    max-height: none;
+    overflow: visible;
+    margin: 0;
+    padding: 0;
+    position: relative;
   }
 
   .mobile-nav-active {
@@ -517,16 +547,36 @@ body.hide-header .header {
     z-index: 9998;
   }
 
+  /* Fix mobile navigation positioning */
   .mobile-nav-active .navmenu {
-    position: fixed;
-    overflow: hidden;
-    inset: 0;
-    background: var(--background-color);
-    transition: 0.3s;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: 100% !important;
+    height: 100vh !important;
+    background: var(--background-color) !important;
+    z-index: 9999 !important;
   }
+
+  .mobile-nav-active .navmenu ul {
+    position: relative !important;
+    top: 80px !important;
+    left: 20px !important;
+    right: 20px !important;
+    max-height: calc(100vh - 120px) !important;
+    overflow-y: auto !important;
+  }
+
+
 
   .mobile-nav-active .navmenu>ul {
     display: block;
+    position: relative;
+    z-index: 10000;
+    padding-right: 16px;
+    margin: 0;
   }
 }
 
