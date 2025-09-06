@@ -402,6 +402,12 @@ body.hide-header .header {
 
 /* Mobile Navigation */
 @media (max-width: 1199px) {
+  /* Prevent horizontal scroll when mobile nav is active */
+  body.mobile-nav-active {
+    overflow-x: hidden !important;
+    position: fixed;
+    width: 100%;
+  }
   .mobile-nav-toggle {
     color: var(--default-color);
     font-size: 28px;
@@ -450,9 +456,12 @@ body.hide-header .header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    white-space: nowrap;
+    white-space: normal;
+    word-wrap: break-word;
     transition: 0.3s;
     cursor: pointer;
+    width: 100%;
+    box-sizing: border-box;
   }
 
   .navmenu a i,
@@ -468,6 +477,8 @@ body.hide-header .header {
     border-radius: 50%;
     transition: 0.3s;
     background-color: color-mix(in srgb, var(--default-color), transparent 83%);
+    position: relative;
+    transform-origin: center;
   }
 
   .navmenu a i:hover,
@@ -487,15 +498,18 @@ body.hide-header .header {
     background-color: var(--accent-color);
     color: var(--default-color);
     transform: rotate(180deg);
+    transform-origin: center;
   }
 
   /* Ensure Material Icons work properly in dropdowns */
   .navmenu .toggle-dropdown {
     transition: transform 0.3s ease;
+    transform-origin: center;
   }
 
   .navmenu .dropdown.active .toggle-dropdown {
     transform: rotate(180deg);
+    transform-origin: center;
   }
 
   .navmenu .dropdown ul {
@@ -508,12 +522,15 @@ body.hide-header .header {
     transition: all 0.5s ease-in-out;
     height: auto;
     max-height: none;
-    overflow: visible;
+    overflow: hidden;
+    width: 100%;
   }
 
   .navmenu .dropdown ul ul {
     background-color: rgba(33, 37, 41, 0.1);
     margin-left: 20px;
+    width: calc(100% - 20px);
+    overflow: hidden;
   }
 
   .navmenu .dropdown>.dropdown-active {
@@ -528,6 +545,10 @@ body.hide-header .header {
   }
 
   .mobile-nav-active {
+    overflow: hidden;
+  }
+
+  .mobile-nav-active body {
     overflow: hidden;
   }
 
@@ -567,6 +588,8 @@ body.hide-header .header {
     right: 20px !important;
     max-height: calc(100vh - 120px) !important;
     overflow-y: auto !important;
+    overflow-x: hidden !important;
+    width: calc(100% - 40px) !important;
   }
 
 
@@ -575,8 +598,9 @@ body.hide-header .header {
     display: block;
     position: relative;
     z-index: 10000;
-    padding-right: 16px;
+    padding-right: 0;
     margin: 0;
+    overflow-x: hidden;
   }
 }
 
