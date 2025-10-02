@@ -1,24 +1,185 @@
 
-/* Doodles: 3-column CSS masonry */
-#doodles-grid {
+/* Three Column Grid: 3-column CSS masonry */
+.three-column-grid {
   column-count: 3;
   column-gap: 16px;
 }
-#doodles-grid .photo-gallery-item {
+.three-column-grid .photo-gallery-item {
   break-inside: avoid;
   margin: 0 0 16px;
   display: block;
 }
-#doodles-grid img {
+.three-column-grid img {
   width: 100%;
   height: auto;
   display: block;
 }
 @media (max-width: 991.98px) {
-  #doodles-grid { column-count: 2; }
+  .three-column-grid { column-count: 2; }
 }
 @media (max-width: 575.98px) {
-  #doodles-grid { column-count: 1; }
+  .three-column-grid { column-count: 1; }
+}
+
+/*--------------------------------------------------------------
+# Two Column Grid - Large Image Layout
+--------------------------------------------------------------*/
+/* Custom 2-column grid for images - larger, more prominent display */
+.two-column-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.two-column-grid .grid-item {
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+  box-shadow: var(--elevation-2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background: var(--paper);
+}
+
+.two-column-grid .grid-item:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--elevation-4);
+}
+
+.two-column-grid .grid-item img {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.two-column-grid .grid-item:hover img {
+  transform: scale(1.05);
+}
+
+.two-column-grid .grid-item a {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Responsive adjustments for two column grid */
+@media (max-width: 768px) {
+  .two-column-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  
+  .two-column-grid .grid-item img {
+    height: 250px;
+  }
+}
+
+@media (max-width: 480px) {
+  .two-column-grid {
+    gap: 12px;
+  }
+  
+  .two-column-grid .grid-item img {
+    height: 200px;
+  }
+}
+
+/*--------------------------------------------------------------
+# Flex Image Grid - Main + Stacked Layout
+--------------------------------------------------------------*/
+/* Flex grid with one main image and two stacked side images */
+.flex-image-grid {
+  display: flex;
+  gap: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+  align-items: flex-start;
+}
+
+.flex-image-grid .main-item {
+  flex: 2;
+  min-width: 0;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: var(--elevation-2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background: var(--paper);
+}
+
+.flex-image-grid .main-item:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--elevation-4);
+}
+
+.flex-image-grid .side-items-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  min-width: 0;
+}
+
+.flex-image-grid .side-item {
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: var(--elevation-2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background: var(--paper);
+}
+
+.flex-image-grid .side-item:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--elevation-4);
+}
+
+.flex-image-grid img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.flex-image-grid .main-item:hover img,
+.flex-image-grid .side-item:hover img {
+  transform: scale(1.05);
+}
+
+.flex-image-grid a {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Responsive adjustments for flex image grid */
+@media (max-width: 991.98px) {
+  .flex-image-grid {
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  .flex-image-grid .main-item,
+  .flex-image-grid .side-items-container {
+    flex: none;
+    width: 100%;
+  }
+  
+  .flex-image-grid .side-items-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .flex-image-grid .side-items-container {
+    grid-template-columns: 1fr;
+  }
 }
 /**
 * Template Name: Personal

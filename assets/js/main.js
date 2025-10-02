@@ -202,12 +202,12 @@
 
   /**
    * Initiate glightbox
-   * For Doodles (#doodles-grid), override ordering so next follows row-wise visual order
+   * For Doodles (.three-column-grid), override ordering so next follows row-wise visual order
    */
   let glightbox = GLightbox({ selector: '.glightbox' });
 
   (function setupDoodlesLightbox() {
-    const grid = document.getElementById('doodles-grid');
+    const grid = document.querySelector('.three-column-grid');
     if (!grid || typeof GLightbox !== 'function') return;
 
     // Destroy generic instance to avoid duplicate handlers on Doodles page
