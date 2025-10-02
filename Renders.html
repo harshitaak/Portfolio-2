@@ -16,6 +16,7 @@
   <link href="https://fonts.googleapis.com" rel="preconnect">
   <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
 
   <!-- Vendor CSS Files -->
   <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -94,14 +95,14 @@
           </div>
         </div>
       </div>
-      <nav class="breadcrumbs">
+      <!-- <nav class="breadcrumbs">
         <div class="container">
           <ol>
             <li><a href="portfolio.html">Portfolio</a></li>
             <li class="current">Digital Renders</li>
           </ol>
         </div>
-      </nav>
+      </nav> -->
     </div><!-- End Page Title -->
 
     <!-- Portfolio Details Section -->
@@ -112,73 +113,32 @@
         <div class="row gy-4">
 
           <div class="col-lg-12">
-            <div class="portfolio-details-slider swiper init-swiper">
-
-              <script type="application/json" class="swiper-config">
-                {
-                  "loop": true,
-                  "speed": 600,
-                  "autoplay": {
-                    "delay": 5000
-                  },
-                  "slidesPerView": "auto",
-                  "pagination": {
-                    "el": ".swiper-pagination",
-                    "type": "bullets",
-                    "clickable": true
-                  }
-                }
-              </script>
-
-              <div class="swiper-wrapper align-items-center">
-
+            <div class="custom-carousel-nav swiper">
+              <div class="swiper-wrapper">
                 <div class="swiper-slide">
-                  <img src="assets/img/Renders/1st.jpg" alt="">
+                  <img src="assets/img/Renders/1st.jpg" alt="Render 1">
                 </div>
-
                 <div class="swiper-slide">
-                  <img src="assets/img/Renders/cloner.jpg" alt="">
+                  <img src="assets/img/Renders/cloner.jpg" alt="Render 2">
                 </div>
-
                 <div class="swiper-slide">
-                  <img src="assets/img/Renders/Crystal work.jpg" alt="">
+                  <img src="assets/img/Renders/Crystal work.jpg" alt="Render 3">
                 </div>
-
                 <div class="swiper-slide">
-                  <img src="assets/img/Renders/reflection.jpg" alt="">
+                  <img src="assets/img/Renders/reflection.jpg" alt="Render 4">
                 </div>
-
-                
                 <div class="swiper-slide">
-                  <img src="assets/img/Renders/test.jpg" alt="">
+                  <img src="assets/img/Renders/test.jpg" alt="Render 5">
                 </div>
-
-                
                 <div class="swiper-slide">
-                  <img src="assets/img/Renders/Untitled 1.jpg" alt="">
+                  <img src="assets/img/Renders/Untitled 1.jpg" alt="Render 6">
                 </div>
-
               </div>
               <div class="swiper-pagination"></div>
             </div>
           </div>
 
-          <!-- <div class="col-lg-4">
-            <div class="portfolio-info" data-aos="fade-up" data-aos-delay="200">
-              <h3>Project information</h3>
-              <ul>
-                <li><strong>Category</strong>: Web design</li>
-                <li><strong>Client</strong>: ASU Company</li>
-                <li><strong>Project date</strong>: 01 March, 2020</li>
-                <li><strong>Project URL</strong>: <a href="#">www.example.com</a></li>
-              </ul>
-            </div>
-            <div class="portfolio-description" data-aos="fade-up" data-aos-delay="300">
-              <h2>Exercitationem repudiandae officiis neque suscipit</h2>
-              <p>
-                Autem ipsum nam porro corporis rerum. Quis eos dolorem eos itaque inventore commodi labore quia quia. Exercitationem repudiandae officiis neque suscipit non officia eaque itaque enim. Voluptatem officia accusantium nesciunt est omnis tempora consectetur dignissimos. Sequi nulla at esse enim cum deserunt eius.
-              </p>
-            </div> -->
+          
           </div>
 
         </div>
@@ -189,27 +149,17 @@
 
   </main>
 
-  <footer id="footer" class="footer dark-background">
-    <div class="container">
-      <h3 class="sitename">Personal</h3>
-      <p>Et aut eum quis fuga eos sunt ipsa nihil. Labore corporis magni eligendi fuga maxime saepe commodi placeat.</p>
-      <div class="social-links d-flex justify-content-center">
-        <a href=""><i class="bi bi-twitter-x"></i></a>
-        <a href=""><i class="bi bi-facebook"></i></a>
-        <a href=""><i class="bi bi-instagram"></i></a>
-        <a href=""><i class="bi bi-skype"></i></a>
-        <a href=""><i class="bi bi-linkedin"></i></a>
-      </div>
-      <div class="container">
-        <div class="copyright">
-          <span>Copyright</span> <strong class="px-1 sitename">Personal</strong> <span>All Rights Reserved</span>
+  <footer id="footer" class="footer minimal-footer">
+    <div class="container py-3">
+      <div class="d-flex flex-column flex-md-row align-items-center justify-content-between gap-3">
+        <div class="social-links d-flex align-items-center gap-3">
+          <a href="https://www.linkedin.com/in/harshitaak/" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
+          <a href="https://www.instagram.com/harshittaak/" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+          <a href="https://dribbble.com/" aria-label="Dribbble"><i class="bi bi-dribbble"></i></a>
+          <a href="https://behance.net/" aria-label="Behance"><i class="bi bi-behance"></i></a>
         </div>
-        <div class="credits">
-          <!-- All the links in the footer should remain intact. -->
-          <!-- You can delete the links only if you've purchased the pro version. -->
-          <!-- Licensing information: https://bootstrapmade.com/license/ -->
-          <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
-          Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+        <div class="cta">
+          <a href="contact.html" class="btn btn-outline-light btn-sm btn-cta">Let's work together</a>
         </div>
       </div>
     </div>

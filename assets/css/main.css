@@ -2531,25 +2531,6 @@ section,
 /*--------------------------------------------------------------
 # Portfolio Details Section
 --------------------------------------------------------------*/
-.portfolio-details .portfolio-details-slider img {
-  width: 100%;
-}
-
-.portfolio-details .portfolio-details-slider .swiper-pagination {
-  margin-top: 20px;
-  position: relative;
-}
-
-.portfolio-details .portfolio-details-slider .swiper-pagination .swiper-pagination-bullet {
-  width: 12px;
-  height: 12px;
-  background-color: color-mix(in srgb, var(--default-color), transparent 85%);
-  opacity: 1;
-}
-
-.portfolio-details .portfolio-details-slider .swiper-pagination .swiper-pagination-bullet-active {
-  background-color: var(--accent-color);
-}
 
 .portfolio-details .portfolio-info {
   background-color: var(--surface-color);
@@ -2688,89 +2669,6 @@ section,
   background: color-mix(in srgb, var(--accent-color), transparent 20%);
 }
 
-/* Purged default Swiper arrow styling; section carousels use .icon-button */
-.my-carousel .swiper-pagination {
-  position: static;
-  margin-top: 1.5rem;
-  text-align: center;
-}
-:root {
-  --carousel-max-width: 700px;
-  --carousel-height: 40vw;
-  --carousel-min-height: 260px;
-  --carousel-max-height: 500px;
-}
-
-.my-carousel-section {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.my-carousel {
-  max-width: var(--carousel-max-width);
-  width: 100%;
-  height: var(--carousel-height);
-  min-height: var(--carousel-min-height);
-  max-height: var(--carousel-max-height);
-  position: relative;
-  display: flex;
-  align-items: center;
-}
-
-.my-carousel .swiper-slide {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  background: transparent;
-}
-
-.my-carousel .swiper-slide img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 8px;
-  display: block;
-}
-
-/* Purged positioning for default Swiper arrows */
-
-.my-carousel .swiper-button-prev {
-  left: 8px;
-  right: auto;
-}
-.my-carousel .swiper-button-next {
-  right: 8px;
-  left: auto;
-}
-
-.my-carousel .swiper-pagination {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 8px;
-  margin: 0 auto;
-  z-index: 10;
-  text-align: center;
-  width: 100%;
-  pointer-events: none; /* allows clicks to pass through except on bullets */
-}
-.my-carousel .swiper-pagination-bullet {
-  pointer-events: auto; /* keep bullets clickable */
-}
-.my-carousel .swiper-pagination-bullet {
-  background: color-mix(in srgb, var(--shadow-color), transparent 80%);
-  opacity: 1;
-  width: 12px;
-  height: 12px;
-  margin: 0 4px !important;
-  transition: background 0.2s;
-}
-.my-carousel .swiper-pagination-bullet-active,
-.portfolio-details-slider .swiper-pagination-bullet-active {
-  background: var(--color) !important;
-}
 
 /* Google Material Symbols Outlined
    The font is linked in page <head>; keep only the utility class here. */
@@ -2791,45 +2689,6 @@ section,
   font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
 }
 
-/* Material Design Icon Button (from https://m2.material.io/develop/web/components/buttons/icon-buttons) */
-.icon-button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  padding: 0;
-  border: none;
-  border-radius: 50%;
-  background: color-mix(in srgb, var(--shadow-color), transparent 88%);
-  cursor: pointer;
-  transition: background 0.2s;
-  outline: none;
-  position: relative;
-}
-.icon-button:focus-visible {
-  outline: 2px solid var(--accent-color);
-  outline-offset: 2px;
-}
-.icon-button:hover {
-  background: color-mix(in srgb, var(--shadow-color), transparent 80%);
-  box-shadow: var(--elevation-1);
-  transition: background 0.2s, box-shadow 0.2s;
-  cursor: pointer;
-}
-.icon-button:active {
-  background: color-mix(in srgb, var(--shadow-color), transparent 80%);
-  box-shadow: var(--elevation-1);
-}
-.icon-button .material-symbols-outlined {
-  font-size: 24px;
-  color: inherit;
-  pointer-events: none;
-}
-.portfolio-details-slider {
-  border-radius: 8px;
-  overflow: hidden;
-}
 .project-title {
   font-weight: 600;
   color: var(--default-color);
@@ -3055,6 +2914,85 @@ section,
 .custom-carousel-nav .swiper-slide img.contain {
   object-fit: contain;
   background: var(--paper);
+}
+
+/*--------------------------------------------------------------
+# GLightbox Fixes and Enhancements
+--------------------------------------------------------------*/
+/* Ensure lightbox overlay is properly styled */
+.glightbox-overlay {
+  background: rgba(0, 0, 0, 0.9) !important;
+  backdrop-filter: blur(4px);
+}
+
+/* Lightbox container */
+.glightbox-container {
+  background: transparent !important;
+}
+
+/* Lightbox image styling */
+.glightbox-container .gslide-media {
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+/* Close button styling */
+.glightbox-container .gclose {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border-radius: 50% !important;
+  width: 40px !important;
+  height: 40px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  transition: all 0.2s ease !important;
+  backdrop-filter: blur(10px);
+}
+
+.glightbox-container .gclose:hover {
+  background: rgba(255, 255, 255, 0.2) !important;
+  transform: scale(1.1);
+}
+
+/* Navigation arrows */
+.glightbox-container .gprev,
+.glightbox-container .gnext {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border-radius: 50% !important;
+  width: 50px !important;
+  height: 50px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  transition: all 0.2s ease !important;
+  backdrop-filter: blur(10px);
+}
+
+.glightbox-container .gprev:hover,
+.glightbox-container .gnext:hover {
+  background: rgba(255, 255, 255, 0.2) !important;
+  transform: scale(1.1);
+}
+
+/* Ensure click-to-close works */
+.glightbox-container .gslide-media img {
+  cursor: pointer;
+}
+
+/* Loading spinner */
+.glightbox-container .gloader {
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-top: 3px solid white;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
 .my-section__image {

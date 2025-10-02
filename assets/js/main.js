@@ -201,48 +201,45 @@
   window.addEventListener("load", initSwiper);
 
   /**
-   * Initiate glightbox
-   * For Doodles (.three-column-grid), override ordering so next follows row-wise visual order
+   * Initiate glightbox with proper configuration
    */
-  let glightbox = GLightbox({ selector: '.glightbox' });
+  let glightbox = null;
 
-  (function setupDoodlesLightbox() {
-    const grid = document.querySelector('.three-column-grid');
-    if (!grid || typeof GLightbox !== 'function') return;
-
-    // Destroy generic instance to avoid duplicate handlers on Doodles page
+  function initGLightbox() {
+    if (typeof GLightbox !== 'function') return;
+    
+    // Destroy existing instance if any
     if (glightbox && typeof glightbox.destroy === 'function') {
       glightbox.destroy();
-      glightbox = null;
     }
 
-    function computeSorted() {
-      const anchors = Array.from(grid.querySelectorAll('.glightbox'));
-      const tolerance = 24; // px threshold to treat same row
-      const items = anchors.map(a => ({ a, rect: a.getBoundingClientRect() }));
-      items.sort((i1, i2) => {
-        const dy = i1.rect.top - i2.rect.top;
-        if (Math.abs(dy) > tolerance) return dy;
-        return i1.rect.left - i2.rect.left;
-      });
-      const elements = items.map(i => ({ href: i.a.getAttribute('href'), type: 'image' }));
-      const orderAnchors = items.map(i => i.a);
-      return { elements, orderAnchors };
-    }
-
-    let sorted = null;
-    let doodlesLightbox = null;
-
-    grid.addEventListener('click', function (e) {
-      const link = e.target.closest('a.glightbox');
-      if (!link || !grid.contains(link)) return;
-      e.preventDefault();
-      if (!sorted) sorted = computeSorted();
-      if (!doodlesLightbox) doodlesLightbox = GLightbox({ elements: sorted.elements });
-      const index = Math.max(0, sorted.orderAnchors.indexOf(link));
-      doodlesLightbox.openAt(index);
+    // Initialize with proper settings
+    glightbox = GLightbox({
+      selector: '.glightbox',
+      touchNavigation: true,
+      loop: true,
+      autoplayVideos: false,
+      moreText: 'Read more',
+      moreLength: 60,
+      zoomable: true,
+      draggable: true,
+      dragTolerance: 40,
+      preload: true,
+      svg: {
+        arrows: {
+          prev: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15,18 9,12 15,6"></polyline></svg>',
+          next: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9,18 15,12 9,6"></polyline></svg>',
+          close: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>'
+        }
+      }
     });
-  })();
+  }
+
+  // Initialize on page load
+  window.addEventListener('load', initGLightbox);
+
+  // Re-initialize when navigating (for SPA-like behavior)
+  window.addEventListener('popstate', initGLightbox);
 
   /**
    * Init isotope layout and filters
