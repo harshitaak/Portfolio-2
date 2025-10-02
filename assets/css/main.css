@@ -3295,3 +3295,18 @@ button {
   position: absolute;
   overflow: visible !important;
 }
+
+/* Ensure GIFs play properly */
+img[src$=".gif"] {
+  animation-play-state: running !important;
+  image-rendering: auto;
+  object-fit: cover;
+}
+
+/* Responsive GIF container */
+.flex-image-grid .main-item img[src$=".gif"] {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
