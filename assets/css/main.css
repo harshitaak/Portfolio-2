@@ -548,6 +548,24 @@ body.hide-header .header {
     overflow: hidden;
   }
 
+  /* Loading cursor styles */
+  .loading-cursor {
+    cursor: wait !important;
+  }
+
+  .loading-cursor * {
+    cursor: wait !important;
+  }
+
+  /* Ensure loading cursor applies to entire page */
+  body.loading {
+    cursor: wait !important;
+  }
+
+  body.loading * {
+    cursor: wait !important;
+  }
+
   .mobile-nav-active body {
     overflow: hidden;
   }
@@ -1115,12 +1133,14 @@ body.hide-header .header {
 
 /*--------------------------------------------------------------
 # Scroll Snap (opt-in per page via .snapscroll on <body>)
+# DISABLED - snap scroll functionality turned off
 --------------------------------------------------------------*/
+/*
 html.snapscroll,
 body.snapscroll {
   scroll-snap-type: y proximity;
   scroll-padding-top: 80px; /* accommodate fixed header */
-}
+
 @media (max-width: 1199px) {
   html.snapscroll,
   body.snapscroll {
@@ -1159,6 +1179,7 @@ html.snapscroll.center-snap {
   padding-top: 0;
   padding-bottom: 0;
 }
+*/
 --------------------------------------------------------------*/
 .page-title {
   color: var(--paper);
@@ -1169,16 +1190,14 @@ html.snapscroll.center-snap {
 }
 
 .page-title .heading {
-  padding: 80px 0 80px 0;
+  padding: 80px 0 20px 0;
   color: var(--ink);
   background-color: var(--color);
-  /* border-top: 1px solid color-mix(in srgb, var(--default-color), transparent 90%); */
 }
 
 .page-title .heading h1 {
   font-size: 56px;
   font-family: var(--text-title-font); 
-  /* font-weight: 700; */
 }
 
 /* Project intro text placed with page-title block for cohesion */
@@ -2757,28 +2776,7 @@ section,
   width: 100%;
   height: 100%;
 }
-/* Section carousel navigation (uses .icon-button) */
-.my-section__carousel .carousel-nav {
-  position: absolute;
-  top: 50%;
-  color: var(--color);
-  background: color-mix(in srgb, var(--color), transparent 80%);
-  transform: translateY(-50%);
-  z-index: 2;
-}
-.my-section__carousel .carousel-nav:hover {
-  cursor: pointer;
-  /* box-shadow: var; */
-}
-.my-section__carousel .carousel-nav[data-dir='prev'] { left: 16px; right: auto; }
-.my-section__carousel .carousel-nav[data-dir='next'] { right: 16px; left: auto; }
-
-/* Rotate icon for prev to reuse the same glyph */
-.my-section__carousel .carousel-nav[data-dir='prev'] .material-symbols-outlined {
-  transform: rotate(180deg);
-}
-
-/* Section carousel pagination */
+/* Section carousel pagination - simplified for custom-carousel-nav */
 .my-section__carousel .swiper-pagination {
   position: absolute;
   left: 0;
@@ -2803,6 +2801,99 @@ section,
 
 .my-section__carousel .swiper-pagination-bullet-active {
   background: var(--color) !important;
+}
+
+/*--------------------------------------------------------------
+# Custom Carousel Navigation (Reusable)
+--------------------------------------------------------------*/
+/* Generic carousel with CSS-generated navigation buttons */
+.custom-carousel-nav {
+  position: relative;
+}
+
+/* CSS-generated navigation buttons using pseudo-elements */
+.custom-carousel-nav::before,
+.custom-carousel-nav::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--color), transparent 80%);
+  transform: translateY(-50%);
+  z-index: 2;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.custom-carousel-nav::before {
+  left: 16px;
+  content: 'chevron_right';
+  font-family: 'Material Symbols Outlined';
+  font-size: 24px;
+  color: var(--color);
+  transform: translateY(-50%) rotate(180deg);
+}
+
+.custom-carousel-nav::after {
+  right: 16px;
+  content: 'chevron_right';
+  font-family: 'Material Symbols Outlined';
+  font-size: 24px;
+  color: var(--color);
+  transform: translateY(-50%);
+}
+
+.custom-carousel-nav:hover::before,
+.custom-carousel-nav:hover::after {
+  opacity: 0.8;
+}
+
+/* Pagination styling for custom carousel */
+.custom-carousel-nav .swiper-pagination {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 8px;
+  margin: 0 auto;
+  z-index: 10;
+  text-align: center;
+  width: 100%;
+  pointer-events: none;
+}
+
+.custom-carousel-nav .swiper-pagination-bullet {
+  pointer-events: auto;
+  background: color-mix(in srgb, var(--shadow-color), transparent 80%);
+  opacity: 1;
+  width: 12px;
+  height: 12px;
+  margin: 0 4px !important;
+  transition: background 0.2s;
+}
+
+.custom-carousel-nav .swiper-pagination-bullet-active {
+  background: var(--color) !important;
+}
+
+/* Image styling for custom carousel - handles any aspect ratio */
+.custom-carousel-nav .swiper-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  border-radius: 8px;
+}
+
+/* Alternative: object-fit: contain for preserving full image */
+.custom-carousel-nav .swiper-slide img.contain {
+  object-fit: contain;
+  background: var(--paper);
 }
 
 .my-section__image {

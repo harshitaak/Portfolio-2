@@ -280,18 +280,34 @@
 
   
   window.addEventListener('load', function() {
-    new Swiper('.my-carousel', {
-      loop: true,
-      navigation: {
-        nextEl: '.my-carousel .swiper-button-next',
-        prevEl: '.my-carousel .swiper-button-prev'
-      },
-      pagination: {
-        el: '.my-carousel .swiper-pagination',
-        clickable: true
-      },
-      slidesPerView: 1,
-      spaceBetween: 30
+    // Initialize all custom carousels with CSS-generated navigation
+    const customCarousels = document.querySelectorAll('.custom-carousel-nav');
+    customCarousels.forEach(function(customCarousel) {
+      const swiper = new Swiper(customCarousel, {
+        loop: true,
+        pagination: {
+          el: customCarousel.querySelector('.swiper-pagination'),
+          clickable: true
+        },
+        slidesPerView: 1,
+        spaceBetween: 30
+      });
+
+      // Add click handlers for CSS-generated navigation
+      customCarousel.addEventListener('click', function(e) {
+        const rect = customCarousel.getBoundingClientRect();
+        const clickX = e.clientX - rect.left;
+        const carouselWidth = rect.width;
+        
+        // Left side click (prev)
+        if (clickX < carouselWidth * 0.2) {
+          swiper.slidePrev();
+        }
+        // Right side click (next)
+        else if (clickX > carouselWidth * 0.8) {
+          swiper.slideNext();
+        }
+      });
     });
   });
 
@@ -365,10 +381,18 @@ document.addEventListener('DOMContentLoaded', function() {
 });
         
 
-//Draw plugin
-gsap.registerPlugin(DrawSVGPlugin);
+//Draw plugin - only register if available
+if (typeof DrawSVGPlugin !== 'undefined') {
+  gsap.registerPlugin(DrawSVGPlugin);
+}
 
 function initDrawRandomUnderline() {
+  // Check if DrawSVGPlugin is available
+  if (typeof DrawSVGPlugin === 'undefined') {
+    console.warn('DrawSVGPlugin not available, skipping draw line effect');
+    return;
+  }
+  
   const svgVariants = [
     `<svg width="310" height="40" viewBox="0 0 310 40" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 20.9999C26.7762 16.2245 49.5532 11.5572 71.7979 14.6666C84.9553 16.5057 97.0392 21.8432 109.987 24.3888C116.413 25.6523 123.012 25.5143 129.042 22.6388C135.981 19.3303 142.586 15.1422 150.092 13.3333C156.799 11.7168 161.702 14.6225 167.887 16.8333C181.562 21.7212 194.975 22.6234 209.252 21.3888C224.678 20.0548 239.912 17.991 255.42 18.3055C272.027 18.6422 288.409 18.867 305 17.9999" stroke="currentColor" stroke-width="10" stroke-linecap="round"/></svg>`,
     `<svg width="310" height="40" viewBox="0 0 310 40" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 24.2592C26.233 20.2879 47.7083 16.9968 69.135 13.8421C98.0469 9.5853 128.407 4.02322 158.059 5.14674C172.583 5.69708 187.686 8.66104 201.598 11.9696C207.232 13.3093 215.437 14.9471 220.137 18.3619C224.401 21.4596 220.737 25.6575 217.184 27.6168C208.309 32.5097 197.199 34.281 186.698 34.8486C183.159 35.0399 147.197 36.2657 155.105 26.5837C158.11 22.9053 162.993 20.6229 167.764 18.7924C178.386 14.7164 190.115 12.1115 201.624 10.3984C218.367 7.90626 235.528 7.06127 252.521 7.49276C258.455 7.64343 264.389 7.92791 270.295 8.41825C280.321 9.25056 296 10.8932 305 13.0242" stroke="#E55050" stroke-width="10" stroke-linecap="round"/></svg>`,
@@ -465,6 +489,8 @@ setTimeout(function() {
 }, 100);
 
 // Smooth snap scroll enhancement (applies only on pages with .snapscroll)
+// DISABLED - snap scroll functionality turned off
+/*
 document.addEventListener('DOMContentLoaded', function() {
   const hasSnapScroll = document.documentElement.classList.contains('snapscroll') || document.body.classList.contains('snapscroll');
   if (!hasSnapScroll) return;
@@ -556,3 +582,77 @@ document.addEventListener('DOMContentLoaded', function() {
   window.addEventListener('touchstart', () => { if (scrollTimeoutId) clearTimeout(scrollTimeoutId); }, { passive: true });
   window.addEventListener('touchend', scheduleSnap, { passive: true });
 });
+*/
+
+/**
+ * Loading cursor functionality
+ * Shows wait cursor when links are clicked and page is loading
+ */
+(function() {
+  "use strict";
+
+  // Set loading cursor on page load (for new pages)
+  document.body.style.cursor = 'wait';
+
+  // Reset cursor when page finishes loading
+  window.addEventListener('load', function() {
+    document.body.style.cursor = 'default';
+    document.body.classList.remove('loading');
+  });
+
+  // Add loading cursor to all links when clicked
+  function addLoadingCursorToLinks() {
+    const links = document.querySelectorAll('a[href]');
+    
+    links.forEach(function(link) {
+      // Skip links that don't navigate to other pages
+      const href = link.getAttribute('href');
+      if (href && href !== '#' && !href.startsWith('javascript:') && !href.startsWith('mailto:') && !href.startsWith('tel:')) {
+        link.addEventListener('click', function(e) {
+          // Add loading class to body
+          document.body.classList.add('loading');
+          document.body.style.cursor = 'wait';
+          
+          // Also set cursor on the clicked element
+          this.style.cursor = 'wait';
+        });
+      }
+    });
+  }
+
+  // Initialize loading cursor functionality when DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', addLoadingCursorToLinks);
+  } else {
+    addLoadingCursorToLinks();
+  }
+
+  // Handle dynamically added links (for SPAs or AJAX content)
+  const observer = new MutationObserver(function(mutations) {
+    mutations.forEach(function(mutation) {
+      if (mutation.type === 'childList') {
+        mutation.addedNodes.forEach(function(node) {
+          if (node.nodeType === 1) { // Element node
+            const newLinks = node.querySelectorAll ? node.querySelectorAll('a[href]') : [];
+            newLinks.forEach(function(link) {
+              const href = link.getAttribute('href');
+              if (href && href !== '#' && !href.startsWith('javascript:') && !href.startsWith('mailto:') && !href.startsWith('tel:')) {
+                link.addEventListener('click', function(e) {
+                  document.body.classList.add('loading');
+                  document.body.style.cursor = 'wait';
+                  this.style.cursor = 'wait';
+                });
+              }
+            });
+          }
+        });
+      }
+    });
+  });
+
+  // Start observing
+  observer.observe(document.body, {
+    childList: true,
+    subtree: true
+  });
+})();
