@@ -24,7 +24,9 @@
 
   /**
    * Hide header on scroll down, show on scroll up
+   * DISABLED: Header is now part of scrollable area, so hide-on-scroll is not needed
    */
+  /*
   (function setupHideOnScrollHeader() {
     const bodyEl = document.body;
     const headerEl = document.getElementById('header');
@@ -58,6 +60,7 @@
 
     window.addEventListener('scroll', onScroll, { passive: true });
   })();
+  */
 
   /**
    * Mobile nav toggle
@@ -129,6 +132,39 @@
 
   window.addEventListener('load', toggleScrollTop);
   document.addEventListener('scroll', toggleScrollTop);
+
+  /**
+   * Floating theme toggle button
+   */
+  let floatingThemeToggle = document.querySelector('#floating-theme-toggle');
+
+  function toggleFloatingThemeToggle() {
+    if (floatingThemeToggle) {
+      // Show floating toggle when user has scrolled down (navbar is now part of scrollable area)
+      const hasScrolled = window.scrollY > 100;
+      
+      if (hasScrolled) {
+        floatingThemeToggle.classList.add('active');
+      } else {
+        floatingThemeToggle.classList.remove('active');
+      }
+    }
+  }
+
+  // Add click listener to floating theme toggle
+  if (floatingThemeToggle) {
+    floatingThemeToggle.addEventListener('click', (e) => {
+      e.preventDefault();
+      // Trigger the main theme toggle
+      const mainThemeToggle = document.getElementById('theme-toggle');
+      if (mainThemeToggle) {
+        mainThemeToggle.click();
+      }
+    });
+  }
+
+  window.addEventListener('load', toggleFloatingThemeToggle);
+  document.addEventListener('scroll', toggleFloatingThemeToggle);
 
   /**
    * Animation on scroll function and init

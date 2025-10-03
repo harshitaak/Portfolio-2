@@ -46,7 +46,7 @@
 <body class="index-page" style="position: relative;">
   <div class="dots-bg"></div>
 
-  <header id="header" class="header d-flex align-items-center fixed-top">
+  <header id="header" class="header d-flex align-items-center">
     <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
 
       <a href="index.html" class="logo d-flex align-items-center">
@@ -76,7 +76,7 @@
             <li><a href="resume.html">Resume</a></li>
             <li><a href="services.html">Services</a></li>
             <li><a href="portfolio.html">Portfolio</a></li>
-            <li class="dropdown"><a href="#"><span>Digital</span> <i class="material-icons toggle-dropdown">expand_more</i></a>
+            <!-- <li class="dropdown"><a href="#"><span>Digital</span> <i class="material-icons toggle-dropdown">expand_more</i></a>
               <ul>    
                 <li><a href="#">Aquata</a></li>
                 <li><a href="#">Test Automation Tool</a></li>
@@ -102,7 +102,7 @@
                 <li><a href="#">GRPVC Bench</a></li>
                 <li><a href="#">Bamboo side table</a></li>
               </ul>
-            </li>
+            </li> -->
             <li><a href="contact.html">Contact</a></li>
             <li class="d-xl-none">
               <a href="#" class="theme-toggle-mobile d-flex align-items-center" onclick="document.getElementById('theme-toggle').click(); return false;">
@@ -203,6 +203,10 @@
 
     </section><!-- /Hero Section -->
 
+    
+   
+
+
   </main>
 
   <footer id="footer" class="footer minimal-footer">
@@ -226,6 +230,27 @@
 
   <!-- Scroll Top -->
   <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="material-icons">keyboard_arrow_up</i></a>
+
+  <!-- Floating Dark Mode Toggle -->
+  <button id="floating-theme-toggle" class="floating-theme-toggle d-flex align-items-center justify-content-center" title="Toggle dark mode" aria-label="Toggle dark mode">
+    <svg class="sun-and-moon" aria-hidden="true" viewBox="0 0 24 24">
+      <mask class="moon" id="floating-moon-mask">
+        <rect x="0" y="0" width="100%" height="100%" fill="white" />
+        <circle cx="24" cy="10" r="6" fill="black" />
+      </mask>
+      <circle class="sun" cx="12" cy="12" r="6" mask="url(#floating-moon-mask)" />
+      <g class="sun-beams">
+        <line x1="12" y1="1" x2="12" y2="3" />
+        <line x1="12" y1="21" x2="12" y2="23" />
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+        <line x1="1" y1="12" x2="3" y2="12" />
+        <line x1="21" y1="12" x2="23" y2="12" />
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+      </g>
+    </svg>
+  </button>
 
   <!-- Preloader -->
   <div id="preloader"></div>

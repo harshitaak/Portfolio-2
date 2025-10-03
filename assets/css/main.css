@@ -340,7 +340,7 @@ h4,
 h5,
 h6 {
   color: var(--default-color);
-  font-family: var(--text-headline-font);
+  font: var(--text-headline-font);
 }
 
 /* Global list bullet/number color */
@@ -379,6 +379,7 @@ ol li::marker {
   align-content: bottom;
   z-index: 997;
   will-change: transform;
+  position: relative; /* Changed from fixed to relative */
 }
 
 .header .logo {
@@ -796,20 +797,6 @@ body.hide-header .header {
   z-index: 10;
 }
 
-.footer h3 {
-  font-size: clamp(24px, 5vw, 36px);
-  font-weight: 700;
-  position: relative;
-  padding: 0;
-  margin: 0 0 15px 0;
-}
-
-.footer p {
-  font-size: clamp(14px, 3vw, 15px);
-  font-style: italic;
-  padding: 0;
-  margin: 0 0 30px 0;
-}
 
 .footer .social-links {
   margin: 0 0 0 0;
@@ -822,7 +809,7 @@ body.hide-header .header {
   align-items: center;
   justify-content: center;
 
-  color: var(--color);
+  color: var(--ink);
   line-height: 1;
   margin: 0 4px;
   border-radius: 50%;
@@ -833,26 +820,17 @@ body.hide-header .header {
 }
 
 .footer .social-links a:hover {
-  color: var(--color);
+  color: var(--ink);
   text-decoration: none;
   cursor: pointer;
 }
 
-.footer .copyright {
-  padding-top: 4;
-  border-top: 1px solid color-mix(in srgb, var(--ink), transparent 90%);
-}
-
-.footer .credits {
-  font-size: 13px;
-  padding-top: 5px;
-}
 
 /* Minimal footer theme adjustments */
 .minimal-footer .brand,
 .minimal-footer .brand .logo-svg,
 .minimal-footer .social-links a {
-  color: var(--color) !important;
+  color: var(--ink) !important;
   margin: 0 !important;
 }
 .minimal-footer .text-muted {
@@ -1253,14 +1231,15 @@ body.hide-header .header {
   visibility: hidden;
   opacity: 0;
   right: 15px;
-  bottom: -15px;
+  bottom: -60px;
   z-index: 99999;
   background-color: var(--accent-color);
   width: 44px;
   height: 44px;
   border-radius: 50px;
-  transition: all 0.2s;
+  transition: all 0.3s ease-out;
   box-shadow: var(--elevation-1);
+  transform: translateY(20px);
 }
 
 .scroll-top i {
@@ -1281,6 +1260,125 @@ body.hide-header .header {
   visibility: visible;
   opacity: 1;
   bottom: 15px;
+  transform: translateY(0);
+}
+
+/*--------------------------------------------------------------
+# Floating Dark Mode Toggle
+--------------------------------------------------------------*/
+.floating-theme-toggle {
+  position: fixed;
+  visibility: hidden;
+  opacity: 0;
+  right: 16px;
+  top: -60px;
+  z-index: 99999;
+  background-color: var(--paper);
+  width: 44px;
+  height: 44px;
+  border-radius: 50px;
+  border: 1px var(--ink);
+  outline: none;
+  transition: all 0.3s ease-out;
+  box-shadow: var(--elevation-1);
+  cursor: pointer;
+  transform: translateY(-20px);
+}
+
+.floating-theme-toggle .sun-and-moon {
+  width: 20px;
+  height: 20px;
+}
+
+.floating-theme-toggle .sun-and-moon > :is(.moon, .sun, .sun-beams) {
+  transform-origin: center;
+}
+
+/* Icon colors */
+.floating-theme-toggle .sun-and-moon > :is(.moon, .sun) {
+  fill: var(--ink);
+  transition: fill 0.3s var(--ease-3);
+}
+
+.floating-theme-toggle .sun-and-moon > .sun-beams {
+  stroke: var(--ink);
+  stroke-width: 2px;
+  transition: stroke 0.3s var(--ease-3);
+}
+
+.floating-theme-toggle:is(:hover, :focus-visible) {
+  background-color: var(--surface-color);
+}
+
+.floating-theme-toggle:is(:hover, :focus-visible) .sun-and-moon > :is(.moon, .sun) {
+  fill: #f39c12;
+}
+
+.floating-theme-toggle:is(:hover, :focus-visible) .sun-and-moon > .sun-beams {
+  stroke: #f39c12;
+}
+
+.floating-theme-toggle.active {
+  visibility: visible;
+  opacity: 1;
+  top: 16px;
+  transform: translateY(0);
+}
+
+/* Dark theme styles (when light-mode class is NOT present) */
+body:not(.light-mode) .floating-theme-toggle .sun-and-moon > .sun {
+  transform: scale(1.75);
+}
+
+body:not(.light-mode) .floating-theme-toggle .sun-and-moon > .sun-beams {
+  opacity: 0;
+}
+
+body:not(.light-mode) .floating-theme-toggle .sun-and-moon > .moon > circle {
+  transform: translateX(-7px);
+}
+
+@supports (cx: 1) {
+  body:not(.light-mode) .floating-theme-toggle .sun-and-moon > .moon > circle {
+    cx: 17;
+    transform: translateX(0);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .floating-theme-toggle .sun-and-moon > .sun {
+    transition: transform .5s var(--ease-elastic-3);
+  }
+
+  .floating-theme-toggle .sun-and-moon > .sun-beams {
+    transition: transform .5s var(--ease-elastic-4), opacity .5s var(--ease-3);
+  }
+
+  .floating-theme-toggle .sun-and-moon .moon > circle {
+    transition: transform .25s var(--ease-out-5);
+  }
+
+  @supports (cx: 1) {
+    .floating-theme-toggle .sun-and-moon .moon > circle {
+      transition: cx .25s var(--ease-out-5);
+    }
+  }
+
+  body:not(.light-mode) .floating-theme-toggle .sun-and-moon > .sun {
+    transition-timing-function: var(--ease-3);
+    transition-duration: .25s;
+    transform: scale(1.75);
+  }
+
+  body:not(.light-mode) .floating-theme-toggle .sun-and-moon > .sun-beams {
+    transition-duration: .15s;
+    transform: rotateZ(-25deg);
+  }
+
+  body:not(.light-mode) .floating-theme-toggle .sun-and-moon > .moon > circle {
+    transition-duration: .5s;
+    transition-delay: .25s;
+  }
 }
 
 /*--------------------------------------------------------------
@@ -1292,73 +1390,23 @@ body.hide-header .header {
   }
 }
 
-/*--------------------------------------------------------------
-# Scroll Snap (opt-in per page via .snapscroll on <body>)
-# DISABLED - snap scroll functionality turned off
---------------------------------------------------------------*/
-/*
-html.snapscroll,
-body.snapscroll {
-  scroll-snap-type: y proximity;
-  scroll-padding-top: 80px; /* accommodate fixed header */
-
-@media (max-width: 1199px) {
-  html.snapscroll,
-  body.snapscroll {
-    scroll-padding-top: 66px;
-  }
-}
-
-/* Center snap helper: remove top padding when header overlaps content height */
-body.snapscroll.center-snap {
-  scroll-padding-top: 0; /* let center alignment be exact */
-}
-html.snapscroll.center-snap {
-  scroll-padding-top: 0; /* ensure root scroller also has no offset */
-}
-.snapscroll section,
-.snapscroll .section,
-.snapscroll .page-title {
-  scroll-snap-align: center;
-  scroll-snap-stop: always;
-  margin-top: 12vh;
-  margin-bottom: 12vh;
-}
-
-/* Utility to make a block fill the viewport for reliable snapping */
-.snapscroll .snap-full {
-  min-height: 100vh;
-}
-
-/* Center snap alignment for print-inspired media/text sections */
-.snapscroll .my-section {
-  scroll-snap-align: center;
-  scroll-snap-stop: always;
-  /* With 80vh section height, use 20vh margins so only one section is visible */
-  margin-top: 20vh;
-  margin-bottom: 20vh;
-  padding-top: 0;
-  padding-bottom: 0;
-}
-*/
 --------------------------------------------------------------*/
 .page-title {
   color: var(--paper);
-  font-family: var(--text-title-font); 
   /* font-size: 56px; */
   /* background-color: var(--background-color); */
   position: relative;
 }
 
 .page-title .heading {
-  padding: 80px 0 20px 0;
+  padding: 20px 0 20px 0;
   color: var(--ink);
   background-color: var(--color);
 }
 
 .page-title .heading h1 {
   font-size: 56px;
-  font-family: var(--text-title-font); 
+  font: var(--text-headline-font);
 }
 
 /* Project intro text placed with page-title block for cohesion */
@@ -3218,7 +3266,6 @@ body {
   /* background-color: #fefaee; */
   /* font-family: PP Neue Montreal, Arial, sans-serif; */
   color: var(--accent-color);
-  font-size: 1vw;
   margin: 0;
   padding: 0;
   overscroll-behavior: none;
