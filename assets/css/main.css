@@ -228,7 +228,8 @@
   /* Core palette */
   --paper: #252525;  /* background surfaces */
   --ink: #e3e3e3;    /* primary text */
-  --color: #94c5e4;  /* accent/brand */
+  /* --color: #94c5e4;  */
+  --color: hsl(204, 56%, 67%);
   --shadow-color: #000000; /* keep as is */
 
   /* Compatibility aliases (will be phased out) */
@@ -252,7 +253,8 @@ body *, body *::before, body *::after {
   /* Core palette */
   --paper: #fcfcfc;
   --ink: #181617;
-  --color: #94c5e4;
+  /* --color: #94c5e4; */
+  --color: hsl(204, 56%, 50%);
   --shadow-color: #000000;
 
   /* Compatibility aliases */
@@ -375,11 +377,15 @@ ol li::marker {
   box-shadow: var(--elevation-1) ;
   background-color: var(--paper);
   padding: 0.5rem 0;
-  transition: all 0.5s;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   align-content: bottom;
   z-index: 997;
-  will-change: transform;
+  will-change: background-color, box-shadow;
   position: relative; /* Changed from fixed to relative */
+  /* Prevent navbar glitching */
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
 .header .logo {
@@ -414,10 +420,10 @@ ol li::marker {
   --background-color: var(--surface-color);
 }
 
-/* Hide-on-scroll header state */
-body.hide-header .header {
+/* Hide-on-scroll header state - DISABLED to prevent conflicts with loading system */
+/* body.hide-header .header {
   transform: translateY(-100%);
-}
+} */
 
 /*--------------------------------------------------------------
 # Navigation Menu
@@ -576,11 +582,16 @@ body.hide-header .header {
     line-height: 0;
     margin-right: 10px;
     cursor: pointer;
-    transition: all 0.3s;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    /* Prevent glitching */
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
   }
 
   .mobile-nav-toggle.close {
-    transform: rotate(180deg);
+    transform: translate3d(0, 0, 0) rotate(180deg);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .navmenu {
@@ -663,14 +674,18 @@ body.hide-header .header {
     transform-origin: center;
   }
 
-  /* Ensure Material Icons work properly in dropdowns */
+  /* Ensure Material Icons work properly in dropdowns - optimized */
   .navmenu .toggle-dropdown {
-    transition: transform 0.3s ease;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     transform-origin: center;
+    /* Prevent glitching */
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
   }
 
   .navmenu .dropdown.active .toggle-dropdown {
-    transform: rotate(180deg);
+    transform: translate3d(0, 0, 0) rotate(180deg);
     transform-origin: center;
   }
 
@@ -732,6 +747,7 @@ body.hide-header .header {
     overflow: hidden;
   }
 
+
   .mobile-nav-active .mobile-nav-toggle {
     color: var(--default-color);
     position: absolute;
@@ -748,7 +764,7 @@ body.hide-header .header {
     z-index: 9998;
   }
 
-  /* Fix mobile navigation positioning */
+  /* Fix mobile navigation positioning - optimized for performance */
   .mobile-nav-active .navmenu {
     position: fixed !important;
     top: 0 !important;
@@ -759,6 +775,11 @@ body.hide-header .header {
     height: 100vh !important;
     background: var(--background-color) !important;
     z-index: 9999 !important;
+    /* Prevent glitching */
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .mobile-nav-active .navmenu ul {
@@ -770,6 +791,11 @@ body.hide-header .header {
     overflow-y: auto !important;
     overflow-x: hidden !important;
     width: calc(100% - 40px) !important;
+    /* Prevent glitching */
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
 
@@ -868,7 +894,7 @@ body.hide-header .header {
   padding: 6px 14px;
   border-radius: 999px;
   font-weight: 500;
-  transition: color .2s var(--ease-3), background .2s var(--ease-3), border-color .2s var(--ease-3), transform .2s var(--ease-3), box-shadow .2s var(--ease-3);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .btn-cta:hover {
   color: var(--cta-fg-hover) !important;
@@ -876,6 +902,7 @@ body.hide-header .header {
   border-color: var(--cta-border) !important;
   transform: translateY(-5px);
   box-shadow: var(--elevation-1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .btn-cta:active {
   transform: translateY(0);
@@ -1230,9 +1257,10 @@ body.hide-header .header {
   position: fixed;
   visibility: hidden;
   opacity: 0;
-  right: 15px;
+  right: 16px;
   bottom: -60px;
   z-index: 99999;
+  
   background-color: var(--accent-color);
   width: 44px;
   height: 44px;
@@ -1244,23 +1272,27 @@ body.hide-header .header {
 
 .scroll-top i {
   font-size: 24px;
-  color: var(--ink);
+  color: var(--paper);
   line-height: 0;
 }
 
 .scroll-top:hover {
   background-color: var(--accent-color);
-  color: var(--ink);
-  transform: translateY(-5px);
-  transition: 0.3s;
+  color: var(--paper);
+  transform: translateY(-2px);
   box-shadow: var(--elevation-2);
+  transition: 0.3s;
 }
 
 .scroll-top.active {
   visibility: visible;
   opacity: 1;
-  bottom: 15px;
+  bottom: 16px;
   transform: translateY(0);
+}
+
+.scroll-top.active:hover {
+  transform: translateY(-2px);
 }
 
 /*--------------------------------------------------------------
@@ -1279,7 +1311,7 @@ body.hide-header .header {
   border-radius: 50px;
   border: 1px var(--ink);
   outline: none;
-  transition: all 0.3s ease-out;
+  transition: all 0.3s ease;
   box-shadow: var(--elevation-1);
   cursor: pointer;
   transform: translateY(-20px);
@@ -1296,18 +1328,20 @@ body.hide-header .header {
 
 /* Icon colors */
 .floating-theme-toggle .sun-and-moon > :is(.moon, .sun) {
-  fill: var(--ink);
+  fill: color-mix(in srgb, var(--ink), var(--paper) 50%);
   transition: fill 0.3s var(--ease-3);
 }
 
 .floating-theme-toggle .sun-and-moon > .sun-beams {
-  stroke: var(--ink);
+  stroke: color-mix(in srgb, var(--ink), var(--paper) 50%);
   stroke-width: 2px;
   transition: stroke 0.3s var(--ease-3);
 }
 
 .floating-theme-toggle:is(:hover, :focus-visible) {
   background-color: var(--surface-color);
+  transform: translateY(-2px);
+  box-shadow: var(--elevation-2);
 }
 
 .floating-theme-toggle:is(:hover, :focus-visible) .sun-and-moon > :is(.moon, .sun) {
@@ -1323,6 +1357,10 @@ body.hide-header .header {
   opacity: 1;
   top: 16px;
   transform: translateY(0);
+}
+
+.floating-theme-toggle.active:is(:hover, :focus-visible) {
+  transform: translateY(-2px);
 }
 
 /* Dark theme styles (when light-mode class is NOT present) */
@@ -1407,12 +1445,14 @@ body:not(.light-mode) .floating-theme-toggle .sun-and-moon > .moon > circle {
 .page-title .heading h1 {
   font-size: 56px;
   font: var(--text-headline-font);
+  color: var(--paper);
 }
 
 /* Project intro text placed with page-title block for cohesion */
 .project-intro {
   color: inherit; /* follow .page-title color in headings area */
   font: var(--text-body-font);
+  color: var(--paper);
   font-size: clamp(16px, 1vw + 12px, 24px);
 }
 
@@ -1432,7 +1472,7 @@ body:not(.light-mode) .floating-theme-toggle .sun-and-moon > .moon > circle {
 
 .page-title nav ol li+li {
   padding-left: 10px;
-  color: var(--ink);
+  color: var(--paper);
 }
 
 .page-title nav ol li+li::before {
@@ -2463,7 +2503,7 @@ section,
   transition: all 0.3s ease-in-out; */
   font-size: 15px;
   font-weight: 500;
-  padding: 12px 25px;
+  padding: 12px 24px;
   cursor: pointer;
   background: var(--surface-color);
   color: var(--default-color);
@@ -2472,11 +2512,12 @@ section,
   align-items: center;
   gap: 8px;
   transition: all 0.3s ease;
+  box-shadow: var(--elevation-1);
 }
 
 .portfolio .portfolio-filters li:hover {
-  color: var(--accent-color);
   transform: translateY(-2px);
+  box-shadow: var(--elevation-2);
   background: color-mix(in srgb, var(--accent-color), transparent 92%);
 }
 .portfolio .portfolio-filters li.filter-active {
@@ -2518,7 +2559,7 @@ section,
   transition: all ease-in-out 0.3s;
   padding: 16px;
   /* border-radius: 16px; */
-  background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.8) 100%);
+  background: linear-gradient(180deg, transparent 0%, color-mix(in srgb, var(--ink) 80%, transparent) 100%);
   box-shadow: var(--elevation-1);
   cursor: pointer;
 }
@@ -2546,7 +2587,7 @@ section,
   right: 0;
   font-size: 16px;
   font-weight: 600;
-  color: var(--ink);
+  color: var(--paper);
 }
 
 .po
