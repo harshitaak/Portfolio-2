@@ -112,7 +112,7 @@
 
 .flex-image-grid .main-item:hover {
   transform: translateY(-4px);
-  box-shadow: var(--elevation-4);
+  box-shadow: var(--elevation-3);
 }
 
 .flex-image-grid .side-items-container {
@@ -133,7 +133,7 @@
 
 .flex-image-grid .side-item:hover {
   transform: translateY(-4px);
-  box-shadow: var(--elevation-4);
+  box-shadow: var(--elevation-3);
 }
 
 .flex-image-grid img {
@@ -146,8 +146,10 @@
 }
 
 .flex-image-grid .main-item:hover img,
+
 .flex-image-grid .side-item:hover img {
   transform: scale(1.05);
+  box-shadow: var(--elevation-3);
 }
 
 .flex-image-grid a {
@@ -228,7 +230,6 @@
   /* Core palette */
   --paper: #252525;  /* background surfaces */
   --ink: #e3e3e3;    /* primary text */
-  /* --color: #94c5e4;  */
   --color: hsl(204, 56%, 67%);
   --shadow-color: #000000; /* keep as is */
 
@@ -253,7 +254,6 @@ body *, body *::before, body *::after {
   /* Core palette */
   --paper: #fcfcfc;
   --ink: #181617;
-  /* --color: #94c5e4; */
   --color: hsl(204, 56%, 50%);
   --shadow-color: #000000;
 
@@ -1445,6 +1445,10 @@ body:not(.light-mode) .floating-theme-toggle .sun-and-moon > .moon > circle {
 .page-title .heading h1 {
   font-size: 56px;
   font: var(--text-headline-font);
+  color: var(--paper);
+}
+
+.page-title .heading p {
   color: var(--paper);
 }
 
