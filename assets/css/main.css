@@ -907,37 +907,29 @@ ol li::marker {
   background-color: var(--paper);
   font-size: 14px;
   text-align: center;
-  /* padding: 40px 0; */
+  padding: 0px 60px;
   position: relative;
   z-index: 10;
 }
 
 
 .footer .social-links {
-  margin: 0 0 0 0;
-  gap: clamp(0.25rem, 1vw, 0.5rem) !important;
+  gap: 0.5rem;
 }
 
 .footer .social-links a {
-  font-size: clamp(18px, 4vw, 24px);
+  font-size: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
-
   color: var(--ink);
-  line-height: 1;
-  margin: 0 4px;
-  border-radius: 50%;
-  text-align: center;
-  width: clamp(28px, 6vw, 36px);
-  height: clamp(28px, 6vw, 36px);
+  width: 32px;
+  height: 32px;
   transition: 0.3s;
 }
 
 .footer .social-links a:hover {
-  color: var(--ink);
-  text-decoration: none;
-  cursor: pointer;
+  color: var(--accent-color);
 }
 
 
@@ -945,15 +937,13 @@ ol li::marker {
 .minimal-footer .brand,
 .minimal-footer .brand .logo-svg,
 .minimal-footer .social-links a {
-  color: var(--ink) !important;
-  margin: 0 !important;
+  color: var(--ink);
 }
 .minimal-footer .text-muted {
-  color: color-mix(in srgb, var(--ink), var(--paper) 50%) !important;
+  color: var(--text-secondary);
 }
 .minimal-footer .social-links a:hover {
-  color: var(--color) !important;
-  cursor: pointer;
+  color: var(--accent-color);
 }
 
 /* Footer brand sizing */
@@ -963,9 +953,9 @@ ol li::marker {
   color: var(--default-color) !important;
 }
 .minimal-footer .brand .small {
-  font-size: 1.5rem; /* larger than Bootstrap .small */
+  font-size: 1.5rem;
   font-weight: 400;
-  color: var(--ink) !important;
+  color: var(--ink);
 }
 
 /* Footer CTA button customization */
