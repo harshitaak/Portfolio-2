@@ -910,6 +910,7 @@ ol li::marker {
   padding: 0px 60px;
   position: relative;
   z-index: 10;
+  box-shadow: var(--elevation-2);
 }
 
 
@@ -932,11 +933,8 @@ ol li::marker {
   color: var(--accent-color);
 }
 
-
 /* Minimal footer theme adjustments */
-.minimal-footer .brand,
-.minimal-footer .brand .logo-svg,
-.minimal-footer .social-links a {
+.minimal-footer .brand {
   color: var(--ink);
 }
 .minimal-footer .text-muted {
