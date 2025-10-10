@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Designing Epiphanies</title>
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+
+  <!-- Font CSS (load before main styles) -->
+  <link href="assets/css/satoshi.css" rel="stylesheet">
+
+  <!-- Main CSS File -->
+  <link href="assets/css/main.css" rel="stylesheet">
+
+</head>
+
+<body class="portfolio-page">
+
+  <header id="header" class="header d-flex align-items-center">
+    <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
+
+      <a href="index.html" class="logo d-flex align-items-center">
+        <!-- Uncomment the line below if you also wish to use an image logo -->
+        <!-- <img src="assets/img/logo.webp" alt=""> -->
+        <svg class="logo-svg" width="32" height="32" viewBox="0 0 1000 1000" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Harshit Taak Logo">
+          <g clip-path="url(#clip0_pilotis_logo)">
+            <path d="M309.598 146.833L211.586 244.845L309.598 342.857L407.61 244.845L309.598 146.833Z" fill="currentColor"/>
+            <path d="M690.412 146.83L592.4 244.842L690.412 342.854L788.425 244.842L690.412 146.83Z" fill="currentColor"/>
+            <path d="M309.59 342.85L307.49 853.17L212.99 758.66L211.58 244.84L309.59 342.85Z" fill="currentColor"/>
+            <path d="M592.4 244.84V435.95H401.3L309.83 527.42H687.53L690.41 342.85L592.4 244.84Z" fill="currentColor"/>
+            <path d="M588.281 755.78L687.531 847.88V527.42L587.971 626.98L588.281 755.78Z" fill="currentColor"/>
+          </g>
+          <defs>
+            <clipPath id="clip0_pilotis_logo">
+              <rect width="1000" height="1000" fill="currentColor"/>
+            </clipPath>
+          </defs>
+        </svg>
+        <h1 class="sitename">Harshit Taak</h1>
+      </a>
+
+      <div class="navbar-right d-flex align-items-center">
+        <nav id="navmenu" class="navmenu">
+          <ul>
+            <li><a href="about.html">About</a></li>
+            <li><a href="resume.html">Resume</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="portfolio.html">Portfolio</a></li>
+            <!-- <li class="dropdown"><a href="#"><span>Digital</span> <i class="material-icons toggle-dropdown">expand_more</i></a>
+              <ul>    
+                <li><a href="#">Aquata</a></li>
+                <li><a href="#">Test Automation Tool</a></li>
+                <li><a href="#">OnTheGO</a></li>
+                <li><a href="#">Humane Technology</a></li>
+                <li><a href="#">Samsung Fam</a></li>
+                <li><a href="#">'Nu' Community</a></li>
+                <li><a href="#">Montra 2019</a></li>
+                <li><a href="#">Lettuce Love</a></li>
+                <li><a href="#">Letter from Future</a></li>
+                <li><a href="#">Designing Epiphanies</a></li>
+                <li><a href="#">Whatsapp Plus</a></li>
+                <li><a href="#">InStock</a></li>
+              </ul>
+            </li>
+            <li class="dropdown"><a href="#"><span>Furniture</span> <i class="material-icons toggle-dropdown">expand_more</i></a>
+              <ul>
+                <li><a href="pilotis.html">Pilotis Range</a></li>
+                <li><a href="#">Pidah: A Rajasthani chair</a></li>
+                <li><a href="#">Camping stool</a></li>
+                <li><a href="#">Bicycle wall mount</a></li>
+                <li><a href="#">The Tilt</a></li>
+                <li><a href="#">GRPVC Bench</a></li>
+                <li><a href="#">Bamboo side table</a></li>
+              </ul>
+            </li> -->
+            <li><a href="contact.html">Contact</a></li>
+            <li class="d-xl-none">
+              <a href="#" class="theme-toggle-mobile d-flex align-items-center" onclick="document.getElementById('theme-toggle').click(); return false;">
+                <svg class="sun-and-moon me-2" aria-hidden="true" viewBox="0 0 24 24" style="width: 20px; height: 20px;">
+                  <mask class="moon" id="moon-mask-mobile">
+                    <rect x="0" y="0" width="100%" height="100%" fill="white" />
+                    <circle cx="24" cy="10" r="6" fill="black" />
+                  </mask>
+                  <circle class="sun" cx="12" cy="12" r="6" mask="url(#moon-mask-mobile)" />
+                  <g class="sun-beams">
+                    <line x1="12" y1="1" x2="12" y2="3" />
+                    <line x1="12" y1="21" x2="12" y2="23" />
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                    <line x1="1" y1="12" x2="3" y2="12" />
+                    <line x1="21" y1="12" x2="23" y2="12" />
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+                  </g>
+                </svg>
+                <span>Dark Mode</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+        
+        <i class="mobile-nav-toggle d-xl-none material-icons">menu</i>
+        
+        <!-- Theme toggle for desktop -->
+        <button class="theme-toggle d-none d-xl-flex" id="theme-toggle" title="Toggles light & dark" aria-label="auto" aria-live="polite">
+          <svg class="sun-and-moon" aria-hidden="true" viewBox="0 0 24 24">
+            <mask class="moon" id="moon-mask">
+              <rect x="0" y="0" width="100%" height="100%" fill="white" />
+              <circle cx="24" cy="10" r="6" fill="black" />
+            </mask>
+            <circle class="sun" cx="12" cy="12" r="6" mask="url(#moon-mask)" />
+            <g class="sun-beams">
+              <line x1="12" y1="1" x2="12" y2="3" />
+              <line x1="12" y1="21" x2="12" y2="23" />
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+              <line x1="1" y1="12" x2="3" y2="12" />
+              <line x1="21" y1="12" x2="23" y2="12" />
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+            </g>
+          </svg>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <main class="main section-gap-80">
+
+    <!-- Page Title -->
+    <div class="page-title" data-aos="fade" style="scroll-snap-align: center;">
+      <div class="heading">
+        <div class="container">
+          <div class="row d-flex justify-content-center text-center">
+            <div class="col-lg-8">
+              <h1>Designing Epiphanies</h1>
+              <p class="project-intro">An elective course at NID</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- <nav class="breadcrumbs">
+        <div class="container">
+          <ol>
+            <li><a href="portfolio.html">Portfolio</a></li>
+            <li class="current">Pilotis</li>
+          </ol>
+        </div>
+      </nav> -->
+    </div><!-- End Page Title -->
+
+
+
+
+
+    <!-- Project Description -->
+    <div class="container section-gap-80">
+      <div class="row mb-5">
+        <div class="col-lg-8 mx-auto text-center">
+          <p class="lead project-description">Designing Epiphanies: Harnessing Spontaneity at Will</p>
+          <p class="project-description">Project type: Relativistic Conceptualization in Integrative Thinking.</p>
+          <p class="project-description">Summation of a thought process in text, and visualization.</p>
+        </div>
+      </div>
+
+      <div class="row mb-5">
+        <div class="col-lg-10 mx-auto">
+          <p class="project-description">This project was the culmination of various chains of mental discourse, pooled up in the "Epiphanetic Design" thought school, at International Open Elective-18, National Institute of Design.</p>
+          
+          <p class="project-description">20 students from various backgrounds were part of the deliberations, that delved into the possibility and validation through self-experience, of harnessing the subconscious at will, and learning to program our own minds to better reveal the true nature of our own interactions with our environment, and its effect on self.</p>
+          
+          <p class="project-description">While the solutions arrived upon were too particularistic to be listed here, the nature of THE Question itself reveals much to the probing eye and hence is presented here, as an abstract elaboration, with a Graphic designed to ask The Question.</p>
+          
+          <div class="text-center my-5">
+            <h3>"AskINg the Right Question"</h3>
+          </div>
+          
+          <div class="row my-4">
+            <div class="col-md-6">
+              <h4>epiphany</h4>
+              <p>/ɪˈpɪf(ə)ni,ɛˈpɪf(ə)ni/</p>
+              <p>noun</p>
+              <p>"A sudden revelation, realization of some meaning"</p>
+            </div>
+            <div class="col-md-6">
+              <h4>design</h4>
+              <p>/dɪˈzʌɪn/</p>
+              <p>noun</p>
+              <p>"A conscious effort/deliberation towards creation of some meaning"</p>
+            </div>
+          </div>
+          
+          <p class="project-description">Design and epiphanies, on first glance, seem to lie on the opposite extremes of human endeavors. One seems to be a result of a thought-out process, while the other, a completely random thought.</p>
+          
+          <p class="project-description">But, what if, epiphanies were not as random, nor as disconnected to one's own self as they are perceived to be?</p>
+          
+          <p class="project-description">What if, the INcalculable power and the sheer majesty of an epiphanatic moment can be harnessed at will?</p>
+          
+          <p class="project-description">What if, it is revealed that what appears as an epiphanatic, and a rather coINcidental happenstance of an idea, is actually our own mind, retrieving INformation hidden in the deep recesses of our own subconscious, and relating it to newer contexts to present before us an idea, that, for all intents and purposes, is novel, revealing, enthralling and bafflingly simple?</p>
+          
+          <p class="project-description">What if, we can learn, to do so, time and again, at will, and thus, design our own epiphanatic moments?</p>
+          
+          <p class="project-description">What happens, when we learn to look INside our own selves, and learn to be in complete control of the INformation we have absorbed IN there?</p>
+          
+          <p class="project-description">We remove our blocks, conquer our fears, allay our INhibitions and learn to learn ourselves, the world withIN, and thus gaIN a new perspective to look at the world outside with, a new vision, an engINe of perpetual INspirations, and unique INsights, at will.</p>
+          
+          <p class="project-description">And we behold a world outside, a gift, locked away by our own sights.</p>
+          
+          <p class="project-description">The key lies withIN.</p>
+          
+          <p class="project-description">An epiphany is self-discovery.</p>
+          
+          <p class="project-description">All we need, is to look IN.</p>
+          
+          <p class="project-description">And find, a pattern amidst the flux, through methodical spontaneity, to achieve order in the chaos.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Project Sections Start -->
+    <div class="container section-gap-80">
+
+      <section class="row align-items-center">
+        <div class="col-lg-12 mb-4 mb-lg-0">
+          <div style="max-width: 900px; width: 100%; margin: 0 auto; height: auto; position: relative; border-radius: 8px; overflow: hidden; display: flex; align-items: center; justify-content: center; background: var(--paper);">
+            <img src="assets/img/Epiphanies/1.jpg" alt="SHIVA" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+          </div>
+        </div>
+      </section>
+    <!-- Project Sections End -->
+
+  </main>
+
+  <footer id="footer" class="footer minimal-footer">
+    <div class="container py-3">
+      <div class="d-flex flex-column flex-md-row align-items-center justify-content-between gap-3">
+        <div class="social-links d-flex align-items-center gap-3">
+          <a href="https://www.linkedin.com/in/harshitaak/" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
+          <a href="https://www.instagram.com/harshittaak/" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+          <a href="https://dribbble.com/" aria-label="Dribbble"><i class="bi bi-dribbble"></i></a>
+          <a href="https://behance.net/" aria-label="Behance"><i class="bi bi-behance"></i></a>
+        </div>
+        <div class="cta">
+          <a href="contact.html" class="btn btn-outline-light btn-sm btn-cta">Let's work together</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scroll Top -->
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Floating Dark Mode Toggle -->
+  <button id="floating-theme-toggle" class="floating-theme-toggle d-flex align-items-center justify-content-center" title="Toggle dark mode" aria-label="Toggle dark mode">
+    <svg class="sun-and-moon" aria-hidden="true" viewBox="0 0 24 24">
+      <mask class="moon" id="floating-moon-mask">
+        <rect x="0" y="0" width="100%" height="100%" fill="white" />
+        <circle cx="24" cy="10" r="6" fill="black" />
+      </mask>
+      <circle class="sun" cx="12" cy="12" r="6" mask="url(#floating-moon-mask)" />
+      <g class="sun-beams">
+        <line x1="12" y1="1" x2="12" y2="3" />
+        <line x1="12" y1="21" x2="12" y2="23" />
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+        <line x1="1" y1="12" x2="3" y2="12" />
+        <line x1="21" y1="12" x2="23" y2="12" />
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+      </g>
+    </svg>
+  </button>
+
+  <!-- Preloader -->
+  <div id="preloader"></div>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+  <script src="assets/vendor/aos/aos.js"></script>
+  <script src="assets/vendor/typed.js/typed.umd.js"></script>
+  <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
+  <script src="assets/vendor/waypoints/noframework.waypoints.js"></script>
+  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
+  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+
+  <!-- Main JS File -->
+  <script src="assets/js/main.js"></script>
+
+</body>
+
+</html>
