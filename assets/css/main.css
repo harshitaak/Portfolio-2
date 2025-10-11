@@ -272,18 +272,7 @@
     grid-template-columns: 1fr;
   }
 }
-/**
-* Template Name: Personal
-* Template URL: https://bootstrapmade.com/personal-free-resume-bootstrap-template/
-* Updated: Mar 05 2025 with Bootstrap v5.3.3
-* Author: BootstrapMade.com
-* License: https://bootstrapmade.com/license/
-*/
 
-/*--------------------------------------------------------------
-# Font & Color Variables
-# Help: https://bootstrapmade.com/color-system/
---------------------------------------------------------------*/
 /* Fonts */
 :root {
   --default-font: "Roboto", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
@@ -958,37 +947,27 @@ ol li::marker {
 
 /* Footer CTA button customization */
 .btn-cta {
-  --cta-bg: var(--color);
-  --cta-fg: var(--paper);
-  /* --cta-border: var(--color); */
-  --cta-bg-hover: var(--color);
-  --cta-fg-hover: var(--paper);
-
-  color: var(--cta-fg) !important;
-  border-color: var(--cta-border) !important;
-  background: var(--cta-bg) !important;
-  border-width: 1.5px;
+  color: var(--paper) !important;
+  background: var(--color) !important;
+  border: none !important;
   padding: 6px 14px;
   border-radius: 999px;
   font-weight: 500;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
+
 .btn-cta:hover {
-  color: var(--cta-fg-hover) !important;
-  background: var(--cta-bg-hover) !important;
-  border-color: var(--cta-border) !important;
+  color: var(--paper) !important;
+  background: var(--color) !important;
   transform: translateY(-5px);
   box-shadow: var(--elevation-1);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
+
 .btn-cta:active {
   transform: translateY(0);
   box-shadow: var(--elevation-1);
 }
-.light-mode .btn-cta {
-  --cta-fg: var(--paper);
-  --cta-border: var(--color);
-}
+
 
 /* Mobile footer layout adjustments */
 @media (max-width: 768px) {
@@ -2640,7 +2619,7 @@ section,
   transition: all ease-in-out 0.3s;
   padding: 16px;
   /* border-radius: 16px; */
-  background: linear-gradient(180deg, transparent 0%, color-mix(in srgb, var(--ink) 80%, transparent) 100%);
+  background: linear-gradient(180deg, transparent 0%, color-mix(in srgb, var(--shadow-color) 80%, transparent) 100%);
   box-shadow: var(--elevation-1);
   cursor: pointer;
 }
@@ -2667,14 +2646,9 @@ section,
   left: 0;
   right: 0;
   font-size: 16px;
-  font-weight: 600;
-  color: var(--paper);
+  font-weight: 500;
+  color: #ffffff;
 }
-
-.po
-
-
-
 
 .portfolio .portfolio-content:hover .portfolio-info {
   opacity: 1;
@@ -2747,20 +2721,20 @@ section,
 # Contact Section
 --------------------------------------------------------------*/
 .contact .info-item {
-  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
   padding: 20px 30px;
 }
 
 .contact .info-item .icon {
   color: var(--ink);
-  background-color: var(--accent-color);
+  background: var(--accent-color);
   width: 56px;
   height: 56px;
   font-size: 24px;
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease;
   border-radius: 50%;
   margin-right: 15px;
 }
@@ -2782,7 +2756,7 @@ section,
   display: inline-block;
   line-height: 1;
   margin: 4px 6px 0 0;
-  transition: 0.3s;
+  transition: color 0.3s ease;
   color: color-mix(in srgb, var(--default-color), transparent 50%);
 }
 
@@ -2791,7 +2765,7 @@ section,
 }
 
 .contact .php-email-form {
-  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
   padding: 30px;
   margin-top: 30px;
 }
@@ -2806,18 +2780,20 @@ section,
 .contact .php-email-form input[type=email],
 .contact .php-email-form textarea {
   color: var(--default-color);
-  background-color: color-mix(in srgb, var(--background-color), transparent 50%);
-  border-color: color-mix(in srgb, var(--default-color), transparent 80%);
+  background: color-mix(in srgb, var(--background-color), transparent 50%);
+  border: 1px solid color-mix(in srgb, var(--default-color), transparent 80%);
   font-size: 14px;
   padding: 10px 15px;
   box-shadow: none;
   border-radius: 0;
+  transition: border-color 0.3s ease;
 }
 
 .contact .php-email-form input[type=text]:focus,
 .contact .php-email-form input[type=email]:focus,
 .contact .php-email-form textarea:focus {
   border-color: var(--accent-color);
+  outline: none;
 }
 
 .contact .php-email-form input[type=text]::placeholder,
@@ -2831,8 +2807,9 @@ section,
   background: var(--accent-color);
   border: 0;
   padding: 10px 30px;
-  transition: 0.4s;
+  transition: background 0.3s ease;
   border-radius: 50px;
+  cursor: pointer;
 }
 
 .contact .php-email-form button[type=submit]:hover {
@@ -3005,13 +2982,16 @@ section,
 /* CSS-generated navigation buttons using pseudo-elements */
 .custom-carousel-nav::before,
 .custom-carousel-nav::after {
-  content: '';
+  content: 'chevron_right';
   position: absolute;
   top: 50%;
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background: color-mix(in srgb, var(--color), transparent 80%);
+  background: var(--paper);
+  font-family: 'Material Symbols Outlined';
+  font-size: 24px;
+  color: var(--color);
   transform: translateY(-50%);
   z-index: 2;
   cursor: pointer;
@@ -3019,29 +2999,21 @@ section,
   display: flex;
   align-items: center;
   justify-content: center;
+  
 }
 
 .custom-carousel-nav::before {
   left: 16px;
-  content: 'chevron_right';
-  font-family: 'Material Symbols Outlined';
-  font-size: 24px;
-  color: var(--color);
   transform: translateY(-50%) rotate(180deg);
 }
 
 .custom-carousel-nav::after {
   right: 16px;
-  content: 'chevron_right';
-  font-family: 'Material Symbols Outlined';
-  font-size: 24px;
-  color: var(--color);
-  transform: translateY(-50%);
 }
 
 .custom-carousel-nav:hover::before,
 .custom-carousel-nav:hover::after {
-  opacity: 0.8;
+  border: 1px solid var(--color);
 }
 
 /* Pagination styling for custom carousel */
