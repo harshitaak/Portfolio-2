@@ -561,6 +561,18 @@ ol li::marker {
     justify-content: center;
   }
 
+  /* Material Icons specific styling for navbar */
+  .navmenu a .material-icons {
+    font-size: 18px;
+    margin-right: 8px;
+    margin-left: 0;
+    vertical-align: middle;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
   .navmenu>ul>li>a:before {
     content: "";
     position: absolute;
@@ -587,6 +599,19 @@ ol li::marker {
   .navmenu .active,
   .navmenu .active:focus {
     color: var(--accent-color);
+  }
+
+  /* Material Icons hover and active states */
+  .navmenu a:hover .material-icons,
+  .navmenu .active .material-icons,
+  .navmenu .active:focus .material-icons {
+    color: var(--accent-color);
+    transform: scale(1.1);
+  }
+
+  .navmenu li:hover>a .material-icons {
+    color: var(--accent-color);
+    transform: scale(1.1);
   }
 
   .navmenu .dropdown ul {
@@ -665,11 +690,27 @@ ol li::marker {
     transform: translate3d(0, 0, 0);
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
+    padding: 8px;
+    border-radius: 4px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .mobile-nav-toggle.close {
-    transform: translate3d(0, 0, 0) rotate(180deg);
+    transform: translate3d(0, 0, 0) !important;
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Enhanced Material Icons styling for mobile nav toggle */
+  .mobile-nav-toggle:hover {
+    color: var(--accent-color);
+    /* background-color: color-mix(in srgb, var(--accent-color), transparent 90%); */
+    /* transform: scale(1.1); */
+  }
+
+  .mobile-nav-toggle:active {
+    transform: scale(0.95);
   }
 
   .navmenu {
@@ -2764,77 +2805,8 @@ section,
   color: var(--accent-color);
 }
 
-.contact .php-email-form {
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-  padding: 30px;
-  margin-top: 30px;
-}
-
-@media (max-width: 575px) {
-  .contact .php-email-form {
-    padding: 20px;
-  }
-}
-
-.contact .php-email-form input[type=text],
-.contact .php-email-form input[type=email],
-.contact .php-email-form textarea {
-  color: var(--default-color);
-  background: color-mix(in srgb, var(--background-color), transparent 50%);
-  border: 1px solid color-mix(in srgb, var(--default-color), transparent 80%);
-  font-size: 14px;
-  padding: 10px 15px;
-  box-shadow: none;
-  border-radius: 0;
-  transition: border-color 0.3s ease;
-}
-
-.contact .php-email-form input[type=text]:focus,
-.contact .php-email-form input[type=email]:focus,
-.contact .php-email-form textarea:focus {
-  border-color: var(--accent-color);
-  outline: none;
-}
-
-.contact .php-email-form input[type=text]::placeholder,
-.contact .php-email-form input[type=email]::placeholder,
-.contact .php-email-form textarea::placeholder {
-  color: color-mix(in srgb, var(--default-color), transparent 70%);
-}
-
-.contact .php-email-form button[type=submit] {
-  color: var(--ink);
-  background: var(--accent-color);
-  border: 0;
-  padding: 10px 30px;
-  transition: background 0.3s ease;
-  border-radius: 50px;
-  cursor: pointer;
-}
-
-.contact .php-email-form button[type=submit]:hover {
-  background: color-mix(in srgb, var(--accent-color), transparent 20%);
-}
 
 
-/* Google Material Symbols Outlined
-   The font is linked in page <head>; keep only the utility class here. */
-.material-symbols-outlined {
-  font-family: 'Material Symbols Outlined';
-  font-weight: normal;
-  font-style: normal;
-  font-size: 24px;  /* Default size, can be overridden */
-  line-height: 1;
-  letter-spacing: normal;
-  text-transform: none;
-  display: inline-block;
-  white-space: nowrap;
-  direction: ltr;
-  /* -webkit-font-feature-settings: 'roboto'; */
-  -webkit-font-smoothing: antialiased;
-  color: inherit;
-  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-}
 
 .project-title {
   font-weight: 600;
