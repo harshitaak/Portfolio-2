@@ -444,6 +444,14 @@ ol li::marker {
   margin-bottom: 1rem;
 }
 
+/* Large title styling for section titles */
+.section-title .title {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--default-color);
+  font-family: var(--heading-font);
+}
+
 /* Legacy .photo-gallery and .image-column styles removed in favor of #doodles-grid CSS masonry */
 
 /*--------------------------------------------------------------
@@ -2961,7 +2969,7 @@ section,
   height: 40px;
   border-radius: 50%;
   background: var(--paper);
-  font-family: 'Material Symbols Outlined';
+  font-family: 'Material Icons';
   font-size: 24px;
   color: var(--color);
   transform: translateY(-50%);
@@ -3423,4 +3431,45 @@ img[src$=".gif"] {
   height: 100%;
   object-fit: cover;
   display: block;
+}
+
+/*--------------------------------------------------------------
+# Text Video Section - Custom layout for wide text with portrait video
+--------------------------------------------------------------*/
+.text-video-section {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  margin: 4rem 0;
+}
+
+.text-video-section__text {
+  flex: 1 1 70%;
+}
+
+.text-video-section__video {
+  flex: 1 1 30%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.text-video-section__video video {
+  width: 100%;
+  max-width: 300px;
+  height: auto;
+  border-radius: 8px;
+}
+
+@media (max-width: 768px) {
+  .text-video-section {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  .text-video-section__text,
+  .text-video-section__video {
+    flex: 1 1 auto;
+    width: 100%;
+  }
 }
