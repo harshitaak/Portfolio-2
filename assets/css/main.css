@@ -330,7 +330,7 @@ body *, body *::before, body *::after {
 /* Light mode color variables */
 .light-mode {
   /* Core palette */
-  --paper: #fcfcfc;
+  --paper:hsl(240, 4%, 91%);
   --ink: #181617;
   --color: hsl(204, 56%, 50%);
   --shadow-color: #000000;
@@ -379,10 +379,33 @@ body *, body *::before, body *::after {
   width: 100%;
   background: radial-gradient(circle, color-mix(in srgb, var(--ink), var(--paper) 50%) 1px, transparent 1px);
   background-size: 16px 16px;
-  /* Optional: mask for a vignette/fade effect */
-  -webkit-mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, #000 80%, transparent 100%);
-  mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, #000 80%, transparent 100%);
-  opacity: 0.6;
+  opacity: 0.8;
+  
+  /* Modern browsers: mask for a vignette/fade effect */
+  -webkit-mask-image: radial-gradient(ellipse 60% 60% at 50% 50%, black 70%, transparent 100%);
+  -webkit-mask-size: 100% 100%;
+  -webkit-mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-image: radial-gradient(ellipse 60% 60% at 50% 50%, black 70%, transparent 100%);
+  mask-size: 100% 100%;
+  mask-position: center;
+  mask-repeat: no-repeat;
+}
+
+/* Fallback: Use a pseudo-element for vignette effect if mask is not supported */
+.dots-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 60% 60% at 50% 50%, transparent 70%, rgba(0, 0, 0, 0.4) 100%);
+  pointer-events: none;
+}
+
+/* Only apply mask when supported */
+@supports (mask-image: radial-gradient(black, transparent)) {
+  .dots-bg::before {
+    display: none;
+  }
 }
 
 /* Smooth scroll */
@@ -2702,7 +2725,7 @@ section,
 .portfolio .portfolio-content:hover .portfolio-info {
   opacity: 1;
   box-shadow: var(--elevation-2);
-  transform: translateY(-5px);
+  /* transform: translateY(-5px); */
   cursor: pointer;
 }
 
