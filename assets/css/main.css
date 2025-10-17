@@ -3368,16 +3368,6 @@ body {
   padding: 0;
   overscroll-behavior: none;
   min-height: 100%;
-  cursor: url("https://cdn.prod.website-files.com/6708f85ff3d3cba6aff436fb/671251b239d7aeb290a31ac5_cursor-default%402x.svg")
-      2 0,
-    auto;
-}
-
-a,
-button {
-  cursor: url("https://cdn.prod.website-files.com/6708f85ff3d3cba6aff436fb/671251b212e6b71494aa67ff_cursor-pointer%402x.svg")
-      12 0,
-    pointer;
 }
 
 .cloneable {
@@ -3425,11 +3415,11 @@ button {
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
+  /* cursor: pointer; */
 }
 
 .text-draw__box svg {
-  transition: all 1s ease;
+  transition: all 1s ease-out;
 }
 
 
