@@ -1424,6 +1424,55 @@ ol li::marker {
 }
 
 /*--------------------------------------------------------------
+# Floating Back Button
+--------------------------------------------------------------*/
+.floating-back-button {
+  position: fixed;
+  visibility: hidden;
+  opacity: 0;
+  left: 16px;
+  top: -60px;
+  z-index: 99999;
+  background-color: var(--paper);
+  width: 44px;
+  height: 44px;
+  border-radius: 50px;
+  border: 1px var(--ink);
+  outline: none;
+  transition: all 0.3s ease;
+  box-shadow: var(--elevation-1);
+  cursor: pointer;
+  transform: translateY(-20px);
+}
+
+.floating-back-button i {
+  font-size: 20px;
+  color: color-mix(in srgb, var(--ink), var(--paper) 50%);
+  transition: color 0.3s var(--ease-3);
+}
+
+.floating-back-button:is(:hover, :focus-visible) {
+  background-color: var(--surface-color);
+  transform: translateY(-2px);
+  box-shadow: var(--elevation-2);
+}
+
+.floating-back-button:is(:hover, :focus-visible) i {
+  color: var(--accent-color);
+}
+
+.floating-back-button.active {
+  visibility: visible;
+  opacity: 1;
+  top: 16px;
+  transform: translateY(0);
+}
+
+.floating-back-button.active:is(:hover, :focus-visible) {
+  transform: translateY(-2px);
+}
+
+/*--------------------------------------------------------------
 # Floating Dark Mode Toggle
 --------------------------------------------------------------*/
 .floating-theme-toggle {

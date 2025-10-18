@@ -134,6 +134,36 @@
   document.addEventListener('scroll', toggleScrollTop);
 
   /**
+   * Floating back button
+   */
+  let floatingBackButton = document.querySelector('#floating-back-button');
+
+  function toggleFloatingBackButton() {
+    if (floatingBackButton) {
+      // Show floating back button when user has scrolled down
+      const hasScrolled = window.scrollY > 100;
+      
+      if (hasScrolled) {
+        floatingBackButton.classList.add('active');
+      } else {
+        floatingBackButton.classList.remove('active');
+      }
+    }
+  }
+
+  // Add click listener to floating back button
+  if (floatingBackButton) {
+    floatingBackButton.addEventListener('click', (e) => {
+      e.preventDefault();
+      // Go back in browser history
+      window.history.back();
+    });
+  }
+
+  window.addEventListener('load', toggleFloatingBackButton);
+  document.addEventListener('scroll', toggleFloatingBackButton);
+
+  /**
    * Floating theme toggle button
    */
   let floatingThemeToggle = document.querySelector('#floating-theme-toggle');
