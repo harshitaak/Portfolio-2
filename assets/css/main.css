@@ -275,8 +275,8 @@
 
 /* Fonts */
 :root {
-  --default-font: "Roboto", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  --heading-font: Satoshi-Medium;
+  --default-font: "Satoshi-Regular", "Roboto", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --heading-font: "Satoshi-Medium", "Satoshi-Regular", sans-serif;
   --nav-font: "Poppins", sans-serif;
 }
 
@@ -284,22 +284,22 @@
 :root {
   
   /* Display Text (For the largest, most prominent text, like hero titles) */
-  --text-display-font: 700 72px/1.2 Satoshi-Bold;
+  --text-display-font: 700 72px/1.2 "Satoshi-Bold", "Satoshi-Medium", sans-serif;
 
   /* Headline Text (For major section titles) */
-  --text-headline-font: 700 48px/1.25 Satoshi-Medium;
+  --text-headline-font: 700 48px/1.25 "Satoshi-Bold", "Satoshi-Medium", sans-serif;
 
   /* Title Text (For subsections or card titles) */
-  --text-title-font: 600 1.5rem/1.4 Satoshi-Medium;
+  --text-title-font: 600 1.5rem/1.4 "Satoshi-Medium", "Satoshi-Regular", sans-serif;
   
   /* Subtitle Text (For text that supports a title) */
-  --text-subtitle-font: 500 1.125rem/1.5 Satoshi-Regular;
+  --text-subtitle-font: 500 1.125rem/1.5 "Satoshi-Medium", "Satoshi-Regular", sans-serif;
 
   /* Body Text (For all default paragraphs) */
-  --text-body-font: 300 1.25rem/1.6 Satoshi-Light;
+  --text-body-font: 300 1.25rem/1.6 "Satoshi-Light", "Satoshi-Regular", sans-serif;
 
   /* Caption Text (For smaller, secondary information) */
-  --text-caption-font: 400 0.875rem/1.5 Satoshi-Light;
+  --text-caption-font: 400 0.875rem/1.5 "Satoshi-Regular", sans-serif;
 }
 
 
@@ -602,6 +602,12 @@ ol li::marker {
     display: inline-flex;
     align-items: center;
     justify-content: center;
+  }
+
+  /* General Material Icons styling to prevent overlap */
+  .material-icons {
+    display: inline-block;
+    vertical-align: middle;
   }
 
   .navmenu>ul>li>a:before {
@@ -1447,18 +1453,18 @@ ol li::marker {
 
 .floating-back-button i {
   font-size: 20px;
-  color: color-mix(in srgb, var(--ink), var(--paper) 50%);
+  color: var(--ink);
   transition: color 0.3s var(--ease-3);
 }
 
 .floating-back-button:is(:hover, :focus-visible) {
-  background-color: var(--surface-color);
+  background-color: var(--paper);
   transform: translateY(-2px);
   box-shadow: var(--elevation-2);
 }
 
 .floating-back-button:is(:hover, :focus-visible) i {
-  color: var(--accent-color);
+  color: var(--ink);
 }
 
 .floating-back-button.active {
@@ -1699,7 +1705,7 @@ section,
   margin: 0;
   letter-spacing: 1.5px;
   text-transform: uppercase;
-  color: color-mix(in srgb, var(--default-color), transparent 50%);
+  color: var(--ink);
   position: relative;
 }
 
@@ -1708,7 +1714,7 @@ section,
   width: 120px;
   height: 1px;
   display: inline-block;
-  background: var(--accent-color);
+  background: var(--color);
   margin: 4px 10px;
 }
 
@@ -2184,6 +2190,7 @@ section,
 .about .content h2 {
   font-weight: 700;
   font-size: 24px;
+  font-family: var(--heading-font);
 }
 
 .about .content ul {
@@ -2203,17 +2210,18 @@ section,
 
 .about .content ul i {
   font-size: 16px;
-  margin-right: 5px;
+  margin-right: 8px;
   color: var(--accent-color);
   line-height: 0;
+  flex-shrink: 0;
 }
 
 /*--------------------------------------------------------------
 # Stats Section
 --------------------------------------------------------------*/
 .stats i {
-  background-color: var(--surface-color);
-  color: var(--accent-color);
+  background-color: var(--paper);
+  color: var(--color);
   box-shadow: var(--elevation-1);
   width: 54px;
   height: 54px;
@@ -2228,7 +2236,7 @@ section,
 }
 
 .stats .stats-item {
-  background-color: var(--surface-color);
+  background-color: var(--paper);
   margin-top: -20px;
   padding: 24px 24px 36px 24px;
   width: 100%;
@@ -2243,7 +2251,7 @@ section,
   font-size: 36px;
   display: block;
   font-weight: 700;
-  color: color-mix(in srgb, var(--default-color), transparent 20%);
+  color: var(--ink);
 }
 
 .stats .stats-item p {
@@ -2294,45 +2302,47 @@ section,
 # Interests Section
 --------------------------------------------------------------*/
 .interests .features-item {
-  background-color: var(--surface-color);
+  background-color: var(--paper);
+  flex-direction: column;
+  gap: 32px;
   display: flex;
   align-items: center;
+  justify-content: center;
   padding: 20px;
   transition: 0.3s;
   /* border: 1px solid color-mix(in srgb, var(--default-color), transparent 90%); */
   position: relative;
   box-shadow: var(--elevation-1);
-  border-radius: 4px;
+  border-radius: 16px;
 }
 
 .interests .features-item i {
-  font-size: 32px;
-  padding-right: 10px;
+  font-size: 48px;
   line-height: 0;
 }
 
 .interests .features-item h3 {
-  font-weight: 700;
+  font-weight: 500;
   margin: 0;
   padding: 0;
-  line-height: 1;
-  font-size: 16px;
+  line-height: 1.2;
+  font-size: 20px;
+  font-family: var(--heading-font);
 }
 
 .interests .features-item h3 a {
-  color: var(--default-color);
+  color: var(--ink);
   transition: 0.3s;
 }
 
 .interests .features-item:hover {
-  border-color: var(--accent-color);
-  box-shadow: var(--elevation-2);
+  box-shadow: var(--elevation-1);
 
   transform: translateY(-5px);
 }
 
 .interests .features-item:hover h3 a {
-  color: var(--default-color);
+  color: var(--ink);
 }
 
 /*--------------------------------------------------------------
@@ -2372,6 +2382,7 @@ section,
   font-size: 18px;
   font-weight: bold;
   margin: 10px 0 5px 45px;
+  font-family: var(--heading-font);
 }
 
 .testimonials .testimonial-item h4 {
@@ -2539,6 +2550,7 @@ section,
   font-weight: 700;
   margin: 10px 0 15px 0;
   font-size: 22px;
+  font-family: var(--heading-font);
 }
 
 .services .service-item p {
@@ -2606,11 +2618,13 @@ section,
 .service-details h3 {
   font-size: 26px;
   font-weight: 700;
+  font-family: var(--heading-font);
 }
 
 .service-details h4 {
   font-size: 20px;
   font-weight: 700;
+  font-family: var(--heading-font);
 }
 
 .service-details p {
@@ -2757,6 +2771,7 @@ section,
   border-radius: 4px;
   display: inline-block;
   background-color: var(--color);
+  font-family: var(--heading-font);
 }
 
 .portfolio .portfolio-content .portfolio-info p {
@@ -2809,6 +2824,7 @@ section,
   margin-bottom: 20px;
   padding-bottom: 20px;
   border-bottom: 1px solid color-mix(in srgb, var(--default-color), transparent 85%);
+  font-family: var(--heading-font);
 }
 
 .portfolio-details .portfolio-info ul {
@@ -2829,6 +2845,7 @@ section,
   font-size: 26px;
   font-weight: 700;
   margin-bottom: 20px;
+  font-family: var(--heading-font);
 }
 
 .portfolio-details .portfolio-description p {
@@ -2864,6 +2881,7 @@ section,
   font-size: 18px;
   font-weight: 700;
   margin: 0 0 2px 0;
+  font-family: var(--heading-font);
 }
 
 .contact .info-item p {
