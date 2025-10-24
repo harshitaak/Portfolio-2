@@ -185,11 +185,25 @@
   if (floatingThemeToggle) {
     floatingThemeToggle.addEventListener('click', (e) => {
       e.preventDefault();
-      // Trigger the main theme toggle
-      const mainThemeToggle = document.getElementById('theme-toggle');
-      if (mainThemeToggle) {
-        mainThemeToggle.click();
+      // Toggle theme independently
+      const body = document.body;
+      const currentTheme = body.classList.contains('light-mode') ? 'light' : 'dark';
+      const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+      
+      // Apply theme directly
+      if (newTheme === 'light') {
+        body.classList.add('light-mode');
+      } else {
+        body.classList.remove('light-mode');
       }
+      
+      // Save theme preference
+      localStorage.setItem('theme-preference', newTheme);
+      
+      // Update aria-label for accessibility
+      floatingThemeToggle.setAttribute('aria-label', `Switch to ${newTheme === 'light' ? 'dark' : 'light'} mode`);
+      
+      console.log('Floating toggle: Theme toggled from', currentTheme, 'to', newTheme);
     });
   }
 
@@ -402,9 +416,15 @@ document.addEventListener('DOMContentLoaded', function() {
       body.classList.remove('light-mode');
     }
     
-    // Update aria-label for accessibility
+    // Update aria-label for accessibility on both toggles
     if (themeToggle) {
       themeToggle.setAttribute('aria-label', `Switch to ${theme === 'light' ? 'dark' : 'light'} mode`);
+    }
+    
+    // Also update floating toggle aria-label
+    const floatingThemeToggle = document.querySelector('#floating-theme-toggle');
+    if (floatingThemeToggle) {
+      floatingThemeToggle.setAttribute('aria-label', `Switch to ${theme === 'light' ? 'dark' : 'light'} mode`);
     }
     
     console.log('Theme applied:', theme); // Debug log
