@@ -277,7 +277,7 @@
 :root {
   --default-font: "Satoshi-Regular", "Roboto", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   --heading-font: "Satoshi-Medium", "Satoshi-Regular", sans-serif;
-  --nav-font: "Poppins", sans-serif;
+  --nav-font: "Satoshi-Regular", sans-serif;
 }
 
 /* Semantic Typography Styles */
@@ -311,7 +311,7 @@
   --color: hsl(204, 56%, 67%);
   --shadow-color: #000000; /* keep as is */
 
-  /* Compatibility aliases (will be phased out) */
+  /* Compatibility aliases (will be phased out) - automatically inherit from core palette */
   --background-color: var(--paper);
   --default-color: var(--ink);
   --accent-color: var(--color);
@@ -329,17 +329,10 @@ body *, body *::before, body *::after {
 
 /* Light mode color variables */
 .light-mode {
-  /* Core palette */
-  --paper:hsl(240, 4%, 91%);
+  --paper: hsl(240, 4%, 91%);
   --ink: #181617;
   --color: hsl(204, 56%, 50%);
-  --shadow-color: #000000;
-
-  /* Compatibility aliases */
-  --background-color: var(--paper);
-  --default-color: var(--ink);
-  --accent-color: var(--color);
-  --surface-color: var(--paper);
+  /* Compatibility aliases automatically inherit updated values from :root */
 }
 
 /* (moved) project intro styles now live near .page-title section */
@@ -567,8 +560,8 @@ ol li::marker {
 
   .navmenu a,
   .navmenu a:focus {
-    color: var(--default-color);
-    font-size: 15px;
+    color: var(--ink);
+    font-size: 16px;
     padding: 0 2px;
     font-family: var(--nav-font);
     font-weight: 400;
@@ -628,7 +621,9 @@ ol li::marker {
   .navmenu .active:before {
     visibility: visible;
     background-color: var(--accent-color);
+    font-family: var(--nav-font);
     width: 100%;
+    /* transition: 0.3s ease-in-out; */
   }
 
   .navmenu li:hover>a,
@@ -636,6 +631,7 @@ ol li::marker {
   .navmenu .active,
   .navmenu .active:focus {
     color: var(--accent-color);
+    /* font-weight: 600; */
   }
 
   /* Material Icons hover and active states */
@@ -1639,6 +1635,7 @@ body:not(.light-mode) .floating-theme-toggle .sun-and-moon > .moon > circle {
 .project-intro {
   color: inherit; /* follow .page-title color in headings area */
   font: var(--text-body-font);
+  font-family: Satoshi-Regular;
   color: var(--paper);
   font-size: clamp(16px, 1vw + 12px, 24px);
 }
