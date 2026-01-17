@@ -1925,6 +1925,8 @@ section,
   backdrop-filter: blur(10px);
   transition: all 0.3s var(--ease-3);
   pointer-events: auto;
+  /* Default floating animation for all cards - can be overridden by specific card-X classes */
+  animation: float-default 6s var(--ease-3) infinite;
 }
 
 .floating-card:hover {
@@ -1966,6 +1968,13 @@ section,
   animation-delay: 2s;
 }
 
+.card-4 {
+  top: 20px;
+  left: -40px;
+  animation: float4 6s var(--ease-3) infinite;
+  animation-delay: 3s;
+}
+
 /* Floating animations */
 @keyframes float1 {
   0%, 100% { transform: translateY(0px) rotate(0deg); }
@@ -1980,6 +1989,16 @@ section,
 @keyframes float3 {
   0%, 100% { transform: translateY(-50%) rotate(0deg); }
   50% { transform: translateY(-60%) rotate(1deg); }
+}
+
+@keyframes float4 {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-12px) rotate(-1.5deg); }
+}
+
+@keyframes float-default {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-10px) rotate(1deg); }
 }
 
 /* Enhanced responsive adjustments for hero image and floating cards */
@@ -2006,6 +2025,11 @@ section,
   .card-3 {
     right: -50px;
   }
+  
+  .card-4 {
+    top: 20px;
+    left: -40px;
+  }
 }
 
 @media (max-width: 1199px) {
@@ -2030,6 +2054,11 @@ section,
   
   .card-3 {
     right: -40px;
+  }
+  
+  .card-4 {
+    top: 15px;
+    left: -35px;
   }
 }
 
@@ -2068,6 +2097,11 @@ section,
   .card-3 {
     right: -35px;
   }
+  
+  .card-4 {
+    top: 12px;
+    left: -32px;
+  }
 }
 
 @media (max-width: 768px) {
@@ -2104,6 +2138,11 @@ section,
   
   .card-3 {
     right: -30px;
+  }
+  
+  .card-4 {
+    top: 10px;
+    left: -25px;
   }
 }
 
@@ -2142,6 +2181,11 @@ section,
   .card-3 {
     right: -25px;
   }
+  
+  .card-4 {
+    top: 8px;
+    left: -20px;
+  }
 }
 
 @media (max-width: 480px) {
@@ -2178,6 +2222,11 @@ section,
   
   .card-3 {
     right: -20px;
+  }
+  
+  .card-4 {
+    top: 5px;
+    left: -15px;
   }
 }
 
