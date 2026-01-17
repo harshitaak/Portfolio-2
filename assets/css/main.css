@@ -1139,55 +1139,35 @@ ol li::marker {
   padding-right: 1.5rem;
 }
 
-.resume .experience-section .experience-cards .experience-card {
+.resume .experience-card,
+.resume .education-content {
   background: var(--surface-color);
-  /* border: 1px solid color-mix(in srgb, var(--default-color), transparent 90%); */
-  border-radius: 12px;
-  padding: 1.8rem;
-  margin-bottom: 1.5rem;
+  border: 1px solid color-mix(in srgb, var(--default-color), transparent 90%);
+  border-radius: 8px;
+  padding: 1.5rem;
   box-shadow: var(--elevation-1);
   transition: all 0.3s ease;
   position: relative;
-  overflow: hidden;
 }
 
-.resume .experience-section .experience-cards .experience-card::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 4px;
-  height: 100%;
-  background: var(--accent-color);
+.resume .experience-card {
+  margin-bottom: 1.5rem;
 }
 
-.resume .experience-section .experience-cards .experience-card:hover {
+.resume .experience-card:hover,
+.resume .education-content:hover {
   box-shadow: var(--elevation-2);
   transform: translateY(-5px);
 }
 
-.resume .experience-section .experience-cards .experience-card .card-header {
+.resume .card-header {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
   margin-bottom: 1rem;
 }
 
-.resume .experience-section .experience-cards .experience-card .card-header .role-info h3 {
-  color: var(--accent-color);
-  font-size: 1.25rem;
-  font-weight: 600;
-  margin-bottom: 0.25rem;
-}
-
-.resume .experience-section .experience-cards .experience-card .card-header .role-info h4 {
-  color: var(--default-color);
-  font-size: 1rem;
-  font-weight: 500;
-  margin: 0;
-}
-
-.resume .experience-section .experience-cards .experience-card .card-header .duration {
+.resume .duration {
   background: color-mix(in srgb, var(--accent-color), transparent 90%);
   color: var(--accent-color);
   padding: 0.4rem 0.8rem;
@@ -1197,19 +1177,13 @@ ol li::marker {
   white-space: nowrap;
 }
 
-.resume .experience-section .experience-cards .experience-card .card-body p {
-  color: color-mix(in srgb, var(--default-color), transparent 25%);
-  margin-bottom: 1rem;
-  line-height: 1.6;
-}
-
-.resume .experience-section .experience-cards .experience-card .card-body .achievements {
+.resume .achievements {
   margin: 0;
   padding-left: 0;
   list-style: none;
 }
 
-.resume .experience-section .experience-cards .experience-card .card-body .achievements li {
+.resume .achievements li {
   position: relative;
   padding-left: 1.5rem;
   margin-bottom: 0.5rem;
@@ -1217,7 +1191,7 @@ ol li::marker {
   font-size: 0.9rem;
 }
 
-.resume .experience-section .experience-cards .experience-card .card-body .achievements li::before {
+.resume .achievements li::before {
   content: "✓";
   position: absolute;
   left: 0;
@@ -1226,7 +1200,7 @@ ol li::marker {
   font-weight: bold;
 }
 
-.resume .experience-section .experience-cards .experience-card .card-body .achievements li:last-child {
+.resume .achievements li:last-child {
   margin-bottom: 0;
 }
 
@@ -1234,11 +1208,11 @@ ol li::marker {
   padding-left: 1.5rem;
 }
 
-.resume .education-section .education-timeline {
+.resume .education-timeline {
   position: relative;
 }
 
-.resume .education-section .education-timeline .timeline-track {
+.resume .timeline-track {
   position: absolute;
   left: 1rem;
   top: 2rem;
@@ -1247,17 +1221,17 @@ ol li::marker {
   background: linear-gradient(to bottom, var(--accent-color), color-mix(in srgb, var(--accent-color), transparent 70%));
 }
 
-.resume .education-section .education-timeline .education-item {
+.resume .education-item {
   position: relative;
   padding-left: 3rem;
   margin-bottom: 2.5rem;
 }
 
-.resume .education-section .education-timeline .education-item:last-child {
+.resume .education-item:last-child {
   margin-bottom: 0;
 }
 
-.resume .education-section .education-timeline .education-item .timeline-marker {
+.resume .timeline-marker {
   position: absolute;
   left: 0.5rem;
   top: 1.5rem;
@@ -1269,57 +1243,39 @@ ol li::marker {
   box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent-color), transparent 85%);
 }
 
-.resume .education-section .education-timeline .education-item .education-content {
-  background: var(--surface-color);
-  border: 1px solid color-mix(in srgb, var(--default-color), transparent 90%);
-  border-radius: 8px;
-  padding: 1.5rem;
-  transition: all 0.3s ease;
-  box-shadow: var(--elevation-1);
-}
 
-.resume .education-section .education-timeline .education-item .education-content:hover {
-  box-shadow: var(--elevation-2);
-  transform: translateY(-5px);
-}
-
-.resume .education-section .education-timeline .education-item .education-content .degree-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 0.5rem;
-}
-
-.resume .education-section .education-timeline .education-item .education-content .degree-header h3 {
+.resume .card-header h3 {
   color: var(--accent-color);
-  font-size: 1.1rem;
+  font-size: 1.25rem;
   font-weight: 600;
-  margin: 0;
-  line-height: 1.3;
+  margin-bottom: 0.25rem;
 }
 
-.resume .education-section .education-timeline .education-item .education-content .degree-header .year {
-  background: color-mix(in srgb, var(--accent-color), transparent 90%);
-  color: var(--accent-color);
-  padding: 0.4rem 0.8rem;
-  border-radius: 20px;
-  font-size: 0.8rem;
+.resume .role-info h4 {
+  color: var(--default-color);
+  font-size: 1rem;
   font-weight: 500;
-  white-space: nowrap;
+  margin: 0;
 }
 
-.resume .education-section .education-timeline .education-item .education-content .institution {
+.resume .institution {
   color: var(--default-color);
   font-size: 1rem;
   font-weight: 500;
   margin-bottom: 0.8rem;
 }
 
-.resume .education-section .education-timeline .education-item .education-content p {
-  color: color-mix(in srgb, var(--default-color), transparent 30%);
+.resume .card-body p {
+  color: color-mix(in srgb, var(--default-color), transparent 25%);
+  margin-bottom: 1rem;
+  line-height: 1.6;
+}
+
+.resume .education-content p {
+  color: color-mix(in srgb, var(--default-color), transparent 25%);
   margin: 0;
+  line-height: 1.6;
   font-size: 0.9rem;
-  line-height: 1.5;
 }
 
 @media (max-width: 992px) {
@@ -1335,21 +1291,13 @@ ol li::marker {
     font-size: 1.6rem;
   }
 
-  .resume .experience-cards .experience-card .card-header {
+
+  .resume .card-header {
     flex-direction: column;
     gap: 0.8rem;
   }
 
-  .resume .experience-cards .experience-card .card-header .duration {
-    align-self: flex-start;
-  }
-
-  .resume .education-timeline .education-item .education-content .degree-header {
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-
-  .resume .education-timeline .education-item .education-content .degree-header .year {
+  .resume .duration {
     align-self: flex-start;
   }
 }
@@ -1363,19 +1311,19 @@ ol li::marker {
     font-size: 1.2rem;
   }
 
-  .resume .experience-cards .experience-card {
+  .resume .experience-card {
     padding: 1.3rem;
   }
 
-  .resume .education-timeline .timeline-track {
+  .resume .timeline-track {
     left: 0.5rem;
   }
 
-  .resume .education-timeline .education-item {
+  .resume .education-item {
     padding-left: 2rem;
   }
 
-  .resume .education-timeline .education-item .timeline-marker {
+  .resume .timeline-marker {
     left: 0;
   }
 }
