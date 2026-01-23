@@ -643,8 +643,36 @@ ol li::marker {
   }
 
   .navmenu li:hover>a .material-icons {
-    color: var(--accent-color);
+    color: var(--color);
     transform: scale(1.1);
+  }
+
+  /* Disabled navigation item styles */
+  .navmenu a.nav-disabled {
+    /* pointer-events: none;
+    cursor: not-allowed; */
+    cursor: progress;
+    opacity: 0.6;
+    color: var(--ink);
+  }
+
+  /* Remove hover states for disabled navmenu items */
+  .navmenu a.nav-disabled:hover, .navmenu li:hover>a.nav-disabled 
+
+  .navmenu li:hover>a.nav-disabled {
+    color: var(--ink);
+    cursor: progress;
+  }
+
+  .navmenu a.nav-disabled:hover .material-icons,
+  .navmenu li:hover>a.nav-disabled .material-icons {
+    color: var(--ink);
+    transform: none;
+  }
+
+  .navmenu a.nav-disabled .material-icons {
+    color: var(--ink);
+    transform: none;
   }
 
   .navmenu .dropdown ul {
@@ -2918,6 +2946,41 @@ section,
   color: var(--default-color);
   font: var(--text-body-font); /* controls size and line-height */
 }
+
+/* Color chips for displaying color palette variables */
+.color-chip {
+  position: relative;
+  display: inline-block;
+  padding-left: 20px;
+  margin: 0 2px;
+}
+
+.color-chip::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 14px;
+  height: 14px;
+  border-radius: 2px;
+  display: inline-block;
+  border: 1px solid color-mix(in srgb, var(--ink), transparent 60%);
+}
+
+.color-chip--paper::before {
+  background-color: var(--paper);
+}
+
+.color-chip--ink::before {
+  background-color: var(--ink);
+}
+
+.color-chip--color::before {
+  background-color: var(--color);
+  border-color: color-mix(in srgb, var(--color), transparent 40%);
+}
+
 .section-gap-80 > * + * {
   margin-top: 40px;
   padding-bottom: 40px;
