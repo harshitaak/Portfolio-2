@@ -390,7 +390,7 @@ body *, body *::before, body *::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse 60% 60% at 50% 50%, transparent 70%, rgba(0, 0, 0, 0.4) 100%);
+  background: radial-gradient(ellipse 60% 60% at 50% 50%, transparent 70%, color-mix(in srgb, var(--ink), transparent 40%) 100%);
   pointer-events: none;
 }
 
@@ -410,8 +410,8 @@ body *, body *::before, body *::after {
 # General Styling & Shared Classes
 --------------------------------------------------------------*/
 body {
-  color: var(--default-color);
-  background-color: var(--background-color);
+  color: var(--ink);
+  background-color: var(--paper);
   font-family: var(--default-font);
 }
 
@@ -464,7 +464,7 @@ ol li::marker {
 .section-title .title {
   font-size: 28px;
   font-weight: 700;
-  color: var(--default-color);
+  color: var(--ink);
   font-family: var(--heading-font);
 }
 
@@ -474,7 +474,6 @@ ol li::marker {
 # Global Header
 --------------------------------------------------------------*/
 .header {
-  --background-color:var(--surface-color);
   color: var(--ink);
   box-shadow: var(--elevation-1) ;
   background-color: var(--paper);
@@ -509,23 +508,14 @@ ol li::marker {
   font-size: 30px;
   margin: 0;
   font-weight: 700;
-  color: var(--default-color);
+  color: var(--ink);
 }
 
 .scrolled .header {
   box-shadow: var(--elevation-1) ;
 }
 
-/* Global Header on Scroll
-------------------------------*/
-.scrolled .header {
-  --background-color: var(--surface-color);
-}
 
-/* Hide-on-scroll header state - DISABLED to prevent conflicts with loading system */
-/* body.hide-header .header {
-  transform: translateY(-100%);
-} */
 
 /*--------------------------------------------------------------
 # Navigation Menu
@@ -610,7 +600,7 @@ ol li::marker {
     bottom: -6px;
     left: 0;
     border-radius: 4px;
-    background-color: var(--surface-color);
+    background-color: var(--paper);
     visibility: hidden;
     width: 0px;
     transition: 0.3s ease-in-out;
@@ -620,7 +610,7 @@ ol li::marker {
   .navmenu a:focus:before,
   .navmenu .active:before {
     visibility: visible;
-    background-color: var(--accent-color);
+    background-color: var(--color);
     font-family: var(--nav-font);
     width: 100%;
     /* transition: 0.3s ease-in-out; */
@@ -630,7 +620,7 @@ ol li::marker {
   .navmenu a:hover,
   .navmenu .active,
   .navmenu .active:focus {
-    color: var(--accent-color);
+    color: var(--color);
     /* font-weight: 600; */
   }
 
@@ -638,7 +628,7 @@ ol li::marker {
   .navmenu a:hover .material-icons,
   .navmenu .active .material-icons,
   .navmenu .active:focus .material-icons {
-    color: var(--accent-color);
+    color: var(--color);
     transform: scale(1.1);
   }
 
@@ -649,19 +639,15 @@ ol li::marker {
 
   /* Disabled navigation item styles */
   .navmenu a.nav-disabled {
-    /* pointer-events: none;
-    cursor: not-allowed; */
-    cursor: progress;
-    opacity: 0.6;
-    color: var(--ink);
+    cursor: not-allowed !important;
+    opacity: 0.5;
+    color: var(--ink) !important;
   }
 
   /* Remove hover states for disabled navmenu items */
-  .navmenu a.nav-disabled:hover, .navmenu li:hover>a.nav-disabled 
-
+  .navmenu a.nav-disabled:hover, 
   .navmenu li:hover>a.nav-disabled {
-    color: var(--ink);
-    cursor: progress;
+    cursor: not-allowed !important;
   }
 
   .navmenu a.nav-disabled:hover .material-icons,
@@ -678,7 +664,7 @@ ol li::marker {
   .navmenu .dropdown ul {
     margin: 0;
     padding: 10px 0;
-    background: var(--surface-color);
+    background: var(--paper);
     display: block;
     position: absolute;
     visibility: hidden;
@@ -699,7 +685,7 @@ ol li::marker {
     padding: 10px 20px;
     font-size: 15px;
     text-transform: none;
-    color: var(--default-color);
+    color: var(--ink);
   }
 
   .navmenu .dropdown ul a i {
@@ -709,7 +695,7 @@ ol li::marker {
   .navmenu .dropdown ul a:hover,
   .navmenu .dropdown ul .active:hover,
   .navmenu .dropdown ul li:hover>a {
-    color: var(--accent-color);
+    color: var(--color);
   }
 
   .navmenu .dropdown:hover>ul {
@@ -741,7 +727,7 @@ ol li::marker {
     width: 100%;
   }
   .mobile-nav-toggle {
-    color: var(--default-color);
+    color: var(--ink);
     font-size: 28px;
     line-height: 0;
     margin-right: 10px;
@@ -765,8 +751,8 @@ ol li::marker {
 
   /* Enhanced Material Icons styling for mobile nav toggle */
   .mobile-nav-toggle:hover {
-    color: var(--accent-color);
-    /* background-color: color-mix(in srgb, var(--accent-color), transparent 90%); */
+    color: var(--color);
+    /* background-color: color-mix(in srgb, var(--color), transparent 90%); */
     /* transform: scale(1.1); */
   }
 
@@ -790,8 +776,8 @@ ol li::marker {
     padding: 10px 0;
     margin: 0;
     border-radius: 6px;
-    background-color: var(--background-color);
-    border: 1px solid color-mix(in srgb, var(--default-color), transparent 90%);
+    background-color: var(--paper);
+    border: 1px solid color-mix(in srgb, var(--ink), transparent 90%);
     box-shadow: none;
     overflow-y: auto;
     transition: 0.3s;
@@ -801,7 +787,7 @@ ol li::marker {
 
   .navmenu a,
   .navmenu a:focus {
-    color: var(--default-color);
+    color: var(--ink);
     padding: 10px 20px;
     font-family: var(--nav-font);
     font-size: 17px;
@@ -829,27 +815,27 @@ ol li::marker {
     justify-content: center;
     border-radius: 50%;
     transition: 0.3s;
-    background-color: color-mix(in srgb, var(--default-color), transparent 83%);
+    background-color: color-mix(in srgb, var(--ink), transparent 83%);
     position: relative;
     transform-origin: center;
   }
 
   .navmenu a i:hover,
   .navmenu a:focus i:hover {
-    background-color: var(--accent-color);
-    color: color-mix(in srgb, var(--default-color), transparent 83%);
+    background-color: var(--color);
+    color: color-mix(in srgb, var(--ink), transparent 83%);
   }
 
   .navmenu a:hover,
   .navmenu .active,
   .navmenu .active:focus {
-    color: var(--accent-color);
+    color: var(--color);
   }
 
   .navmenu .active i,
   .navmenu .active:focus i {
-    background-color: var(--accent-color);
-    color: var(--default-color);
+    background-color: var(--color);
+    color: var(--ink);
     transform: rotate(180deg);
     transform-origin: center;
   }
@@ -875,7 +861,7 @@ ol li::marker {
     z-index: 99;
     padding: 0;
     margin: 0;
-    background-color: var(--background-color);
+    background-color: var(--paper);
     transition: all 0.5s ease-in-out;
     height: auto;
     max-height: none;
@@ -929,7 +915,7 @@ ol li::marker {
 
 
   .mobile-nav-active .mobile-nav-toggle {
-    color: var(--default-color);
+    color: var(--ink);
     position: absolute;
     font-size: 32px;
     top: 15px;
@@ -953,7 +939,7 @@ ol li::marker {
     bottom: 0 !important;
     width: 100% !important;
     height: 100vh !important;
-    background: var(--background-color) !important;
+    background: var(--paper) !important;
     z-index: 9999 !important;
     /* Prevent glitching */
     transform: translate3d(0, 0, 0);
@@ -1021,7 +1007,7 @@ ol li::marker {
 }
 
 .footer .social-links a:hover {
-  color: var(--accent-color);
+  color: var(--color);
 }
 
 /* Minimal footer theme adjustments */
@@ -1032,14 +1018,14 @@ ol li::marker {
   color: var(--text-secondary);
 }
 .minimal-footer .social-links a:hover {
-  color: var(--accent-color);
+  color: var(--color);
 }
 
 /* Footer brand sizing */
 .minimal-footer .brand .logo-svg {
   width: 64px;
   height: 64px;
-  color: var(--default-color) !important;
+  color: var(--ink) !important;
 }
 .minimal-footer .brand .small {
   font-size: 1.5rem;
@@ -1139,6 +1125,10 @@ ol li::marker {
 /*--------------------------------------------------------------
 # Resume Section
 --------------------------------------------------------------*/
+.resume {
+  overflow: visible;
+}
+
 .resume .section-header {
   margin-bottom: 2.5rem;
 }
@@ -1153,40 +1143,52 @@ ol li::marker {
 }
 
 .resume .section-header h2 i {
-  color: var(--accent-color);
+  color: var(--color);
   font-size: 1.5rem;
 }
 
 .resume .section-header .section-subtitle {
-  color: color-mix(in srgb, var(--default-color), transparent 30%);
+  color: color-mix(in srgb, var(--ink), transparent 30%);
   font-size: 1rem;
   line-height: 1.6;
 }
 
 .resume .experience-section {
   padding-right: 1.5rem;
+  overflow: visible;
 }
 
-.resume .experience-card,
-.resume .education-content {
-  background: var(--surface-color);
-  border: 1px solid color-mix(in srgb, var(--default-color), transparent 90%);
-  border-radius: 8px;
-  padding: 1.5rem;
-  box-shadow: var(--elevation-1);
-  transition: all 0.3s ease;
-  position: relative;
+.resume .experience-cards {
+  overflow: visible;
 }
 
 .resume .experience-card {
+  background: var(--paper);
+  /* border: 1px solid color-mix(in srgb, var(--ink), transparent 90%); */
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: var(--elevation-1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
   margin-bottom: 1.5rem;
+  display: block;
+  transform: translateY(0);
+  will-change: transform;
+}
+
+.resume .experience-card[data-aos] {
+  transition: transform 0.3s ease, box-shadow 0.3s ease !important;
+  transition-delay: 0s !important;
 }
 
 .resume .experience-card:hover,
-.resume .education-content:hover {
+.resume .experience-card[data-aos]:hover {
   box-shadow: var(--elevation-2);
-  transform: translateY(-5px);
+  transform: translateY(-5px) !important;
+  transition: transform 0.3s ease, box-shadow 0.3s ease !important;
+  transition-delay: 0s !important;
 }
+
 
 .resume .card-header {
   display: flex;
@@ -1196,8 +1198,8 @@ ol li::marker {
 }
 
 .resume .duration {
-  background: color-mix(in srgb, var(--accent-color), transparent 90%);
-  color: var(--accent-color);
+  background: color-mix(in srgb, var(--color), transparent 90%);
+  color: var(--color);
   padding: 0.4rem 0.8rem;
   border-radius: 20px;
   font-size: 0.85rem;
@@ -1215,7 +1217,7 @@ ol li::marker {
   position: relative;
   padding-left: 1.5rem;
   margin-bottom: 0.5rem;
-  color: color-mix(in srgb, var(--default-color), transparent 15%);
+  color: color-mix(in srgb, var(--ink), transparent 15%);
   font-size: 0.9rem;
 }
 
@@ -1224,7 +1226,7 @@ ol li::marker {
   position: absolute;
   left: 0;
   top: 0;
-  color: var(--accent-color);
+  color: var(--color);
   font-weight: bold;
 }
 
@@ -1242,11 +1244,11 @@ ol li::marker {
 
 .resume .timeline-track {
   position: absolute;
-  left: 1rem;
+  left: calc(1rem - 1px);
   top: 2rem;
   bottom: 2rem;
   width: 2px;
-  background: linear-gradient(to bottom, var(--accent-color), color-mix(in srgb, var(--accent-color), transparent 70%));
+  background-color: color-mix(in srgb, var(--color), transparent 70%);
 }
 
 .resume .education-item {
@@ -1259,6 +1261,10 @@ ol li::marker {
   margin-bottom: 0;
 }
 
+.resume .education-item .experience-card {
+  margin-bottom: 0;
+}
+
 .resume .timeline-marker {
   position: absolute;
   left: 0.5rem;
@@ -1268,7 +1274,7 @@ ol li::marker {
   background: var(--color);
   border: 2px color-mix(in srgb, color var(--color), color 50%);
   border-radius: 50%;
-  box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent-color), transparent 85%);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--color), transparent 85%);
 }
 
 
@@ -1286,24 +1292,13 @@ ol li::marker {
   margin: 0;
 }
 
-.resume .institution {
-  color: var(--ink);
-  font-size: 1rem;
-  font-weight: 500;
-  margin-bottom: 0.8rem;
-}
-
 .resume .card-body p {
-      /* color: color-mix(in srgb, var(--ink), transparent 25%); */
   margin-bottom: 1rem;
   line-height: 1.6;
 }
 
-.resume .education-content p {
-  /* color: color-mix(in srgb, var(--ink), transparent 25%); */
-  margin: 0;
-  line-height: 1.6;
-  font-size: 0.9rem;
+.resume .card-body p:last-child {
+  margin-bottom: 0;
 }
 
 @media (max-width: 992px) {
@@ -1343,8 +1338,12 @@ ol li::marker {
     padding: 1.3rem;
   }
 
+  .resume .education-item .experience-card {
+    margin-bottom: 0;
+  }
+
   .resume .timeline-track {
-    left: 0.5rem;
+    left: calc(0.5rem - 1px);
   }
 
   .resume .education-item {
@@ -1367,7 +1366,7 @@ ol li::marker {
   bottom: -60px;
   z-index: 99999;
   
-  background-color: var(--accent-color);
+  background-color: var(--color);
   width: 44px;
   height: 44px;
   border-radius: 50px;
@@ -1383,8 +1382,6 @@ ol li::marker {
 }
 
 .scroll-top:hover {
-  background-color: var(--accent-color);
-  color: var(--paper);
   transform: translateY(-2px);
   box-shadow: var(--elevation-2);
   transition: 0.3s;
@@ -1494,7 +1491,7 @@ ol li::marker {
 }
 
 .floating-theme-toggle:is(:hover, :focus-visible) {
-  background-color: var(--surface-color);
+  background-color: var(--paper);
   transform: translateY(-2px);
   box-shadow: var(--elevation-2);
 }
@@ -1587,7 +1584,7 @@ body:not(.light-mode) .floating-theme-toggle .sun-and-moon > .moon > circle {
 .page-title {
   color: var(--paper);
   /* font-size: 56px; */
-  /* background-color: var(--background-color); */
+  /* background-color: var(--paper); */
   position: relative;
 }
 
@@ -1617,7 +1614,7 @@ body:not(.light-mode) .floating-theme-toggle .sun-and-moon > .moon > circle {
 }
 
 .page-title nav {
-  background-color: color-mix(in srgb, var(--default-color), transparent 90%);
+  background-color: color-mix(in srgb, var(--ink), transparent 90%);
   padding: 20px 0;
 }
 
@@ -1639,7 +1636,7 @@ body:not(.light-mode) .floating-theme-toggle .sun-and-moon > .moon > circle {
   content: "/";
   display: inline-block;
   padding-right: 10px;
-  color: color-mix(in srgb, var(--default-color), transparent 70%);
+  color: color-mix(in srgb, var(--ink), transparent 70%);
 }
 
 /*--------------------------------------------------------------
@@ -1647,8 +1644,8 @@ body:not(.light-mode) .floating-theme-toggle .sun-and-moon > .moon > circle {
 --------------------------------------------------------------*/
 section,
 .section {
-  color: var(--default-color);
-  /* background-color: var(--background-color); */
+  color: var(--ink);
+  background-color: var(--paper);
   padding: 60px 0;
   scroll-margin-top: 100px;
   overflow: clip;
@@ -1692,7 +1689,7 @@ section,
 }
 
 .section-title div {
-  color: var(--default-color);
+  color: var(--ink);
   margin: 0;
   margin: 0;
   font-size: 28px;
@@ -1713,6 +1710,7 @@ section,
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  background-color: var(--paper);
 }
 
 .hero img {
@@ -1748,16 +1746,18 @@ section,
   margin: 0;
   font-size: 64px;
   font-weight: 700;
+  color: var(--ink);
 }
 
 .hero p {
   margin: 4px 0 0 0;
   font-size: 24px;
+  color: var(--ink);
 }
 
 .hero p span {
   letter-spacing: 1px;
-  border-bottom: 2px solid var(--accent-color);
+  border-bottom: 2px solid var(--color);
 }
 
 .hero .social-links {
@@ -1765,7 +1765,7 @@ section,
 }
 
 .hero .social-links a {
-  /* background-color: color-mix(in srgb, var(--default-color), transparent 90%); */
+  /* background-color: color-mix(in srgb, var(--ink), transparent 90%); */
    color: color-mix(in srgb, var(--ink), var(--paper) 50%);
    font-size: 24px;
   width: 24px;
@@ -1779,7 +1779,7 @@ section,
 }
 
 .hero .social-links a:hover {
-  color: var(--accent-color);
+  color: var(--color);
 }
 
 /* Enhanced responsive breakpoints for hero section */
@@ -1857,7 +1857,7 @@ section,
   position: relative;
   z-index: 4; /* Increased to be above overlay */
   transition: transform 0.3s ease; /* Moved transition here for better performance */
-  background-color: var(--surface-color); /* Added background color variable */
+  background-color: var(--paper); /* Added background color variable */
 }
 
 .hero-main-image:hover {
@@ -1890,7 +1890,7 @@ section,
 
 .floating-card {
   position: absolute;
-  background: var(--surface-color);
+  background: var(--paper);
   /* border: 1px solid rgba(255, 255, 255, 0.1); */
   border-radius: 12px;
   padding: 12px 16px;
@@ -1906,19 +1906,20 @@ section,
 }
 
 .floating-card:hover {
-  transform: translateY(-5px);
+  transform: translateY(-4px);
   box-shadow: var(--elevation-2);
+  
 }
 
 .floating-card i {
   font-size: 18px;
-  color: var(--accent-color);
+  color: var(--color);
 }
 
 .floating-card span {
   font-size: 14px;
   font-weight: 500;
-  color: var(--default-color);
+  color: var(--ink);
   white-space: nowrap;
 }
 
@@ -2233,7 +2234,7 @@ section,
 .about .content ul i {
   font-size: 16px;
   margin-right: 8px;
-  color: var(--accent-color);
+  color: var(--color);
   line-height: 0;
   flex-shrink: 0;
 }
@@ -2249,7 +2250,7 @@ section,
   height: 54px;
   font-size: 24px;
   border-radius: 50px;
-  /* border: 2px solid var(--background-color); */
+  /* border: 2px solid var(--paper); */
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -2294,7 +2295,7 @@ section,
 }
 
 .skills .progress .skill {
-  color: var(--default-color);
+  color: var(--ink);
   padding: 0;
   margin: 0 0 6px 0;
   text-transform: uppercase;
@@ -2309,7 +2310,7 @@ section,
 }
 
 .skills .progress-bar-wrap {
-  background: color-mix(in srgb, var(--default-color), transparent 90%);
+  background: color-mix(in srgb, var(--ink), transparent 90%);
   height: 10px;
 }
 
@@ -2317,7 +2318,7 @@ section,
   width: 1px;
   height: 10px;
   transition: 0.9s;
-  background-color: var(--accent-color);
+  background-color: var(--color);
 }
 
 /*--------------------------------------------------------------
@@ -2332,7 +2333,7 @@ section,
   justify-content: center;
   padding: 20px;
   transition: 0.3s;
-  /* border: 1px solid color-mix(in srgb, var(--default-color), transparent 90%); */
+  /* border: 1px solid color-mix(in srgb, var(--ink), transparent 90%); */
   position: relative;
   box-shadow: var(--elevation-1);
   border-radius: 16px;
@@ -2389,8 +2390,8 @@ section,
 }
 
 .testimonials .testimonial-item:hover {
-  border-color: var(--accent-color);
-  box-shadow: var(--elevation-2) color-mix(in srgb, var(--accent-color), transparent 90%);
+  border-color: var(--color);
+  box-shadow: var(--elevation-2) color-mix(in srgb, var(--color), transparent 90%);
   /* scale: 1.05; */
   transform: translateY(-5px);
 }
@@ -2401,7 +2402,7 @@ section,
   margin: -40px 0 0 40px;
   position: relative;
   z-index: 2;
-  border: 6px solid var(--background-color);
+  border: 6px solid var(--paper);
   
 }
 
@@ -2414,13 +2415,13 @@ section,
 
 .testimonials .testimonial-item h4 {
   font-size: 14px;
-  color: color-mix(in srgb, var(--default-color), transparent 20%);
+  color: color-mix(in srgb, var(--ink), transparent 20%);
   margin: 0 0 0 45px;
 }
 
 .testimonials .testimonial-item .quote-icon-left,
 .testimonials .testimonial-item .quote-icon-right {
-  color: var(--accent-color);
+  color: var(--color);
   font-size: 24px;
   line-height: 0;
 }
@@ -2443,7 +2444,7 @@ section,
   font-style: italic;
   margin: 0 15px 0 15px;
   padding: 20px 20px 60px 20px;
-  background: var(--surface-color);
+  background: var(--paper);
   border-radius: 6px;
   position: relative;
   z-index: 1;
@@ -2461,20 +2462,20 @@ section,
 .testimonials .swiper-pagination .swiper-pagination-bullet {
   width: 12px;
   height: 12px;
-  background-color: var(--background-color);
+  background-color: var(--paper);
   opacity: 1;
   border: 1px solid color-mix(in srgb, var(--ink), var(--paper) 50%);
 }
 
 .testimonials .swiper-pagination .swiper-pagination-bullet-active {
-  background-color: var(--accent-color);
+  background-color: var(--color);
 }
 
 /*--------------------------------------------------------------
 # Resume Section
 --------------------------------------------------------------*/
 .resume .resume-title {
-  color: var(--default-color);
+  color: var(--ink);
   font-size: 26px;
   font-weight: 700;
   margin-top: 20px;
@@ -2484,7 +2485,7 @@ section,
 .resume .resume-item {
   padding: 0 0 20px 20px;
   margin-top: -2px;
-  border-left: 2px solid var(--accent-color);
+  border-left: 2px solid var(--color);
   position: relative;
 }
 
@@ -2493,7 +2494,7 @@ section,
   font-size: 18px;
   font-weight: 600;
   text-transform: uppercase;
-  color: color-mix(in srgb, var(--default-color), transparent 20%);
+  color: color-mix(in srgb, var(--ink), transparent 20%);
   margin-bottom: 10px;
 }
 
@@ -2525,15 +2526,15 @@ section,
   border-radius: 50px;
   left: -9px;
   top: 0;
-  background: var(--background-color);
-  border: 2px solid var(--accent-color);
+  background: var(--paper);
+  border: 2px solid var(--color);
 }
 
 /*--------------------------------------------------------------
 # Services Section
 --------------------------------------------------------------*/
 .services .service-item {
-  background-color: var(--surface-color);
+  background-color: var(--paper);
   text-align: center;
   padding: 80px 20px;
   transition: all ease-in-out 0.3s;
@@ -2544,7 +2545,7 @@ section,
   margin: 0 auto;
   width: 64px;
   height: 64px;
-  background: var(--accent-color);
+  background: var(--color);
   border-radius: 4px;
   display: flex;
   align-items: center;
@@ -2567,7 +2568,7 @@ section,
   top: -8px;
   height: 100%;
   width: 100%;
-  background: color-mix(in srgb, var(--accent-color), transparent 80%);
+  background: color-mix(in srgb, var(--color), transparent 80%);
   border-radius: 5px;
   transition: all 0.3s ease-out 0s;
   transform: translateZ(-1px);
@@ -2587,20 +2588,20 @@ section,
 }
 
 .services .service-item:hover {
-  background: var(--accent-color);
-  border-color: var(--accent-color);
+  background: var(--color);
+  border-color: var(--color);
 }
 
 .services .service-item:hover .icon {
-  background: var(--surface-color);
+  background: var(--paper);
 }
 
 .services .service-item:hover .icon i {
-  color: var(--accent-color);
+  color: var(--color);
 }
 
 .services .service-item:hover .icon::before {
-  background: color-mix(in srgb, var(--background-color), transparent 70%);
+  background: color-mix(in srgb, var(--paper), transparent 70%);
 }
 
 .services .service-item:hover h3,
@@ -2612,9 +2613,9 @@ section,
 # Service Details Section
 --------------------------------------------------------------*/
 .service-details .services-list {
-  background-color: var(--surface-color);
+  background-color: var(--paper);
   padding: 10px 30px;
-  border: 1px solid color-mix(in srgb, var(--default-color), transparent 90%);
+  border: 1px solid color-mix(in srgb, var(--ink), transparent 90%);
   margin-bottom: 20px;
 }
 
@@ -2622,20 +2623,20 @@ section,
   display: block;
   line-height: 1;
   padding: 8px 0 8px 15px;
-  border-left: 3px solid color-mix(in srgb, var(--default-color), transparent 70%);
+  border-left: 3px solid color-mix(in srgb, var(--ink), transparent 70%);
   margin: 20px 0;
-  color: color-mix(in srgb, var(--default-color), transparent 20%);
+  color: color-mix(in srgb, var(--ink), transparent 20%);
   transition: 0.3s;
 }
 
 .service-details .services-list a.active {
-  color: var(--default-color);
+  color: var(--ink);
   font-weight: 700;
-  border-color: var(--accent-color);
+  border-color: var(--color);
 }
 
 .service-details .services-list a:hover {
-  border-color: var(--accent-color);
+  border-color: var(--color);
 }
 
 .service-details .services-img {
@@ -2673,7 +2674,7 @@ section,
 .service-details ul i {
   font-size: 20px;
   margin-right: 8px;
-  color: var(--accent-color);
+  color: var(--color);
 }
 
 /*--------------------------------------------------------------
@@ -2691,7 +2692,7 @@ section,
 }
 
 .portfolio .portfolio-filters li:hover .material-icons {
-  color: var(--accent-color);
+  color: var(--color);
 }
 
 .portfolio .portfolio-filters li.filter-active .material-icons {
@@ -2727,8 +2728,8 @@ section,
   font-weight: 500;
   padding: 12px 24px;
   cursor: pointer;
-  background: var(--surface-color);
-  color: var(--default-color);
+  background: var(--paper);
+  color: var(--ink);
   border-radius: 30px;
   display: flex;
   align-items: center;
@@ -2740,10 +2741,10 @@ section,
 .portfolio .portfolio-filters li:hover {
   transform: translateY(-2px);
   box-shadow: var(--elevation-2);
-  background: color-mix(in srgb, var(--accent-color), transparent 92%);
+  background: color-mix(in srgb, var(--color), transparent 92%);
 }
 .portfolio .portfolio-filters li.filter-active {
-  background: var(--accent-color);
+  background: var(--color);
   color: var(--paper);
 }
 
@@ -2840,7 +2841,7 @@ section,
 --------------------------------------------------------------*/
 
 .portfolio-details .portfolio-info {
-  background-color: var(--surface-color);
+  background-color: var(--paper);
   padding: 30px;
   box-shadow: var(--elevation-1);
 }
@@ -2850,7 +2851,7 @@ section,
   font-weight: 700;
   margin-bottom: 20px;
   padding-bottom: 20px;
-  border-bottom: 1px solid color-mix(in srgb, var(--default-color), transparent 85%);
+  border-bottom: 1px solid color-mix(in srgb, var(--ink), transparent 85%);
   font-family: var(--heading-font);
 }
 
@@ -2877,7 +2878,7 @@ section,
 
 .portfolio-details .portfolio-description p {
   padding: 0;
-  color: color-mix(in srgb, var(--default-color), transparent 30%);
+  color: color-mix(in srgb, var(--ink), transparent 30%);
 }
 
 
@@ -2892,7 +2893,7 @@ section,
 
 .contact .info-item .icon {
   color: var(--ink);
-  background: var(--accent-color);
+  background: var(--color);
   width: 56px;
   height: 56px;
   font-size: 24px;
@@ -2923,11 +2924,11 @@ section,
   line-height: 1;
   margin: 4px 6px 0 0;
   transition: color 0.3s ease;
-  color: color-mix(in srgb, var(--default-color), transparent 50%);
+  color: color-mix(in srgb, var(--ink), transparent 50%);
 }
 
 .contact .info-item .social-links a:hover {
-  color: var(--accent-color);
+  color: var(--color);
 }
 
 
@@ -2935,7 +2936,7 @@ section,
 
 .project-title {
   font-weight: 600;
-  color: var(--default-color);
+  color: var(--ink);
   margin-bottom: 1rem;
 }
 .project-title a {
@@ -2943,7 +2944,7 @@ section,
   text-decoration: underline;
 }
 .project-description {
-  color: var(--default-color);
+  color: var(--ink);
   font: var(--text-body-font); /* controls size and line-height */
 }
 
@@ -2997,7 +2998,7 @@ section,
 .collage-item {
   overflow: hidden;
   border-radius: 8px;
-  background: var(--surface-color, #222);
+  background: var(--paper, #222);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -3296,7 +3297,7 @@ section,
   font-family: var(--heading-font);
   font-size: 2.5rem;
   font-weight: 600;
-  color: var(--default-color);
+  color: var(--ink);
   margin-bottom: 0; /* remove gap below title */
 }
 
@@ -3367,7 +3368,7 @@ section,
   }
   
   .theme-toggle-mobile:hover {
-    color: var(--accent-color) !important;
+    color: var(--color) !important;
   }
 }
 
@@ -3398,8 +3399,8 @@ section,
 }
 
 .theme-toggle:is(:hover, :focus-visible) {
-  background-color: var(--surface-color);
-  /* outline: 2px solid var(--accent-color); */
+  background-color: var(--paper);
+  /* outline: 2px solid var(--color); */
 }
 
 .sun-and-moon {
@@ -3492,7 +3493,8 @@ body:not(.light-mode) .sun-and-moon > .moon > circle {
 body {
   /* background-color: #fefaee; */
   /* font-family: PP Neue Montreal, Arial, sans-serif; */
-  color: var(--accent-color);
+  color: var(--ink);
+  background-color: var(--paper);
   margin: 0;
   padding: 0;
   overscroll-behavior: none;
@@ -3509,7 +3511,7 @@ body {
 }
 
 .text-draw {
-  color: var(--accent-color);
+  color: var(--color);
   margin-left: 1em;
   margin-right: 1em;
   font-size: 3.5vw;
@@ -3535,7 +3537,7 @@ body {
 }
 
 .text-draw__box {
-  color: var(--accent-color);
+  color: var(--color);
   width: 100%;
   height: .625em;
   position: relative;
