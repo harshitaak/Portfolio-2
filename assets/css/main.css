@@ -1057,6 +1057,16 @@ ol li::marker {
   box-shadow: var(--elevation-1);
 }
 
+.btn-cta [data-lucide] {
+  vertical-align: middle;
+  margin-right: 6px;
+  display: inline-block;
+}
+
+.btn-cta [data-lucide] svg {
+  width: 20px !important;
+  height: 20px !important;
+}
 
 /* Mobile footer layout adjustments */
 @media (max-width: 768px) {

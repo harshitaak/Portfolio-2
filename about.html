@@ -558,7 +558,7 @@
         </div>
         <div class="cta">
           <a href="mailto:harshit.ea@gmail.com?subject=Portfolio%20Contact" class="btn btn-outline-light btn-sm btn-cta">
-            <i data-lucide="mail" style="vertical-align: middle; font-size: 20px; margin-right: 6px; display: inline-block;"></i>
+            <i data-lucide="mail" class="icon-cta"></i>
             Contact
           </a>
         </div>
@@ -616,6 +616,19 @@
         height: 60
       }
     });
+    // Force footer CTA mail icon to 20px (global attrs above make it 60px otherwise)
+    (function () {
+      var el = document.querySelector('.footer .btn-cta .icon-cta, .footer .btn-cta [data-lucide="mail"]');
+      if (el) {
+        var svg = el.querySelector('svg') || (el.tagName === 'svg' ? el : null);
+        if (svg) {
+          svg.setAttribute('width', '20');
+          svg.setAttribute('height', '20');
+          svg.style.width = '20px';
+          svg.style.height = '20px';
+        }
+      }
+    })();
   </script>
 
 </body>
