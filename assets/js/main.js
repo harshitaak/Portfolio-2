@@ -464,18 +464,13 @@ document.addEventListener('DOMContentLoaded', function() {
 });
         
 
-//Draw plugin - only register if available
-if (typeof DrawSVGPlugin !== 'undefined') {
+//Draw plugin - only register if available (DrawSVGPlugin is a paid Club GreenSock plugin)
+var hasDrawSVGPlugin = typeof DrawSVGPlugin !== 'undefined';
+if (hasDrawSVGPlugin) {
   gsap.registerPlugin(DrawSVGPlugin);
 }
 
 function initDrawRandomUnderline() {
-  // Check if DrawSVGPlugin is available
-  if (typeof DrawSVGPlugin === 'undefined') {
-    console.warn('DrawSVGPlugin not available, skipping draw line effect');
-    return;
-  }
-  
   const svgVariants = [
     `<svg width="310" height="40" viewBox="0 0 310 40" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 20.9999C26.7762 16.2245 49.5532 11.5572 71.7979 14.6666C84.9553 16.5057 97.0392 21.8432 109.987 24.3888C116.413 25.6523 123.012 25.5143 129.042 22.6388C135.981 19.3303 142.586 15.1422 150.092 13.3333C156.799 11.7168 161.702 14.6225 167.887 16.8333C181.562 21.7212 194.975 22.6234 209.252 21.3888C224.678 20.0548 239.912 17.991 255.42 18.3055C272.027 18.6422 288.409 18.867 305 17.9999" stroke="currentColor" stroke-width="10" stroke-linecap="round"/></svg>`,
     `<svg width="310" height="40" viewBox="0 0 310 40" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 24.2592C26.233 20.2879 47.7083 16.9968 69.135 13.8421C98.0469 9.5853 128.407 4.02322 158.059 5.14674C172.583 5.69708 187.686 8.66104 201.598 11.9696C207.232 13.3093 215.437 14.9471 220.137 18.3619C224.401 21.4596 220.737 25.6575 217.184 27.6168C208.309 32.5097 197.199 34.281 186.698 34.8486C183.159 35.0399 147.197 36.2657 155.105 26.5837C158.11 22.9053 162.993 20.6229 167.764 18.7924C178.386 14.7164 190.115 12.1115 201.624 10.3984C218.367 7.90626 235.528 7.06127 252.521 7.49276C258.455 7.64343 264.389 7.92791 270.295 8.41825C280.321 9.25056 296 10.8932 305 13.0242" stroke="#E55050" stroke-width="10" stroke-linecap="round"/></svg>`,
@@ -492,12 +487,9 @@ function initDrawRandomUnderline() {
       path.setAttribute('stroke', 'currentColor');
     });
   }
-            const containers = document.querySelectorAll('[draw-line]');
-  console.log('Found draw line containers:', containers.length);
-  
-  containers.forEach((container, index) => {
-                const box = container.querySelector('[draw-line-box]');
-    console.log(`Container ${index}:`, container, 'Box:', box);
+  const containers = document.querySelectorAll('[draw-line]');
+  containers.forEach((container) => {
+    const box = container.querySelector('[draw-line-box]');
     if (!box) return;
     let enterTween = null;
     let leaveTween = null;
@@ -517,13 +509,24 @@ function initDrawRandomUnderline() {
         decorateSVG(svg);
         const path = svg.querySelector('path');
         if (path) {
-          gsap.set(path, { drawSVG: '0%' });
-          enterTween = gsap.to(path, {
-            duration: 0.5,
-            drawSVG: '100%',
-            ease: 'power2.inOut',
-            onComplete: () => { enterTween = null; }
-          });
+          if (hasDrawSVGPlugin) {
+            gsap.set(path, { drawSVG: '0%' });
+            enterTween = gsap.to(path, {
+              duration: 0.5,
+              drawSVG: '100%',
+              ease: 'power2.inOut',
+              onComplete: () => { enterTween = null; }
+            });
+          } else {
+            var len = path.getTotalLength();
+            gsap.set(path, { strokeDasharray: len, strokeDashoffset: len });
+            enterTween = gsap.to(path, {
+              duration: 0.5,
+              strokeDashoffset: 0,
+              ease: 'power2.inOut',
+              onComplete: () => { enterTween = null; }
+            });
+          }
         }
       }
     });
@@ -537,17 +540,29 @@ function initDrawRandomUnderline() {
       if (!path) return;
       
       const playOut = () => {
-        // Don't restart if still drawing out
         if (leaveTween && leaveTween.isActive()) return;
-        leaveTween = gsap.to(path, {
-          duration: 0.5,
-          drawSVG: '100% 100%',
-          ease: 'power2.inOut',
-          onComplete: () => {
-            leaveTween = null;
-            box.innerHTML = ''; // remove SVG when done
-          }
-        });
+        if (hasDrawSVGPlugin) {
+          leaveTween = gsap.to(path, {
+            duration: 0.5,
+            drawSVG: '100% 100%',
+            ease: 'power2.inOut',
+            onComplete: () => {
+              leaveTween = null;
+              box.innerHTML = '';
+            }
+          });
+        } else {
+          var len = path.getTotalLength();
+          leaveTween = gsap.to(path, {
+            duration: 0.5,
+            strokeDashoffset: len,
+            ease: 'power2.inOut',
+            onComplete: () => {
+              leaveTween = null;
+              box.innerHTML = '';
+            }
+          });
+        }
       };
       
       if (enterTween && enterTween.isActive()) {
@@ -560,16 +575,8 @@ function initDrawRandomUnderline() {
   });
 }
 // Initialize Draw Random Underline
-document.addEventListener('DOMContentLoaded', function() {
-  console.log('DOM loaded, initializing draw line effect...');
-  initDrawRandomUnderline();
-});
-
-// Also try initializing after a short delay to ensure GSAP is loaded
-setTimeout(function() {
-  console.log('Delayed initialization of draw line effect...');
-  initDrawRandomUnderline();
-}, 100);
+document.addEventListener('DOMContentLoaded', initDrawRandomUnderline);
+setTimeout(initDrawRandomUnderline, 100); // fallback if DOMContentLoaded already fired
 
 // Smooth snap scroll enhancement (applies only on pages with .snapscroll)
 // DISABLED - snap scroll functionality turned off

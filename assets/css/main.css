@@ -1,3 +1,4 @@
+@import "https://unpkg.com/open-props/easings.min.css";
 
 /* Three Column Grid: 3-column CSS masonry */
 .three-column-grid {
@@ -1040,7 +1041,7 @@ ol li::marker {
   border: none !important;
   padding: 6px 14px;
   border-radius: 999px;
-  font-weight: 500;
+  font-weight: 550;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -2356,6 +2357,11 @@ section,
 /*--------------------------------------------------------------
 # Testimonials Section
 --------------------------------------------------------------*/
+#testimonials .row .col-lg-4,
+#testimonials .row .col-md-6 {
+  display: flex;
+}
+
 .testimonials .testimonials-carousel,
 .testimonials .testimonials-slider {
   overflow: visible !important;
@@ -2363,24 +2369,27 @@ section,
 
 .testimonials .testimonial-item {
   box-sizing: content-box;
-  min-height: 320px;
-  /* box-shadow: var(--elevation-1); */
-  transition: 0.3s;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  padding: 24px;
+  background: var(--paper);
+  border-radius: 12px;
+  box-shadow: var(--elevation-1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
   overflow: visible !important;
 }
 
 .testimonials .testimonial-item:hover {
-  border-color: var(--color);
-  /* box-shadow: var(--elevation-2) color-mix(in srgb, var(--color), transparent 90%); */
-  /* scale: 1.05; */
   transform: translateY(-4px);
+  box-shadow: var(--elevation-2);
 }
 
 .testimonials .testimonial-item .testimonial-img {
   width: 90px;
   height: 90px;
   border-radius: 50%;
-  margin: -40px 0 0 40px;
   position: relative;
   z-index: 2;
   border: 6px solid var(--paper);
@@ -2392,7 +2401,7 @@ section,
 .testimonials .testimonial-item h3 {
   font-size: 18px;
   font-weight: bold;
-  margin: 10px 0 5px 45px;
+  margin: 10px 0 5px 0;
   font-family: var(--heading-font);
 }
 
@@ -2405,7 +2414,6 @@ section,
 
 .testimonials .testimonial-item h3 .testimonial-linkedin-link:hover {
   color: var(--color);
-  /* text-decoration: underline; */
 }
 
 .testimonials .testimonial-item h3 .testimonial-linkedin-icon {
@@ -2418,7 +2426,6 @@ section,
 .testimonials .testimonial-item h4 {
   font-size: 14px;
   color: color-mix(in srgb, var(--ink), transparent 20%);
-  margin: 0 0 0 45px;
 }
 
 .testimonials .testimonial-item .quote-icon-left,
@@ -2443,11 +2450,10 @@ section,
 }
 
 .testimonials .testimonial-item p {
+  flex: 1 1 auto;
   font-style: italic;
-  margin: 0 15px 0 15px;
-  padding: 20px 20px 60px 20px;
-  background: var(--paper);
-  border-radius: 6px;
+  padding-bottom: 60px;
+  border-radius: 8px;
   position: relative;
   z-index: 1;
 }
@@ -3381,8 +3387,6 @@ section,
 /*--------------------------------------------------------------
 # Theme Toggle
 --------------------------------------------------------------*/
-
-@import "https://unpkg.com/open-props/easings.min.css";
 
 .theme-toggle {
   --size: 2rem;
