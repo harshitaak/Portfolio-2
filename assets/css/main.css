@@ -729,7 +729,7 @@ ol li::marker {
   }
   .mobile-nav-toggle {
     color: var(--ink);
-    font-size: 28px;
+    font-size: 32px;
     line-height: 0;
     margin-right: 10px;
     cursor: pointer;
@@ -747,7 +747,7 @@ ol li::marker {
 
   .mobile-nav-toggle.close {
     transform: translate3d(0, 0, 0) !important;
-    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    /* transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); */
   }
 
   /* Enhanced Material Icons styling for mobile nav toggle */
@@ -841,6 +841,27 @@ ol li::marker {
     transform-origin: center;
   }
 
+  /* Disabled navigation item styles (mobile) */
+  .navmenu a.nav-disabled {
+    cursor: not-allowed !important;
+    opacity: 0.5;
+    color: var(--ink) !important;
+  }
+
+  .navmenu a.nav-disabled:hover,
+  .navmenu .active:focus a.nav-disabled,
+  .navmenu li:hover > a.nav-disabled {
+    color: var(--ink) !important;
+    cursor: not-allowed !important;
+  }
+
+  .navmenu a.nav-disabled i,
+  .navmenu a.nav-disabled:hover i {
+    color: var(--ink);
+    transform: none;
+    background-color: color-mix(in srgb, var(--ink), transparent 83%);
+  }
+
   /* Ensure Material Icons work properly in dropdowns - optimized */
   .navmenu .toggle-dropdown {
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -919,8 +940,8 @@ ol li::marker {
     color: var(--ink);
     position: absolute;
     font-size: 32px;
-    top: 15px;
-    right: 15px;
+    /* top: 16px; */
+    right: 10px;
     margin-right: 0;
     z-index: 9999;
   }
@@ -940,7 +961,8 @@ ol li::marker {
     bottom: 0 !important;
     width: 100% !important;
     height: 100vh !important;
-    background: var(--paper) !important;
+    background: color-mix(in srgb, var(--paper), transparent 85%) !important;
+    box-shadow: var(--elevation-2) !important;
     z-index: 9999 !important;
     /* Prevent glitching */
     transform: translate3d(0, 0, 0);
