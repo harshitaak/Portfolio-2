@@ -1919,6 +1919,16 @@ section,
   color: var(--color);
 }
 
+/* Lucide icons (SVG) – match Material icon size */
+.floating-card i svg,
+.floating-card svg {
+  width: 18px;
+  height: 18px;
+  color: var(--color);
+  stroke: currentColor;
+  fill: none;
+}
+
 .floating-card span {
   font-size: 14px;
   font-weight: 500;
@@ -1926,33 +1936,64 @@ section,
   white-space: nowrap;
 }
 
-/* Floating card positions */
+/* Floating card positions – random but roughly evenly distributed around hero image */
 .card-1 {
-  top: -20px;
-  right: -30px;
-  animation: float1 6s var(--ease-3) infinite;
+  top: -14px;
+  left: 56%;
+  transform: translateX(-50%);
+  animation: float-center-h 6s var(--ease-3) infinite;
 }
 
 .card-2 {
-  bottom: 20px;
-  left: -40px;
-  animation: float2 6s var(--ease-3) infinite;
-  animation-delay: 1s;
+  top: -8px;
+  right: -32px;
+  animation: float1 6s var(--ease-3) infinite;
+  animation-delay: 0.5s;
 }
 
 .card-3 {
-  top: 50%;
-  right: -50px;
+  top: 36%;
+  right: -44px;
   transform: translateY(-50%);
   animation: float3 6s var(--ease-3) infinite;
-  animation-delay: 2s;
+  animation-delay: 1s;
 }
 
 .card-4 {
-  top: 20px;
-  left: -40px;
+  bottom: 22%;
+  right: -36px;
+  animation: float2 6s var(--ease-3) infinite;
+  animation-delay: 1.5s;
+}
+
+.card-5 {
+  bottom: -16px;
+  left: 44%;
+  transform: translateX(-50%);
+  animation: float-center-h 6s var(--ease-3) infinite;
+  animation-delay: 2s;
+}
+
+.card-6 {
+  bottom: -6px;
+  left: -34px;
   animation: float4 6s var(--ease-3) infinite;
+  animation-delay: 2.5s;
+}
+
+.card-7 {
+  top: 64%;
+  left: -42px;
+  transform: translateY(-50%);
+  animation: float3 6s var(--ease-3) infinite;
   animation-delay: 3s;
+}
+
+.card-8 {
+  top: -6px;
+  left: -28px;
+  animation: float1 6s var(--ease-3) infinite;
+  animation-delay: 3.5s;
 }
 
 /* Floating animations */
@@ -1981,6 +2022,12 @@ section,
   50% { transform: translateY(-10px) rotate(1deg); }
 }
 
+/* For top/bottom center cards – preserve horizontal centering */
+@keyframes float-center-h {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(-8px); }
+}
+
 /* Enhanced responsive adjustments for hero image and floating cards */
 @media (max-width: 1200px) {
   .hero-image {
@@ -1992,24 +2039,14 @@ section,
     height: 400px;
   }
   
-  .card-1 {
-    top: -20px;
-    right: -30px;
-  }
-  
-  .card-2 {
-    bottom: 20px;
-    left: -40px;
-  }
-  
-  .card-3 {
-    right: -50px;
-  }
-  
-  .card-4 {
-    top: 20px;
-    left: -40px;
-  }
+  .card-1 { top: -12px; left: 56%; }
+  .card-2 { top: -6px; right: -26px; }
+  .card-3 { top: 36%; right: -38px; }
+  .card-4 { bottom: 22%; right: -32px; }
+  .card-5 { bottom: -12px; left: 44%; }
+  .card-6 { bottom: -4px; left: -28px; }
+  .card-7 { top: 64%; left: -36px; }
+  .card-8 { top: -4px; left: -24px; }
 }
 
 @media (max-width: 1199px) {
@@ -2022,24 +2059,14 @@ section,
     height: 350px;
   }
   
-  .card-1 {
-    top: -15px;
-    right: -25px;
-  }
-  
-  .card-2 {
-    bottom: 15px;
-    left: -35px;
-  }
-  
-  .card-3 {
-    right: -40px;
-  }
-  
-  .card-4 {
-    top: 15px;
-    left: -35px;
-  }
+  .card-1 { top: -12px; left: 56%; }
+  .card-2 { top: -6px; right: -24px; }
+  .card-3 { top: 36%; right: -34px; }
+  .card-4 { bottom: 22%; right: -30px; }
+  .card-5 { bottom: -12px; left: 44%; }
+  .card-6 { bottom: -4px; left: -28px; }
+  .card-7 { top: 64%; left: -34px; }
+  .card-8 { top: -4px; left: -24px; }
 }
 
 @media (max-width: 992px) {
@@ -2059,29 +2086,25 @@ section,
   .floating-card i {
     font-size: 17px;
   }
+
+  .floating-card i svg,
+  .floating-card svg {
+    width: 17px;
+    height: 17px;
+  }
   
   .floating-card span {
     font-size: 13px;
   }
   
-  .card-1 {
-    top: -12px;
-    right: -22px;
-  }
-  
-  .card-2 {
-    bottom: 12px;
-    left: -32px;
-  }
-  
-  .card-3 {
-    right: -35px;
-  }
-  
-  .card-4 {
-    top: 12px;
-    left: -32px;
-  }
+  .card-1 { top: -10px; left: 56%; }
+  .card-2 { top: -4px; right: -22px; }
+  .card-3 { top: 36%; right: -30px; }
+  .card-4 { bottom: 22%; right: -26px; }
+  .card-5 { bottom: -10px; left: 44%; }
+  .card-6 { bottom: -2px; left: -26px; }
+  .card-7 { top: 64%; left: -30px; }
+  .card-8 { top: -2px; left: -22px; }
 }
 
 @media (max-width: 768px) {
@@ -2101,29 +2124,25 @@ section,
   .floating-card i {
     font-size: 16px;
   }
+
+  .floating-card i svg,
+  .floating-card svg {
+    width: 16px;
+    height: 16px;
+  }
   
   .floating-card span {
     font-size: 12px;
   }
   
-  .card-1 {
-    top: -10px;
-    right: -20px;
-  }
-  
-  .card-2 {
-    bottom: 10px;
-    left: -25px;
-  }
-  
-  .card-3 {
-    right: -30px;
-  }
-  
-  .card-4 {
-    top: 10px;
-    left: -25px;
-  }
+  .card-1 { top: -8px; left: 56%; }
+  .card-2 { top: -2px; right: -20px; }
+  .card-3 { top: 36%; right: -26px; }
+  .card-4 { bottom: 22%; right: -22px; }
+  .card-5 { bottom: -8px; left: 44%; }
+  .card-6 { bottom: 0; left: -24px; }
+  .card-7 { top: 64%; left: -26px; }
+  .card-8 { top: 0; left: -20px; }
 }
 
 @media (max-width: 576px) {
@@ -2143,29 +2162,25 @@ section,
   .floating-card i {
     font-size: 14px;
   }
+
+  .floating-card i svg,
+  .floating-card svg {
+    width: 14px;
+    height: 14px;
+  }
   
   .floating-card span {
     font-size: 11px;
   }
   
-  .card-1 {
-    top: -8px;
-    right: -15px;
-  }
-  
-  .card-2 {
-    bottom: 8px;
-    left: -20px;
-  }
-  
-  .card-3 {
-    right: -25px;
-  }
-  
-  .card-4 {
-    top: 8px;
-    left: -20px;
-  }
+  .card-1 { top: -6px; left: 56%; }
+  .card-2 { top: 0; right: -18px; }
+  .card-3 { top: 36%; right: -24px; }
+  .card-4 { bottom: 22%; right: -20px; }
+  .card-5 { bottom: -6px; left: 44%; }
+  .card-6 { bottom: 2px; left: -22px; }
+  .card-7 { top: 64%; left: -24px; }
+  .card-8 { top: 2px; left: -18px; }
 }
 
 @media (max-width: 480px) {
@@ -2185,29 +2200,25 @@ section,
   .floating-card i {
     font-size: 12px;
   }
+
+  .floating-card i svg,
+  .floating-card svg {
+    width: 12px;
+    height: 12px;
+  }
   
   .floating-card span {
     font-size: 10px;
   }
   
-  .card-1 {
-    top: -5px;
-    right: -12px;
-  }
-  
-  .card-2 {
-    bottom: 5px;
-    left: -15px;
-  }
-  
-  .card-3 {
-    right: -20px;
-  }
-  
-  .card-4 {
-    top: 5px;
-    left: -15px;
-  }
+  .card-1 { top: -4px; left: 56%; }
+  .card-2 { top: 2px; right: -14px; }
+  .card-3 { top: 36%; right: -20px; }
+  .card-4 { bottom: 22%; right: -16px; }
+  .card-5 { bottom: -4px; left: 44%; }
+  .card-6 { bottom: 4px; left: -18px; }
+  .card-7 { top: 64%; left: -20px; }
+  .card-8 { top: 4px; left: -14px; }
 }
 
 /*--------------------------------------------------------------
