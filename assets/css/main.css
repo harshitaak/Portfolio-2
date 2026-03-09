@@ -1902,7 +1902,12 @@ section,
   gap: 8px;
   box-shadow: var(--elevation-1);
   backdrop-filter: blur(10px);
-  transition: all 0.3s var(--ease-3);
+  will-change: transform, box-shadow, background-color, backdrop-filter;
+  transition:
+    transform 0.35s var(--ease-3),
+    box-shadow 0.35s var(--ease-3),
+    background-color 0.35s var(--ease-3),
+    backdrop-filter 0.35s var(--ease-3);
   pointer-events: auto;
   /* Default floating animation for all cards - can be overridden by specific card-X classes */
   animation: float-default 6s var(--ease-3) infinite;
