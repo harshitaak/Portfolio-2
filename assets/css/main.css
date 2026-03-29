@@ -1177,63 +1177,12 @@ ol li::marker {
 }
 
 /*--------------------------------------------------------------
-# Preloader
+# Preloader (disabled — full-screen overlay hid cross-document
+  view transitions and read as the only “loader” on navigation)
 --------------------------------------------------------------*/
 #preloader {
-  position: fixed;
-  inset: 0;
-  z-index: 999999;
-  overflow: hidden;
-  background: var(--paper);
-  transition: all 0.6s ease-out;
-}
-
-#preloader:before {
-  content: "";
-  position: fixed;
-  top: calc(50% - 30px);
-  left: calc(50% - 30px);
-  border: 6px solid #ffffff;
-  border-color: var(--color) transparent var(--color) transparent;
-  border-radius: 50%;
-  width: 60px;
-  height: 60px;
-  animation: animate-preloader 1.5s linear infinite;
-}
-
-@keyframes animate-preloader {
-  0% {
-    transform: rotate(0deg);
-  }
-
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-/*--------------------------------------------------------------
-# Resume Section
---------------------------------------------------------------*/
-.resume {
-  overflow: visible;
-}
-
-.resume .section-header {
-  margin-bottom: 2.5rem;
-}
-
-.resume .section-header h2 {
-  font-size: 1.8rem;
-  font-weight: 700;
-  margin-bottom: 1rem;
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-}
-
-.resume .section-header h2 i {
-  color: var(--color);
-  font-size: 1.5rem;
+  display: none !important;
+  pointer-events: none;
 }
 
 .resume .section-header .section-subtitle {

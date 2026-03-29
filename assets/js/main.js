@@ -103,13 +103,12 @@
 
 
   /**
-   * Preloader
+   * Preloader — element kept in HTML for backwards compatibility;
+   * overlay is disabled in CSS so view transitions stay visible.
    */
   const preloader = document.querySelector('#preloader');
   if (preloader) {
-    window.addEventListener('load', () => {
-      preloader.remove();
-    });
+    preloader.remove();
   }
 
   /**
@@ -673,76 +672,3 @@ document.addEventListener('DOMContentLoaded', function() {
   window.addEventListener('touchend', scheduleSnap, { passive: true });
 });
 */
-
-/**
- * Loading cursor functionality
- * Shows wait cursor when links are clicked and page is loading
- */
-(function() {
-  "use strict";
-
-  // Set loading cursor on page load (for new pages)
-  document.body.style.cursor = 'wait';
-
-  // Reset cursor when page finishes loading
-  window.addEventListener('load', function() {
-    document.body.style.cursor = 'default';
-    document.body.classList.remove('loading');
-  });
-
-  // Add loading cursor to all links when clicked
-  function addLoadingCursorToLinks() {
-    const links = document.querySelectorAll('a[href]');
-    
-    links.forEach(function(link) {
-      // Skip links that don't navigate to other pages
-      const href = link.getAttribute('href');
-      if (href && href !== '#' && !href.startsWith('javascript:') && !href.startsWith('mailto:') && !href.startsWith('tel:')) {
-        link.addEventListener('click', function(e) {
-          // Add loading class to body
-          document.body.classList.add('loading');
-          document.body.style.cursor = 'wait';
-          
-          // Also set cursor on the clicked element
-          this.style.cursor = 'wait';
-        });
-      }
-    });
-  }
-
-  // Initialize loading cursor functionality when DOM is ready
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', addLoadingCursorToLinks);
-  } else {
-    addLoadingCursorToLinks();
-  }
-
-  // Handle dynamically added links (for SPAs or AJAX content)
-  const observer = new MutationObserver(function(mutations) {
-    mutations.forEach(function(mutation) {
-      if (mutation.type === 'childList') {
-        mutation.addedNodes.forEach(function(node) {
-          if (node.nodeType === 1) { // Element node
-            const newLinks = node.querySelectorAll ? node.querySelectorAll('a[href]') : [];
-            newLinks.forEach(function(link) {
-              const href = link.getAttribute('href');
-              if (href && href !== '#' && !href.startsWith('javascript:') && !href.startsWith('mailto:') && !href.startsWith('tel:')) {
-                link.addEventListener('click', function(e) {
-                  document.body.classList.add('loading');
-                  document.body.style.cursor = 'wait';
-                  this.style.cursor = 'wait';
-                });
-              }
-            });
-          }
-        });
-      }
-    });
-  });
-
-  // Start observing
-  observer.observe(document.body, {
-    childList: true,
-    subtree: true
-  });
-})();
