@@ -464,6 +464,18 @@ body {
   font-family: var(--default-font);
 }
 
+/* Portfolio: footer stays at bottom of viewport when filtered grid is short */
+body.portfolio-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+body.portfolio-page main.main {
+  flex: 1 0 auto;
+}
+
 
 a {
   color: var(--color);
@@ -3041,6 +3053,7 @@ section,
 
 #portfolio {
   padding-top: 40px;
+  height: 100%;
 }
 
 .portfolio .portfolio-item {
