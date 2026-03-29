@@ -1965,18 +1965,18 @@ section,
   backdrop-filter: blur(10px);
   will-change: transform, box-shadow, background-color, backdrop-filter;
   transition:
-    transform 0.35s var(--ease-3),
     box-shadow 0.35s var(--ease-3),
     background-color 0.35s var(--ease-3),
-    backdrop-filter 0.35s var(--ease-3);
+    backdrop-filter 0.35s var(--ease-3),
+    filter 0.35s var(--ease-3);
   pointer-events: auto;
   /* Default floating animation for all cards - can be overridden by specific card-X classes */
   animation: float-default 6s var(--ease-3) infinite;
 }
 
 .floating-card:hover {
-  transform: translateY(-4px);
   box-shadow: var(--elevation-2);
+  filter: brightness(1.03);
 
 }
 
@@ -2002,62 +2002,102 @@ section,
   white-space: nowrap;
 }
 
-/* Floating card positions – random but roughly evenly distributed around hero image */
-.card-1 {
-  top: -14px;
-  left: 56%;
-  transform: translateX(-50%);
-  animation: float-center-h 6s var(--ease-3) infinite;
+.floating-slot {
+  position: absolute;
+  pointer-events: none;
 }
 
-.card-2 {
-  top: -8px;
-  right: -32px;
+.floating-slot .floating-card-zoom {
+  display: block;
+  pointer-events: none;
+}
+
+.floating-slot .floating-card {
+  position: relative;
+  inset: auto;
+  pointer-events: auto;
+}
+
+/* Floating card positions – irregular placement (~even perimeter coverage, no regular shape) */
+.floating-slot.card-1 {
+  top: -11px;
+  left: 44%;
+  transform: translateX(-50%);
+}
+
+.floating-slot.card-1 .floating-card {
+  animation: float-bob-y-8 6s var(--ease-3) infinite;
+}
+
+.floating-slot.card-2 {
+  top: 17%;
+  right: -36px;
+}
+
+.floating-slot.card-2 .floating-card {
   animation: float1 6s var(--ease-3) infinite;
   animation-delay: 0.5s;
 }
 
-.card-3 {
-  top: 36%;
-  right: -44px;
+.floating-slot.card-3 {
+  top: 54%;
+  left: -40px;
   transform: translateY(-50%);
-  animation: float3 6s var(--ease-3) infinite;
+}
+
+.floating-slot.card-3 .floating-card {
+  animation: float3-inner 6s var(--ease-3) infinite;
   animation-delay: 1s;
 }
 
-.card-4 {
-  bottom: 22%;
-  right: -36px;
+.floating-slot.card-4 {
+  bottom: 26%;
+  right: -34px;
+}
+
+.floating-slot.card-4 .floating-card {
   animation: float2 6s var(--ease-3) infinite;
   animation-delay: 1.5s;
 }
 
-.card-5 {
-  bottom: -16px;
-  left: 44%;
+.floating-slot.card-5 {
+  bottom: -15px;
+  left: 47%;
   transform: translateX(-50%);
-  animation: float-center-h 6s var(--ease-3) infinite;
+}
+
+.floating-slot.card-5 .floating-card {
+  animation: float-bob-y-8 6s var(--ease-3) infinite;
   animation-delay: 2s;
 }
 
-.card-6 {
-  bottom: -6px;
-  left: -34px;
+.floating-slot.card-6 {
+  bottom: -5px;
+  left: -33px;
+}
+
+.floating-slot.card-6 .floating-card {
   animation: float4 6s var(--ease-3) infinite;
   animation-delay: 2.5s;
 }
 
-.card-7 {
-  top: 64%;
+.floating-slot.card-7 {
+  top: 28%;
   left: -42px;
   transform: translateY(-50%);
-  animation: float3 6s var(--ease-3) infinite;
+}
+
+.floating-slot.card-7 .floating-card {
+  animation: float3-inner 6s var(--ease-3) infinite;
   animation-delay: 3s;
 }
 
-.card-8 {
-  top: -6px;
-  left: -28px;
+.floating-slot.card-8 {
+  top: -5px;
+  left: -29px;
+}
+
+.floating-slot.card-8 .floating-card {
   animation: float1 6s var(--ease-3) infinite;
   animation-delay: 3.5s;
 }
@@ -2136,6 +2176,30 @@ section,
   }
 }
 
+@keyframes float-bob-y-8 {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes float3-inner {
+
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+
+  50% {
+    transform: translateY(-10px) rotate(1deg);
+  }
+}
+
 /* Enhanced responsive adjustments for hero image and floating cards */
 @media (max-width: 1200px) {
   .hero-image {
@@ -2147,44 +2211,44 @@ section,
     height: 400px;
   }
 
-  .card-1 {
-    top: -12px;
-    left: 56%;
-  }
-
-  .card-2 {
-    top: -6px;
-    right: -26px;
-  }
-
-  .card-3 {
-    top: 36%;
-    right: -38px;
-  }
-
-  .card-4 {
-    bottom: 22%;
-    right: -32px;
-  }
-
-  .card-5 {
-    bottom: -12px;
+  .floating-slot.card-1 {
+    top: -9px;
     left: 44%;
   }
 
-  .card-6 {
+  .floating-slot.card-2 {
+    top: 17%;
+    right: -29px;
+  }
+
+  .floating-slot.card-3 {
+    top: 54%;
+    left: -32px;
+  }
+
+  .floating-slot.card-4 {
+    bottom: 26%;
+    right: -27px;
+  }
+
+  .floating-slot.card-5 {
+    bottom: -12px;
+    left: 47%;
+  }
+
+  .floating-slot.card-6 {
     bottom: -4px;
-    left: -28px;
+    left: -26px;
   }
 
-  .card-7 {
-    top: 64%;
-    left: -36px;
+  .floating-slot.card-7 {
+    top: 28%;
+    left: -34px;
   }
 
-  .card-8 {
+  .floating-slot.card-8 {
     top: -4px;
-    left: -24px;
+    left: -23px;
   }
 }
 
@@ -2198,44 +2262,44 @@ section,
     height: 350px;
   }
 
-  .card-1 {
-    top: -12px;
-    left: 56%;
-  }
-
-  .card-2 {
-    top: -6px;
-    right: -24px;
-  }
-
-  .card-3 {
-    top: 36%;
-    right: -34px;
-  }
-
-  .card-4 {
-    bottom: 22%;
-    right: -30px;
-  }
-
-  .card-5 {
-    bottom: -12px;
+  .floating-slot.card-1 {
+    top: -9px;
     left: 44%;
   }
 
-  .card-6 {
+  .floating-slot.card-2 {
+    top: 17%;
+    right: -27px;
+  }
+
+  .floating-slot.card-3 {
+    top: 54%;
+    left: -30px;
+  }
+
+  .floating-slot.card-4 {
+    bottom: 26%;
+    right: -25px;
+  }
+
+  .floating-slot.card-5 {
+    bottom: -12px;
+    left: 47%;
+  }
+
+  .floating-slot.card-6 {
     bottom: -4px;
-    left: -28px;
+    left: -26px;
   }
 
-  .card-7 {
-    top: 64%;
-    left: -34px;
+  .floating-slot.card-7 {
+    top: 28%;
+    left: -32px;
   }
 
-  .card-8 {
+  .floating-slot.card-8 {
     top: -4px;
-    left: -24px;
+    left: -21px;
   }
 }
 
@@ -2267,44 +2331,44 @@ section,
     font-size: 13px;
   }
 
-  .card-1 {
-    top: -10px;
-    left: 56%;
-  }
-
-  .card-2 {
-    top: -4px;
-    right: -22px;
-  }
-
-  .card-3 {
-    top: 36%;
-    right: -30px;
-  }
-
-  .card-4 {
-    bottom: 22%;
-    right: -26px;
-  }
-
-  .card-5 {
-    bottom: -10px;
+  .floating-slot.card-1 {
+    top: -8px;
     left: 44%;
   }
 
-  .card-6 {
+  .floating-slot.card-2 {
+    top: 17%;
+    right: -24px;
+  }
+
+  .floating-slot.card-3 {
+    top: 54%;
+    left: -28px;
+  }
+
+  .floating-slot.card-4 {
+    bottom: 26%;
+    right: -23px;
+  }
+
+  .floating-slot.card-5 {
+    bottom: -10px;
+    left: 47%;
+  }
+
+  .floating-slot.card-6 {
     bottom: -2px;
-    left: -26px;
+    left: -24px;
   }
 
-  .card-7 {
-    top: 64%;
-    left: -30px;
+  .floating-slot.card-7 {
+    top: 28%;
+    left: -28px;
   }
 
-  .card-8 {
+  .floating-slot.card-8 {
     top: -2px;
-    left: -22px;
+    left: -20px;
   }
 }
 
@@ -2336,44 +2400,44 @@ section,
     font-size: 12px;
   }
 
-  .card-1 {
-    top: -8px;
-    left: 56%;
-  }
-
-  .card-2 {
-    top: -2px;
-    right: -20px;
-  }
-
-  .card-3 {
-    top: 36%;
-    right: -26px;
-  }
-
-  .card-4 {
-    bottom: 22%;
-    right: -22px;
-  }
-
-  .card-5 {
-    bottom: -8px;
+  .floating-slot.card-1 {
+    top: -7px;
     left: 44%;
   }
 
-  .card-6 {
+  .floating-slot.card-2 {
+    top: 17%;
+    right: -21px;
+  }
+
+  .floating-slot.card-3 {
+    top: 54%;
+    left: -25px;
+  }
+
+  .floating-slot.card-4 {
+    bottom: 26%;
+    right: -20px;
+  }
+
+  .floating-slot.card-5 {
+    bottom: -8px;
+    left: 47%;
+  }
+
+  .floating-slot.card-6 {
     bottom: 0;
-    left: -24px;
+    left: -22px;
   }
 
-  .card-7 {
-    top: 64%;
-    left: -26px;
+  .floating-slot.card-7 {
+    top: 28%;
+    left: -25px;
   }
 
-  .card-8 {
+  .floating-slot.card-8 {
     top: 0;
-    left: -20px;
+    left: -18px;
   }
 }
 
@@ -2405,44 +2469,44 @@ section,
     font-size: 11px;
   }
 
-  .card-1 {
+  .floating-slot.card-1 {
     top: -6px;
-    left: 56%;
-  }
-
-  .card-2 {
-    top: 0;
-    right: -18px;
-  }
-
-  .card-3 {
-    top: 36%;
-    right: -24px;
-  }
-
-  .card-4 {
-    bottom: 22%;
-    right: -20px;
-  }
-
-  .card-5 {
-    bottom: -6px;
     left: 44%;
   }
 
-  .card-6 {
+  .floating-slot.card-2 {
+    top: 17%;
+    right: -18px;
+  }
+
+  .floating-slot.card-3 {
+    top: 54%;
+    left: -23px;
+  }
+
+  .floating-slot.card-4 {
+    bottom: 26%;
+    right: -18px;
+  }
+
+  .floating-slot.card-5 {
+    bottom: -6px;
+    left: 47%;
+  }
+
+  .floating-slot.card-6 {
     bottom: 2px;
-    left: -22px;
+    left: -20px;
   }
 
-  .card-7 {
-    top: 64%;
-    left: -24px;
+  .floating-slot.card-7 {
+    top: 28%;
+    left: -23px;
   }
 
-  .card-8 {
+  .floating-slot.card-8 {
     top: 2px;
-    left: -18px;
+    left: -16px;
   }
 }
 
@@ -2474,44 +2538,44 @@ section,
     font-size: 10px;
   }
 
-  .card-1 {
+  .floating-slot.card-1 {
     top: -4px;
-    left: 56%;
-  }
-
-  .card-2 {
-    top: 2px;
-    right: -14px;
-  }
-
-  .card-3 {
-    top: 36%;
-    right: -20px;
-  }
-
-  .card-4 {
-    bottom: 22%;
-    right: -16px;
-  }
-
-  .card-5 {
-    bottom: -4px;
     left: 44%;
   }
 
-  .card-6 {
+  .floating-slot.card-2 {
+    top: 17%;
+    right: -14px;
+  }
+
+  .floating-slot.card-3 {
+    top: 54%;
+    left: -19px;
+  }
+
+  .floating-slot.card-4 {
+    bottom: 26%;
+    right: -14px;
+  }
+
+  .floating-slot.card-5 {
+    bottom: -4px;
+    left: 47%;
+  }
+
+  .floating-slot.card-6 {
     bottom: 4px;
-    left: -18px;
+    left: -16px;
   }
 
-  .card-7 {
-    top: 64%;
-    left: -20px;
+  .floating-slot.card-7 {
+    top: 28%;
+    left: -19px;
   }
 
-  .card-8 {
+  .floating-slot.card-8 {
     top: 4px;
-    left: -14px;
+    left: -13px;
   }
 }
 
