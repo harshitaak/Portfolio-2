@@ -1137,7 +1137,7 @@ ol li::marker {
 .btn-cta:hover {
   color: var(--paper) !important;
   background: var(--color) !important;
-  transform: translateY(-5px);
+  transform: translateY(-2px);
   box-shadow: var(--elevation-1);
 }
 
@@ -1390,7 +1390,7 @@ ol li::marker {
   width: 44px;
   height: 44px;
   border-radius: 50px;
-  transition: all 0.3s ease-out;
+  transition: all 0.3s ease-in-out;
   box-shadow: var(--elevation-1);
   transform: translateY(20px);
 }
@@ -3147,7 +3147,7 @@ section,
 }
 
 .portfolio .portfolio-content img {
-  transition: 0.3s;
+  transition: 0.3s ease-in-out;
 }
 
 .portfolio .portfolio-content .portfolio-info {
@@ -3198,7 +3198,7 @@ section,
 }
 
 .portfolio .portfolio-content:hover img {
-  transform: scale(1.1);
+  transform: scale(1.05);
 }
 
 /* Fix for portfolio items with links */
