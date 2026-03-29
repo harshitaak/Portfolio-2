@@ -1,25 +1,67 @@
 @import "https://unpkg.com/open-props/easings.min.css";
 
+/*--------------------------------------------------------------
+# View Transitions API — same-origin full page navigations
+  Supported in Chromium 126+; other browsers ignore these rules.
+--------------------------------------------------------------*/
+@view-transition {
+  navigation: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  @view-transition {
+    navigation: none;
+  }
+}
+
+@keyframes vt-root-fade-out {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes vt-root-fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+::view-transition-old(root) {
+  animation: vt-root-fade-out 0.22s var(--ease-3, cubic-bezier(0.4, 0, 0.2, 1)) both;
+}
+
+::view-transition-new(root) {
+  animation: vt-root-fade-in 0.38s var(--ease-3, cubic-bezier(0.4, 0, 0.2, 1)) both;
+}
+
 /* Three Column Grid: 3-column CSS masonry */
 .three-column-grid {
   column-count: 3;
   column-gap: 16px;
 }
+
 .three-column-grid .photo-gallery-item {
   break-inside: avoid;
   margin: 0 0 16px;
   display: block;
 }
+
 .three-column-grid img {
   width: 100%;
   height: auto;
   display: block;
 }
+
 @media (max-width: 991.98px) {
-  .three-column-grid { column-count: 2; }
+  .three-column-grid {
+    column-count: 2;
+  }
 }
+
 @media (max-width: 575.98px) {
-  .three-column-grid { column-count: 1; }
+  .three-column-grid {
+    column-count: 1;
+  }
 }
 
 /*--------------------------------------------------------------
@@ -30,7 +72,7 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 24px;
-  max-width: 1200px;  
+  max-width: 1200px;
   margin: 0 auto;
 }
 
@@ -102,7 +144,7 @@
     gap: 32px;
     padding: 32px 20px;
   }
-  
+
   .two-column-grid-with-text .text-content {
     padding: 0;
   }
@@ -113,11 +155,11 @@
     gap: 24px;
     padding: 24px 16px;
   }
-  
+
   .two-column-grid-with-text .text-title {
     font-size: 20px;
   }
-  
+
   .two-column-grid-with-text .text-description {
     font-size: 15px;
   }
@@ -162,7 +204,7 @@
     grid-template-columns: 1fr;
     gap: 16px;
   }
-  
+
   .two-column-grid .grid-item img {
     height: auto;
   }
@@ -172,7 +214,7 @@
   .two-column-grid {
     gap: 12px;
   }
-  
+
   .two-column-grid .grid-item img {
     height: auto;
   }
@@ -254,13 +296,13 @@
     flex-direction: column;
     gap: 16px;
   }
-  
+
   .flex-image-grid .main-item,
   .flex-image-grid .side-items-container {
     flex: none;
     width: 100%;
   }
-  
+
   .flex-image-grid .side-items-container {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -283,7 +325,7 @@
 
 /* Semantic Typography Styles */
 :root {
-  
+
   /* Display Text (For the largest, most prominent text, like hero titles) */
   --text-display-font: 700 72px/1.2 "Satoshi-Bold", "Satoshi-Medium", sans-serif;
 
@@ -292,7 +334,7 @@
 
   /* Title Text (For subsections or card titles) */
   --text-title-font: 600 1.5rem/1.4 "Satoshi-Medium", "Satoshi-Regular", sans-serif;
-  
+
   /* Subtitle Text (For text that supports a title) */
   --text-subtitle-font: 500 1.125rem/1.5 "Satoshi-Medium", "Satoshi-Regular", sans-serif;
 
@@ -305,12 +347,15 @@
 
 
 /* Global Colors - The following color variables are used throughout the website. Updating them here will change the color scheme of the entire website */
-:root { 
+:root {
   /* Core palette */
-  --paper: #252525;  /* background surfaces */
-  --ink: #e3e3e3;    /* primary text */
+  --paper: #252525;
+  /* background surfaces */
+  --ink: #e3e3e3;
+  /* primary text */
   --color: hsl(204, 56%, 67%);
-  --shadow-color: #000000; /* keep as is */
+  --shadow-color: #000000;
+  /* keep as is */
 
   /* Compatibility aliases (will be phased out) - automatically inherit from core palette */
   --background-color: var(--paper);
@@ -320,8 +365,11 @@
 }
 
 /* Smooth transition for color changes */
-html, body,
-body *, body *::before, body *::after {
+html,
+body,
+body *,
+body *::before,
+body *::after {
   transition:
     background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
     color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
@@ -341,10 +389,10 @@ body *, body *::before, body *::after {
 
 :root {
   /* ...existing variables... */
-  --elevation-1: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-  --elevation-2: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-  --elevation-3: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
-  
+  --elevation-1: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  --elevation-2: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  --elevation-3: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+
   /* Easing variables */
   --ease-1: cubic-bezier(0.25, 0.46, 0.45, 0.94);
   --ease-2: cubic-bezier(0.55, 0.085, 0.68, 0.53);
@@ -374,7 +422,7 @@ body *, body *::before, body *::after {
   background: radial-gradient(circle, color-mix(in srgb, var(--ink), var(--paper) 50%) 1px, transparent 1px);
   background-size: 16px 16px;
   opacity: 0.8;
-  
+
   /* Modern browsers: mask for a vignette/fade effect */
   -webkit-mask-image: radial-gradient(ellipse 60% 60% at 50% 50%, black 70%, transparent 100%);
   -webkit-mask-size: 100% 100%;
@@ -421,7 +469,7 @@ a {
   color: var(--color);
   text-decoration: none;
   transition: 0.3s;
-  
+
 }
 
 a:hover {
@@ -450,14 +498,14 @@ ol li::marker {
 /*--------------------------------------------------------------
 # Responsive Image Grid
 --------------------------------------------------------------*/
-.image-area{
+.image-area {
   max-width: 1200px;
   width: 90%;
   margin: auto;
   padding: 16px 0;
 }
 
-.title{
+.title {
   margin-bottom: 1rem;
 }
 
@@ -476,14 +524,16 @@ ol li::marker {
 --------------------------------------------------------------*/
 .header {
   color: var(--ink);
-  box-shadow: var(--elevation-1) ;
+  box-shadow: var(--elevation-1);
   background-color: var(--paper);
   padding: 0.5rem 0;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   align-content: bottom;
   z-index: 997;
   will-change: background-color, box-shadow;
-  position: relative; /* Changed from fixed to relative */
+  position: relative;
+  /* Changed from fixed to relative */
+  view-transition-name: site-header;
   /* Prevent navbar glitching */
   transform: translate3d(0, 0, 0);
   backface-visibility: hidden;
@@ -513,7 +563,7 @@ ol li::marker {
 }
 
 .scrolled .header {
-  box-shadow: var(--elevation-1) ;
+  box-shadow: var(--elevation-1);
 }
 
 
@@ -646,7 +696,7 @@ ol li::marker {
   }
 
   /* Remove hover states for disabled navmenu items */
-  .navmenu a.nav-disabled:hover, 
+  .navmenu a.nav-disabled:hover,
   .navmenu li:hover>a.nav-disabled {
     cursor: not-allowed !important;
   }
@@ -721,12 +771,14 @@ ol li::marker {
 
 /* Mobile Navigation */
 @media (max-width: 1199px) {
+
   /* Prevent horizontal scroll when mobile nav is active */
   body.mobile-nav-active {
     overflow-x: hidden !important;
     position: fixed;
     width: 100%;
   }
+
   .mobile-nav-toggle {
     color: var(--ink);
     font-size: 32px;
@@ -850,7 +902,7 @@ ol li::marker {
 
   .navmenu a.nav-disabled:hover,
   .navmenu .active:focus a.nav-disabled,
-  .navmenu li:hover > a.nav-disabled {
+  .navmenu li:hover>a.nav-disabled {
     color: var(--ink) !important;
     cursor: not-allowed !important;
   }
@@ -945,7 +997,7 @@ ol li::marker {
     margin-right: 0;
     z-index: 9999;
   }
-  
+
   /* Ensure navbar-right container doesn't interfere on mobile */
   .mobile-nav-active .navbar-right {
     position: relative;
@@ -1037,9 +1089,11 @@ ol li::marker {
 .minimal-footer .brand {
   color: var(--ink);
 }
+
 .minimal-footer .text-muted {
   color: var(--text-secondary);
 }
+
 .minimal-footer .social-links a:hover {
   color: var(--color);
 }
@@ -1050,6 +1104,7 @@ ol li::marker {
   height: 64px;
   color: var(--ink) !important;
 }
+
 .minimal-footer .brand .small {
   font-size: 1.5rem;
   font-weight: 400;
@@ -1063,7 +1118,7 @@ ol li::marker {
   border: none !important;
   padding: 6px 14px;
   border-radius: 999px;
-  font-weight: 550;
+  font-weight: 700;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -1095,25 +1150,25 @@ ol li::marker {
   .minimal-footer .container {
     padding: 1rem 0;
   }
-  
+
   .minimal-footer .footer-left {
     flex: 0 0 auto;
   }
-  
+
   .minimal-footer .footer-right {
     flex: 0 0 auto;
     gap: 0.75rem !important;
   }
-  
+
   .minimal-footer .brand .logo-svg {
     width: 56px;
     height: 56px;
   }
-  
+
   .minimal-footer .social-links {
     gap: 0.5rem !important;
   }
-  
+
   .minimal-footer .social-links a {
     width: 32px;
     height: 32px;
@@ -1155,6 +1210,7 @@ ol li::marker {
     transform: rotate(360deg);
   }
 }
+
 /*--------------------------------------------------------------
 # Resume Section
 --------------------------------------------------------------*/
@@ -1368,7 +1424,7 @@ ol li::marker {
   right: 16px;
   bottom: -60px;
   z-index: 99999;
-  
+
   background-color: var(--color);
   width: 44px;
   height: 44px;
@@ -1477,17 +1533,17 @@ ol li::marker {
   height: 20px;
 }
 
-.floating-theme-toggle .sun-and-moon > :is(.moon, .sun, .sun-beams) {
+.floating-theme-toggle .sun-and-moon> :is(.moon, .sun, .sun-beams) {
   transform-origin: center;
 }
 
 /* Icon colors */
-.floating-theme-toggle .sun-and-moon > :is(.moon, .sun) {
+.floating-theme-toggle .sun-and-moon> :is(.moon, .sun) {
   fill: color-mix(in srgb, var(--ink), var(--paper) 50%);
   transition: fill 0.3s var(--ease-3);
 }
 
-.floating-theme-toggle .sun-and-moon > .sun-beams {
+.floating-theme-toggle .sun-and-moon>.sun-beams {
   stroke: color-mix(in srgb, var(--ink), var(--paper) 50%);
   stroke-width: 2px;
   transition: stroke 0.3s var(--ease-3);
@@ -1499,11 +1555,11 @@ ol li::marker {
   box-shadow: var(--elevation-2);
 }
 
-.floating-theme-toggle:is(:hover, :focus-visible) .sun-and-moon > :is(.moon, .sun) {
+.floating-theme-toggle:is(:hover, :focus-visible) .sun-and-moon> :is(.moon, .sun) {
   fill: #f39c12;
 }
 
-.floating-theme-toggle:is(:hover, :focus-visible) .sun-and-moon > .sun-beams {
+.floating-theme-toggle:is(:hover, :focus-visible) .sun-and-moon>.sun-beams {
   stroke: #f39c12;
 }
 
@@ -1519,56 +1575,56 @@ ol li::marker {
 }
 
 /* Dark theme styles (when light-mode class is NOT present) */
-body:not(.light-mode) .floating-theme-toggle .sun-and-moon > .sun {
+body:not(.light-mode) .floating-theme-toggle .sun-and-moon>.sun {
   transform: scale(1.75);
 }
 
-body:not(.light-mode) .floating-theme-toggle .sun-and-moon > .sun-beams {
+body:not(.light-mode) .floating-theme-toggle .sun-and-moon>.sun-beams {
   opacity: 0;
 }
 
-body:not(.light-mode) .floating-theme-toggle .sun-and-moon > .moon > circle {
+body:not(.light-mode) .floating-theme-toggle .sun-and-moon>.moon>circle {
   transform: translateX(-7px);
 }
 
 @supports (cx: 1) {
-  body:not(.light-mode) .floating-theme-toggle .sun-and-moon > .moon > circle {
+  body:not(.light-mode) .floating-theme-toggle .sun-and-moon>.moon>circle {
     cx: 17;
     transform: translateX(0);
   }
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .floating-theme-toggle .sun-and-moon > .sun {
+  .floating-theme-toggle .sun-and-moon>.sun {
     transition: transform .5s var(--ease-elastic-3);
   }
 
-  .floating-theme-toggle .sun-and-moon > .sun-beams {
+  .floating-theme-toggle .sun-and-moon>.sun-beams {
     transition: transform .5s var(--ease-elastic-4), opacity .5s var(--ease-3);
   }
 
-  .floating-theme-toggle .sun-and-moon .moon > circle {
+  .floating-theme-toggle .sun-and-moon .moon>circle {
     transition: transform .25s var(--ease-out-5);
   }
 
   @supports (cx: 1) {
-    .floating-theme-toggle .sun-and-moon .moon > circle {
+    .floating-theme-toggle .sun-and-moon .moon>circle {
       transition: cx .25s var(--ease-out-5);
     }
   }
 
-  body:not(.light-mode) .floating-theme-toggle .sun-and-moon > .sun {
+  body:not(.light-mode) .floating-theme-toggle .sun-and-moon>.sun {
     transition-timing-function: var(--ease-3);
     transition-duration: .25s;
     transform: scale(1.75);
   }
 
-  body:not(.light-mode) .floating-theme-toggle .sun-and-moon > .sun-beams {
+  body:not(.light-mode) .floating-theme-toggle .sun-and-moon>.sun-beams {
     transition-duration: .15s;
     transform: rotateZ(-25deg);
   }
 
-  body:not(.light-mode) .floating-theme-toggle .sun-and-moon > .moon > circle {
+  body:not(.light-mode) .floating-theme-toggle .sun-and-moon>.moon>circle {
     transition-duration: .5s;
     transition-delay: .25s;
   }
@@ -1583,8 +1639,7 @@ body:not(.light-mode) .floating-theme-toggle .sun-and-moon > .moon > circle {
   }
 }
 
---------------------------------------------------------------*/
-.page-title {
+--------------------------------------------------------------*/ .page-title {
   color: var(--paper);
   /* font-size: 56px; */
   /* background-color: var(--paper); */
@@ -1609,7 +1664,8 @@ body:not(.light-mode) .floating-theme-toggle .sun-and-moon > .moon > circle {
 
 /* Project intro text placed with page-title block for cohesion */
 .project-intro {
-  color: inherit; /* follow .page-title color in headings area */
+  color: inherit;
+  /* follow .page-title color in headings area */
   font: var(--text-body-font);
   font-family: Satoshi-Regular;
   color: var(--paper);
@@ -1769,8 +1825,8 @@ section,
 
 .hero .social-links a {
   /* background-color: color-mix(in srgb, var(--ink), transparent 90%); */
-   color: color-mix(in srgb, var(--ink), var(--paper) 50%);
-   font-size: 24px;
+  color: color-mix(in srgb, var(--ink), var(--paper) 50%);
+  font-size: 24px;
   width: 24px;
   height: 24px;
   border-radius: 50px;
@@ -1790,7 +1846,7 @@ section,
   .hero h2 {
     font-size: 48px;
   }
-  
+
   .hero p {
     font-size: 22px;
   }
@@ -1800,7 +1856,7 @@ section,
   .hero h2 {
     font-size: 40px;
   }
-  
+
   .hero p {
     font-size: 20px;
   }
@@ -1811,7 +1867,7 @@ section,
     padding: 60px 0;
     min-height: 90vh;
   }
-  
+
   .hero h2 {
     font-size: 32px;
   }
@@ -1826,11 +1882,11 @@ section,
     padding: 40px 0;
     min-height: 80vh;
   }
-  
+
   .hero h2 {
     font-size: 28px;
   }
-  
+
   .hero p {
     font-size: 16px;
   }
@@ -1858,9 +1914,12 @@ section,
   border-radius: 50%;
   box-shadow: var(--elevation-2);
   position: relative;
-  z-index: 4; /* Increased to be above overlay */
-  transition: transform 0.3s ease; /* Moved transition here for better performance */
-  background-color: var(--paper); /* Added background color variable */
+  z-index: 4;
+  /* Increased to be above overlay */
+  transition: transform 0.3s ease;
+  /* Moved transition here for better performance */
+  background-color: var(--paper);
+  /* Added background color variable */
 }
 
 .hero-main-image:hover {
@@ -1877,7 +1936,8 @@ section,
   /* background: linear-gradient(135deg, rgba(28, 152, 208, 0.1), rgba(28, 152, 208, 0.05)); */
   border-radius: 20px;
   z-index: 3;
-  pointer-events: none; /* Allow clicks to pass through to the image */
+  pointer-events: none;
+  /* Allow clicks to pass through to the image */
 }
 
 .floating-elements {
@@ -1886,7 +1946,8 @@ section,
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: 5; /* Increased to be above the image */
+  z-index: 5;
+  /* Increased to be above the image */
   pointer-events: none;
   transition: all 0.3s ease;
 }
@@ -1916,7 +1977,7 @@ section,
 .floating-card:hover {
   transform: translateY(-4px);
   box-shadow: var(--elevation-2);
-  
+
 }
 
 .floating-card i {
@@ -2003,34 +2064,76 @@ section,
 
 /* Floating animations */
 @keyframes float1 {
-  0%, 100% { transform: translateY(0px) rotate(0deg); }
-  50% { transform: translateY(-10px) rotate(2deg); }
+
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+
+  50% {
+    transform: translateY(-10px) rotate(2deg);
+  }
 }
 
 @keyframes float2 {
-  0%, 100% { transform: translateY(0px) rotate(0deg); }
-  50% { transform: translateY(-8px) rotate(-2deg); }
+
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+
+  50% {
+    transform: translateY(-8px) rotate(-2deg);
+  }
 }
 
 @keyframes float3 {
-  0%, 100% { transform: translateY(-50%) rotate(0deg); }
-  50% { transform: translateY(-60%) rotate(1deg); }
+
+  0%,
+  100% {
+    transform: translateY(-50%) rotate(0deg);
+  }
+
+  50% {
+    transform: translateY(-60%) rotate(1deg);
+  }
 }
 
 @keyframes float4 {
-  0%, 100% { transform: translateY(0px) rotate(0deg); }
-  50% { transform: translateY(-12px) rotate(-1.5deg); }
+
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+
+  50% {
+    transform: translateY(-12px) rotate(-1.5deg);
+  }
 }
 
 @keyframes float-default {
-  0%, 100% { transform: translateY(0px) rotate(0deg); }
-  50% { transform: translateY(-10px) rotate(1deg); }
+
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+
+  50% {
+    transform: translateY(-10px) rotate(1deg);
+  }
 }
 
 /* For top/bottom center cards – preserve horizontal centering */
 @keyframes float-center-h {
-  0%, 100% { transform: translateX(-50%) translateY(0); }
-  50% { transform: translateX(-50%) translateY(-8px); }
+
+  0%,
+  100% {
+    transform: translateX(-50%) translateY(0);
+  }
+
+  50% {
+    transform: translateX(-50%) translateY(-8px);
+  }
 }
 
 /* Enhanced responsive adjustments for hero image and floating cards */
@@ -2038,56 +2141,118 @@ section,
   .hero-image {
     margin-top: 30px;
   }
-  
+
   .image-container {
     max-width: 400px;
     height: 400px;
   }
-  
-  .card-1 { top: -12px; left: 56%; }
-  .card-2 { top: -6px; right: -26px; }
-  .card-3 { top: 36%; right: -38px; }
-  .card-4 { bottom: 22%; right: -32px; }
-  .card-5 { bottom: -12px; left: 44%; }
-  .card-6 { bottom: -4px; left: -28px; }
-  .card-7 { top: 64%; left: -36px; }
-  .card-8 { top: -4px; left: -24px; }
+
+  .card-1 {
+    top: -12px;
+    left: 56%;
+  }
+
+  .card-2 {
+    top: -6px;
+    right: -26px;
+  }
+
+  .card-3 {
+    top: 36%;
+    right: -38px;
+  }
+
+  .card-4 {
+    bottom: 22%;
+    right: -32px;
+  }
+
+  .card-5 {
+    bottom: -12px;
+    left: 44%;
+  }
+
+  .card-6 {
+    bottom: -4px;
+    left: -28px;
+  }
+
+  .card-7 {
+    top: 64%;
+    left: -36px;
+  }
+
+  .card-8 {
+    top: -4px;
+    left: -24px;
+  }
 }
 
 @media (max-width: 1199px) {
   .hero-image {
     margin-top: 40px;
   }
-  
+
   .image-container {
     max-width: 350px;
     height: 350px;
   }
-  
-  .card-1 { top: -12px; left: 56%; }
-  .card-2 { top: -6px; right: -24px; }
-  .card-3 { top: 36%; right: -34px; }
-  .card-4 { bottom: 22%; right: -30px; }
-  .card-5 { bottom: -12px; left: 44%; }
-  .card-6 { bottom: -4px; left: -28px; }
-  .card-7 { top: 64%; left: -34px; }
-  .card-8 { top: -4px; left: -24px; }
+
+  .card-1 {
+    top: -12px;
+    left: 56%;
+  }
+
+  .card-2 {
+    top: -6px;
+    right: -24px;
+  }
+
+  .card-3 {
+    top: 36%;
+    right: -34px;
+  }
+
+  .card-4 {
+    bottom: 22%;
+    right: -30px;
+  }
+
+  .card-5 {
+    bottom: -12px;
+    left: 44%;
+  }
+
+  .card-6 {
+    bottom: -4px;
+    left: -28px;
+  }
+
+  .card-7 {
+    top: 64%;
+    left: -34px;
+  }
+
+  .card-8 {
+    top: -4px;
+    left: -24px;
+  }
 }
 
 @media (max-width: 992px) {
   .hero-image {
     margin-top: 50px;
   }
-  
+
   .image-container {
     max-width: 320px;
     height: 320px;
   }
-  
+
   .floating-card {
     padding: 12px 16px;
   }
-  
+
   .floating-card i {
     font-size: 17px;
   }
@@ -2097,35 +2262,66 @@ section,
     width: 17px;
     height: 17px;
   }
-  
+
   .floating-card span {
     font-size: 13px;
   }
-  
-  .card-1 { top: -10px; left: 56%; }
-  .card-2 { top: -4px; right: -22px; }
-  .card-3 { top: 36%; right: -30px; }
-  .card-4 { bottom: 22%; right: -26px; }
-  .card-5 { bottom: -10px; left: 44%; }
-  .card-6 { bottom: -2px; left: -26px; }
-  .card-7 { top: 64%; left: -30px; }
-  .card-8 { top: -2px; left: -22px; }
+
+  .card-1 {
+    top: -10px;
+    left: 56%;
+  }
+
+  .card-2 {
+    top: -4px;
+    right: -22px;
+  }
+
+  .card-3 {
+    top: 36%;
+    right: -30px;
+  }
+
+  .card-4 {
+    bottom: 22%;
+    right: -26px;
+  }
+
+  .card-5 {
+    bottom: -10px;
+    left: 44%;
+  }
+
+  .card-6 {
+    bottom: -2px;
+    left: -26px;
+  }
+
+  .card-7 {
+    top: 64%;
+    left: -30px;
+  }
+
+  .card-8 {
+    top: -2px;
+    left: -22px;
+  }
 }
 
 @media (max-width: 768px) {
   .hero-image {
     margin-top: 30px;
   }
-  
+
   .image-container {
     max-width: 280px;
     height: 280px;
   }
-  
+
   .floating-card {
     padding: 10px 14px;
   }
-  
+
   .floating-card i {
     font-size: 16px;
   }
@@ -2135,35 +2331,66 @@ section,
     width: 16px;
     height: 16px;
   }
-  
+
   .floating-card span {
     font-size: 12px;
   }
-  
-  .card-1 { top: -8px; left: 56%; }
-  .card-2 { top: -2px; right: -20px; }
-  .card-3 { top: 36%; right: -26px; }
-  .card-4 { bottom: 22%; right: -22px; }
-  .card-5 { bottom: -8px; left: 44%; }
-  .card-6 { bottom: 0; left: -24px; }
-  .card-7 { top: 64%; left: -26px; }
-  .card-8 { top: 0; left: -20px; }
+
+  .card-1 {
+    top: -8px;
+    left: 56%;
+  }
+
+  .card-2 {
+    top: -2px;
+    right: -20px;
+  }
+
+  .card-3 {
+    top: 36%;
+    right: -26px;
+  }
+
+  .card-4 {
+    bottom: 22%;
+    right: -22px;
+  }
+
+  .card-5 {
+    bottom: -8px;
+    left: 44%;
+  }
+
+  .card-6 {
+    bottom: 0;
+    left: -24px;
+  }
+
+  .card-7 {
+    top: 64%;
+    left: -26px;
+  }
+
+  .card-8 {
+    top: 0;
+    left: -20px;
+  }
 }
 
 @media (max-width: 576px) {
   .hero-image {
     margin-top: 20px;
   }
-  
+
   .image-container {
     max-width: 300px;
     height: 300px;
   }
-  
+
   .floating-card {
     padding: 8px 12px;
   }
-  
+
   .floating-card i {
     font-size: 14px;
   }
@@ -2173,35 +2400,66 @@ section,
     width: 14px;
     height: 14px;
   }
-  
+
   .floating-card span {
     font-size: 11px;
   }
-  
-  .card-1 { top: -6px; left: 56%; }
-  .card-2 { top: 0; right: -18px; }
-  .card-3 { top: 36%; right: -24px; }
-  .card-4 { bottom: 22%; right: -20px; }
-  .card-5 { bottom: -6px; left: 44%; }
-  .card-6 { bottom: 2px; left: -22px; }
-  .card-7 { top: 64%; left: -24px; }
-  .card-8 { top: 2px; left: -18px; }
+
+  .card-1 {
+    top: -6px;
+    left: 56%;
+  }
+
+  .card-2 {
+    top: 0;
+    right: -18px;
+  }
+
+  .card-3 {
+    top: 36%;
+    right: -24px;
+  }
+
+  .card-4 {
+    bottom: 22%;
+    right: -20px;
+  }
+
+  .card-5 {
+    bottom: -6px;
+    left: 44%;
+  }
+
+  .card-6 {
+    bottom: 2px;
+    left: -22px;
+  }
+
+  .card-7 {
+    top: 64%;
+    left: -24px;
+  }
+
+  .card-8 {
+    top: 2px;
+    left: -18px;
+  }
 }
 
 @media (max-width: 480px) {
   .hero-image {
     margin-top: 15px;
   }
-  
+
   .image-container {
     max-width: 250px;
     height: 250px;
   }
-  
+
   .floating-card {
     padding: 6px 10px;
   }
-  
+
   .floating-card i {
     font-size: 12px;
   }
@@ -2211,19 +2469,50 @@ section,
     width: 12px;
     height: 12px;
   }
-  
+
   .floating-card span {
     font-size: 10px;
   }
-  
-  .card-1 { top: -4px; left: 56%; }
-  .card-2 { top: 2px; right: -14px; }
-  .card-3 { top: 36%; right: -20px; }
-  .card-4 { bottom: 22%; right: -16px; }
-  .card-5 { bottom: -4px; left: 44%; }
-  .card-6 { bottom: 4px; left: -18px; }
-  .card-7 { top: 64%; left: -20px; }
-  .card-8 { top: 4px; left: -14px; }
+
+  .card-1 {
+    top: -4px;
+    left: 56%;
+  }
+
+  .card-2 {
+    top: 2px;
+    right: -14px;
+  }
+
+  .card-3 {
+    top: 36%;
+    right: -20px;
+  }
+
+  .card-4 {
+    bottom: 22%;
+    right: -16px;
+  }
+
+  .card-5 {
+    bottom: -4px;
+    left: 44%;
+  }
+
+  .card-6 {
+    bottom: 4px;
+    left: -18px;
+  }
+
+  .card-7 {
+    top: 64%;
+    left: -20px;
+  }
+
+  .card-8 {
+    top: 4px;
+    left: -14px;
+  }
 }
 
 /*--------------------------------------------------------------
@@ -2771,7 +3060,7 @@ section,
   padding: 0;
   margin: 0 0 40px;
   list-style: none;
-  
+
 }
 
 .portfolio .portfolio-filters li {
@@ -2803,6 +3092,7 @@ section,
   box-shadow: var(--elevation-2);
   background: color-mix(in srgb, var(--color), transparent 92%);
 }
+
 .portfolio .portfolio-filters li.filter-active {
   background: var(--color);
   color: var(--paper);
@@ -2999,13 +3289,16 @@ section,
   color: var(--ink);
   margin-bottom: 1rem;
 }
+
 .project-title a {
   color: inherit;
   text-decoration: underline;
 }
+
 .project-description {
   color: var(--ink);
-  font: var(--text-body-font); /* controls size and line-height */
+  font: var(--text-body-font);
+  /* controls size and line-height */
 }
 
 /* Color chips for displaying color palette variables */
@@ -3042,10 +3335,11 @@ section,
   border-color: color-mix(in srgb, var(--color), transparent 40%);
 }
 
-.section-gap-80 > * + * {
+.section-gap-80>*+* {
   margin-top: 40px;
   padding-bottom: 40px;
 }
+
 /* Collage variant of the project */
 
 .image-collage-grid {
@@ -3094,16 +3388,19 @@ section,
 --------------------------------------------------------------*/
 /* Reverse is now the default layout */
 .my-section {
-  margin-top: 10vh ;
+  margin-top: 10vh;
   margin-bottom: 10vh;
   max-width: 100%;
-  height: auto; /* let media aspect-ratio drive height */
+  height: auto;
+  /* let media aspect-ratio drive height */
   /* Default aspect ratio for media; override via inline style or modifier if needed */
   --media-aspect-ratio: 16 / 9;
-  
+
   display: flex;
-  flex-direction: row-reverse; /* default reversed */
-  align-items: stretch; /* let media define height and text match it */
+  flex-direction: row-reverse;
+  /* default reversed */
+  align-items: stretch;
+  /* let media define height and text match it */
   gap: 32px;
   transition: 0.3s ease-in-out;
 }
@@ -3112,14 +3409,17 @@ section,
 
 .my-section__media,
 .my-section__text {
-  min-width: 0; /* prevent overflow */
-  box-sizing: border-box; /* include padding in flex basis */
+  min-width: 0;
+  /* prevent overflow */
+  box-sizing: border-box;
+  /* include padding in flex basis */
 }
 
 .my-section__media {
   flex: 1 1 70%;
   aspect-ratio: var(--media-aspect-ratio);
-  height: auto; /* compute from width and aspect ratio */
+  height: auto;
+  /* compute from width and aspect ratio */
   border-radius: 0;
   overflow: hidden;
   display: flex;
@@ -3132,11 +3432,13 @@ section,
   width: 100%;
   height: 100%;
 }
+
 .my-section__carousel .swiper-wrapper,
 .my-section__carousel .swiper-slide {
   width: 100%;
   height: 100%;
 }
+
 /* Section carousel pagination - simplified for custom-carousel-nav */
 .my-section__carousel .swiper-pagination {
   position: absolute;
@@ -3192,7 +3494,7 @@ section,
   display: flex;
   align-items: center;
   justify-content: center;
-  
+
 }
 
 .custom-carousel-nav::before {
@@ -3327,8 +3629,13 @@ section,
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .my-section__image {
@@ -3341,29 +3648,37 @@ section,
 
 .my-section__text {
   text-align: left;
-  padding: 0; /* remove padding */
+  padding: 0;
+  /* remove padding */
   display: flex;
   flex-direction: column;
-  justify-content: flex-end; /* push content to bottom */
+  justify-content: flex-end;
+  /* push content to bottom */
   align-items: flex-start;
-  align-self: stretch; /* match media height */
-  flex: 1 1 30%; /* reduced text width to give media more space */
+  align-self: stretch;
+  /* match media height */
+  flex: 1 1 30%;
+  /* reduced text width to give media more space */
 }
 
 /* Reverse variant class no longer needed; keep for backward compatibility */
-.my-section--reverse { flex-direction: row-reverse; }
+.my-section--reverse {
+  flex-direction: row-reverse;
+}
 
 .my-section h2 {
   font-family: var(--heading-font);
   font-size: 2.5rem;
   font-weight: 600;
   color: var(--ink);
-  margin-bottom: 0; /* remove gap below title */
+  margin-bottom: 0;
+  /* remove gap below title */
 }
 
 /* Project description inside section */
 .my-section .project-description {
-  margin: 0; /* tight to title */
+  margin: 0;
+  /* tight to title */
   color: var(--ink);
 }
 
@@ -3376,28 +3691,33 @@ section,
 
 @media (max-width: 1200px) {
   .my-section {
-    flex-direction: column; /* stack on mobile */
-    height: auto; /* let aspect-ratio drive height on small screens */
+    flex-direction: column;
+    /* stack on mobile */
+    height: auto;
+    /* let aspect-ratio drive height on small screens */
   }
 
   .my-section__media,
   .my-section__text {
     width: 100%;
-    flex: 1 1 auto; /* stack naturally on mobile */
+    flex: 1 1 auto;
+    /* stack naturally on mobile */
   }
 
   /* Let image define height on mobile as well */
   .my-section__media {
     width: 100%;
     height: auto;
-    aspect-ratio: var(--media-aspect-ratio); /* lock visual ratio on small screens */
+    aspect-ratio: var(--media-aspect-ratio);
+    /* lock visual ratio on small screens */
   }
 
   /* mobile stays stacked regardless of reverse */
 
   .my-section__text {
     padding: 0;
-    margin-top: auto; /* place text block at bottom when stacked */
+    margin-top: auto;
+    /* place text block at bottom when stacked */
   }
 }
 
@@ -3426,7 +3746,7 @@ section,
   .theme-toggle-mobile {
     transition: color 0.3s;
   }
-  
+
   .theme-toggle-mobile:hover {
     color: var(--color) !important;
   }
@@ -3467,81 +3787,81 @@ section,
   stroke-linecap: round;
 }
 
-.sun-and-moon > :is(.moon, .sun, .sun-beams) {
+.sun-and-moon> :is(.moon, .sun, .sun-beams) {
   transform-origin: center;
 }
 
 /* Icon colors */
-.sun-and-moon > :is(.moon, .sun) {
+.sun-and-moon> :is(.moon, .sun) {
   fill: color-mix(in srgb, var(--ink), var(--paper) 50%);
   transition: fill 0.3s var(--ease-3);
 }
 
-.theme-toggle:is(:hover, :focus-visible) > .sun-and-moon > :is(.moon, .sun) {
+.theme-toggle:is(:hover, :focus-visible)>.sun-and-moon> :is(.moon, .sun) {
   fill: #f39c12;
 }
 
-.sun-and-moon > .sun-beams {
+.sun-and-moon>.sun-beams {
   stroke: color-mix(in srgb, var(--ink), var(--paper) 50%);
   stroke-width: 2px;
   transition: stroke 0.3s var(--ease-3);
 }
 
-.theme-toggle:is(:hover, :focus-visible) .sun-and-moon > .sun-beams {
+.theme-toggle:is(:hover, :focus-visible) .sun-and-moon>.sun-beams {
   stroke: #f39c12;
 }
 
 /* Dark theme styles (when light-mode class is NOT present) */
-body:not(.light-mode) .sun-and-moon > .sun {
+body:not(.light-mode) .sun-and-moon>.sun {
   transform: scale(1.75);
 }
 
-body:not(.light-mode) .sun-and-moon > .sun-beams {
+body:not(.light-mode) .sun-and-moon>.sun-beams {
   opacity: 0;
 }
 
-body:not(.light-mode) .sun-and-moon > .moon > circle {
+body:not(.light-mode) .sun-and-moon>.moon>circle {
   transform: translateX(-7px);
 }
 
 @supports (cx: 1) {
-  body:not(.light-mode) .sun-and-moon > .moon > circle {
+  body:not(.light-mode) .sun-and-moon>.moon>circle {
     cx: 17;
     transform: translateX(0);
   }
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .sun-and-moon > .sun {
+  .sun-and-moon>.sun {
     transition: transform .5s var(--ease-elastic-3);
   }
 
-  .sun-and-moon > .sun-beams {
+  .sun-and-moon>.sun-beams {
     transition: transform .5s var(--ease-elastic-4), opacity .5s var(--ease-3);
   }
 
-  .sun-and-moon .moon > circle {
+  .sun-and-moon .moon>circle {
     transition: transform .25s var(--ease-out-5);
   }
 
   @supports (cx: 1) {
-    .sun-and-moon .moon > circle {
+    .sun-and-moon .moon>circle {
       transition: cx .25s var(--ease-out-5);
     }
   }
 
-  body:not(.light-mode) .sun-and-moon > .sun {
+  body:not(.light-mode) .sun-and-moon>.sun {
     transition-timing-function: var(--ease-3);
     transition-duration: .25s;
     transform: scale(1.75);
   }
 
-  body:not(.light-mode) .sun-and-moon > .sun-beams {
+  body:not(.light-mode) .sun-and-moon>.sun-beams {
     transition-duration: .15s;
     transform: rotateZ(-25deg);
   }
 
-  body:not(.light-mode) .sun-and-moon > .moon > circle {
+  body:not(.light-mode) .sun-and-moon>.moon>circle {
     transition-duration: .5s;
     transition-delay: .25s;
   }
@@ -3668,7 +3988,7 @@ img[src$=".gif"] {
     flex-direction: column;
     gap: 1.5rem;
   }
-  
+
   .text-video-section__text,
   .text-video-section__video {
     flex: 1 1 auto;
