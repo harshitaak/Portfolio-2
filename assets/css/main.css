@@ -1323,6 +1323,7 @@ ol li::marker {
 .resume .card-body p {
   margin-bottom: 1rem;
   line-height: 1.6;
+  text-wrap: pretty;
 }
 
 .resume .card-body p:last-child {
@@ -1773,6 +1774,7 @@ section,
   margin: 4px 0 0 0;
   font-size: 24px;
   color: var(--ink);
+  text-wrap: pretty;
 }
 
 .hero p span {
@@ -1810,6 +1812,7 @@ section,
 
   .hero p {
     font-size: 22px;
+    
   }
 }
 
@@ -3324,7 +3327,7 @@ section,
 .project-description {
   color: var(--ink);
   font: var(--text-body-font);
-  /* controls size and line-height */
+  text-wrap: pretty;
 }
 
 /* Color chips for displaying color palette variables */
