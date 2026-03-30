@@ -1734,16 +1734,6 @@ section,
   background-color: var(--paper);
 }
 
-.hero img {
-  position: absolute;
-  inset: 0;
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  z-index: 1;
-}
-
 .hero .container {
   position: relative;
   z-index: 3;
@@ -1872,6 +1862,7 @@ section,
 }
 
 .hero-main-image {
+  display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -1879,15 +1870,12 @@ section,
   box-shadow: var(--elevation-2);
   position: relative;
   z-index: 4;
-  /* Increased to be above overlay */
   transition: transform 0.3s ease;
-  /* Moved transition here for better performance */
   background-color: var(--paper);
-  /* Added background color variable */
 }
 
 .hero-main-image:hover {
-  transform: scale(1.05) translateY(-10px);
+  transform: scale(1.05);
   box-shadow: var(--elevation-3);
 }
 
@@ -1900,7 +1888,6 @@ section,
   /* background: linear-gradient(135deg, rgba(28, 152, 208, 0.1), rgba(28, 152, 208, 0.05)); */
   border-radius: 20px;
   z-index: 3;
-  pointer-events: none;
   /* Allow clicks to pass through to the image */
 }
 
@@ -1912,9 +1899,10 @@ section,
   bottom: 0;
   z-index: 5;
   /* Increased to be above the image */
-  pointer-events: none;
   transition: all 0.3s ease;
+  pointer-events: none;
 }
+
 
 .floating-card {
   position: absolute;
@@ -1933,7 +1921,6 @@ section,
     background-color 0.35s var(--ease-3),
     backdrop-filter 0.35s var(--ease-3),
     filter 0.35s var(--ease-3);
-  pointer-events: auto;
   /* Default floating animation for all cards - can be overridden by specific card-X classes */
   animation: float-default 6s var(--ease-3) infinite;
 }
@@ -1964,6 +1951,7 @@ section,
   font-weight: 500;
   color: var(--ink);
   white-space: nowrap;
+  pointer-events: none;
 }
 
 .floating-slot {
@@ -1979,7 +1967,7 @@ section,
 .floating-slot .floating-card {
   position: relative;
   inset: auto;
-  pointer-events: auto;
+  pointer-events: none;
 }
 
 /* Floating card positions – irregular placement (~even perimeter coverage, no regular shape) */
@@ -2585,6 +2573,71 @@ section,
   flex-shrink: 0;
 }
 
+/* CSS scroll-driven animations (About page) — progressive enhancement */
+@keyframes about-scroll-visual-in {
+  from {
+    opacity: 0.75;
+    transform: translateY(2.25rem) scale(0.96);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes about-scroll-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(1.5rem);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@supports (animation-timeline: view()) {
+  body.about-page #about .about-scroll-visual {
+    animation-name: about-scroll-visual-in;
+    animation-duration: 1ms;
+    animation-timing-function: linear;
+    animation-fill-mode: both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 38%;
+  }
+
+  body.about-page #about .about-scroll-heading {
+    animation-name: about-scroll-fade-up;
+    animation-duration: 1ms;
+    animation-timing-function: linear;
+    animation-fill-mode: both;
+    animation-timeline: view();
+    animation-range: entry 8% cover 45%;
+  }
+
+  body.about-page #about .about-scroll-copy {
+    animation-name: about-scroll-fade-up;
+    animation-duration: 1ms;
+    animation-timing-function: linear;
+    animation-fill-mode: both;
+    animation-timeline: view();
+    animation-range: entry 18% cover 52%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.about-page #about .about-scroll-visual,
+  body.about-page #about .about-scroll-heading,
+  body.about-page #about .about-scroll-copy {
+    animation: none !important;
+  }
+}
+
+/*--------------------------------------------------------------
+# Stats Section
+--------------------------------------------------------------*/
 /*--------------------------------------------------------------
 # Stats Section
 --------------------------------------------------------------*/
