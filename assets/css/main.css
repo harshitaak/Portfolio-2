@@ -1536,20 +1536,20 @@ ol li::marker {
 }
 
 /* Dark theme styles (when light-mode class is NOT present) */
-body:not(.light-mode) .floating-theme-toggle .sun-and-moon>.sun {
+html:not(.light-mode) .floating-theme-toggle .sun-and-moon>.sun {
   transform: scale(1.75);
 }
 
-body:not(.light-mode) .floating-theme-toggle .sun-and-moon>.sun-beams {
+html:not(.light-mode) .floating-theme-toggle .sun-and-moon>.sun-beams {
   opacity: 0;
 }
 
-body:not(.light-mode) .floating-theme-toggle .sun-and-moon>.moon>circle {
+html:not(.light-mode) .floating-theme-toggle .sun-and-moon>.moon>circle {
   transform: translateX(-7px);
 }
 
 @supports (cx: 1) {
-  body:not(.light-mode) .floating-theme-toggle .sun-and-moon>.moon>circle {
+  html:not(.light-mode) .floating-theme-toggle .sun-and-moon>.moon>circle {
     cx: 17;
     transform: translateX(0);
   }
@@ -1574,18 +1574,18 @@ body:not(.light-mode) .floating-theme-toggle .sun-and-moon>.moon>circle {
     }
   }
 
-  body:not(.light-mode) .floating-theme-toggle .sun-and-moon>.sun {
+  html:not(.light-mode) .floating-theme-toggle .sun-and-moon>.sun {
     transition-timing-function: var(--ease-3);
     transition-duration: .25s;
     transform: scale(1.75);
   }
 
-  body:not(.light-mode) .floating-theme-toggle .sun-and-moon>.sun-beams {
+  html:not(.light-mode) .floating-theme-toggle .sun-and-moon>.sun-beams {
     transition-duration: .15s;
     transform: rotateZ(-25deg);
   }
 
-  body:not(.light-mode) .floating-theme-toggle .sun-and-moon>.moon>circle {
+  html:not(.light-mode) .floating-theme-toggle .sun-and-moon>.moon>circle {
     transition-duration: .5s;
     transition-delay: .25s;
   }
@@ -3838,20 +3838,20 @@ section,
 }
 
 /* Dark theme styles (when light-mode class is NOT present) */
-body:not(.light-mode) .sun-and-moon>.sun {
+html:not(.light-mode) .sun-and-moon>.sun {
   transform: scale(1.75);
 }
 
-body:not(.light-mode) .sun-and-moon>.sun-beams {
+html:not(.light-mode) .sun-and-moon>.sun-beams {
   opacity: 0;
 }
 
-body:not(.light-mode) .sun-and-moon>.moon>circle {
+html:not(.light-mode) .sun-and-moon>.moon>circle {
   transform: translateX(-7px);
 }
 
 @supports (cx: 1) {
-  body:not(.light-mode) .sun-and-moon>.moon>circle {
+  html:not(.light-mode) .sun-and-moon>.moon>circle {
     cx: 17;
     transform: translateX(0);
   }
@@ -3876,18 +3876,18 @@ body:not(.light-mode) .sun-and-moon>.moon>circle {
     }
   }
 
-  body:not(.light-mode) .sun-and-moon>.sun {
+  html:not(.light-mode) .sun-and-moon>.sun {
     transition-timing-function: var(--ease-3);
     transition-duration: .25s;
     transform: scale(1.75);
   }
 
-  body:not(.light-mode) .sun-and-moon>.sun-beams {
+  html:not(.light-mode) .sun-and-moon>.sun-beams {
     transition-duration: .15s;
     transform: rotateZ(-25deg);
   }
 
-  body:not(.light-mode) .sun-and-moon>.moon>circle {
+  html:not(.light-mode) .sun-and-moon>.moon>circle {
     transition-duration: .5s;
     transition-delay: .25s;
   }

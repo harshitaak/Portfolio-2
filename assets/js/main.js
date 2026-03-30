@@ -184,25 +184,27 @@
   if (floatingThemeToggle) {
     floatingThemeToggle.addEventListener('click', (e) => {
       e.preventDefault();
-      // Toggle theme independently
+      const root = document.documentElement;
       const body = document.body;
-      const currentTheme = body.classList.contains('light-mode') ? 'light' : 'dark';
+      const currentTheme = root.classList.contains('light-mode') ? 'light' : 'dark';
       const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-      
-      // Apply theme directly
+
       if (newTheme === 'light') {
+        root.classList.add('light-mode');
         body.classList.add('light-mode');
       } else {
+        root.classList.remove('light-mode');
         body.classList.remove('light-mode');
       }
-      
-      // Save theme preference
+
       localStorage.setItem('theme-preference', newTheme);
-      
-      // Update aria-label for accessibility
+
       floatingThemeToggle.setAttribute('aria-label', `Switch to ${newTheme === 'light' ? 'dark' : 'light'} mode`);
-      
-      console.log('Floating toggle: Theme toggled from', currentTheme, 'to', newTheme);
+
+      const navThemeToggle = document.getElementById('theme-toggle');
+      if (navThemeToggle) {
+        navThemeToggle.setAttribute('aria-label', `Switch to ${newTheme === 'light' ? 'dark' : 'light'} mode`);
+      }
     });
   }
 
@@ -392,13 +394,13 @@
 // Old theme toggle implementation removed - replaced with modern data-theme approach below
 
 
-// Theme toggle using .light-mode class approach
+// Theme toggle using .light-mode on <html> and <body> (early init in theme-init.js)
 document.addEventListener('DOMContentLoaded', function() {
   const themeToggle = document.getElementById('theme-toggle');
+  const root = document.documentElement;
   const body = document.body;
   const storageKey = 'theme-preference';
 
-  // Get saved theme preference or system preference
   function getThemePreference() {
     const saved = localStorage.getItem(storageKey);
     if (saved) {
@@ -407,58 +409,50 @@ document.addEventListener('DOMContentLoaded', function() {
     return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
   }
 
-  // Apply theme to body class
   function applyTheme(theme) {
     if (theme === 'light') {
+      root.classList.add('light-mode');
       body.classList.add('light-mode');
     } else {
+      root.classList.remove('light-mode');
       body.classList.remove('light-mode');
     }
-    
-    // Update aria-label for accessibility on both toggles
+
     if (themeToggle) {
       themeToggle.setAttribute('aria-label', `Switch to ${theme === 'light' ? 'dark' : 'light'} mode`);
     }
-    
-    // Also update floating toggle aria-label
+
     const floatingThemeToggle = document.querySelector('#floating-theme-toggle');
     if (floatingThemeToggle) {
       floatingThemeToggle.setAttribute('aria-label', `Switch to ${theme === 'light' ? 'dark' : 'light'} mode`);
     }
-    
-    console.log('Theme applied:', theme); // Debug log
   }
 
-  // Save theme preference
   function saveTheme(theme) {
     localStorage.setItem(storageKey, theme);
   }
 
-  // Toggle theme
   function toggleTheme() {
-    const currentTheme = body.classList.contains('light-mode') ? 'light' : 'dark';
+    const currentTheme = root.classList.contains('light-mode') ? 'light' : 'dark';
     const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-    
+
     applyTheme(newTheme);
     saveTheme(newTheme);
-    
-    console.log('Theme toggled from', currentTheme, 'to', newTheme); // Debug log
   }
 
-  // Initialize theme
   const initialTheme = getThemePreference();
   applyTheme(initialTheme);
 
-  // Add click listener
   if (themeToggle) {
     themeToggle.addEventListener('click', toggleTheme);
   }
 
-  // Sync with system changes
+  // Only follow OS theme when user has not chosen a stored preference.
+  // Otherwise spurious "change" events would flash dark then re-apply light and could overwrite localStorage.
   window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+    if (localStorage.getItem(storageKey)) return;
     const systemTheme = e.matches ? 'dark' : 'light';
     applyTheme(systemTheme);
-    saveTheme(systemTheme);
   });
 });
         
