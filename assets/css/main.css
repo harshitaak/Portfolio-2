@@ -9,7 +9,7 @@
   navigation: none;
 }
 
-@media (prefers-reduced-motion: reduce) {
+@media (prefers-reduced-motion: reduce){
   @view-transition {
     navigation: none;
   }
@@ -1190,9 +1190,6 @@ ol li::marker {
 
   .minimal-footer .social-links {
     gap: 0.5rem !important;
-  }
-
-  .minimal-footer .social-links a {
   }
 }
 
