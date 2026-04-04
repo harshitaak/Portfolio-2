@@ -4,8 +4,9 @@
 # View Transitions API — same-origin full page navigations
   Supported in Chromium 126+; other browsers ignore these rules.
 --------------------------------------------------------------*/
+/* Disabled: root snapshot + opacity crossfade often reads as header/page flash on link click (Chromium). Re-enable if you add per-group tuning. */
 @view-transition {
-  navigation: auto;
+  navigation: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -539,21 +540,23 @@ ol li::marker {
   box-shadow: var(--elevation-1);
   background-color: var(--paper);
   padding: 0.5rem 0;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  align-content: bottom;
+  /* Avoid transition:all — it animates unrelated properties on click/theme toggle and can flicker */
+  /* transition:
+    background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    color 0.3s cubic-bezier(0.4, 0, 0.2, 1); */
+  align-content: center;
   z-index: 997;
-  will-change: background-color, box-shadow;
   position: relative;
   /* Changed from fixed to relative */
-  view-transition-name: site-header;
+  /* Header is part of the root snapshot; a named group without ::view-transition-group(site-header) rules often flickers in Chromium */
   /* Prevent navbar glitching */
-  transform: translate3d(0, 0, 0);
+  /* transform: translate3d(0, 0, 0); */
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
 }
 
 .header .logo {
-  /* line-height: 1; */
   max-height: 48px;
 }
 
@@ -784,6 +787,12 @@ ol li::marker {
 /* Mobile Navigation */
 @media (max-width: 1199px) {
 
+  /* Reserve space so the menu button does not jump between flex and absolute when the overlay opens */
+  .header .navbar-right {
+    position: relative;
+    padding-right: 52px;
+  }
+
   /* Prevent horizontal scroll when mobile nav is active */
   body.mobile-nav-active {
     overflow-x: hidden !important;
@@ -795,11 +804,13 @@ ol li::marker {
     color: var(--ink);
     font-size: 32px;
     line-height: 0;
-    margin-right: 10px;
+    margin-right: 0;
     cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    /* Prevent glitching */
-    transform: translate3d(0, 0, 0);
+    transition: color 0.3s cubic-bezier(0.4, 0, 0.2, 1), transform 0.15s ease;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
     padding: 8px;
@@ -809,9 +820,9 @@ ol li::marker {
     justify-content: center;
   }
 
+  /* Previous rule reset transform and dropped vertical centering when the icon switched to "close" */
   .mobile-nav-toggle.close {
-    transform: translate3d(0, 0, 0) !important;
-    /* transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); */
+    transform: translateY(-50%) !important;
   }
 
   /* Enhanced Material Icons styling for mobile nav toggle */
@@ -822,7 +833,11 @@ ol li::marker {
   }
 
   .mobile-nav-toggle:active {
-    transform: scale(0.95);
+    transform: translateY(-50%) scale(0.95);
+  }
+
+  .mobile-nav-toggle.close:active {
+    transform: translateY(-50%) scale(0.95) !important;
   }
 
   .navmenu {
@@ -1002,12 +1017,7 @@ ol li::marker {
 
   .mobile-nav-active .mobile-nav-toggle {
     color: var(--ink);
-    position: absolute;
-    font-size: 32px;
-    /* top: 16px; */
-    right: 10px;
-    margin-right: 0;
-    z-index: 9999;
+    z-index: 10000;
   }
 
   /* Ensure navbar-right container doesn't interfere on mobile */
@@ -1133,8 +1143,9 @@ ol li::marker {
   padding: 6px 14px;
   border-radius: 8px;
   font-weight: 700;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.3s ease;
   box-shadow: var(--elevation-1);
+  vertical-align: middle;
 }
 
 .btn-cta:hover {
@@ -4079,5 +4090,32 @@ img[src$=".gif"] {
   .text-video-section__video {
     flex: 1 1 auto;
     width: 100%;
+  }
+}
+
+.cursor {
+  z-index: 100;
+  background-color: var(--color);
+  /* border: 1px solid #ff4c24; */
+  border-radius: 100em;
+  width: 1em;
+  height: 1em;
+  transition: background-color .375s cubic-bezier(.625, .05, 0, 1), height .375s cubic-bezier(.625, .05, 0, 1), width .375s cubic-bezier(.625, .05, 0, 1);
+  position: fixed;
+  inset: 0% auto auto 0%;
+  pointer-events: none;
+}
+
+body:has( a:hover) .cursor,
+body:has( button:hover) .cursor,
+body:has( [data-cursor]:hover) .cursor{
+  width: 3em;
+  height: 3em;
+  background-color: color-mix(in srgb, var(--color), transparent 70%);
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .cursor {
+    display: none;
   }
 }

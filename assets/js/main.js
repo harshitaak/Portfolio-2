@@ -15,6 +15,7 @@
   function toggleScrolled() {
     const selectBody = document.querySelector('body');
     const selectHeader = document.querySelector('#header');
+    if (!selectHeader) return;
     if (!selectHeader.classList.contains('scroll-up-sticky') && !selectHeader.classList.contains('sticky-top') && !selectHeader.classList.contains('fixed-top')) return;
     window.scrollY > 100 ? selectBody.classList.add('scrolled') : selectBody.classList.remove('scrolled');
   }
@@ -66,11 +67,28 @@
    * Mobile nav toggle
    */
   const mobileNavToggleBtn = document.querySelector('.mobile-nav-toggle');
+  let mobileNavScrollY = 0;
 
   function mobileNavToogle() {
-    document.querySelector('body').classList.toggle('mobile-nav-active');
+    const body = document.querySelector('body');
+    const opening = !body.classList.contains('mobile-nav-active');
+
+    if (opening) {
+      mobileNavScrollY = window.scrollY;
+      body.style.top = '-' + mobileNavScrollY + 'px';
+    } else {
+      body.style.top = '';
+    }
+
+    body.classList.toggle('mobile-nav-active');
     mobileNavToggleBtn.classList.toggle('menu');
     mobileNavToggleBtn.classList.toggle('close');
+
+    if (!opening) {
+      requestAnimationFrame(function () {
+        window.scrollTo(0, mobileNavScrollY);
+      });
+    }
   }
   if (mobileNavToggleBtn) {
     mobileNavToggleBtn.addEventListener('click', mobileNavToogle);
@@ -121,13 +139,15 @@
       window.scrollY > 100 ? scrollTop.classList.add('active') : scrollTop.classList.remove('active');
     }
   }
-  scrollTop.addEventListener('click', (e) => {
-    e.preventDefault();
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
+  if (scrollTop) {
+    scrollTop.addEventListener('click', (e) => {
+      e.preventDefault();
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
     });
-  });
+  }
 
   window.addEventListener('load', toggleScrollTop);
   document.addEventListener('scroll', toggleScrollTop);
@@ -666,3 +686,27 @@ document.addEventListener('DOMContentLoaded', function() {
   window.addEventListener('touchend', scheduleSnap, { passive: true });
 });
 */
+/* For basic custom cursor */
+function initBasicCustomCursor() {  
+  
+  gsap.set(".cursor", {xPercent:-50, yPercent: -50});
+
+  let xTo = gsap.quickTo(".cursor", "x", {duration: 0.6, ease: "power3"});
+  let yTo = gsap.quickTo(".cursor", "y", {duration: 0.6, ease: "power3"});
+
+  window.addEventListener("mousemove", e => {
+    xTo(e.clientX);
+    yTo(e.clientY);
+  });
+}
+
+// Initialize Basic Custom Cursor
+document.addEventListener('DOMContentLoaded', () => {
+  initBasicCustomCursor();
+});
+
+/* For smooth scroll */
+// Lenis Link:https://github.com/darkroomengineering/lenis
+const lenis = new Lenis({
+  autoRaf: true,
+});
