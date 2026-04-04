@@ -1070,11 +1070,13 @@ ol li::marker {
   color: var(--ink);
   background-color: var(--paper);
   font-size: 14px;
+  display: flex;
   text-align: center;
   padding: 0px 60px;
   position: relative;
   z-index: 10;
   box-shadow: var(--elevation-2);
+  flex-direction: column;
 }
 
 
@@ -1129,7 +1131,7 @@ ol li::marker {
   background: var(--color) !important;
   border: none !important;
   padding: 6px 14px;
-  border-radius: 999px;
+  border-radius: 8px;
   font-weight: 700;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -1161,6 +1163,7 @@ ol li::marker {
 @media (max-width: 768px) {
   .minimal-footer .container {
     padding: 1rem 0;
+    flex-direction: row !important;
   }
 
   .minimal-footer .footer-left {
@@ -1181,11 +1184,7 @@ ol li::marker {
     gap: 0.5rem !important;
   }
 
-  .minimal-footer .social-links a {
-    width: 32px;
-    height: 32px;
-    font-size: 16px;
-  }
+  .minimal-footer .social-links a {}
 }
 
 /*--------------------------------------------------------------
@@ -1269,6 +1268,7 @@ ol li::marker {
   margin-bottom: 0.5rem;
   color: color-mix(in srgb, var(--ink), transparent 15%);
   font-size: 0.9rem;
+  text-wrap: pretty;
 }
 
 .resume .achievements li::before {
@@ -1802,7 +1802,7 @@ section,
 
   .hero p {
     font-size: 22px;
-    
+
   }
 }
 
@@ -2628,6 +2628,7 @@ section,
 }
 
 @media (prefers-reduced-motion: reduce) {
+
   body.about-page #about .about-scroll-visual,
   body.about-page #about .about-scroll-heading,
   body.about-page #about .about-scroll-copy {
@@ -3811,7 +3812,8 @@ section,
 
 .navbar-right {
   gap: 16px;
-  align-items: center;
+  align-items: center !important;
+  height: 100% !important;
 }
 
 /* Desktop: Align theme toggle properly */
