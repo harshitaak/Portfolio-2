@@ -4089,7 +4089,7 @@ img[src$=".gif"] {
 .cursor {
   z-index: 9998;
   background-color: var(--color);
-  /* border: 1px solid #ff4c24; */
+  /* border: 1px solid var(--color); */
   border-radius: 100em;
   width: 1em;
   height: 1em;
