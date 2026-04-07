@@ -6,6 +6,13 @@
 * License: https://bootstrapmade.com/license/
 */
 
+function reportThemeModeToGA(theme) {
+  if (typeof window.gtag !== 'function') return;
+  window.gtag('set', 'user_properties', {
+    theme_mode: theme
+  });
+}
+
 (function() {
   "use strict";
 
@@ -179,6 +186,7 @@
       }
 
       localStorage.setItem('theme-preference', newTheme);
+      reportThemeModeToGA(newTheme);
 
       floatingThemeToggle.setAttribute('aria-label', `Switch to ${newTheme === 'light' ? 'dark' : 'light'} mode`);
 
@@ -407,6 +415,8 @@ document.addEventListener('DOMContentLoaded', function() {
     if (floatingThemeToggle) {
       floatingThemeToggle.setAttribute('aria-label', `Switch to ${theme === 'light' ? 'dark' : 'light'} mode`);
     }
+
+    reportThemeModeToGA(theme);
   }
 
   function saveTheme(theme) {
