@@ -344,6 +344,7 @@
 
   /* Caption Text (For smaller, secondary information) */
   --text-caption-font: 400 0.875rem/1.5 "Satoshi-Regular", sans-serif;
+
 }
 
 
@@ -372,6 +373,7 @@ body *::after {
     color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
     border-color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
+
 
 /* Light mode color variables */
 .light-mode {
@@ -1723,6 +1725,10 @@ section,
   font-family: var(--heading-font);
 }
 
+.highlights-copy {
+  font-family: var(--heading-font);
+}
+
 /*--------------------------------------------------------------
 # Hero Section
 --------------------------------------------------------------*/
@@ -1847,6 +1853,28 @@ section,
 
   .hero p {
     font-size: 16px;
+  }
+}
+
+/* Back-to-back large text rows below hero */
+.big-text-band {
+  display: grid;
+  gap: 4px;
+  padding: 0 0 40px;
+}
+
+.big-text-row {
+  width: 100%;
+  text-align: center;
+  color: var(--ink);
+  font-size: clamp(42px, 11vw, 160px);
+  font-family: "Satoshi-Bold", "Satoshi-Medium", sans-serif;
+}
+
+@media (max-width: 768px) {
+  .big-text-band {
+    gap: 2px;
+    padding-bottom: 24px;
   }
 }
 
@@ -4085,7 +4113,7 @@ img[src$=".gif"] {
 }
 
 .cursor {
-  z-index: 9998;
+  z-index: 10000;
   background-color: var(--color);
   /* border: 1px solid var(--color); */
   border-radius: 100em;
@@ -4105,9 +4133,31 @@ body:has( [data-cursor]:hover) .cursor{
   background-color: color-mix(in srgb, var(--color), transparent 70%);
 }
 
-@media (hover: none) and (pointer: coarse) {
+@media (max-width: 991px) {
   .cursor {
-    display: none;
+    width: 2em;
+    height: 2em;
+  }
+
+  body:has( a:hover) .cursor,
+  body:has( button:hover) .cursor,
+  body:has( [data-cursor]:hover) .cursor {
+    width: 2.4em;
+    height: 2.4em;
+  }
+}
+
+@media (max-width: 767px) {
+  .cursor {
+    width: 2em;
+    height: 2em;
+  }
+
+  body:has( a:hover) .cursor,
+  body:has( button:hover) .cursor,
+  body:has( [data-cursor]:hover) .cursor {
+    width: 2.4em;
+    height: 2.4em;
   }
 }
 
