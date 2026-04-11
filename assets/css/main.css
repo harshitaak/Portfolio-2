@@ -503,7 +503,7 @@ a:hover {
 
 p {
   font-family: var(--text-body-font);
-  font-size: clamp(0.5rem, 8vw, 2rem);
+  font-size: clamp(0.5rem, 8vw, 1.5rem);
   text-wrap: pretty;
   margin-bottom: 0px !important;
 }
