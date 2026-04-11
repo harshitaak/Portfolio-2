@@ -505,6 +505,7 @@ p {
   font-family: var(--text-body-font);
   font-size: clamp(0.5rem, 8vw, 2rem);
   text-wrap: pretty;
+  margin-bottom: 0px !important;
 }
 
 h1 {
