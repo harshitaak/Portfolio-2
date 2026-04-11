@@ -475,6 +475,18 @@ body.portfolio-page main.main {
   flex: 1 0 auto;
 }
 
+/* Philosophy: footer at bottom when content is short */
+body.philosophy-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+body.philosophy-page main.main {
+  flex: 1 0 auto;
+}
+
 
 a {
   color: var(--color);
@@ -489,8 +501,20 @@ a:hover {
   cursor: pointer;
 }
 
-h1,
-h2,
+p {
+  font-family: var(--text-body-font);
+  font-size: clamp(0.5rem, 8vw, 2rem);
+  text-wrap: pretty;
+}
+
+h1 {
+  font-size: clamp(3rem, 11vw, 5rem);
+  font-family: var(--heading-font);
+}
+h2 {
+  font-size: clamp(2rem, 8vw, 3rem);
+  font-family: var(--heading-font);
+}
 h3,
 h4,
 h5,
@@ -1859,8 +1883,6 @@ section,
 /* Back-to-back large text rows below hero */
 .big-text-band {
   display: grid;
-  gap: 4px;
-  padding: 0 0 40px;
 }
 
 .big-text-row {
@@ -3985,8 +4007,6 @@ html:not(.light-mode) .sun-and-moon>.moon>circle {
 
 /* Draw a line from the top left to the bottom right of the page */
 body {
-  /* background-color: #fefaee; */
-  /* font-family: PP Neue Montreal, Arial, sans-serif; */
   color: var(--ink);
   background-color: var(--paper);
   margin: 0;
@@ -4162,12 +4182,14 @@ body:has( [data-cursor]:hover) .cursor{
 }
 
 
-/* Page animation*/
+/* Element scroll animation*/
 
-.autoShow {
-  animation: text-appear both;
-  animation-timeline: view();
-  animation-range: entry 15% cover 100vh;
+@media (prefers-reduced-motion: no-preference) {
+  .autoShow {
+    animation: text-appear both;
+    animation-timeline: view();
+    animation-range: entry 15% cover 100vh;
+  }
 }
 
 @keyframes text-appear {
@@ -4181,3 +4203,19 @@ body:has( [data-cursor]:hover) .cursor{
   }
 }
 
+@media (prefers-reduced-motion: no-preference) {
+  .animScale {
+    animation: scale-in both forwards;
+    animation-timeline: view();
+    animation-range: entry 15% cover 100vh;
+  }
+}
+
+@keyframes scale-in {
+  from {
+    transform: scale(0.8);
+  }
+  to {
+    transform: scale(1);
+  }
+}

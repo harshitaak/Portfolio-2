@@ -14,9 +14,9 @@
     gtag('config', 'G-8TQZB3JJF8');
   </script>
 
-  <title>Resume - Personal Bootstrap Template</title>
-  <meta name="description" content="">
-  <meta name="keywords" content="">
+  <title>Philosophy</title>
+  <meta name="description" content="How I think about design, tools, and life.">
+  <meta name="keywords" content="Harshit Taak, philosophy, design, Buddhism">
 
   <!-- Favicons -->
   <link href="assets/img/favicon.png" rel="icon">
@@ -42,19 +42,22 @@
   <!-- Main CSS File -->
   <script src="assets/js/theme-init.js"></script>
   <link href="assets/css/main.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lenis@1.2.3/dist/lenis.css">
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.2.3/dist/lenis.min.js"></script>
 
 </head>
 
-<body class="resume-page">
+<body class="philosophy-page">
+
+  <div class="cursor"></div>
 
   <header id="header" class="header d-flex align-items-center">
     <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
 
       <a href="index.html" class="logo d-flex align-items-center">
-        <!-- Uncomment the line below if you also wish to use an image logo -->
-        <!-- <img src="assets/img/logo.webp" alt=""> -->
         <svg class="logo-svg" width="32" height="32" viewBox="0 0 1000 1000" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Harshit Taak Logo">
-          <g clip-path="url(#clip0_index_logo)">
+          <g clip-path="url(#clip0_philosophy_logo)">
             <path d="M309.598 146.833L211.586 244.845L309.598 342.857L407.61 244.845L309.598 146.833Z" fill="currentColor"/>
             <path d="M690.412 146.83L592.4 244.842L690.412 342.854L788.425 244.842L690.412 146.83Z" fill="currentColor"/>
             <path d="M309.59 342.85L307.49 853.17L212.99 758.66L211.58 244.84L309.59 342.85Z" fill="currentColor"/>
@@ -62,7 +65,7 @@
             <path d="M588.281 755.78L687.531 847.88V527.42L587.971 626.98L588.281 755.78Z" fill="currentColor"/>
           </g>
           <defs>
-            <clipPath id="clip0_index_logo">
+            <clipPath id="clip0_philosophy_logo">
               <rect width="1000" height="1000" fill="currentColor"/>
             </clipPath>
           </defs>
@@ -74,35 +77,8 @@
         <nav id="navmenu" class="navmenu">
           <ul>
             <li><a href="about.html">About</a></li>
-            <li><a href="philosophy.html">Philosophy</a></li>
+            <li><a href="philosophy.html" class="active">Philosophy</a></li>
             <li><a href="portfolio.html">Portfolio</a></li>
-            <!-- <li class="dropdown"><a href="#"><span>Digital</span> <i class="material-icons toggle-dropdown">expand_more</i></a>
-              <ul>    
-                <li><a href="#">Aquata</a></li>
-                <li><a href="#">Test Automation Tool</a></li>
-                <li><a href="#">OnTheGO</a></li>
-                <li><a href="#">Humane Technology</a></li>
-                <li><a href="#">Samsung Fam</a></li>
-                <li><a href="#">'Nu' Community</a></li>
-                <li><a href="#">Montra 2019</a></li>
-                <li><a href="#">Lettuce Love</a></li>
-                <li><a href="#">Letter from Future</a></li>
-                <li><a href="#">Designing Epiphanies</a></li>
-                <li><a href="#">Whatsapp Plus</a></li>
-                <li><a href="#">InStock</a></li>
-              </ul>
-            </li>
-            <li class="dropdown"><a href="#"><span>Furniture</span> <i class="material-icons toggle-dropdown">expand_more</i></a>
-              <ul>
-                <li><a href="pilotis.html">Pilotis Range</a></li>
-                <li><a href="#">Pidah: A Rajasthani chair</a></li>
-                <li><a href="#">Camping stool</a></li>
-                <li><a href="#">Bicycle wall mount</a></li>
-                <li><a href="#">The Tilt</a></li>
-                <li><a href="#">GRPVC Bench</a></li>
-                <li><a href="#">Bamboo side table</a></li>
-              </ul>
-            </li> -->
             <li class="d-xl-none">
               <a href="#" class="theme-toggle-mobile d-flex align-items-center" onclick="document.getElementById('theme-toggle').click(); return false;">
                 <svg class="sun-and-moon me-2" aria-hidden="true" viewBox="0 0 24 24" style="width: 20px; height: 20px;">
@@ -127,10 +103,9 @@
             </li>
           </ul>
         </nav>
-        
+
         <i class="mobile-nav-toggle d-xl-none material-icons">menu</i>
-        
-        <!-- Theme toggle for desktop -->
+
         <button class="theme-toggle d-none d-xl-flex" id="theme-toggle" title="Toggles light & dark" aria-label="auto" aria-live="polite">
           <svg class="sun-and-moon" aria-hidden="true" viewBox="0 0 24 24">
             <mask class="moon" id="moon-mask">
@@ -157,130 +132,55 @@
 
   <main class="main">
 
-    <!-- Page Title -->
-    <div class="page-title" data-aos="fade">
-      <div class="heading">
-        <div class="container">
-          <div class="row d-flex justify-content-center text-center">
-            <div class="col-lg-8">
-              <h1>Resume</h1>
-              <p class="mb-0">Odio et unde deleniti. Deserunt numquam exercitationem. Officiis quo odio sint voluptas consequatur ut a odio voluptatem. Sit dolorum debitis veritatis natus dolores. Quasi ratione sint. Sit quaerat ipsum dolorem.</p>
-            </div>
+    <section class="big-text-band-container autoShow"
+      style="height: 60vh; display: flex; flex-direction: column; justify-content: center; align-items: center">
+      <div class="big-text-band autoShow" style="text-align: center; text-wrap: balance;" aria-label="Highlights">
+        <h1>I design</h1>
+        <h1 style="color: var(--color)">Digital Tools</h1>
+      </div>
+    </section>
+
+    <section id="philosophy" class="philosophy section">
+      <div class="container autoShow" >
+        <div class="row justify-content-center">
+          <div class="col-lg-8">
+            <h2>Static Marketing/portfolio sites</h2>
+            <p>This page is a place for the ideas behind the work: what I believe about people, tools, and responsibility. I am still writing it—check back as it grows.</p>
+            <p>If something here resonates or you want to go deeper, you are welcome to reach out from the footer below.</p>
           </div>
         </div>
       </div>
-      <nav class="breadcrumbs">
-        <div class="container">
-          <ol>
-            <li class="current">Resume</li>
-          </ol>
-        </div>
-      </nav>
-    </div><!-- End Page Title -->
+    </section>
 
-    <!-- Resume Section -->
-    <section id="resume" class="resume section">
-
-      <div class="container">
-
-        <div class="row">
-
-          <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
-            <h3 class="resume-title">Sumary</h3>
-
-            <div class="resume-item pb-0">
-              <h4>Brandon Johnson</h4>
-              <p><em>Innovative and deadline-driven Graphic Designer with 3+ years of experience designing and developing user-centered digital/print marketing material from initial concept to final, polished deliverable.</em></p>
-              <ul>
-                <li>Portland par 127,Orlando, FL</li>
-                <li>(123) 456-7891</li>
-                <li>alice.barkley@example.com</li>
-              </ul>
-            </div><!-- Edn Resume Item -->
-
-            <h3 class="resume-title">Education</h3>
-            <div class="resume-item">
-              <h4>Master of Fine Arts &amp; Graphic Design</h4>
-              <h5>2015 - 2016</h5>
-              <p><em>Rochester Institute of Technology, Rochester, NY</em></p>
-              <p>Qui deserunt veniam. Et sed aliquam labore tempore sed quisquam iusto autem sit. Ea vero voluptatum qui ut dignissimos deleniti nerada porti sand markend</p>
-            </div><!-- Edn Resume Item -->
-
-            <div class="resume-item">
-              <h4>Bachelor of Fine Arts &amp; Graphic Design</h4>
-              <h5>2010 - 2014</h5>
-              <p><em>Rochester Institute of Technology, Rochester, NY</em></p>
-              <p>Quia nobis sequi est occaecati aut. Repudiandae et iusto quae reiciendis et quis Eius vel ratione eius unde vitae rerum voluptates asperiores voluptatem Earum molestiae consequatur neque etlon sader mart dila</p>
-            </div><!-- Edn Resume Item -->
-
-          </div>
-
-          <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
-            <h3 class="resume-title">Professional Experience</h3>
-            <div class="resume-item">
-              <h4>Senior graphic design specialist</h4>
-              <h5>2019 - Present</h5>
-              <p><em>Experion, New York, NY </em></p>
-              <ul>
-                <li>Lead in the design, development, and implementation of the graphic, layout, and production communication materials</li>
-                <li>Delegate tasks to the 7 members of the design team and provide counsel on all aspects of the project. </li>
-                <li>Supervise the assessment of all graphic materials in order to ensure quality and accuracy of the design</li>
-                <li>Oversee the efficient use of production project budgets ranging from $2,000 - $25,000</li>
-              </ul>
-            </div><!-- Edn Resume Item -->
-
-            <div class="resume-item">
-              <h4>Graphic design specialist</h4>
-              <h5>2017 - 2018</h5>
-              <p><em>Stepping Stone Advertising, New York, NY</em></p>
-              <ul>
-                <li>Developed numerous marketing programs (logos, brochures,infographics, presentations, and advertisements).</li>
-                <li>Managed up to 5 projects or tasks at a given time while under pressure</li>
-                <li>Recommended and consulted with clients on the most appropriate graphic design</li>
-                <li>Created 4+ design presentations and proposals a month for clients and account managers</li>
-              </ul>
-            </div><!-- Edn Resume Item -->
-
-          </div>
-
-        </div>
-
+    <section class="big-text-band-container autoShow"
+      style="height: 80vh; display: flex; flex-direction: column; justify-content: center; align-items: center">
+      <div class="big-text-band autoShow" style="text-align: center;" aria-label="Highlights">
+        <div style="font-size: clamp(3rem, 11vw, 5rem);">So this is how </div>
+        <div style="color: var(--color); font-size: clamp(3rem, 11vw, 5rem);">I structure digital "things"</div>
       </div>
-
-    </section><!-- /Resume Section -->
+    </section>
 
   </main>
 
-  <footer id="footer" class="footer dark-background">
-    <div class="container">
-      <h3 class="sitename">Personal</h3>
-      <p>Et aut eum quis fuga eos sunt ipsa nihil. Labore corporis magni eligendi fuga maxime saepe commodi placeat.</p>
-      <div class="social-links d-flex justify-content-center">
-        <a href=""><i class="bi bi-twitter-x"></i></a>
-        <a href=""><i class="bi bi-facebook"></i></a>
-        <a href=""><i class="bi bi-instagram"></i></a>
-        <a href=""><i class="bi bi-skype"></i></a>
-        <a href=""><i class="bi bi-linkedin"></i></a>
-      </div>
-      <div class="container">
-        <div class="copyright">
-          <span>Copyright</span> <strong class="px-1 sitename">Personal</strong> <span>All Rights Reserved</span>
+  <footer id="footer" class="footer minimal-footer">
+    <div class="container py-3">
+      <div class="d-flex flex-column flex-md-row align-items-center justify-content-between gap-3">
+        <div class="social-links d-flex align-items-center gap-3">
+          <a href="https://www.linkedin.com/in/harshitaak/" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
+          <a href="https://www.instagram.com/harshittaak/" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
         </div>
-        <div class="credits">
-          <!-- All the links in the footer should remain intact. -->
-          <!-- You can delete the links only if you've purchased the pro version. -->
-          <!-- Licensing information: https://bootstrapmade.com/license/ -->
-          <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
-          Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+        <div class="cta">
+          <a href="mailto:harshit.ea@gmail.com?subject=Portfolio%20Contact" class="btn btn-outline-light btn-sm btn-cta">
+            <i data-lucide="mail" class="icon-cta"></i>
+            Contact
+          </a>
         </div>
       </div>
     </div>
   </footer>
 
-  <!-- Scroll Top -->
-  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="material-icons">keyboard_arrow_up</i></a>
 
-  <!-- Floating Dark Mode Toggle -->
   <button id="floating-theme-toggle" class="floating-theme-toggle d-flex align-items-center justify-content-center" title="Toggle dark mode" aria-label="Toggle dark mode">
     <svg class="sun-and-moon" aria-hidden="true" viewBox="0 0 24 24">
       <mask class="moon" id="floating-moon-mask">
@@ -301,10 +201,8 @@
     </svg>
   </button>
 
-  <!-- Preloader -->
   <div id="preloader"></div>
 
-  <!-- Vendor JS Files -->
   <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="assets/vendor/aos/aos.js"></script>
   <script src="assets/vendor/typed.js/typed.umd.js"></script>
@@ -315,8 +213,29 @@
   <script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
   <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
 
-  <!-- Main JS File -->
   <script src="assets/js/main.js"></script>
+
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    lucide.createIcons({
+      attrs: {
+        width: 60,
+        height: 60
+      }
+    });
+    (function () {
+      var icons = document.querySelectorAll('.btn-cta .icon-cta, .btn-cta [data-lucide]');
+      icons.forEach(function(el) {
+        var svg = el.querySelector('svg') || (el.tagName === 'svg' ? el : null);
+        if (svg) {
+          svg.setAttribute('width', '20');
+          svg.setAttribute('height', '20');
+          svg.style.width = '20px';
+          svg.style.height = '20px';
+        }
+      });
+    })();
+  </script>
 
 </body>
 
