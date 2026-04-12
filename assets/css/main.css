@@ -4177,6 +4177,7 @@ body:has( [data-cursor]:hover) .cursor{
   .cursor {
     width: 2em;
     height: 2em;
+    opacity: 0;
   }
 
   body:has( a:hover) .cursor,
@@ -4184,6 +4185,7 @@ body:has( [data-cursor]:hover) .cursor{
   body:has( [data-cursor]:hover) .cursor {
     width: 2.4em;
     height: 2.4em;
+    opacity: 0;
   }
 }
 
