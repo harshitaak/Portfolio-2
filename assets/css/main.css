@@ -1514,13 +1514,12 @@ ol li::marker {
   opacity: 0;
   right: 16px;
   top: -60px;
-  z-index: 99999;
+  z-index: 999;
   background-color: var(--paper);
   width: 44px;
-  height: 44px;
+  aspect-ratio: 1/1;
   border-radius: 50px;
   border: 1px var(--ink);
-  outline: none;
   transition: all 0.3s ease;
   box-shadow: var(--elevation-1);
   cursor: pointer;
@@ -1529,7 +1528,7 @@ ol li::marker {
 
 .floating-theme-toggle .sun-and-moon {
   width: 20px;
-  height: 20px;
+  aspect-ratio: 1/1;
 }
 
 .floating-theme-toggle .sun-and-moon> :is(.moon, .sun, .sun-beams) {
@@ -2579,154 +2578,6 @@ section,
   color: var(--color);
   line-height: 0;
   flex-shrink: 0;
-}
-
-/* CSS scroll-driven animations (About page) — progressive enhancement */
-@keyframes about-scroll-visual-in {
-  from {
-    opacity: 0.75;
-    transform: translateY(2.25rem) scale(0.96);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-
-@keyframes about-scroll-fade-up {
-  from {
-    opacity: 0;
-    transform: translateY(1.5rem);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@supports (animation-timeline: view()) {
-  body.about-page #about .about-scroll-visual {
-    animation-name: about-scroll-visual-in;
-    animation-duration: 1ms;
-    animation-timing-function: linear;
-    animation-fill-mode: both;
-    animation-timeline: view();
-    animation-range: entry 0% cover 38%;
-  }
-
-  body.about-page #about .about-scroll-heading {
-    animation-name: about-scroll-fade-up;
-    animation-duration: 1ms;
-    animation-timing-function: linear;
-    animation-fill-mode: both;
-    animation-timeline: view();
-    animation-range: entry 8% cover 45%;
-  }
-
-  body.about-page #about .about-scroll-copy {
-    animation-name: about-scroll-fade-up;
-    animation-duration: 1ms;
-    animation-timing-function: linear;
-    animation-fill-mode: both;
-    animation-timeline: view();
-    animation-range: entry 18% cover 52%;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-
-  body.about-page #about .about-scroll-visual,
-  body.about-page #about .about-scroll-heading,
-  body.about-page #about .about-scroll-copy {
-    animation: none !important;
-  }
-}
-
-/*--------------------------------------------------------------
-# Stats Section
---------------------------------------------------------------*/
-/*--------------------------------------------------------------
-# Stats Section
---------------------------------------------------------------*/
-.stats i {
-  background-color: var(--paper);
-  color: var(--color);
-  box-shadow: var(--elevation-1);
-  width: 54px;
-  height: 54px;
-  font-size: 24px;
-  border-radius: 50px;
-  /* border: 2px solid var(--paper); */
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  z-index: 1;
-}
-
-.stats .stats-item {
-  background-color: var(--paper);
-  margin-top: -20px;
-  padding: 24px 24px 36px 24px;
-  width: 100%;
-  position: relative;
-  text-align: center;
-  box-shadow: var(--elevation-1);
-  border-radius: 4px;
-  z-index: 0;
-}
-
-.stats .stats-item span {
-  font-size: 36px;
-  display: block;
-  font-weight: 700;
-  color: var(--ink);
-}
-
-.stats .stats-item p {
-  padding: 0;
-  margin: 0;
-  font-family: var(--heading-font);
-  font-size: 16px;
-}
-
-/*--------------------------------------------------------------
-# Skills Section
---------------------------------------------------------------*/
-.skills .progress {
-  height: 60px;
-  display: block;
-  background: none;
-  border-radius: 0;
-}
-
-.skills .progress .skill {
-  color: var(--ink);
-  padding: 0;
-  margin: 0 0 6px 0;
-  text-transform: uppercase;
-  display: block;
-  font-weight: 600;
-  font-family: var(--heading-font);
-}
-
-.skills .progress .skill .val {
-  float: right;
-  font-style: normal;
-}
-
-.skills .progress-bar-wrap {
-  background: color-mix(in srgb, var(--ink), transparent 90%);
-  height: 10px;
-}
-
-.skills .progress-bar {
-  width: 1px;
-  height: 10px;
-  transition: 0.9s;
-  background-color: var(--color);
 }
 
 /*--------------------------------------------------------------
