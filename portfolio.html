@@ -160,28 +160,6 @@
   </header>
 
   <main class="main">
-
-    <!-- Page Title -->
-    <!-- <div class="page-title" data-aos="fade">
-      <div class="heading">
-        <div class="container">
-          <div class="row d-flex justify-content-center text-center">
-            <div class="col-lg-8">
-              <h1>Portfolio</h1>
-              <p class="project-intro">The collection of my work.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- <nav class="breadcrumbs">
-        <div class="container">
-          <ol>
-            <li class="current">Portfolio</li>
-          </ol>
-        </div>
-      </nav> -->
-    <!-- </div> --> <!-- -->
-
     <!-- Portfolio Section -->
     <section id="portfolio" class="portfolio section">
 
@@ -191,12 +169,12 @@
 
         <div class="isotope-layout" data-default-filter="*" data-layout="masonry" data-sort="original-order">
 
-          <ul class="portfolio-filters isotope-filters" data-aos="fade-up" data-aos-delay="100">
-            <li data-filter="*" class="filter-active"><span class="material-icons">palette</span>All</li>
-            <li data-filter=".filter-app"><span class="material-icons">app_registration</span>Digital</li>
-            <li data-filter=".filter-product"><span class="material-icons">chair</span>Furniture</li>
-            <li data-filter=".filter-branding"><span class="material-icons">palette</span>Visual</li>
-            <li data-filter=".filter-books"><span class="material-icons">palette</span>Art</li>
+          <ul class="portfolio-filters isotope-filters" data-aos="fade-up" data-aos-delay="100" data-cursor>
+            <li data-filter="*" class="filter-active"><i data-lucide="layers" class="portfolio-filter-icon" aria-hidden="true"></i>All</li>
+            <li data-filter=".filter-app"><i data-lucide="monitor-smartphone" class="portfolio-filter-icon" aria-hidden="true"></i>Digital</li>
+            <li data-filter=".filter-product"><i data-lucide="armchair" class="portfolio-filter-icon" aria-hidden="true"></i>Furniture</li>
+            <li data-filter=".filter-branding"><i data-lucide="palette" class="portfolio-filter-icon" aria-hidden="true"></i>Visual</li>
+            <li data-filter=".filter-books"><i data-lucide="brush" class="portfolio-filter-icon" aria-hidden="true"></i>Art</li>
           </ul><!-- End Portfolio Filters -->
 
           <div class="row gy-4 isotope-container" data-aos="fade-up" data-aos-delay="200">
@@ -213,6 +191,7 @@
               </a>
             </div>
 
+            
             <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-app" style="cursor: pointer;">
               <a href="OTG.html" class="text-decoration-none portfolio-link">
                 <div class="portfolio-content h-100">
@@ -493,8 +472,6 @@
     </svg>
   </button>
 
-  <!-- Preloader -->
-  <div id="preloader"></div>
 
   <!-- Vendor JS Files -->
   <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

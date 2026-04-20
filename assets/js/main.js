@@ -89,15 +89,6 @@ function reportThemeModeToGA(theme) {
 
 
   /**
-   * Preloader — element kept in HTML for backwards compatibility;
-   * overlay is disabled in CSS so view transitions stay visible.
-   */
-  const preloader = document.querySelector('#preloader');
-  if (preloader) {
-    preloader.remove();
-  }
-
-  /**
    * Scroll top button
    */
   let scrollTop = document.querySelector('.scroll-top');

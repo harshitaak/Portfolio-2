@@ -362,6 +362,17 @@
   --surface-color: var(--paper);
 }
 
+/* For text selection custom color */
+::selection {
+  background: var(--color);
+  color: #000000;
+}
+/* For Firefox compatibility */
+::-moz-selection {
+  background: var(--color);
+  color: #000000;
+}
+
 /* Smooth transition for color changes */
 html,
 body,
@@ -1177,15 +1188,13 @@ ol li::marker {
 }
 
 .btn-cta:hover {
-  color: var(--paper) !important;
-  background: var(--color) !important;
   transform: translateY(-2px);
   box-shadow: var(--elevation-2);
 }
 
 .btn-cta:active {
   transform: translateY(0);
-  box-shadow: var(--elevation-2);
+  box-shadow: var(--elevation-1);
 }
 
 .btn-cta [data-lucide] {
@@ -1225,15 +1234,6 @@ ol li::marker {
   }
 }
 
-/*--------------------------------------------------------------
-# Preloader (disabled — full-screen overlay hid cross-document
-  view transitions and read as the only “loader” on navigation)
---------------------------------------------------------------*/
-#preloader {
-  display: none !important;
-  pointer-events: none;
-}
-
 .resume .section-header .section-subtitle {
   color: color-mix(in srgb, var(--ink), transparent 30%);
   font-size: 1rem;
@@ -1251,7 +1251,6 @@ ol li::marker {
 
 .resume .experience-card {
   background: var(--paper);
-  /* border: 1px solid color-mix(in srgb, var(--ink), transparent 90%); */
   border-radius: 8px;
   padding: 1.5rem;
   box-shadow: var(--elevation-1);
@@ -2213,57 +2212,6 @@ section,
 }
 
 /* Enhanced responsive adjustments for hero image and floating cards */
-@media (max-width: 1200px) {
-  .hero-image {
-    margin-top: 30px;
-  }
-
-  .image-container {
-    max-width: 400px;
-    height: 400px;
-  }
-
-  .floating-slot.card-1 {
-    top: -9px;
-    left: 44%;
-  }
-
-  .floating-slot.card-2 {
-    top: 17%;
-    right: -29px;
-  }
-
-  .floating-slot.card-3 {
-    top: 54%;
-    left: -32px;
-  }
-
-  .floating-slot.card-4 {
-    bottom: 26%;
-    right: -27px;
-  }
-
-  .floating-slot.card-5 {
-    bottom: -12px;
-    left: 47%;
-  }
-
-  .floating-slot.card-6 {
-    bottom: -4px;
-    left: -26px;
-  }
-
-  .floating-slot.card-7 {
-    top: 28%;
-    left: -34px;
-  }
-
-  .floating-slot.card-8 {
-    top: -4px;
-    left: -23px;
-  }
-}
-
 @media (max-width: 1199px) {
   .hero-image {
     margin-top: 40px;
@@ -3177,45 +3125,36 @@ section,
   margin-bottom: 30px;
 }
 
-.portfolio .portfolio-filters .material-icons {
-  font-size: 20px;
+.portfolio .portfolio-filters .portfolio-filter-icon,
+.portfolio .portfolio-filters li > svg {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
   vertical-align: middle;
   color: color-mix(in srgb, var(--ink), var(--paper) 50%);
+  stroke: currentColor;
 }
 
-.portfolio .portfolio-filters li:hover .material-icons {
+.portfolio .portfolio-filters li:hover .portfolio-filter-icon,
+.portfolio .portfolio-filters li:hover > svg {
   color: var(--color);
 }
 
-.portfolio .portfolio-filters li.filter-active .material-icons {
+.portfolio .portfolio-filters li.filter-active .portfolio-filter-icon,
+.portfolio .portfolio-filters li.filter-active > svg {
   color: var(--paper);
 }
 
-.portfolio .portfolio-filters {
-  /* padding: 0;
-  margin: 0 auto 20px auto;
-  list-style: none;
-  text-align: center; */
+.portfolio .portfolio-filters {  
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
   gap: 16px;
-  margin: 0 0 40px 0;
-  list-style: none;
-  padding-left: 0;
+  margin-bottom: 40px;
 
 }
 
-.portfolio .portfolio-filters li {
-  /* cursor: pointer;
-  display: inline-block;
-  padding: 0;
-  font-size: 18px;
-  font-weight: 500;
-  margin: 0 10px;
-  line-height: 1;
-  margin-bottom: 5px;
-  transition: all 0.3s ease-in-out; */
+.portfolio .portfolio-filters li {  
   font-size: 15px;
   font-weight: 500;
   padding: 12px 24px;
@@ -3234,6 +3173,22 @@ section,
   transform: translateY(-2px);
   box-shadow: var(--elevation-2);
   background: color-mix(in srgb, var(--color), transparent 92%);
+}
+
+.portfolio .portfolio-filters li:active {
+  transform: translateY(0);
+  box-shadow: var(--elevation-1);
+  transition-duration: 0.12s;
+}
+
+.portfolio .portfolio-filters li.filter-active:hover {
+  transform: translateY(0);
+  box-shadow: var(--elevation-1);
+  cursor: default;
+}
+
+.portfolio .portfolio-filters li.filter-active:active {
+  transform: translateY(-2px);
 }
 
 .portfolio .portfolio-filters li.filter-active {
@@ -3304,15 +3259,15 @@ section,
   right: 0;
   font-size: 16px;
   font-weight: 500;
-  color: #ffffff;
+  color: white;
 }
 
 .portfolio .portfolio-content:hover .portfolio-info {
   opacity: 1;
   box-shadow: var(--elevation-2);
-  /* transform: translateY(-5px); */
   cursor: pointer;
 }
+
 
 .portfolio .portfolio-content:hover img {
   transform: scale(1.05);
@@ -3322,7 +3277,6 @@ section,
 .portfolio .portfolio-link:hover .portfolio-content .portfolio-info {
   opacity: 1;
   box-shadow: var(--elevation-2);
-  /* transform: translateY(-5px); */
 }
 
 .portfolio .portfolio-link:hover .portfolio-content img {
@@ -3481,48 +3435,6 @@ section,
 .section-gap-80>*+* {
   margin-top: 40px;
   padding-bottom: 40px;
-}
-
-/* Collage variant of the project */
-
-.image-collage-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: repeat(3, 1fr);
-  gap: 16px;
-}
-
-.collage-item {
-  overflow: hidden;
-  border-radius: 8px;
-  background: var(--paper, #222);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.collage-item img {
-  width: 100%;
-  height: 100%;
-  height: 400px;
-  object-fit: cover;
-  display: block;
-}
-
-/* Custom sizes for collage effect */
-.collage-item-large {
-  grid-column: 2 / span 2;
-  grid-row: 1 / span 2;
-}
-
-.collage-item-tall {
-  grid-column: 1 / span 1;
-  grid-row: 1 / span 2;
-}
-
-.collage-item-wide {
-  grid-column: 4 / span 1;
-  grid-row: 1 / span 2;
 }
 
 /* The rest fill the remaining grid cells */
@@ -4187,6 +4099,231 @@ body:has( [data-cursor]:hover) .cursor{
     height: 2.4em;
     opacity: 0;
   }
+}
+
+.journey-intent-visual {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.journey-intent-card {
+  display: grid;
+  gap: 1.15rem;
+  width: min(100%, 58rem);
+  margin-inline: auto;
+  color: var(--ink);
+}
+
+.journey-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  column-gap: 16px;
+}
+
+.journey-row-dramatic {
+  overflow: visible;
+}
+
+.journey-icon {
+  display: block;
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+  color: color-mix(in srgb, var(--ink), transparent 10%);
+  stroke-width: 1.8;
+}
+
+.journey-track {
+  height: 0.55rem;
+  border-radius: 999px;
+  position: relative;
+  overflow: hidden;
+}
+
+.journey-track .journey-fill {
+  display: block;
+  height: 100%;
+  width: 100%;
+  border-radius: inherit;
+}
+
+.journey-track-short {
+  width: clamp(7.5rem, 16vw, 10rem);
+  border: 1px solid color-mix(in srgb, var(--ink), transparent 35%);
+  background: color-mix(in srgb, var(--paper), var(--ink) 8%);
+}
+
+.journey-track-short .journey-fill {
+  width: 22%;
+  background: #74c7ff;
+}
+
+.journey-track-medium {
+  width: clamp(8.25rem, 17.5vw, 10.75rem);
+  border: 1px solid color-mix(in srgb, var(--ink), transparent 35%);
+  background: color-mix(in srgb, var(--paper), var(--ink) 8%);
+}
+
+.journey-track-medium .journey-fill {
+  width: 32%;
+  background: #74c7ff;
+}
+
+.journey-track-dramatic {
+  width: clamp(8.5rem, 26vw, 16rem);
+  overflow: visible;
+}
+
+.journey-track-dramatic .dramatic-fill {
+  width: 100%;
+  background: #74c7ff;
+  box-shadow: 0 0 0 1px color-mix(in srgb, #74c7ff, transparent 35%);
+}
+
+.journey-label {
+  grid-column: 2 / -1;
+  margin: 0;
+  padding: 0;
+  margin-top: 0.32rem;
+  font-size: clamp(1rem, 1.6vw, 1.55rem);
+  line-height: 1.2;
+}
+
+.intent-group {
+  display: grid;
+  justify-items: start;
+  gap: 0.4rem;
+  margin-left: 1.9rem;
+  margin-top: 0.35rem;
+}
+
+.intent-icon {
+  width: 0.65rem;
+  height: 1.35rem;
+  border-radius: 999px;
+  border: 1.5px solid color-mix(in srgb, var(--ink), transparent 25%);
+  position: relative;
+  display: inline-block;
+}
+
+.intent-icon::before {
+  content: "";
+  width: 0.36rem;
+  height: 0.36rem;
+  background: var(--paper);
+  border: 1.5px solid color-mix(in srgb, var(--ink), transparent 15%);
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@media (max-width: 992px) {
+  .journey-row {
+    grid-template-columns: auto minmax(7rem, 13rem);
+  }
+
+  .journey-track-dramatic {
+    width: clamp(8rem, 40vw, 12rem);
+  }
+
+  .journey-track-medium {
+    width: clamp(8rem, 18.5vw, 11rem);
+  }
+}
+
+@media (max-width: 576px) {
+  .journey-intent-card {
+    gap: 1rem;
+  }
+
+  .journey-row {
+    grid-template-columns: auto minmax(6rem, 9.5rem);
+    column-gap: 0.55rem;
+  }
+
+  .journey-label {
+    font-size: clamp(0.95rem, 4.8vw, 1.2rem);
+  }
+
+  .intent-group {
+    margin-left: 1.45rem;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .journey-track-dramatic .dramatic-fill {
+      animation: journey-bar-expand both linear;
+      animation-timeline: view();
+      animation-range: entry 10% cover 50%;
+    }
+
+    .journey-track-short .journey-fill {
+      animation: journey-bar-fill-short both linear;
+      animation-timeline: view();
+      animation-range: entry 10% cover 50%;
+    }
+
+    .journey-track-medium .journey-fill {
+      animation: journey-bar-fill-medium both linear;
+      animation-timeline: view();
+      animation-range: entry 10% cover 50%;
+    }
+  }
+}
+
+@keyframes journey-bar-expand {
+  from {
+    width: 100%;
+  }
+  to {
+    width: min(82vw, 64rem);
+  }
+}
+
+@keyframes journey-bar-fill-short {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 22%;
+  }
+}
+
+@keyframes journey-bar-fill-medium {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 32%;
+  }
+}
+
+/*--------------------------------------------------------------
+# FigJam / Figma embed
+--------------------------------------------------------------*/
+.figjam-embed {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  margin: 0.5rem 0 0;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--ink), transparent 88%);
+  background: var(--paper);
+  aspect-ratio: 16 / 9;
+}
+
+.figjam-embed iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
 }
 
 
