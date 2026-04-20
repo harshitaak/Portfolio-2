@@ -68,7 +68,7 @@ Portfolio/
 - **Content**: Edit text and images directly inside the HTML files.
 - **Theme colors**: Tweak the *Paper / Ink / Color* palette in [`assets/css/main.css`](assets/css/main.css).
 - **Projects**: Add a new card in `portfolio.html` and link it to a new case-study HTML page.
-- **Analytics**: Replace the GA4 Measurement ID (`G-8TQZB3JJF8`) in each HTML file's `<head>` with your own.
+- **Google Analytics**: 
 - **Resume link**: Update the Google Drive link in [`about.html`](about.html).
 
 ## Credits
