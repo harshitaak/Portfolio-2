@@ -3135,99 +3135,8 @@ section,
 }
 
 /*--------------------------------------------------------------
-# Portfolio Details Section
---------------------------------------------------------------*/
-
-.portfolio-details .portfolio-info {
-  background-color: var(--paper);
-  padding: 30px;
-  box-shadow: var(--elevation-1);
-}
-
-.portfolio-details .portfolio-info h3 {
-  font-size: 22px;
-  font-weight: 700;
-  margin-bottom: 20px;
-  padding-bottom: 20px;
-  border-bottom: 1px solid color-mix(in srgb, var(--ink), transparent 85%);
-  font-family: var(--heading-font);
-}
-
-.portfolio-details .portfolio-info ul {
-  list-style: none;
-  padding: 0;
-  font-size: 15px;
-}
-
-.portfolio-details .portfolio-info ul li+li {
-  margin-top: 10px;
-}
-
-.portfolio-details .portfolio-description {
-  padding-top: 30px;
-}
-
-.portfolio-details .portfolio-description h2 {
-  font-size: 26px;
-  font-weight: 700;
-  margin-bottom: 20px;
-  font-family: var(--heading-font);
-}
-
-.portfolio-details .portfolio-description p {
-  padding: 0;
-  color: color-mix(in srgb, var(--ink), transparent 30%);
-}
-
-
-
-/*--------------------------------------------------------------
 # Contact Section
 --------------------------------------------------------------*/
-.contact .info-item {
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-  padding: 20px 30px;
-}
-
-.contact .info-item .icon {
-  color: var(--ink);
-  background: var(--color);
-  width: 56px;
-  height: 56px;
-  font-size: 24px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: all 0.3s ease;
-  border-radius: 50%;
-  margin-right: 15px;
-}
-
-.contact .info-item h3 {
-  font-size: 18px;
-  font-weight: 700;
-  margin: 0 0 2px 0;
-  font-family: var(--heading-font);
-}
-
-.contact .info-item p {
-  padding: 0;
-  margin-bottom: 0;
-  font-size: 14px;
-}
-
-.contact .info-item .social-links a {
-  font-size: 24px;
-  display: inline-block;
-  line-height: 1;
-  margin: 4px 6px 0 0;
-  transition: color 0.3s ease;
-  color: color-mix(in srgb, var(--ink), transparent 50%);
-}
-
-.contact .info-item .social-links a:hover {
-  color: var(--color);
-}
 
 
 
@@ -3263,11 +3172,11 @@ section,
   left: 0;
   top: 50%;
   transform: translateY(-50%);
-  width: 14px;
-  height: 14px;
-  border-radius: 2px;
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
   display: inline-block;
-  border: 1px solid color-mix(in srgb, var(--ink), transparent 60%);
+  border: 1px solid color-mix(in srgb, var(--ink), transparent 50%);
 }
 
 .color-chip--paper::before {
@@ -3298,7 +3207,6 @@ section,
   margin-bottom: 10vh;
   max-width: 100%;
   height: auto;
-  /* let media aspect-ratio drive height */
   /* Default aspect ratio for media; override via inline style or modifier if needed */
   --media-aspect-ratio: 16 / 9;
 
@@ -3904,7 +3812,6 @@ img[src$=".gif"] {
 .cursor {
   z-index: 10000;
   background-color: var(--color);
-  /* border: 1px solid var(--color); */
   border-radius: 100em;
   width: 1em;
   height: 1em;
