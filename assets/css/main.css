@@ -15,25 +15,12 @@
   }
 }
 
-@keyframes vt-root-fade-out {
-  to {
-    opacity: 0;
-  }
-}
-
-@keyframes vt-root-fade-in {
-  from {
-    opacity: 0;
-  }
-}
-
-::view-transition-old(root) {
-  animation: vt-root-fade-out 0.22s var(--ease-3, cubic-bezier(0.4, 0, 0.2, 1)) both;
-}
-
-::view-transition-new(root) {
-  animation: vt-root-fade-in 0.38s var(--ease-3, cubic-bezier(0.4, 0, 0.2, 1)) both;
-}
+/* View transition animations — restore when @view-transition { navigation: auto } is re-enabled
+@keyframes vt-root-fade-out { to { opacity: 0; } }
+@keyframes vt-root-fade-in  { from { opacity: 0; } }
+::view-transition-old(root) { animation: vt-root-fade-out 0.22s var(--ease-3, cubic-bezier(0.4, 0, 0.2, 1)) both; }
+::view-transition-new(root) { animation: vt-root-fade-in  0.38s var(--ease-3, cubic-bezier(0.4, 0, 0.2, 1)) both; }
+*/
 
 /* Three Column Grid: 3-column CSS masonry */
 .three-column-grid {
@@ -317,49 +304,47 @@
   }
 }
 
-/* Fonts */
+/* Global design tokens — update here to retheme the entire site */
 :root {
+  /* Fonts */
   --default-font: "Satoshi-Regular", "Roboto", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   --heading-font: "Satoshi-Medium", "Satoshi-Regular", sans-serif;
   --nav-font: "Satoshi-Regular", sans-serif;
-}
 
-/* Semantic Typography Styles */
-:root {
-
-  /* Display Text (For the largest, most prominent text, like hero titles) */
+  /* Semantic Typography */
   --text-display-font: 700 72px/1.2 "Satoshi-Bold", "Satoshi-Medium", sans-serif;
-
-  /* Headline Text (For major section titles) */
   --text-headline-font: 700 48px/1.25 "Satoshi-Bold", "Satoshi-Medium", sans-serif;
-
-  /* Title Text (For subsections or card titles) */
   --text-title-font: 600 1.5rem/1.4 "Satoshi-Medium", "Satoshi-Regular", sans-serif;
-
-  /* Subtitle Text (For text that supports a title) */
   --text-subtitle-font: 500 1.125rem/1.5 "Satoshi-Medium", "Satoshi-Regular", sans-serif;
-
-  /* Body Text (For all default paragraphs) */
   --text-body-font: 300 1.25rem/1.6 "Satoshi-Light", "Satoshi-Regular", sans-serif;
-
-  /* Caption Text (For smaller, secondary information) */
   --text-caption-font: 400 0.875rem/1.5 "Satoshi-Regular", sans-serif;
 
-}
-
-
-/* Global Colors - The following color variables are used throughout the website. Updating them here will change the color scheme of the entire website */
-:root {
+  /* Colors */
   --paper: #252525;
   --ink: #e3e3e3;
   --color: hsl(204, 56%, 67%);
   --shadow-color: #000000;
-
-  /* Compatibility aliases (will be phased out) - automatically inherit from core palette */
   --background-color: var(--paper);
   --default-color: var(--ink);
   --accent-color: var(--color);
   --surface-color: var(--paper);
+
+  /* Elevation */
+  --elevation-1: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  --elevation-2: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  --elevation-3: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+
+  /* Easing */
+  --ease-1: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --ease-2: cubic-bezier(0.55, 0.085, 0.68, 0.53);
+  --ease-3: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-4: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --ease-5: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --ease-elastic-3: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  --ease-elastic-4: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  --ease-out-5: cubic-bezier(0.23, 1, 0.32, 1);
+
+  scroll-behavior: smooth;
 }
 
 /* For text selection custom color */
@@ -394,25 +379,6 @@ body *::after {
   /* Compatibility aliases automatically inherit updated values from :root */
 }
 
-/* (moved) project intro styles now live near .page-title section */
-
-
-:root {
-  /* ...existing variables... */
-  --elevation-1: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-  --elevation-2: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-  --elevation-3: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
-
-  /* Easing variables */
-  --ease-1: cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  --ease-2: cubic-bezier(0.55, 0.085, 0.68, 0.53);
-  --ease-3: cubic-bezier(0.4, 0, 0.2, 1);
-  --ease-4: cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  --ease-5: cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  --ease-elastic-3: cubic-bezier(0.68, -0.55, 0.265, 1.55);
-  --ease-elastic-4: cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  --ease-out-5: cubic-bezier(0.23, 1, 0.32, 1);
-}
 
 .dot {
   position: absolute;
@@ -460,10 +426,6 @@ body *::after {
   }
 }
 
-/* Smooth scroll */
-:root {
-  scroll-behavior: smooth;
-}
 
 /*--------------------------------------------------------------
 # General Styling & Shared Classes
@@ -472,6 +434,10 @@ body {
   color: var(--ink);
   background-color: var(--paper);
   font-family: var(--default-font);
+  margin: 0;
+  padding: 0;
+  overscroll-behavior: none;
+  min-height: 100%;
 }
 
 /* Portfolio: footer stays at bottom of viewport when filtered grid is short */
@@ -516,7 +482,7 @@ p {
   font-family: var(--text-body-font);
   font-size: clamp(0.5rem, 6vw, 1.25rem);
   text-wrap: pretty;
-  margin-bottom: 0px !important;
+  margin-bottom: 0 !important;
   padding: 0px 16px;
 }
 
@@ -1637,7 +1603,10 @@ html:not(.light-mode) .floating-theme-toggle .sun-and-moon>.moon>circle {
   }
 }
 
---------------------------------------------------------------*/ .page-title {
+/*--------------------------------------------------------------
+# Page Title
+--------------------------------------------------------------*/
+.page-title {
   color: var(--paper);
   /* font-size: 56px; */
   /* background-color: var(--paper); */
@@ -2823,7 +2792,7 @@ section,
   background-color: var(--paper);
   text-align: center;
   padding: 80px 20px;
-  transition: all ease-in-out 0.3s;
+  transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
   height: 100%;
 }
 
@@ -3682,15 +3651,6 @@ html:not(.light-mode) .sun-and-moon>.moon>circle {
   }
 }
 
-/* Draw a line from the top left to the bottom right of the page */
-body {
-  color: var(--ink);
-  background-color: var(--paper);
-  margin: 0;
-  padding: 0;
-  overscroll-behavior: none;
-  min-height: 100%;
-}
 
 .cloneable {
   padding: var(--section-padding) var(--container-padding);
@@ -3713,7 +3673,7 @@ body {
 [draw-line] {
   cursor: pointer;
   padding: 1em;
-  transition: all 0.3s ease;
+  transition: background-color 0.3s ease, border-radius 0.3s ease;
   border-radius: 8px;
   position: relative;
 }
@@ -3751,6 +3711,72 @@ body {
   height: 100%;
   position: absolute;
   overflow: visible !important;
+}
+
+/*--------------------------------------------------------------
+# Headline Draw — large display headline + scroll-drawn underline
+  Pattern mirrors .autoShow: animation-timeline: view() with a
+  tunable animation-range. No JS required.
+--------------------------------------------------------------*/
+.headline-draw {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.25em;
+  margin: 0 auto;
+  padding: 0 16px;
+  max-width: 1100px;
+}
+
+.headline-draw__title {
+  font: var(--text-display-font);
+  color: var(--ink);
+  text-wrap: balance;
+  margin: 0;
+}
+
+.headline-draw__line {
+  color: var(--color);
+  width: min(100%, 520px);
+  height: 40px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.headline-draw__line svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  display: block;
+}
+
+.headline-draw__line path {
+  stroke: currentColor;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+}
+
+@keyframes headline-line-draw {
+  from { stroke-dashoffset: 1; }
+  to   { stroke-dashoffset: 0; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .headline-draw__line path {
+    animation: headline-line-draw both linear;
+    animation-timeline: view();
+    /* Tune these two keywords to shift when the line draws */
+    animation-range: entry 20% cover 40%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .headline-draw__line path {
+    stroke-dashoffset: 0;
+  }
 }
 
 /* Ensure GIFs play properly */
