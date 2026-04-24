@@ -321,30 +321,9 @@
   <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
   <script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
   <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-
   <script src="assets/js/main.js"></script>
-
   <script src="https://unpkg.com/lucide@latest"></script>
-  <script>
-    lucide.createIcons({
-      attrs: {
-        width: 60,
-        height: 60
-      }
-    });
-    (function () {
-      var icons = document.querySelectorAll('.btn-cta .icon-cta, .btn-cta [data-lucide]');
-      icons.forEach(function(el) {
-        var svg = el.querySelector('svg') || (el.tagName === 'svg' ? el : null);
-        if (svg) {
-          svg.setAttribute('width', '20');
-          svg.setAttribute('height', '20');
-          svg.style.width = '20px';
-          svg.style.height = '20px';
-        }
-      });
-    })();
-  </script>
+  <script>    lucide.createIcons(); // Force all CTA button icons to 20px (global attrs above make them 60px otherwise) </script>
 
 </body>
 

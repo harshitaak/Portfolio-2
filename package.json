@@ -1,0 +1,29 @@
+{
+  "name": "portfolio",
+  "version": "1.0.0",
+  "description": "A personal portfolio website for **Harshit Taak** — a Product Designer exploring how digital tools are designed and made. The site brings together professional work, design philosophy, and multidisciplinary projects spanning UX, furniture, branding, and art.",
+  "main": "index.js",
+  "scripts": {
+    "tailwind:build": "tailwindcss -i ./assets/css/tailwind-input.css -o ./assets/css/tailwind.css --minify",
+    "tailwind:watch": "tailwindcss -i ./assets/css/tailwind-input.css -o ./assets/css/tailwind.css --watch",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/harshitaak/Portfolio-2.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/harshitaak/Portfolio-2/issues"
+  },
+  "homepage": "https://github.com/harshitaak/Portfolio-2#readme",
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.2.4",
+    "autoprefixer": "^10.5.0",
+    "postcss": "^8.5.10",
+    "tailwindcss": "^4.2.4"
+  }
+}

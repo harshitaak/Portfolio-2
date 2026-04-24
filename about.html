@@ -176,11 +176,15 @@
     <!-- Testimonials Section -->
     <section id="testimonials" class="testimonials section">
 
-      <!-- Section Title -->
-      <div class="container section-title autoShow" data-aos="fade-up" >
-        <h2>Testimonials</h2>
-        <div><span>Check my</span> <span class="description-title">Testimonials</span></div>
-      </div><!-- End Section Title -->
+     
+      <div class="container autoShow" aria-label="Highlights">
+        <div class="headline-draw headline-draw--align-left">
+          <div class="headline-draw__title-group">
+            <h2 class="headline-draw__title">Testimonials</h2>
+            <div class="headline-draw__line" data-line-style="4" aria-hidden="true"></div>
+          </div>
+        </div>
+      </div>
 
       <div class="container autoShow" data-aos="fade-up" data-aos-delay="100">
 
@@ -256,11 +260,14 @@
     <section id="resume" class="resume section">
 
       <!-- Section Title -->
-      
-        <div class="container section-title autoShow" data-aos="fade-up">
-          <h2>Timeline</h2>
-          <div><span>My journey so far</span> <span class="description-title">Journey</span></div>
-      </div><!-- End Section Title -->
+      <div class="container autoShow" aria-label="Highlights">
+        <div class="headline-draw headline-draw--align-left">
+          <div class="headline-draw__title-group">
+            <h2 class="headline-draw__title">Journeys</h2>
+            <div class="headline-draw__line" data-line-style="5" aria-hidden="true"></div>
+          </div>
+        </div>
+      </div>
 
       <div class="container" data-aos="fade-up" data-aos-delay="100">
 
@@ -268,10 +275,9 @@
           <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
             <div class="experience-section">
               <div class="section-header">
-                <h2><i class="material-icons">work</i> Professional Journey</h2>
+                <h2><i data-lucide="briefcase" class="section-header__icon" aria-hidden="true"></i> Professional</h2>
                 <p class="section-subtitle">The work I've been doing in/for the world</p>
               </div>
-
               <div class="experience-cards">
                 <div class="experience-card" data-aos="fade-up" data-aos-delay="300">
                   <div class="card-header">
@@ -346,7 +352,7 @@
           <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
             <div class="education-section">
               <div class="section-header">
-                <h2><i class="material-icons">school</i> Academic Journey</h2>
+                <h2><i data-lucide="graduation-cap" class="section-header__icon" aria-hidden="true"></i> Academic</h2>
                 <p class="section-subtitle">The education which enabled me to do what I do</p>
               </div>
 
@@ -387,12 +393,15 @@
 
         <!-- Interests Section -->
     <section id="interests" class="interests section">
-
-      <!-- Section Title -->
-      <div class="container section-title autoShow" data-aos="fade-up" draw-line="">
-        <h2>Features</h2>
-        <div><span>I'm</span> <span class="description-title">interested in</span></div>
-      </div><!-- End Section Title -->
+    <!-- Section Title -->
+      <div class="container autoShow" aria-label="Highlights">
+        <div class="headline-draw headline-draw--align-left">
+          <div class="headline-draw__title-group">
+            <h2 class="headline-draw__title">Hobbies</h2>
+            <div class="headline-draw__line" data-line-style="1" aria-hidden="true"></div>
+          </div>
+        </div>
+      </div>
 
       <div class="container autoShow" data-aos="fade-up" data-aos-delay="100">
 
@@ -450,13 +459,16 @@
     </section><!-- /Interests Section -->
         
 
+      <!-- Section Title -->
+      <div class="container" aria-label="Highlights">
+        <div class="headline-draw headline-draw--align-left">
+          <div class="headline-draw__title-group">
+            <h2 class="headline-draw__title">About this website</h2>
+            <div class="headline-draw__line" data-line-style="1" aria-hidden="true"></div>
+          </div>
+        </div>
+      </div>
 
-
-        <!-- Section Title -->
-      <div class="container section-title" data-aos="fade-up" draw-line="">
-        <h2>About </h2>
-        <div><span>This</span> <span class="description-title">website</span></div>
-      </div><!-- End Section Title -->
 
       <!-- Project Description -->
       <div class="row mb-3" style="width: 100%; margin-left: 0; margin-right: 0;" data-aos="fade-up" data-aos-delay="100">
@@ -530,25 +542,7 @@
   <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
   <script>
-    lucide.createIcons({
-      attrs: {
-        width: 60,
-        height: 60
-      }
-    });
-    // Force all CTA button icons to 20px (global attrs above make them 60px otherwise)
-    (function () {
-      var icons = document.querySelectorAll('.btn-cta .icon-cta, .btn-cta [data-lucide]');
-      icons.forEach(function(el) {
-        var svg = el.querySelector('svg') || (el.tagName === 'svg' ? el : null);
-        if (svg) {
-          svg.setAttribute('width', '20');
-          svg.setAttribute('height', '20');
-          svg.style.width = '20px';
-          svg.style.height = '20px';
-        }
-      });
-    })();
+    lucide.createIcons();
   </script>
 
 </body>

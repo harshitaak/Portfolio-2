@@ -1,4 +1,63 @@
+@import "./tailwind.css";
 @import "https://unpkg.com/open-props/easings.min.css";
+
+/*==============================================================
+  TABLE OF CONTENTS — Ctrl+F the section name to jump to it
+================================================================
+
+  TOKENS & RESET
+    Global Design Tokens ............. fonts, colors, elevation, easing
+    General Styling & Shared Classes . body, headings, links, lists
+
+  LAYOUT UTILITIES
+    Three Column Grid ................ CSS masonry, 3-col
+    Two Column Grid .................. large image grid, 2-col
+    Two Column Grid with Text ........ image grid + sidebar text
+    Flex Image Grid .................. main image + stacked side images
+    Responsive Image Grid ............ .image-area utility
+
+  GLOBAL CHROME
+    Global Header
+    Navigation Menu .................. desktop + mobile
+    Global Footer
+    Navbar Right Container
+    Theme Toggle ..................... sun/moon icon button
+
+  FLOATING UI
+    Scroll Top Button
+    Floating Back Button
+    Floating Dark Mode Toggle
+
+  PAGE SECTIONS
+    Page Title ....................... breadcrumb banner
+    Global Sections .................. shared section padding
+    Global Section Titles
+    Hero Section ..................... floating cards, big text band
+    About Section
+    Interests Section
+    Testimonials Section
+    Resume Section
+    Services Section
+    Service Details Section
+    Portfolio Section ................ filters + grid
+    Contact Section
+
+  PROJECT PAGE COMPONENTS
+    My Section ....................... media + text layout
+    Custom Carousel Navigation
+    GLightbox Fixes and Enhancements
+    Headline Draw .................... scroll-drawn SVG underline
+    Text Video Section
+    FigJam / Figma Embed
+
+  ANIMATIONS & UTILITIES
+    View Transitions API ............. disabled; re-enable in @view-transition
+    Disable AOS Animation Delay ...... mobile override
+    autoShow / animScale ............. scroll-timeline animations
+    Journey Intent Visual
+    Cursor
+
+================================================================*/
 
 /*--------------------------------------------------------------
 # View Transitions API — same-origin full page navigations
@@ -483,19 +542,16 @@ p {
   font-size: clamp(0.5rem, 6vw, 1.25rem);
   text-wrap: pretty;
   margin-bottom: 0 !important;
-  padding: 0px 16px;
 }
 
 h1 {
   font-size: clamp(3rem, 11vw, 5rem);
   font-family: var(--heading-font);
-  padding: 0px 16px;
   text-wrap: balance;
 }
 h2 {
   font-size: clamp(2rem, 8vw, 3rem);
   font-family: var(--heading-font);
-  padding: 0px 16px;
   text-wrap: balance;
 }
 h3,
@@ -1200,6 +1256,19 @@ ol li::marker {
   }
 }
 
+.resume .section-header h2 {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.resume .section-header h2 .section-header__icon,
+.resume .section-header h2 .section-header__icon svg {
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+}
+
 .resume .section-header .section-subtitle {
   color: color-mix(in srgb, var(--ink), transparent 30%);
   font-size: 1rem;
@@ -1360,10 +1429,6 @@ ol li::marker {
 @media (max-width: 576px) {
   .resume .section-header h2 {
     font-size: 1.4rem;
-  }
-
-  .resume .section-header h2 i {
-    font-size: 1.2rem;
   }
 
   .resume .experience-card {
@@ -2670,6 +2735,12 @@ section,
   flex-shrink: 0;
 }
 
+.testimonials .testimonial-item h3 .testimonial-linkedin-icon svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
 .testimonials .testimonial-item h4 {
   font-size: 14px;
   color: color-mix(in srgb, var(--ink), transparent 20%);
@@ -3713,72 +3784,6 @@ html:not(.light-mode) .sun-and-moon>.moon>circle {
   overflow: visible !important;
 }
 
-/*--------------------------------------------------------------
-# Headline Draw — large display headline + scroll-drawn underline
-  Pattern mirrors .autoShow: animation-timeline: view() with a
-  tunable animation-range. No JS required.
---------------------------------------------------------------*/
-.headline-draw {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  gap: 0.25em;
-  margin: 0 auto;
-  padding: 0 16px;
-  max-width: 1100px;
-}
-
-.headline-draw__title {
-  font: var(--text-display-font);
-  color: var(--ink);
-  text-wrap: balance;
-  margin: 0;
-}
-
-.headline-draw__line {
-  color: var(--color);
-  width: min(100%, 520px);
-  height: 40px;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.headline-draw__line svg {
-  width: 100%;
-  height: 100%;
-  overflow: visible;
-  display: block;
-}
-
-.headline-draw__line path {
-  stroke: currentColor;
-  stroke-dasharray: 1;
-  stroke-dashoffset: 1;
-}
-
-@keyframes headline-line-draw {
-  from { stroke-dashoffset: 1; }
-  to   { stroke-dashoffset: 0; }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .headline-draw__line path {
-    animation: headline-line-draw both linear;
-    animation-timeline: view();
-    /* Tune these two keywords to shift when the line draws */
-    animation-range: entry 20% cover 40%;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .headline-draw__line path {
-    stroke-dashoffset: 0;
-  }
-}
-
 /* Ensure GIFs play properly */
 img[src$=".gif"] {
   animation-play-state: running !important;
@@ -3916,6 +3921,12 @@ body:has( [data-cursor]:hover) .cursor{
   flex-shrink: 0;
   color: color-mix(in srgb, var(--ink), transparent 10%);
   stroke-width: 1.8;
+}
+
+.journey-icon svg {
+  width: 100%;
+  height: 100%;
+  display: block;
 }
 
 .journey-track {
@@ -4146,5 +4157,88 @@ body:has( [data-cursor]:hover) .cursor{
   }
   to {
     transform: scale(1);
+  }
+}
+
+
+/*--------------------------------------------------------------
+# Headline Draw — large display headline + scroll-drawn underline
+  Pattern mirrors .autoShow: animation-timeline: view() with a
+  tunable animation-range. No JS required.
+--------------------------------------------------------------*/
+.headline-draw {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.25em;
+  max-width: 1200px;
+}
+
+.headline-draw--align-left {
+  align-items: flex-start;
+  text-align: left;
+  padding-bottom: 2rem;
+}
+
+.headline-draw__title {
+  font: var(--text-display-font);
+  color: var(--ink);
+  text-wrap: balance;
+  margin: 0;
+}
+
+/* h2 + line: line matches heading width (shrink-wraps to text) */
+.headline-draw__title-group {
+  display: inline-block;
+  max-width: 100%;
+  vertical-align: top;
+}
+
+.headline-draw__title-group .headline-draw__line {
+  width: 100%;
+  max-width: none;
+}
+
+.headline-draw__line {
+  color: var(--color);
+  width: min(100%, 520px);
+  height: 40px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.headline-draw__line svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  display: block;
+}
+
+.headline-draw__line path {
+  stroke: currentColor;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+}
+
+@keyframes headline-line-draw {
+  from { stroke-dashoffset: 1; }
+  to   { stroke-dashoffset: 0; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .headline-draw__line path {
+    animation: headline-line-draw both linear;
+    animation-timeline: view();
+    /* Tune these two keywords to shift when the line draws */
+    animation-range: entry 20% cover 40%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .headline-draw__line path {
+    stroke-dashoffset: 0;
   }
 }
