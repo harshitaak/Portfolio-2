@@ -2637,7 +2637,7 @@ section,
   line-height: 0;
 }
 
-.interests .features-item i svg {
+.interests .features-item svg {
   width: 42px !important;
   height: 42px !important;
 }
@@ -4182,27 +4182,50 @@ body:has( [data-cursor]:hover) .cursor{
 }
 
 .headline-draw__title {
-  font: var(--text-display-font);
+  font-size: clamp(2rem, 4vw, 4rem);
+  font-family: var(--heading-font);
   color: var(--ink);
   text-wrap: balance;
   margin: 0;
 }
 
-/* h2 + line: line matches heading width (shrink-wraps to text) */
+/* h2 + line: width is finalized in JS (syncHeadlineDrawTitleGroupLineWidths) for a pixel match */
 .headline-draw__title-group {
-  display: inline-block;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: max-content;
   max-width: 100%;
-  vertical-align: top;
+  min-width: 0;
+  box-sizing: border-box;
 }
 
+.headline-draw--align-left .headline-draw__title-group {
+  align-items: flex-start;
+}
+
+/* max-content + no balance so the title box width matches the glyphs (balance can change measure) */
+.headline-draw__title-group .headline-draw__title {
+  width: max-content;
+  max-width: 100%;
+  text-wrap: pretty;
+  box-sizing: border-box;
+}
+
+/* min-width: 0; width: 100% is fallback, JS sets px width to match the title; SVG ~310px min is bypassed */
 .headline-draw__title-group .headline-draw__line {
+  min-width: 0;
   width: 100%;
-  max-width: none;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow-x: clip;
+  overflow-y: visible;
 }
 
 .headline-draw__line {
   color: var(--color);
   width: min(100%, 520px);
+  min-width: 0;
   height: 40px;
   position: relative;
   display: flex;
@@ -4211,8 +4234,11 @@ body:has( [data-cursor]:hover) .cursor{
 }
 
 .headline-draw__line svg {
+  min-width: 0;
+  flex: 1 1 auto;
   width: 100%;
   height: 100%;
+  max-width: 100%;
   overflow: visible;
   display: block;
 }

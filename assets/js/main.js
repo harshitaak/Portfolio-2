@@ -553,8 +553,54 @@ function initHeadlineDrawLines() {
     }
     box.dataset.lineStamped = '1';
   });
+  if (typeof syncHeadlineDrawTitleGroupLineWidths === 'function') {
+    syncHeadlineDrawTitleGroupLineWidths();
+  }
 }
 
+/**
+ * Match .headline-draw__line width to the heading’s rendered width.
+ * Pairs with .headline-draw__title-group; fixes SVG min-intrinsic width and text-wrap: balance drift.
+ */
+function syncHeadlineDrawTitleGroupLineWidths() {
+  document.querySelectorAll('.headline-draw__title-group').forEach((group) => {
+    const title = group.querySelector('.headline-draw__title');
+    const line = group.querySelector('.headline-draw__line');
+    if (!title || !line) return;
+    const w = title.getBoundingClientRect().width;
+    if (w > 0) {
+      line.style.width = `${Math.round(w * 100) / 100}px`;
+    }
+  });
+}
+
+function initHeadlineDrawTitleGroupLineWidths() {
+  if (!document.querySelectorAll('.headline-draw__title-group').length) return;
+  const run = () => {
+    syncHeadlineDrawTitleGroupLineWidths();
+  };
+  if (window.ResizeObserver) {
+    const ro = new ResizeObserver(run);
+    document.querySelectorAll('.headline-draw__title-group .headline-draw__title').forEach((el) => {
+      ro.observe(el);
+    });
+  } else {
+    let t;
+    window.addEventListener('resize', () => {
+      clearTimeout(t);
+      t = setTimeout(run, 100);
+    });
+  }
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(run);
+  }
+  run();
+  setTimeout(run, 0);
+  setTimeout(run, 200);
+}
+
+document.addEventListener('DOMContentLoaded', initHeadlineDrawTitleGroupLineWidths);
+setTimeout(initHeadlineDrawTitleGroupLineWidths, 100);
 document.addEventListener('DOMContentLoaded', initHeadlineDrawLines);
 setTimeout(initHeadlineDrawLines, 100);
 
