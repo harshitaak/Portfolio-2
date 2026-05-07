@@ -702,9 +702,12 @@ ol li::marker {
     justify-content: center;
   }
 
-  /* Material Icons specific styling for navbar */
-  .navmenu a .material-icons {
+  /* Icon styling for navbar (Material Icons + Lucide) */
+  .navmenu a .material-icons,
+  .navmenu a .lucide {
     font-size: 18px;
+    width: 18px;
+    height: 18px;
     margin-right: 8px;
     margin-left: 0;
     vertical-align: middle;
@@ -714,8 +717,9 @@ ol li::marker {
     justify-content: center;
   }
 
-  /* General Material Icons styling to prevent overlap */
-  .material-icons {
+  /* General icon styling to prevent overlap */
+  .material-icons,
+  .lucide {
     display: inline-block;
     vertical-align: middle;
   }
@@ -751,15 +755,19 @@ ol li::marker {
     /* font-weight: 600; */
   }
 
-  /* Material Icons hover and active states */
+  /* Icon hover and active states */
   .navmenu a:hover .material-icons,
+  .navmenu a:hover .lucide,
   .navmenu .active .material-icons,
-  .navmenu .active:focus .material-icons {
+  .navmenu .active .lucide,
+  .navmenu .active:focus .material-icons,
+  .navmenu .active:focus .lucide {
     color: var(--color);
     transform: scale(1.1);
   }
 
-  .navmenu li:hover>a .material-icons {
+  .navmenu li:hover>a .material-icons,
+  .navmenu li:hover>a .lucide {
     color: var(--color);
     transform: scale(1.1);
   }
@@ -778,12 +786,15 @@ ol li::marker {
   }
 
   .navmenu a.nav-disabled:hover .material-icons,
-  .navmenu li:hover>a.nav-disabled .material-icons {
+  .navmenu a.nav-disabled:hover .lucide,
+  .navmenu li:hover>a.nav-disabled .material-icons,
+  .navmenu li:hover>a.nav-disabled .lucide {
     color: var(--ink);
     transform: none;
   }
 
-  .navmenu a.nav-disabled .material-icons {
+  .navmenu a.nav-disabled .material-icons,
+  .navmenu a.nav-disabled .lucide {
     color: var(--ink);
     transform: none;
   }
@@ -874,11 +885,17 @@ ol li::marker {
     transform: translateY(-50%);
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
-    padding: 8px;
     border-radius: 4px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
+  }
+
+  /* Keep Lucide hamburger/close at the same visual size as previous icon font */
+  .mobile-nav-toggle svg {
+    width: 32px;
+    height: 32px;
+    display: block;
   }
 
   /* Previous rule reset transform and dropped vertical centering when the icon switched to "close" */
@@ -3854,7 +3871,8 @@ img[src$=".gif"] {
 
 body:has( a:hover) .cursor,
 body:has( button:hover) .cursor,
-body:has( [data-cursor]:hover) .cursor{
+body:has( [data-cursor]:hover) .cursor,
+body:has( .mobile-nav-toggle:hover) .cursor{
   width: 3em;
   height: 3em;
   background-color: color-mix(in srgb, var(--color), transparent 70%);
@@ -3868,7 +3886,8 @@ body:has( [data-cursor]:hover) .cursor{
 
   body:has( a:hover) .cursor,
   body:has( button:hover) .cursor,
-  body:has( [data-cursor]:hover) .cursor {
+  body:has( [data-cursor]:hover) .cursor,
+  body:has( .mobile-nav-toggle:hover) .cursor {
     width: 2.4em;
     height: 2.4em;
   }
@@ -3883,7 +3902,8 @@ body:has( [data-cursor]:hover) .cursor{
 
   body:has( a:hover) .cursor,
   body:has( button:hover) .cursor,
-  body:has( [data-cursor]:hover) .cursor {
+  body:has( [data-cursor]:hover) .cursor,
+  body:has( .mobile-nav-toggle:hover) .cursor {
     width: 2.4em;
     height: 2.4em;
     opacity: 0;

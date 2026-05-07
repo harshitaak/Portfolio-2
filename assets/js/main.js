@@ -28,10 +28,29 @@ function reportThemeModeToGA(theme) {
   /**
    * Mobile nav toggle
    */
-  const mobileNavToggleBtn = document.querySelector('.mobile-nav-toggle');
   let mobileNavScrollY = 0;
 
+  function setMobileToggleIcon(isOpen) {
+    const mobileNavToggleBtn = document.querySelector('.mobile-nav-toggle');
+    if (!mobileNavToggleBtn) return;
+
+    // Lucide icon swap for the mobile toggle.
+    if (mobileNavToggleBtn.hasAttribute('data-lucide')) {
+      mobileNavToggleBtn.setAttribute('data-lucide', isOpen ? 'x' : 'menu');
+      if (window.lucide && typeof window.lucide.createIcons === 'function') {
+        window.lucide.createIcons();
+      }
+      return;
+    }
+
+    // Fallback for pages still using Material Icons text glyphs.
+    mobileNavToggleBtn.textContent = isOpen ? 'close' : 'menu';
+  }
+
   function mobileNavToogle() {
+    const mobileNavToggleBtn = document.querySelector('.mobile-nav-toggle');
+    if (!mobileNavToggleBtn) return;
+
     const body = document.querySelector('body');
     const opening = !body.classList.contains('mobile-nav-active');
 
@@ -45,6 +64,7 @@ function reportThemeModeToGA(theme) {
     body.classList.toggle('mobile-nav-active');
     mobileNavToggleBtn.classList.toggle('menu');
     mobileNavToggleBtn.classList.toggle('close');
+    setMobileToggleIcon(opening);
 
     if (!opening) {
       requestAnimationFrame(function () {
@@ -52,9 +72,10 @@ function reportThemeModeToGA(theme) {
       });
     }
   }
-  if (mobileNavToggleBtn) {
-    mobileNavToggleBtn.addEventListener('click', mobileNavToogle);
-  }
+  document.addEventListener('click', function(e) {
+    if (!e.target.closest('.mobile-nav-toggle')) return;
+    mobileNavToogle();
+  });
 
   /**
    * Hide mobile nav on same-page/hash links
