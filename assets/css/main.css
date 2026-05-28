@@ -4246,7 +4246,7 @@ body:has( .mobile-nav-toggle:hover) .cursor{
   color: var(--color);
   width: min(100%, 520px);
   min-width: 0;
-  height: 40px;
+  aspect-ratio: 310 / 40;
   position: relative;
   display: flex;
   align-items: center;
