@@ -145,7 +145,7 @@
 }
 
 .two-column-grid-with-text .text-title {
-  font-size: 24px;
+  font-size: var(--title);
   font-weight: 600;
   color: var(--text-primary);
   margin-bottom: 16px;
@@ -201,10 +201,6 @@
   .two-column-grid-with-text {
     gap: 24px;
     padding: 24px 16px;
-  }
-
-  .two-column-grid-with-text .text-title {
-    font-size: 20px;
   }
 
   .two-column-grid-with-text .text-description {
@@ -370,13 +366,27 @@
   --heading-font: "Satoshi-Medium", "Satoshi-Regular", sans-serif;
   --nav-font: "Satoshi-Regular", sans-serif;
 
+  /* Type Scale — all font sizes controlled from here */
+  --display:       clamp(2.5rem,   1.5rem + 4vw,     4.5rem);
+  --hero-heading:  clamp(1.75rem,  1rem   + 4vw,     4rem);
+  --hero-body:     clamp(1rem,     0.875rem + 1vw,   1.5rem);
+  --page-title:    clamp(2rem,     1rem   + 3.33vw,  3.5rem);
+  --headline:      clamp(1.75rem,  1rem   + 2.5vw,   3rem);
+  --section-title: clamp(1.25rem,  1rem   + 1vw,     1.75rem);
+  --title:         clamp(1.125rem, 1rem   + 0.67vw,  1.5rem);
+  --subtitle:      1.125rem;
+  --body:          clamp(1rem,     0.875rem + 0.5vw,  1.25rem);
+  --caption:       0.875rem;
+  --float-icon:    clamp(0.75rem,  0.5rem  + 1vw,    1.125rem);
+  --float-label:   clamp(0.625rem, 0.375rem + 0.83vw, 0.875rem);
+
   /* Semantic Typography */
-  --text-display-font: 700 72px/1.2 "Satoshi-Bold", "Satoshi-Medium", sans-serif;
-  --text-headline-font: 700 48px/1.25 "Satoshi-Bold", "Satoshi-Medium", sans-serif;
-  --text-title-font: 600 1.5rem/1.4 "Satoshi-Medium", "Satoshi-Regular", sans-serif;
-  --text-subtitle-font: 500 1.125rem/1.5 "Satoshi-Medium", "Satoshi-Regular", sans-serif;
-  --text-body-font: 300 1.25rem/1.6 "Satoshi-Light", "Satoshi-Regular", sans-serif;
-  --text-caption-font: 400 0.875rem/1.5 "Satoshi-Regular", sans-serif;
+  --text-display-font:  700 var(--display)/1.2   "Satoshi-Bold", "Satoshi-Medium", sans-serif;
+  --text-headline-font: 700 var(--headline)/1.25 "Satoshi-Bold", "Satoshi-Medium", sans-serif;
+  --text-title-font:    600 var(--title)/1.4     "Satoshi-Medium", "Satoshi-Regular", sans-serif;
+  --text-subtitle-font: 500 var(--subtitle)/1.5  "Satoshi-Medium", "Satoshi-Regular", sans-serif;
+  --text-body-font:     300 var(--body)/1.6      "Satoshi-Light", "Satoshi-Regular", sans-serif;
+  --text-caption-font:  400 var(--caption)/1.5   "Satoshi-Regular", sans-serif;
 
   /* Colors */
   --paper: #252525;
@@ -1702,8 +1712,8 @@ html:not(.light-mode) .floating-theme-toggle .sun-and-moon>.moon>circle {
 }
 
 .page-title .heading h1 {
-  font-size: 56px;
   font: var(--text-headline-font);
+  font-size: var(--page-title);
   color: var(--paper);
 }
 
@@ -1799,7 +1809,7 @@ section,
 .section-title div {
   color: var(--ink);
   margin: 0;
-  font-size: 28px;
+  font-size: var(--section-title);
   font-weight: 700;
   font-family: var(--heading-font);
 }
@@ -1844,14 +1854,14 @@ section,
 
 .hero h2 {
   margin: 0;
-  font-size: 64px;
+  font-size: var(--hero-heading);
   font-weight: 700;
   color: var(--ink);
 }
 
 .hero p {
   margin: 4px 0 0 0;
-  font-size: 24px;
+  font-size: var(--hero-body);
   color: var(--ink);
   text-wrap: pretty;
 }
@@ -1884,39 +1894,10 @@ section,
 }
 
 /* Enhanced responsive breakpoints for hero section */
-@media (max-width: 1200px) {
-  .hero h2 {
-    font-size: 48px;
-  }
-
-  .hero p {
-    font-size: 22px;
-
-  }
-}
-
-@media (max-width: 992px) {
-  .hero h2 {
-    font-size: 40px;
-  }
-
-  .hero p {
-    font-size: 20px;
-  }
-}
-
 @media (max-width: 768px) {
   .hero {
     padding: 60px 0;
     min-height: 90vh;
-  }
-
-  .hero h2 {
-    font-size: 32px;
-  }
-
-  .hero p {
-    font-size: 18px;
   }
 }
 
@@ -1924,14 +1905,6 @@ section,
   .hero {
     padding: 40px 0;
     min-height: 80vh;
-  }
-
-  .hero h2 {
-    font-size: 28px;
-  }
-
-  .hero p {
-    font-size: 16px;
   }
 }
 
@@ -2041,22 +2014,22 @@ section,
 }
 
 .floating-card i {
-  font-size: 18px;
+  font-size: var(--float-icon);
   color: var(--color);
 }
 
 /* Lucide icons (SVG) – match Material icon size */
 .floating-card i svg,
 .floating-card svg {
-  width: 18px;
-  height: 18px;
+  width: var(--float-icon);
+  height: var(--float-icon);
   color: var(--color);
   stroke: currentColor;
   fill: none;
 }
 
 .floating-card span {
-  font-size: 14px;
+  font-size: var(--float-label);
   font-weight: 500;
   color: var(--ink);
   white-space: nowrap;
@@ -2327,20 +2300,6 @@ section,
     padding: 12px 16px;
   }
 
-  .floating-card i {
-    font-size: 17px;
-  }
-
-  .floating-card i svg,
-  .floating-card svg {
-    width: 17px;
-    height: 17px;
-  }
-
-  .floating-card span {
-    font-size: 13px;
-  }
-
   .floating-slot.card-1 {
     top: -8px;
     left: 44%;
@@ -2394,20 +2353,6 @@ section,
 
   .floating-card {
     padding: 10px 14px;
-  }
-
-  .floating-card i {
-    font-size: 16px;
-  }
-
-  .floating-card i svg,
-  .floating-card svg {
-    width: 16px;
-    height: 16px;
-  }
-
-  .floating-card span {
-    font-size: 12px;
   }
 
   .floating-slot.card-1 {
@@ -2465,20 +2410,6 @@ section,
     padding: 8px 12px;
   }
 
-  .floating-card i {
-    font-size: 14px;
-  }
-
-  .floating-card i svg,
-  .floating-card svg {
-    width: 14px;
-    height: 14px;
-  }
-
-  .floating-card span {
-    font-size: 11px;
-  }
-
   .floating-slot.card-1 {
     top: -6px;
     left: 44%;
@@ -2532,20 +2463,6 @@ section,
 
   .floating-card {
     padding: 6px 10px;
-  }
-
-  .floating-card i {
-    font-size: 12px;
-  }
-
-  .floating-card i svg,
-  .floating-card svg {
-    width: 12px;
-    height: 12px;
-  }
-
-  .floating-card span {
-    font-size: 10px;
   }
 
   .floating-slot.card-1 {
