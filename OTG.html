@@ -46,9 +46,10 @@
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.2.3/dist/lenis.min.js"></script> 
 
   <style>
-    /* Page-specific accent hue override; lightness/chroma inherit from the base theme */
-    :root { --accent-hue: 296.15; }
-    .light-mode { --accent-hue: 290.11; }
+    /* Page-specific theme color override for both dark and light modes */
+    :root { --color: hsl(258, 56%, 67%); --accent-color: hsl(258, 56%, 67%); }
+    .light-mode { --color: hsl(258, 56%, 50%); --accent-color: hsl(258, 56%, 50%); }
+    
   </style>
 
 </head>

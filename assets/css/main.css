@@ -350,14 +350,10 @@
 
 /* Global Colors - The following color variables are used throughout the website. Updating them here will change the color scheme of the entire website */
 :root {
-  /* Colors (OKLCH) */
-  --paper: oklch(26.45% 0 0);
-  --ink: oklch(91.58% 0 0);
-  --accent-lightness: 74.57%;
-  --accent-chroma: 0.0804;
-  --accent-hue: 238.46;
-  --color: oklch(var(--accent-lightness) var(--accent-chroma) var(--accent-hue));
-  --shadow-color: oklch(0% 0 0);
+  --paper: #252525;
+  --ink: #e3e3e3;
+  --color: hsl(204, 56%, 67%);
+  --shadow-color: #000000;
 
   /* Compatibility aliases (will be phased out) - automatically inherit from core palette */
   --background-color: var(--paper);
@@ -379,14 +375,11 @@ body *::after {
 }
 
 
-/* Light mode color variables (OKLCH) */
+/* Light mode color variables */
 .light-mode {
-  --paper: oklch(92.89% 0.0025 286.35);
-  --ink: oklch(20.29% 0.0037 345.62);
-  --accent-lightness: 62%;
-  --accent-chroma: 0.1186;
-  --accent-hue: 241.69;
-  --color: oklch(var(--accent-lightness) var(--accent-chroma) var(--accent-hue));
+  --paper: hsl(240, 4%, 91%);
+  --ink: #181617;
+  --color: hsl(204, 56%, 50%);
   /* Compatibility aliases automatically inherit updated values from :root */
 }
 
