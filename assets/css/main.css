@@ -613,7 +613,8 @@ ol li::marker {
   color: var(--ink);
   box-shadow: var(--elevation-1);
   background-color: var(--paper);
-  padding: 0.5rem 0;
+  /* padding: 0.75rem 0; */
+  height: 72px;
   /* Avoid transition:all — it animates unrelated properties on click/theme toggle and can flicker */
   /* transition:
     background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
