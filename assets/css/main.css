@@ -99,13 +99,13 @@
   display: block;
 }
 
-@media (max-width: 991.98px) {
+@media (max-width: 991px) {
   .three-column-grid {
     column-count: 2;
   }
 }
 
-@media (max-width: 575.98px) {
+@media (max-width: 575px) {
   .three-column-grid {
     column-count: 1;
   }
@@ -185,7 +185,7 @@
 }
 
 /* Responsive adjustments for two-column-grid-with-text */
-@media (max-width: 1024px) {
+@media (max-width: 991px) {
   .two-column-grid-with-text {
     flex-direction: column;
     gap: 32px;
@@ -197,7 +197,7 @@
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .two-column-grid-with-text {
     gap: 24px;
     padding: 24px 16px;
@@ -242,7 +242,7 @@
 }
 
 /* Responsive adjustments for two column grid */
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .two-column-grid {
     grid-template-columns: 1fr;
     gap: 16px;
@@ -253,7 +253,7 @@
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 575px) {
   .two-column-grid {
     gap: 12px;
   }
@@ -334,7 +334,7 @@
 }
 
 /* Responsive adjustments for flex image grid */
-@media (max-width: 991.98px) {
+@media (max-width: 991px) {
   .flex-image-grid {
     flex-direction: column;
     gap: 16px;
@@ -353,7 +353,7 @@
   }
 }
 
-@media (max-width: 575.98px) {
+@media (max-width: 575px) {
   .flex-image-grid .side-items-container {
     grid-template-columns: 1fr;
   }
@@ -389,14 +389,37 @@
   --text-caption-font:  400 var(--caption)/1.5   "Satoshi-Regular", sans-serif;
 
   /* Colors */
-  --paper: #252525;
-  --ink: #e3e3e3;
-  --color: hsl(204, 56%, 67%);
-  --shadow-color: #000000;
+  --paper: oklch(27% 0 0);
+  --ink:   oklch(92% 0 0);
+  --color: oklch(75% 0.08 240);
+  --shadow-color: oklch(0% 0 0);
   --background-color: var(--paper);
   --default-color: var(--ink);
   --accent-color: var(--color);
   --surface-color: var(--paper);
+
+  /* Smooth transition for color changes */
+html,
+body,
+body *,
+body *::before,
+body *::after {
+  transition:
+    background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+    color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+    border-color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+
+/* Light mode color variables */
+.light-mode {
+  --paper: oklch(93% 0 0);
+  --ink:   oklch(20% 0 0);
+  --color: oklch(62.4% 0.11 240);
+  --shadow-color: oklch(0% 0 0);
+  /* Compatibility aliases automatically inherit updated values from :root */
+}
+
 
   /* Elevation */
   --elevation-1: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
@@ -427,26 +450,6 @@
   color: #000000;
 }
 
-/* Smooth transition for color changes */
-html,
-body,
-body *,
-body *::before,
-body *::after {
-  transition:
-    background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-    color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-    border-color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-
-/* Light mode color variables */
-.light-mode {
-  --paper: hsl(240, 4%, 91%);
-  --ink: #181617;
-  --color: hsl(204, 56%, 50%);
-  /* Compatibility aliases automatically inherit updated values from :root */
-}
 
 
 .dot {
@@ -658,7 +661,7 @@ ol li::marker {
 # Navigation Menu
 --------------------------------------------------------------*/
 /* Desktop Navigation */
-@media (min-width: 1200px) {
+@media (min-width: 768px) {
   .navmenu {
     padding: 0;
   }
@@ -728,7 +731,6 @@ ol li::marker {
   }
 
   /* General icon styling to prevent overlap */
-  .material-icons,
   .lucide {
     display: inline-block;
     vertical-align: middle;
@@ -766,17 +768,12 @@ ol li::marker {
   }
 
   /* Icon hover and active states */
-  .navmenu a:hover .material-icons,
   .navmenu a:hover .lucide,
-  .navmenu .active .material-icons,
-  .navmenu .active .lucide,
-  .navmenu .active:focus .material-icons,
   .navmenu .active:focus .lucide {
     color: var(--color);
     transform: scale(1.1);
   }
 
-  .navmenu li:hover>a .material-icons,
   .navmenu li:hover>a .lucide {
     color: var(--color);
     transform: scale(1.1);
@@ -795,15 +792,12 @@ ol li::marker {
     cursor: not-allowed !important;
   }
 
-  .navmenu a.nav-disabled:hover .material-icons,
   .navmenu a.nav-disabled:hover .lucide,
-  .navmenu li:hover>a.nav-disabled .material-icons,
   .navmenu li:hover>a.nav-disabled .lucide {
     color: var(--ink);
     transform: none;
   }
 
-  .navmenu a.nav-disabled .material-icons,
   .navmenu a.nav-disabled .lucide {
     color: var(--ink);
     transform: none;
@@ -867,7 +861,7 @@ ol li::marker {
 }
 
 /* Mobile Navigation */
-@media (max-width: 1199px) {
+@media (max-width: 767px) {
 
   /* Reserve space so the menu button does not jump between flex and absolute when the overlay opens */
   .header .navbar-right {
@@ -1258,7 +1252,7 @@ ol li::marker {
 }
 
 /* Mobile footer layout adjustments */
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .minimal-footer .container {
     padding: 1rem 0;
     flex-direction: row !important;
@@ -1429,7 +1423,7 @@ ol li::marker {
   margin-bottom: 0;
 }
 
-@media (max-width: 992px) {
+@media (max-width: 991px) {
 
   .resume .experience-section,
   .resume .education-section {
@@ -1453,7 +1447,7 @@ ol li::marker {
   }
 }
 
-@media (max-width: 576px) {
+@media (max-width: 575px) {
   .resume .section-header h2 {
     font-size: 1.4rem;
   }
@@ -1689,7 +1683,7 @@ html:not(.light-mode) .floating-theme-toggle .sun-and-moon>.moon>circle {
 /*--------------------------------------------------------------
 # Disable aos animation delay on mobile devices
 --------------------------------------------------------------*/
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 767px) {
   [data-aos-delay] {
     transition-delay: 0 !important;
   }
@@ -1840,13 +1834,13 @@ section,
 }
 
 /* Responsive container adjustments */
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .hero .container {
     padding: 0 15px;
   }
 }
 
-@media (max-width: 576px) {
+@media (max-width: 575px) {
   .hero .container {
     padding: 0 10px;
   }
@@ -1894,14 +1888,14 @@ section,
 }
 
 /* Enhanced responsive breakpoints for hero section */
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .hero {
     padding: 60px 0;
     min-height: 90vh;
   }
 }
 
-@media (max-width: 576px) {
+@media (max-width: 575px) {
   .hero {
     padding: 40px 0;
     min-height: 80vh;
@@ -1921,7 +1915,7 @@ section,
   font-family: "Satoshi-Bold", "Satoshi-Medium", sans-serif;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .big-text-band {
     gap: 2px;
     padding-bottom: 24px;
@@ -2286,7 +2280,7 @@ section,
   }
 }
 
-@media (max-width: 992px) {
+@media (max-width: 991px) {
   .hero-image {
     margin-top: 50px;
   }
@@ -2341,7 +2335,7 @@ section,
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .hero-image {
     margin-top: 30px;
   }
@@ -2396,7 +2390,7 @@ section,
   }
 }
 
-@media (max-width: 576px) {
+@media (max-width: 575px) {
   .hero-image {
     margin-top: 20px;
   }
@@ -2451,7 +2445,7 @@ section,
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 575px) {
   .hero-image {
     margin-top: 15px;
   }
@@ -3522,7 +3516,7 @@ section,
 }
 
 /* Desktop: Align theme toggle properly */
-@media (min-width: 1200px) {
+@media (min-width: 768px) {
   .theme-toggle {
     align-items: center;
     justify-content: center;
@@ -3531,7 +3525,7 @@ section,
 }
 
 /* Mobile theme toggle styling */
-@media (max-width: 1199px) {
+@media (max-width: 767px) {
   .theme-toggle-mobile {
     transition: color 0.3s;
   }
@@ -3761,7 +3755,7 @@ img[src$=".gif"] {
   border-radius: 8px;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .text-video-section {
     flex-direction: column;
     gap: 1.5rem;
@@ -3952,7 +3946,7 @@ body:has( .mobile-nav-toggle:hover) .cursor{
   transform: translate(-50%, -50%);
 }
 
-@media (max-width: 992px) {
+@media (max-width: 991px) {
   .journey-row {
     grid-template-columns: auto minmax(7rem, 13rem);
   }
@@ -3966,7 +3960,7 @@ body:has( .mobile-nav-toggle:hover) .cursor{
   }
 }
 
-@media (max-width: 576px) {
+@media (max-width: 575px) {
   .journey-intent-card {
     gap: 1rem;
   }
