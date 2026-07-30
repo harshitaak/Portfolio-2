@@ -63,7 +63,6 @@
 # View Transitions API — same-origin full page navigations
   Supported in Chromium 126+; other browsers ignore these rules.
 --------------------------------------------------------------*/
-/* Disabled: root snapshot + opacity crossfade often reads as header/page flash on link click (Chromium). Re-enable if you add per-group tuning. */
 @view-transition {
   navigation: auto;
 }
@@ -86,8 +85,7 @@ main {
   view-transition-name: page-content;
 }
 
-/* Pull the header out of the default root snapshot so it doesn't crossfade
-   (root snapshot + opacity blend reads as a dark flash on navigation). */
+
 .header {
   view-transition-name: site-header;
 }
@@ -102,10 +100,6 @@ main {
   mix-blend-mode: normal;
 }
 
-/* Everything else (floating buttons, cursor, body backdrop, etc.) stays in
-   the default root group. Its UA crossfade (opacity + plus-lighter blend)
-   reads as a dark flash in light mode since the unstyled :root is dark —
-   kill the animation/blend so it just cuts instead. */
 ::view-transition-group(root) {
   animation: none;
 }
@@ -453,10 +447,10 @@ main {
   --ink:   oklch(92% 0 0);
   --color: oklch(75% 0.08 240);
   --shadow-color: oklch(0% 0 0);
-  --background-color: var(--paper);
+  /* --background-color: var(--paper);
   --default-color: var(--ink);
   --accent-color: var(--color);
-  --surface-color: var(--paper);
+  --surface-color: var(--paper); */
 
   /* Elevation */
   --elevation-1: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
@@ -494,7 +488,7 @@ body *::after {
   --ink:   oklch(20% 0 0);
   --color: oklch(62.4% 0.11 240);
   --shadow-color: oklch(0% 0 0);
-  /* Compatibility aliases automatically inherit updated values from :root */
+  
 }
 
 /* For text selection custom color */
@@ -1358,7 +1352,10 @@ ol li::marker {
 
 .resume .experience-section {
   padding-right: 1.5rem;
-  overflow: visible;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem
+  /* overflow: visible; */
 }
 
 .resume .experience-cards {
@@ -1400,7 +1397,9 @@ ol li::marker {
 }
 
 .resume .duration {
-  background: color-mix(in srgb, var(--color), transparent 90%);
+  /* background: color-mix(in srgb, var(--color), transparent 90%); */
+  background: oklch(from var(--color) l c h / 10%);
+
   color: var(--color);
   padding: 0.4rem 0.8rem;
   border-radius: 20px;
@@ -1438,6 +1437,9 @@ ol li::marker {
 }
 
 .resume .education-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
   padding-left: 1.5rem;
 }
 
@@ -4256,4 +4258,20 @@ body:has( .mobile-nav-toggle:hover) .cursor{
   .headline-draw__line path {
     stroke-dashoffset: 0;
   }
+}
+
+
+/* Infographic */
+.image-infographic-holder {
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.responsive-infographic {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 8px;
 }
