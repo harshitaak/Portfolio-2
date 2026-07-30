@@ -102,6 +102,20 @@ main {
   mix-blend-mode: normal;
 }
 
+/* Everything else (floating buttons, cursor, body backdrop, etc.) stays in
+   the default root group. Its UA crossfade (opacity + plus-lighter blend)
+   reads as a dark flash in light mode since the unstyled :root is dark —
+   kill the animation/blend so it just cuts instead. */
+::view-transition-group(root) {
+  animation: none;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
 @keyframes slide-out {
   to {
     translate: -100vw;
@@ -444,29 +458,6 @@ main {
   --accent-color: var(--color);
   --surface-color: var(--paper);
 
-  /* Smooth transition for color changes */
-html,
-body,
-body *,
-body *::before,
-body *::after {
-  transition:
-    background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-    color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-    border-color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-
-/* Light mode color variables */
-.light-mode {
-  --paper: oklch(93% 0 0);
-  --ink:   oklch(20% 0 0);
-  --color: oklch(62.4% 0.11 240);
-  --shadow-color: oklch(0% 0 0);
-  /* Compatibility aliases automatically inherit updated values from :root */
-}
-
-
   /* Elevation */
   --elevation-1: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
   --elevation-2: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
@@ -483,6 +474,27 @@ body *::after {
   --ease-out-5: cubic-bezier(0.23, 1, 0.32, 1);
 
   scroll-behavior: smooth;
+}
+
+/* Smooth transition for color changes */
+html,
+body,
+body *,
+body *::before,
+body *::after {
+  transition:
+    background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+    color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+    border-color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Light mode color variables */
+.light-mode {
+  --paper: oklch(93% 0 0);
+  --ink:   oklch(20% 0 0);
+  --color: oklch(62.4% 0.11 240);
+  --shadow-color: oklch(0% 0 0);
+  /* Compatibility aliases automatically inherit updated values from :root */
 }
 
 /* For text selection custom color */
