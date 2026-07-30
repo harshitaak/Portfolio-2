@@ -65,7 +65,53 @@
 --------------------------------------------------------------*/
 /* Disabled: root snapshot + opacity crossfade often reads as header/page flash on link click (Chromium). Re-enable if you add per-group tuning. */
 @view-transition {
-  navigation: none;
+  navigation: auto;
+}
+
+::view-transition-group(page-content) {
+  animation-duration: 0.6s;
+  animation-timing-function: ease-in-out;
+}
+
+
+::view-transition-old(page-content) {
+  animation-name: slide-out;
+}
+
+::view-transition-new(page-content) {
+  animation-name: slide-in;
+}
+
+main {
+  view-transition-name: page-content;
+}
+
+/* Pull the header out of the default root snapshot so it doesn't crossfade
+   (root snapshot + opacity blend reads as a dark flash on navigation). */
+.header {
+  view-transition-name: site-header;
+}
+
+::view-transition-group(site-header) {
+  animation: none;
+}
+
+::view-transition-old(site-header),
+::view-transition-new(site-header) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+@keyframes slide-out {
+  to {
+    translate: -100vw;
+  }
+}
+
+@keyframes slide-in {
+  from {
+    translate: 100vw;
+  }
 }
 
 @media (prefers-reduced-motion: reduce){
@@ -650,6 +696,7 @@ ol li::marker {
   margin: 0;
   font-weight: 700;
   color: var(--ink);
+  text-wrap: balance;
 }
 
 .scrolled .header {
@@ -1590,12 +1637,12 @@ ol li::marker {
 
 /* Icon colors */
 .floating-theme-toggle .sun-and-moon> :is(.moon, .sun) {
-  fill: color-mix(in srgb, var(--ink), var(--paper) 50%);
+  fill: oklch(from var(--ink) l c h / 0.5);
   transition: fill 0.3s var(--ease-3);
 }
 
 .floating-theme-toggle .sun-and-moon>.sun-beams {
-  stroke: color-mix(in srgb, var(--ink), var(--paper) 50%);
+  stroke: oklch(from var(--ink) l c h / 0.5);
   stroke-width: 2px;
   transition: stroke 0.3s var(--ease-3);
 }
@@ -3787,7 +3834,8 @@ body:has( [data-cursor]:hover) .cursor,
 body:has( .mobile-nav-toggle:hover) .cursor{
   width: 3em;
   height: 3em;
-  background-color: color-mix(in srgb, var(--color), transparent 70%);
+  background-color: oklch(from var(--color) l c h / 0.5);
+  
 }
 
 @media (max-width: 991px) {
@@ -3851,7 +3899,7 @@ body:has( .mobile-nav-toggle:hover) .cursor{
   width: 48px;
   height: 48px;
   flex-shrink: 0;
-  color: color-mix(in srgb, var(--ink), transparent 10%);
+  color: oklch(from var(--ink) l c h / 0.8);
   stroke-width: 1.8;
 }
 
@@ -3877,24 +3925,22 @@ body:has( .mobile-nav-toggle:hover) .cursor{
 
 .journey-track-short {
   width: clamp(7.5rem, 16vw, 10rem);
-  border: 1px solid color-mix(in srgb, var(--ink), transparent 35%);
-  background: color-mix(in srgb, var(--paper), var(--ink) 8%);
+  border: 1px solid oklch(from var(--ink) l c h / 0.35);
 }
 
 .journey-track-short .journey-fill {
   width: 22%;
-  background: #74c7ff;
+  background: var(--color);
 }
 
 .journey-track-medium {
   width: clamp(8.25rem, 17.5vw, 10.75rem);
-  border: 1px solid color-mix(in srgb, var(--ink), transparent 35%);
-  background: color-mix(in srgb, var(--paper), var(--ink) 8%);
+  border: 1px solid oklch(from var(--ink) l c h / 0.35);
 }
 
 .journey-track-medium .journey-fill {
   width: 32%;
-  background: #74c7ff;
+  background: var(--color);
 }
 
 .journey-track-dramatic {
@@ -3904,8 +3950,7 @@ body:has( .mobile-nav-toggle:hover) .cursor{
 
 .journey-track-dramatic .dramatic-fill {
   width: 100%;
-  background: #74c7ff;
-  box-shadow: 0 0 0 1px color-mix(in srgb, #74c7ff, transparent 35%);
+  background: var(--color);
 }
 
 .journey-label {
@@ -3929,7 +3974,7 @@ body:has( .mobile-nav-toggle:hover) .cursor{
   width: 0.65rem;
   height: 1.35rem;
   border-radius: 999px;
-  border: 1.5px solid color-mix(in srgb, var(--ink), transparent 25%);
+  border: 1.5px solid oklch(from var(--ink) l c h / 0.25);
   position: relative;
   display: inline-block;
 }
@@ -3939,7 +3984,7 @@ body:has( .mobile-nav-toggle:hover) .cursor{
   width: 0.36rem;
   height: 0.36rem;
   background: var(--paper);
-  border: 1.5px solid color-mix(in srgb, var(--ink), transparent 15%);
+  border: 1.5px solid oklch(from var(--ink) l c h / 0.15);
   border-radius: 50%;
   position: absolute;
   top: 50%;
