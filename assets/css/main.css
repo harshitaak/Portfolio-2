@@ -2660,6 +2660,10 @@ section,
 # Testimonials Section
 --------------------------------------------------------------*/
 #testimonials .row .col-lg-4,
+#testimonials .row.gy-4 {
+  display: flex;
+  justify-content: center;
+}
 #testimonials .row .col-md-6 {
   display: flex;
 }
