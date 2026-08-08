@@ -446,28 +446,35 @@ main {
   --paper: oklch(27% 0 0);
   --ink:   oklch(92% 0 0);
   --color: oklch(75% 0.08 240);
-  --shadow-color: oklch(0% 0 0);
-  /* --background-color: var(--paper);
-  --default-color: var(--ink);
-  --accent-color: var(--color);
-  --surface-color: var(--paper); */
+  --color-2: oklch(60% 0.14 31);
+  --color-3: oklch(75% 0.08 180);
+  --color-4: oklch(55.117% 0.05403 196);
 
+  --shadow-color: oklch(0% 0 0);
+  
   /* Elevation */
   --elevation-1: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
   --elevation-2: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
   --elevation-3: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
 
   /* Easing */
-  --ease-1: cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  --ease-2: cubic-bezier(0.55, 0.085, 0.68, 0.53);
-  --ease-3: cubic-bezier(0.4, 0, 0.2, 1);
-  --ease-4: cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  --ease-5: cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  --ease-elastic-3: cubic-bezier(0.68, -0.55, 0.265, 1.55);
-  --ease-elastic-4: cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  --ease-out-5: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  --ease-bounce-strong: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  --ease-snap: cubic-bezier(0.23, 1, 0.32, 1);
 
   scroll-behavior: smooth;
+}
+
+/* Light mode color variables */
+.light-mode {
+  --paper: oklch(93% 0 0);
+  --ink:   oklch(20% 0 0);
+  --color: oklch(62.4% 0.11 240);
+  --color-2: oklch(62.4% 0.11 31);
+  --color-3: oklch(62.4% 0.11 180);
+  --color-4: oklch(55.117% 0.11 196);
+  --shadow-color: oklch(0% 0 0);
 }
 
 /* Smooth transition for color changes */
@@ -477,29 +484,20 @@ body *,
 body *::before,
 body *::after {
   transition:
-    background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-    color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-    border-color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* Light mode color variables */
-.light-mode {
-  --paper: oklch(93% 0 0);
-  --ink:   oklch(20% 0 0);
-  --color: oklch(62.4% 0.11 240);
-  --shadow-color: oklch(0% 0 0);
-  
+    background-color 0.4s var(--ease-smooth),
+    color 0.4s var(--ease-smooth),
+    border-color 0.4s var(--ease-smooth);
 }
 
 /* For text selection custom color */
 ::selection {
   background: var(--color);
-  color: #000000;
+  color: var(--paper);
 }
-/* For Firefox compatibility */
+/* For Firefox compatibility for fallback*/
 ::-moz-selection {
   background: var(--color);
-  color: #000000;
+  color: var(--paper);
 }
 
 
@@ -659,26 +657,29 @@ ol li::marker {
 /* Legacy .photo-gallery and .image-column styles removed in favor of #doodles-grid CSS masonry */
 
 /*--------------------------------------------------------------
+# Centered Container
+--------------------------------------------------------------*/
+.container-centered {
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.container-centered.wide {
+  max-width: 1000px;
+}
+
+/*--------------------------------------------------------------
 # Global Header
 --------------------------------------------------------------*/
 .header {
   color: var(--ink);
   box-shadow: var(--elevation-1);
   background-color: var(--paper);
-  /* padding: 0.75rem 0; */
   height: 72px;
-  /* Avoid transition:all — it animates unrelated properties on click/theme toggle and can flicker */
-  /* transition:
-    background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-    box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-    color 0.3s cubic-bezier(0.4, 0, 0.2, 1); */
   align-content: center;
   z-index: 997;
   position: relative;
-  /* Changed from fixed to relative */
-  /* Header is part of the root snapshot; a named group without ::view-transition-group(site-header) rules often flickers in Chromium */
-  /* Prevent navbar glitching */
-  /* transform: translate3d(0, 0, 0); */
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
 }
@@ -1128,24 +1129,6 @@ ol li::marker {
     overflow: hidden;
   }
 
-  /* Loading cursor styles */
-  .loading-cursor {
-    cursor: wait !important;
-  }
-
-  .loading-cursor * {
-    cursor: wait !important;
-  }
-
-  /* Ensure loading cursor applies to entire page */
-  body.loading {
-    cursor: wait !important;
-  }
-
-  body.loading * {
-    cursor: wait !important;
-  }
-
   .mobile-nav-active body {
     overflow: hidden;
   }
@@ -1281,7 +1264,9 @@ ol li::marker {
   font-weight: 700;
   transition: all 0.3s ease;
   box-shadow: var(--elevation-1);
-  vertical-align: middle;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .btn-cta:hover {
@@ -1295,9 +1280,9 @@ ol li::marker {
 }
 
 .btn-cta [data-lucide] {
-  vertical-align: middle;
-  margin-right: 6px;
-  display: inline-block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .btn-cta [data-lucide] svg {
@@ -1595,7 +1580,7 @@ ol li::marker {
 .floating-back-button i {
   font-size: 20px;
   color: var(--ink);
-  transition: color 0.3s var(--ease-3);
+  transition: color 0.3s var(--ease-smooth);
 }
 
 .floating-back-button:is(:hover, :focus-visible) {
@@ -1652,13 +1637,13 @@ ol li::marker {
 /* Icon colors */
 .floating-theme-toggle .sun-and-moon> :is(.moon, .sun) {
   fill: oklch(from var(--ink) l c h / 0.5);
-  transition: fill 0.3s var(--ease-3);
+  transition: fill 0.3s var(--ease-smooth);
 }
 
 .floating-theme-toggle .sun-and-moon>.sun-beams {
   stroke: oklch(from var(--ink) l c h / 0.5);
   stroke-width: 2px;
-  transition: stroke 0.3s var(--ease-3);
+  transition: stroke 0.3s var(--ease-smooth);
 }
 
 .floating-theme-toggle:is(:hover, :focus-visible) {
@@ -1708,25 +1693,25 @@ html:not(.light-mode) .floating-theme-toggle .sun-and-moon>.moon>circle {
 
 @media (prefers-reduced-motion: no-preference) {
   .floating-theme-toggle .sun-and-moon>.sun {
-    transition: transform .5s var(--ease-elastic-3);
+    transition: transform .5s var(--ease-bounce);
   }
 
   .floating-theme-toggle .sun-and-moon>.sun-beams {
-    transition: transform .5s var(--ease-elastic-4), opacity .5s var(--ease-3);
+    transition: transform .5s var(--ease-bounce-strong), opacity .5s var(--ease-smooth);
   }
 
   .floating-theme-toggle .sun-and-moon .moon>circle {
-    transition: transform .25s var(--ease-out-5);
+    transition: transform .25s var(--ease-snap);
   }
 
   @supports (cx: 1) {
     .floating-theme-toggle .sun-and-moon .moon>circle {
-      transition: cx .25s var(--ease-out-5);
+      transition: cx .25s var(--ease-snap);
     }
   }
 
   html:not(.light-mode) .floating-theme-toggle .sun-and-moon>.sun {
-    transition-timing-function: var(--ease-3);
+    transition-timing-function: var(--ease-smooth);
     transition-duration: .25s;
     transform: scale(1.75);
   }
@@ -2055,12 +2040,12 @@ section,
   backdrop-filter: blur(10px);
   will-change: transform, box-shadow, background-color, backdrop-filter;
   transition:
-    box-shadow 0.35s var(--ease-3),
-    background-color 0.35s var(--ease-3),
-    backdrop-filter 0.35s var(--ease-3),
-    filter 0.35s var(--ease-3);
+    box-shadow 0.35s var(--ease-smooth),
+    background-color 0.35s var(--ease-smooth),
+    backdrop-filter 0.35s var(--ease-smooth),
+    filter 0.35s var(--ease-smooth);
   /* Default floating animation for all cards - can be overridden by specific card-X classes */
-  animation: float-default 6s var(--ease-3) infinite;
+  animation: float-default 6s var(--ease-smooth) infinite;
 }
 
 .floating-card:hover {
@@ -2116,7 +2101,7 @@ section,
 }
 
 .floating-slot.card-1 .floating-card {
-  animation: float-bob-y-8 6s var(--ease-3) infinite;
+  animation: float-bob-y-8 6s var(--ease-smooth) infinite;
 }
 
 .floating-slot.card-2 {
@@ -2125,7 +2110,7 @@ section,
 }
 
 .floating-slot.card-2 .floating-card {
-  animation: float1 6s var(--ease-3) infinite;
+  animation: float1 6s var(--ease-smooth) infinite;
   animation-delay: 0.5s;
 }
 
@@ -2136,7 +2121,7 @@ section,
 }
 
 .floating-slot.card-3 .floating-card {
-  animation: float3-inner 6s var(--ease-3) infinite;
+  animation: float3-inner 6s var(--ease-smooth) infinite;
   animation-delay: 1s;
 }
 
@@ -2146,7 +2131,7 @@ section,
 }
 
 .floating-slot.card-4 .floating-card {
-  animation: float2 6s var(--ease-3) infinite;
+  animation: float2 6s var(--ease-smooth) infinite;
   animation-delay: 1.5s;
 }
 
@@ -2157,7 +2142,7 @@ section,
 }
 
 .floating-slot.card-5 .floating-card {
-  animation: float-bob-y-8 6s var(--ease-3) infinite;
+  animation: float-bob-y-8 6s var(--ease-smooth) infinite;
   animation-delay: 2s;
 }
 
@@ -2167,7 +2152,7 @@ section,
 }
 
 .floating-slot.card-6 .floating-card {
-  animation: float4 6s var(--ease-3) infinite;
+  animation: float4 6s var(--ease-smooth) infinite;
   animation-delay: 2.5s;
 }
 
@@ -2178,7 +2163,7 @@ section,
 }
 
 .floating-slot.card-7 .floating-card {
-  animation: float3-inner 6s var(--ease-3) infinite;
+  animation: float3-inner 6s var(--ease-smooth) infinite;
   animation-delay: 3s;
 }
 
@@ -2188,7 +2173,7 @@ section,
 }
 
 .floating-slot.card-8 .floating-card {
-  animation: float1 6s var(--ease-3) infinite;
+  animation: float1 6s var(--ease-smooth) infinite;
   animation-delay: 3.5s;
 }
 
@@ -3622,7 +3607,7 @@ section,
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background-color 0.3s var(--ease-3);
+  transition: background-color 0.3s var(--ease-smooth);
 }
 
 .theme-toggle:is(:hover, :focus-visible) {
@@ -3643,7 +3628,7 @@ section,
 /* Icon colors */
 .sun-and-moon> :is(.moon, .sun) {
   fill: color-mix(in srgb, var(--ink), var(--paper) 50%);
-  transition: fill 0.3s var(--ease-3);
+  transition: fill 0.3s var(--ease-smooth);
 }
 
 .theme-toggle:is(:hover, :focus-visible)>.sun-and-moon> :is(.moon, .sun) {
@@ -3653,7 +3638,7 @@ section,
 .sun-and-moon>.sun-beams {
   stroke: color-mix(in srgb, var(--ink), var(--paper) 50%);
   stroke-width: 2px;
-  transition: stroke 0.3s var(--ease-3);
+  transition: stroke 0.3s var(--ease-smooth);
 }
 
 .theme-toggle:is(:hover, :focus-visible) .sun-and-moon>.sun-beams {
@@ -3682,25 +3667,25 @@ html:not(.light-mode) .sun-and-moon>.moon>circle {
 
 @media (prefers-reduced-motion: no-preference) {
   .sun-and-moon>.sun {
-    transition: transform .5s var(--ease-elastic-3);
+    transition: transform .5s var(--ease-bounce);
   }
 
   .sun-and-moon>.sun-beams {
-    transition: transform .5s var(--ease-elastic-4), opacity .5s var(--ease-3);
+    transition: transform .5s var(--ease-bounce-strong), opacity .5s var(--ease-smooth);
   }
 
   .sun-and-moon .moon>circle {
-    transition: transform .25s var(--ease-out-5);
+    transition: transform .25s var(--ease-snap);
   }
 
   @supports (cx: 1) {
     .sun-and-moon .moon>circle {
-      transition: cx .25s var(--ease-out-5);
+      transition: cx .25s var(--ease-snap);
     }
   }
 
   html:not(.light-mode) .sun-and-moon>.sun {
-    transition-timing-function: var(--ease-3);
+    transition-timing-function: var(--ease-smooth);
     transition-duration: .25s;
     transform: scale(1.75);
   }
@@ -3888,160 +3873,6 @@ body:has( .mobile-nav-toggle:hover) .cursor{
   }
 }
 
-.journey-intent-visual {
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-}
-
-.journey-intent-card {
-  display: grid;
-  gap: 1.15rem;
-  width: min(100%, 58rem);
-  margin-inline: auto;
-  color: var(--ink);
-}
-
-.journey-row {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  column-gap: 16px;
-}
-
-.journey-row-dramatic {
-  overflow: visible;
-}
-
-.journey-icon {
-  display: block;
-  width: 48px;
-  height: 48px;
-  flex-shrink: 0;
-  color: oklch(from var(--ink) l c h / 0.8);
-  stroke-width: 1.8;
-}
-
-.journey-icon svg {
-  width: 100%;
-  height: 100%;
-  display: block;
-}
-
-.journey-track {
-  height: 0.55rem;
-  border-radius: 999px;
-  position: relative;
-  overflow: hidden;
-}
-
-.journey-track .journey-fill {
-  display: block;
-  height: 100%;
-  width: 100%;
-  border-radius: inherit;
-}
-
-.journey-track-short {
-  width: clamp(7.5rem, 16vw, 10rem);
-  border: 1px solid oklch(from var(--ink) l c h / 0.35);
-}
-
-.journey-track-short .journey-fill {
-  width: 22%;
-  background: var(--color);
-}
-
-.journey-track-medium {
-  width: clamp(8.25rem, 17.5vw, 10.75rem);
-  border: 1px solid oklch(from var(--ink) l c h / 0.35);
-}
-
-.journey-track-medium .journey-fill {
-  width: 32%;
-  background: var(--color);
-}
-
-.journey-track-dramatic {
-  width: clamp(8.5rem, 26vw, 16rem);
-  overflow: visible;
-}
-
-.journey-track-dramatic .dramatic-fill {
-  width: 100%;
-  background: var(--color);
-}
-
-.journey-label {
-  grid-column: 2 / -1;
-  margin: 0;
-  padding: 0;
-  margin-top: 0.32rem;
-  font-size: clamp(1rem, 1.6vw, 1.55rem);
-  line-height: 1.2;
-}
-
-.intent-group {
-  display: grid;
-  justify-items: start;
-  gap: 0.4rem;
-  margin-left: 1.9rem;
-  margin-top: 0.35rem;
-}
-
-.intent-icon {
-  width: 0.65rem;
-  height: 1.35rem;
-  border-radius: 999px;
-  border: 1.5px solid oklch(from var(--ink) l c h / 0.25);
-  position: relative;
-  display: inline-block;
-}
-
-.intent-icon::before {
-  content: "";
-  width: 0.36rem;
-  height: 0.36rem;
-  background: var(--paper);
-  border: 1.5px solid oklch(from var(--ink) l c h / 0.15);
-  border-radius: 50%;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
-@media (max-width: 991px) {
-  .journey-row {
-    grid-template-columns: auto minmax(7rem, 13rem);
-  }
-
-  .journey-track-dramatic {
-    width: clamp(8rem, 40vw, 12rem);
-  }
-
-  .journey-track-medium {
-    width: clamp(8rem, 18.5vw, 11rem);
-  }
-}
-
-@media (max-width: 575px) {
-  .journey-intent-card {
-    gap: 1rem;
-  }
-
-  .journey-row {
-    grid-template-columns: auto minmax(6rem, 9.5rem);
-    column-gap: 0.55rem;
-  }
-
-  .journey-label {
-    font-size: clamp(0.95rem, 4.8vw, 1.2rem);
-  }
-
-  .intent-group {
-    margin-left: 1.45rem;
-  }
-}
 
 @media (prefers-reduced-motion: no-preference) {
   @supports (animation-timeline: view()) {
@@ -4123,7 +3954,7 @@ body:has( .mobile-nav-toggle:hover) .cursor{
   .autoShow {
     animation: text-appear both;
     animation-timeline: view();
-    animation-range: entry 15% cover 100vh;
+    animation-range: entry 15% cover 50vh;
   }
 }
 
