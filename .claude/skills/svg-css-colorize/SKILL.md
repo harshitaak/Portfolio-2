@@ -78,3 +78,30 @@ If the user's SVG is currently loaded via `<img src="...">` or CSS
 3. Then proceed with the colorize workflow above on that same source file
    before inlining — it's easier to run the script on the file and paste the
    *result*, rather than coloring after pasting.
+
+## Quick Workflow: Large SVGs with Hardcoded Hex Colors
+
+For large SVGs (4MB+) with embedded images and hardcoded hex colors like
+`#FF0000`, `#00E6FF`, etc., use the PowerShell script:
+
+```powershell
+.\colorize-inline-workflow.ps1 `
+  -SvgPath "path/to/Fig.svg" `
+  -HtmlPath "path/to/page.html" `
+  -ColorMap @{
+    "#FF0000" = "var(--color-2)"
+    "#EEFF00" = "var(--color)"
+    "#00E6FF" = "var(--color-3)"
+    "white" = "var(--ink)"
+  }
+```
+
+This script automatically:
+1. Replaces all hardcoded colors with CSS variables in one pass
+2. Removes XML declarations (invalid in HTML)
+3. **Sets responsive dimensions**: `width="100%"` `height="auto"`
+4. Inlines the SVG directly into your HTML, replacing the `<img>` tag
+5. Reports success and verifies CSS variables are in scope
+
+No need to run the Python script separately or manually copy/paste SVG
+content. SVGs are fully responsive and theme-aware out of the box.
