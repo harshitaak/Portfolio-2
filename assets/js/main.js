@@ -646,6 +646,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 /* For smooth scroll */
 // Lenis Link:https://github.com/darkroomengineering/lenis
-const lenis = new Lenis({
-  autoRaf: true,
-});
+// Skipped when the visitor asks for reduced motion, so the whole page
+// (including the scroll-driven essay animations) stays consistent.
+const lenis = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+  ? null
+  : new Lenis({ autoRaf: true });
