@@ -4298,7 +4298,7 @@ body.philosophy-page .log-card__head {
   font: var(--text-caption-font);
   text-transform: uppercase;
   letter-spacing: 0.12em;
-  color: color-mix(in oklch, var(--ink) 60%, transparent);
+  color: var(--ink);
   display: flex;
   align-items: center;
   gap: 0.75em;
