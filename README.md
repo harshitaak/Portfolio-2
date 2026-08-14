@@ -63,39 +63,6 @@ Portfolio/
 │   └── vendor/             # Bootstrap, AOS, Swiper, Isotope, GLightbox, etc.
 ```
 
-## Run Locally
-
-Because the site uses relative paths and a few fetched assets, it is best served over HTTP rather than opened directly as a file.
-
-### Option 1 — PowerShell (Windows)
-
-A minimal static server is included:
-
-```powershell
-./server.ps1
-```
-
-Then open http://localhost:8000 in your browser.
-
-### Option 2 — Python
-
-```bash
-python -m http.server 8000
-```
-
-### Option 3 — Node
-
-```bash
-npx serve .
-```
-
-## Deploy to GitHub Pages
-
-1. Push this repository to GitHub.
-2. Go to **Settings → Pages**.
-3. Under **Build and deployment**, choose **Deploy from a branch**.
-4. Pick the `main` branch and the `/ (root)` folder, then save.
-5. After a minute, your site will be live at `https://<your-github-username>.github.io/<repo-name>/`.
 
 ## Customization
 
@@ -109,7 +76,7 @@ npx serve .
 
 - Typography: **Satoshi** by Deni Anggara
 - Hosting: **GitHub Pages**
-- Icons: Lucide, Bootstrap Icons, Material Icons
+- Icons: Lucide, Bootstrap Icons
 - Animation and UI libraries listed above
 
 ## Contact
