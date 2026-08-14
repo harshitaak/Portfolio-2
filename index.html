@@ -88,7 +88,7 @@
             <li><a href="about.html">About</a></li>
             <li><a href="philosophy.html">Philosophy</a></li>
             <li><a href="portfolio.html">Portfolio</a></li>
-            <li class="d-xl-none">
+            <li class="d-md-none">
               <a href="#" class="theme-toggle-mobile d-flex align-items-center"
                 onclick="document.getElementById('theme-toggle').click(); return false;">
                 <svg class="sun-and-moon me-2" aria-hidden="true" viewBox="0 0 24 24"
@@ -115,10 +115,10 @@
           </ul>
         </nav>
 
-        <i class="mobile-nav-toggle d-xl-none material-icons">menu</i>
+        <i class="mobile-nav-toggle d-md-none" data-lucide="menu" aria-label="Open menu"></i>
 
         <!-- Theme toggle for desktop -->
-        <button class="theme-toggle d-none d-xl-flex" id="theme-toggle" title="Toggles light & dark" aria-label="auto"
+        <button class="theme-toggle d-none d-md-flex" id="theme-toggle" title="Toggles light & dark" aria-label="auto"
           aria-live="polite">
           <svg class="sun-and-moon" aria-hidden="true" viewBox="0 0 24 24">
             <mask class="moon" id="moon-mask">
@@ -214,7 +214,7 @@
     <section class="big-text-band-container autoShow"
       style="height: 60vh; display: flex; flex-direction: column; justify-content: center; align-items: center">
       <div class="big-text-band autoShow" style="text-align: center; text-wrap: balance;" aria-label="Highlights">
-        <div style="font-size: clamp(3rem, 11vw, 5rem);">I design</div>
+        <div style="font-size: clamp(3rem, 11vw, 5rem)">I design</div>
         <a href="philosophy.html"><div style="color: var(--color); font-size: clamp(3rem, 11vw, 5rem); padding-bottom: 100px;">Digital Tools</div></a>
       </div>
     </section>
@@ -267,15 +267,11 @@
     </svg>
   </button>
 
-  <!-- Preloader -->
-  <div id="preloader"></div>
 
   <!-- Vendor JS Files -->
   <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="assets/vendor/aos/aos.js"></script>
   <script src="assets/vendor/typed.js/typed.umd.js"></script>
-  <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
-  <script src="assets/vendor/waypoints/noframework.waypoints.js"></script>
   <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
   <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
   <script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
