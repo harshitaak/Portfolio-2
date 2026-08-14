@@ -273,7 +273,7 @@ main {
 
 .two-column-grid .grid-item:hover {
   transform: translateY(-4px);
-  box-shadow: var(--elevation-4);
+  box-shadow: var(--elevation-3);
 }
 
 .two-column-grid .grid-item img {
@@ -452,7 +452,6 @@ main {
   --color-2: oklch(60% 0.14 31);
   --color-3: oklch(75% 0.08 180);
   --color-4: oklch(55.117% 0.05403 196);
-
   --shadow-color: oklch(0% 0 0);
   
   /* Elevation */
