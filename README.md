@@ -76,7 +76,7 @@ Portfolio/
 
 - Typography: **Satoshi** by Deni Anggara
 - Hosting: **GitHub Pages**
-- Icons: Lucide, Bootstrap Icons, Material Icons
+- Icons: Lucide, Bootstrap Icons
 - Animation and UI libraries listed above
 
 ## Contact
