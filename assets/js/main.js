@@ -226,13 +226,93 @@ function reportThemeModeToGA(theme) {
   if (selectTyped) {
     let typed_strings = selectTyped.getAttribute('data-typed-items');
     typed_strings = typed_strings.split(',');
-    new Typed('.typed', {
+
+    // Optional: each typed item can point at its own page via data-typed-links,
+    // listed in the same order as data-typed-items. "#" means "no link yet".
+    let typed_links = (selectTyped.getAttribute('data-typed-links') ?? '').split(',');
+    let typedLink = selectTyped.closest('.typed-link');
+
+    let typed_options = {
       strings: typed_strings,
       loop: true,
       typeSpeed: 100,
       backSpeed: 50,
       backDelay: 2000
-    });
+    };
+
+    // Each item is only on screen for a few seconds, so the rotation is held
+    // while the visitor reaches for the link. It is only ever held on a fully
+    // typed word — pausing mid-word reads as a broken animation — so a hover
+    // that lands mid-word waits for the word to finish before holding.
+    let hovering = false;
+    let held = false;
+
+    function holdRotation(self) {
+      let current = self.strings[self.arrayPos] ?? '';
+      // Ignore anything but a completely typed word: mid-type, or mid-backspace
+      // after the hold was released, the displayed text won't match.
+      if (held || selectTyped.textContent !== current) {
+        return;
+      }
+      held = true;
+      // stop() alone only raises typed.js's pause flag; it leaves the queued
+      // backspace pending and records the resume point only once that fires.
+      // Dropping the timer and seeding the resume point ourselves makes both
+      // the hold and the release deterministic, however briefly it was held.
+      clearTimeout(self.timeout);
+      self.pause.typewrite = false;
+      self.pause.curString = current;
+      self.pause.curStrPos = current.length;
+      self.stop();
+    }
+
+    function releaseRotation() {
+      if (!held) {
+        return;
+      }
+      held = false;
+      typedInstance.start();
+    }
+
+    if (typedLink) {
+      typed_options.preStringTyped = function(index) {
+        let href = (typed_links[index] ?? '').trim() || '#';
+        typedLink.setAttribute('href', href);
+        typedLink.setAttribute('aria-label', (typed_strings[index] ?? '').trim());
+        if (href === '#') {
+          typedLink.setAttribute('tabindex', '-1');
+          typedLink.setAttribute('aria-disabled', 'true');
+        } else {
+          typedLink.removeAttribute('tabindex');
+          typedLink.removeAttribute('aria-disabled');
+        }
+      };
+
+      // Fires the moment the word is fully typed — the only safe point to hold
+      typed_options.onStringTyped = function(index, self) {
+        if (hovering) {
+          holdRotation(self);
+        }
+      };
+    }
+
+    let typedInstance = new Typed('.typed', typed_options);
+
+    if (typedLink) {
+      ['mouseenter', 'focus'].forEach(function(event) {
+        typedLink.addEventListener(event, function() {
+          hovering = true;
+          // Already sitting on a finished word? Hold it straight away.
+          holdRotation(typedInstance);
+        });
+      });
+      ['mouseleave', 'blur'].forEach(function(event) {
+        typedLink.addEventListener(event, function() {
+          hovering = false;
+          releaseRotation();
+        });
+      });
+    }
   }
 
   /**
@@ -303,6 +383,28 @@ function reportThemeModeToGA(theme) {
     let filter = isotopeItem.getAttribute('data-default-filter') ?? '*';
     let sort = isotopeItem.getAttribute('data-sort') ?? 'original-order';
 
+    // Deep link support: portfolio.html#filter-product opens on the Furniture filter.
+    // The hash is the data-filter class without its leading dot; an empty hash means "All".
+    function filterButtonFromHash() {
+      let selector = location.hash ? '.' + location.hash.slice(1) : '*';
+      return isotopeItem.querySelector('.isotope-filters li[data-filter="' + selector + '"]');
+    }
+
+    function setActiveFilter(button) {
+      let activeButton = isotopeItem.querySelector('.isotope-filters .filter-active');
+      if (activeButton) {
+        activeButton.classList.remove('filter-active');
+      }
+      button.classList.add('filter-active');
+    }
+
+    // An unknown hash leaves the default filter untouched
+    let hashButton = location.hash ? filterButtonFromHash() : null;
+    if (hashButton) {
+      filter = hashButton.getAttribute('data-filter');
+      setActiveFilter(hashButton);
+    }
+
     let initIsotope;
     imagesLoaded(isotopeItem.querySelector('.isotope-container'), function() {
       initIsotope = new Isotope(isotopeItem.querySelector('.isotope-container'), {
@@ -315,8 +417,7 @@ function reportThemeModeToGA(theme) {
 
     isotopeItem.querySelectorAll('.isotope-filters li').forEach(function(filters) {
       filters.addEventListener('click', function() {
-        isotopeItem.querySelector('.isotope-filters .filter-active').classList.remove('filter-active');
-        this.classList.add('filter-active');
+        setActiveFilter(this);
         initIsotope.arrange({
           filter: this.getAttribute('data-filter')
         });
@@ -324,6 +425,21 @@ function reportThemeModeToGA(theme) {
           aosInit();
         }
       }, false);
+    });
+
+    // Hash links followed from this same page don't reload it, so re-filter on hashchange too
+    window.addEventListener('hashchange', function() {
+      let button = filterButtonFromHash();
+      if (!button || !initIsotope) {
+        return;
+      }
+      setActiveFilter(button);
+      initIsotope.arrange({
+        filter: button.getAttribute('data-filter')
+      });
+      if (typeof aosInit === 'function') {
+        aosInit();
+      }
     });
 
   });
@@ -463,87 +579,32 @@ function initDrawRandomUnderline() {
   containers.forEach((container) => {
     const box = container.querySelector('[draw-line-box]');
     if (!box) return;
-    let enterTween = null;
-    let leaveTween = null;
-    container.addEventListener('mouseenter', () => {
-      // Don't restart if still playing
-      if (enterTween && enterTween.isActive()) return;
-      if (leaveTween && leaveTween.isActive()) leaveTween.kill();
-      
+    if (box.dataset.lineScheduled === '1') return; // draw once, ever
+    box.dataset.lineScheduled = '1';
+
+    const drawOnce = () => {
       // Get the specified line style from attribute
       const lineStyle = parseInt(box.getAttribute('draw-line-style')) || 0;
       const selectedIndex = lineStyle % svgVariants.length; // Ensure it's within bounds
-      
+
       // Animate Draw
       box.innerHTML = svgVariants[selectedIndex];
       const svg = box.querySelector('svg');
-      if (svg) {
-        decorateSVG(svg);
-        const path = svg.querySelector('path');
-        if (path) {
-          if (hasDrawSVGPlugin) {
-            gsap.set(path, { drawSVG: '0%' });
-            enterTween = gsap.to(path, {
-              duration: 0.5,
-              drawSVG: '100%',
-              ease: 'power2.inOut',
-              onComplete: () => { enterTween = null; }
-            });
-          } else {
-            var len = path.getTotalLength();
-            gsap.set(path, { strokeDasharray: len, strokeDashoffset: len });
-            enterTween = gsap.to(path, {
-              duration: 0.5,
-              strokeDashoffset: 0,
-              ease: 'power2.inOut',
-              onComplete: () => { enterTween = null; }
-            });
-          }
-        }
-      }
-    });
-    container.addEventListener('mouseleave', () => {
-      // Do nothing on mouse leave - line stays visible
-    });
-    
-    // Add click event to make line disappear
-    container.addEventListener('click', () => {
-      const path = box.querySelector('path');
+      if (!svg) return;
+      decorateSVG(svg);
+      const path = svg.querySelector('path');
       if (!path) return;
-      
-      const playOut = () => {
-        if (leaveTween && leaveTween.isActive()) return;
-        if (hasDrawSVGPlugin) {
-          leaveTween = gsap.to(path, {
-            duration: 0.5,
-            drawSVG: '100% 100%',
-            ease: 'power2.inOut',
-            onComplete: () => {
-              leaveTween = null;
-              box.innerHTML = '';
-            }
-          });
-        } else {
-          var len = path.getTotalLength();
-          leaveTween = gsap.to(path, {
-            duration: 0.5,
-            strokeDashoffset: len,
-            ease: 'power2.inOut',
-            onComplete: () => {
-              leaveTween = null;
-              box.innerHTML = '';
-            }
-          });
-        }
-      };
-      
-      if (enterTween && enterTween.isActive()) {
-        // Wait until draw-in finishes
-        enterTween.eventCallback('onComplete', playOut);
+      if (hasDrawSVGPlugin) {
+        gsap.set(path, { drawSVG: '0%' });
+        gsap.to(path, { duration: 0.5, drawSVG: '100%', ease: 'power2.inOut' });
       } else {
-        playOut();
+        var len = path.getTotalLength();
+        gsap.set(path, { strokeDasharray: len, strokeDashoffset: len });
+        gsap.to(path, { duration: 0.5, strokeDashoffset: 0, ease: 'power2.inOut' });
       }
-    });
+    };
+
+    setTimeout(drawOnce, 2000);
   });
 }
 // Initialize Draw Random Underline

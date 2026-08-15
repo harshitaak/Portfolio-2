@@ -1272,8 +1272,9 @@ ol li::marker {
    centre whatever the label's length — no per-label travel tuning.
 
    Modifiers:
-     .btn-fly--plane  45deg tilt on take-off, for a paper-plane icon
-     .btn-fly--back   arrow flies left, out of the button ("go back")
+     .btn-fly--plane    45deg tilt on take-off, for a paper-plane icon
+     .btn-fly--outline  secondary weight — ringed and transparent at rest,
+                        fills on hover. Combines with the others.
 
    Tuning hooks (set per-instance, e.g. style="--fly-size: 24px"):
      --fly-rotate  tilt applied as the icon leaves (0 for mail / arrow /
@@ -1282,19 +1283,24 @@ ol li::marker {
      --fly-pad     horizontal inset — identical on both edges, so the
                    icon + label group sits exactly centred
      --fly-gap     space between icon and label
+     --fly-ring    border width — transparent unless --outline colours it
    --------------------------------------------------------------- */
 .btn-fly {
   --fly-rotate: 0deg;
   --fly-size: 20px;
   --fly-pad: 1em;
   --fly-gap: 0.4em;
+  --fly-ring: 1.5px;
 
   position: relative;
   display: inline-flex;
   align-items: center;
   /* the icon is out of flow, so its slot is reserved by the left padding */
   padding: 0.7em var(--fly-pad) 0.7em calc(var(--fly-pad) + var(--fly-size) + var(--fly-gap));
-  border: none;
+  /* transparent on the solid button so every variant shares one footprint —
+     an outline that added its border only on itself would stand a hair taller
+     than the solid one beside it */
+  border: var(--fly-ring) solid transparent;
   border-radius: 12px;
   background: var(--color);
   color: var(--paper);
@@ -1305,11 +1311,11 @@ ol li::marker {
   text-decoration: none;
   cursor: pointer;
   overflow: hidden;
-  box-shadow: var(--elevation-1);
+  box-shadow: var(--elevation-2);
   /* background-color/color keep the sitewide theme cross-fade (see the
      blanket `body *` transition) — a shorthand here would drop them */
   transition: box-shadow 0.2s var(--ease-smooth), transform 0.2s var(--ease-smooth),
-    background-color 0.4s, color 0.4s;
+    background-color 0.4s, color 0.4s, border-color 0.4s;
 }
 
 .btn-fly--plane {
@@ -1320,7 +1326,7 @@ ol li::marker {
 .btn-fly:focus-visible {
   background: var(--color);
   color: var(--paper);
-  box-shadow: var(--elevation-2);
+  box-shadow: var(--elevation-3);
 }
 
 .btn-fly-icon {
@@ -1367,15 +1373,24 @@ ol li::marker {
   transform: translateX(calc(100% + var(--fly-pad)));
 }
 
-/* back variant — the arrow leaves the way it points, past the left edge */
-.btn-fly--back:hover .btn-fly-icon,
-.btn-fly--back:focus-visible .btn-fly-icon {
-  left: calc(-1 * var(--fly-size));
-}
-
 .btn-fly:active {
   background: var(--color);
   transform: scale(0.95);
+}
+
+/* outline variant — secondary weight, same flight: ringed and transparent at
+   rest, fills to match the solid button once you're actually on it. */
+.btn-fly--outline {
+  background: transparent;
+  border-color: var(--color);
+  color: var(--color);
+}
+
+.btn-fly--outline:hover,
+.btn-fly--outline:focus-visible,
+.btn-fly--outline:active {
+  background: transparent;
+  color: var(--color);
 }
 
 /* keeps the -50% vertical centring while bobbing */
@@ -2008,22 +2023,51 @@ section,
 }
 
 .hero h2 {
+  /* No bottom margin: .heading-underline reserves the underline's own height
+     in flow (see .heading-underline::after), so the gap tracks the SVG. */
   margin: 0;
   font-size: var(--hero-heading);
   font-weight: 700;
   color: var(--ink);
+  text-wrap: balance;
 }
 
 .hero p {
-  margin: 4px 0 0 0;
+  padding-bottom:  1em;
   font-size: var(--hero-body);
   color: var(--ink);
   text-wrap: pretty;
 }
 
+/* Row of .btn-fly CTAs under the hero copy. Wraps to a stacked column on
+   narrow screens rather than letting the buttons shrink. */
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+
 .hero p span {
   letter-spacing: 1px;
   border-bottom: 2px solid var(--color);
+}
+
+.hero p a.typed-link {
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.hero p a.typed-link:hover span.typed,
+.hero p a.typed-link:focus-visible span.typed {
+  color: var(--color);
+}
+
+/* Placeholder links stay inert until a real URL is filled in */
+.hero p a.typed-link[href="#"] {
+  cursor: inherit;
+  pointer-events: none;
 }
 
 .hero .social-links {
@@ -3822,9 +3866,11 @@ html:not(.light-mode) .sun-and-moon>.moon>circle {
   text-decoration: none;
 }
 
-/* Draw line container styling */
+/* Draw line container styling.
+   No cursor here: the line draws on a timer, not on hover or click, so the
+   container is not interactive. cursor is inherited, and setting it would put
+   a pointer on every heading and paragraph inside. */
 [draw-line] {
-  cursor: pointer;
   padding: 1em;
   transition: background-color 0.3s ease, border-radius 0.3s ease;
   border-radius: 8px;
@@ -3850,11 +3896,42 @@ html:not(.light-mode) .sun-and-moon>.moon>circle {
   display: flex;
   align-items: center;
   justify-content: center;
-  /* cursor: pointer; */
 }
 
 .text-draw__box svg {
   transition: all 1s ease-out;
+}
+
+/* Pins a [draw-line-box] to the width of the words it wraps, rather than
+   letting it span the whole column. */
+.heading-underline {
+  position: relative;
+  display: inline-block;
+}
+
+/* Reserves exactly the height the absolutely-positioned line renders at, so the
+   space below the heading scales with the SVG instead of a fixed em value.
+   Same aspect-ratio as .heading-underline__line, driven by the same width. */
+.heading-underline::after {
+  content: "";
+  display: block;
+  width: 100%;
+  aspect-ratio: 310 / 40;
+}
+
+/* Height follows the width so the stroke keeps the proportions it was drawn at.
+   Every svgVariants entry is viewBox="0 0 310 40"; the SVG itself is stamped
+   preserveAspectRatio="none", so without this the artwork gets squashed. */
+.heading-underline__line {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 310 / 40;
+  min-height: 0;
+  margin: 0;
+  pointer-events: none;
 }
 
 
