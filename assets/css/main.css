@@ -201,7 +201,7 @@ main {
 .two-column-grid-with-text .text-title {
   font-size: var(--title);
   font-weight: 600;
-  color: var(--text-primary);
+  color: var(--ink);
   margin-bottom: 16px;
   line-height: 1.3;
 }
@@ -209,7 +209,7 @@ main {
 .two-column-grid-with-text .text-description {
   font-size: 16px;
   line-height: 1.6;
-  color: var(--text-secondary);
+  color: var(--ink);
   margin-bottom: 24px;
 }
 
@@ -225,7 +225,7 @@ main {
   margin-bottom: 12px;
   font-size: 15px;
   line-height: 1.5;
-  color: var(--text-secondary);
+  color: var(--ink);
 }
 
 .two-column-grid-with-text .text-features li::before {
@@ -1236,7 +1236,7 @@ ol li::marker {
 }
 
 .minimal-footer .text-muted {
-  color: var(--text-secondary);
+  color: var(--ink);
 }
 
 .minimal-footer .social-links a:hover {
@@ -1256,42 +1256,153 @@ ol li::marker {
   color: var(--ink);
 }
 
-/* Footer CTA button customization */
-.btn-cta {
-  color: var(--paper) !important;
-  background: var(--color) !important;
-  border: none !important;
-  padding: 8px 16px;
-  border-radius: 8px;
-  font-family: "Satoshi-Bold", sans-serif;
-  font-size: 16px;
-  font-weight: 700 !important;
-  transition: all 0.3s ease;
-  box-shadow: var(--elevation-1);
-  display: flex;
+/* ---------------------------------------------------------------
+   Fly button — icon takes off on hover, label slides out behind it.
+   Works with lucide icons (lucide.createIcons() swaps the <i> for an
+   <svg>, so the transforms are applied to .btn-fly svg).
+
+   Markup:
+     <a class="btn-fly" href="...">
+       <span class="btn-fly-icon"><i data-lucide="send"></i></span>
+       <span class="btn-fly-label">Send</span>
+     </a>
+
+   The icon is absolutely positioned and its resting slot is reserved by
+   the button's left padding, so on hover it lands on the button's true
+   centre whatever the label's length — no per-label travel tuning.
+
+   Modifiers:
+     .btn-fly--plane  45deg tilt on take-off, for a paper-plane icon
+     .btn-fly--back   arrow flies left, out of the button ("go back")
+
+   Tuning hooks (set per-instance, e.g. style="--fly-size: 24px"):
+     --fly-rotate  tilt applied as the icon leaves (0 for mail / arrow /
+                   most lucide glyphs; see .btn-fly--plane)
+     --fly-size    icon size
+     --fly-pad     horizontal inset — identical on both edges, so the
+                   icon + label group sits exactly centred
+     --fly-gap     space between icon and label
+   --------------------------------------------------------------- */
+.btn-fly {
+  --fly-rotate: 0deg;
+  --fly-size: 20px;
+  --fly-pad: 1em;
+  --fly-gap: 0.4em;
+
+  position: relative;
+  display: inline-flex;
   align-items: center;
-  gap: 8px;
+  /* the icon is out of flow, so its slot is reserved by the left padding */
+  padding: 0.7em var(--fly-pad) 0.7em calc(var(--fly-pad) + var(--fly-size) + var(--fly-gap));
+  border: none;
+  border-radius: 12px;
+  background: var(--color);
+  color: var(--paper);
+  font-family: "Satoshi-Bold", var(--default-font);
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1;
+  text-decoration: none;
+  cursor: pointer;
+  overflow: hidden;
+  box-shadow: var(--elevation-1);
+  /* background-color/color keep the sitewide theme cross-fade (see the
+     blanket `body *` transition) — a shorthand here would drop them */
+  transition: box-shadow 0.2s var(--ease-smooth), transform 0.2s var(--ease-smooth),
+    background-color 0.4s, color 0.4s;
 }
 
-.btn-cta:hover {
-  transform: translateY(-2px);
+.btn-fly--plane {
+  --fly-rotate: 45deg;
+}
+
+.btn-fly:hover,
+.btn-fly:focus-visible {
+  background: var(--color);
+  color: var(--paper);
   box-shadow: var(--elevation-2);
 }
 
-.btn-cta:active {
-  transform: translateY(0);
-  box-shadow: var(--elevation-1);
-}
-
-.btn-cta [data-lucide] {
+.btn-fly-icon {
+  position: absolute;
+  top: 50%;
+  left: var(--fly-pad);
   display: flex;
   align-items: center;
   justify-content: center;
+  transform: translateY(-50%);
+  transition: left 0.3s ease-in-out, color 0.4s;
 }
 
-.btn-cta [data-lucide] svg {
-  width: 20px !important;
-  height: 20px !important;
+.btn-fly svg {
+  display: block;
+  width: var(--fly-size);
+  height: var(--fly-size);
+  transform-origin: center center;
+  transition: transform 0.3s ease-in-out, color 0.4s;
+}
+
+.btn-fly-label {
+  display: block;
+  white-space: nowrap;
+  transition: transform 0.3s ease-in-out, color 0.4s;
+}
+
+.btn-fly:hover .btn-fly-icon,
+.btn-fly:focus-visible .btn-fly-icon {
+  /* half the icon width off centre — the icon box is exactly --fly-size wide */
+  left: calc(50% - var(--fly-size) / 2);
+  animation: btn-fly-hover 0.6s ease-in-out infinite alternate;
+}
+
+.btn-fly:hover svg,
+.btn-fly:focus-visible svg {
+  transform: rotate(var(--fly-rotate)) scale(1.1);
+}
+
+.btn-fly:hover .btn-fly-label,
+.btn-fly:focus-visible .btn-fly-label {
+  /* its own width clears the label's resting slot, + the right inset clears
+     the button — a fixed distance would leave long labels half visible */
+  transform: translateX(calc(100% + var(--fly-pad)));
+}
+
+/* back variant — the arrow leaves the way it points, past the left edge */
+.btn-fly--back:hover .btn-fly-icon,
+.btn-fly--back:focus-visible .btn-fly-icon {
+  left: calc(-1 * var(--fly-size));
+}
+
+.btn-fly:active {
+  background: var(--color);
+  transform: scale(0.95);
+}
+
+/* keeps the -50% vertical centring while bobbing */
+@keyframes btn-fly-hover {
+  from { transform: translateY(calc(-50% + 0.1em)); }
+  to   { transform: translateY(calc(-50% - 0.1em)); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-fly:hover .btn-fly-icon,
+  .btn-fly:focus-visible .btn-fly-icon {
+    left: var(--fly-pad);
+    animation: none;
+  }
+
+  .btn-fly-icon,
+  .btn-fly svg,
+  .btn-fly-label {
+    transition: none;
+  }
+
+  .btn-fly:hover svg,
+  .btn-fly:focus-visible svg,
+  .btn-fly:hover .btn-fly-label,
+  .btn-fly:focus-visible .btn-fly-label {
+    transform: none;
+  }
 }
 
 /* Mobile footer layout adjustments */
@@ -1386,9 +1497,7 @@ ol li::marker {
 }
 
 .resume .duration {
-  /* background: color-mix(in srgb, var(--color), transparent 90%); */
   background: oklch(from var(--color) l c h / 10%);
-
   color: var(--color);
   padding: 0.4rem 0.8rem;
   border-radius: 20px;
@@ -1409,7 +1518,7 @@ ol li::marker {
   padding-left: 1.5rem;
   margin-bottom: 0.5rem;
   color: color-mix(in srgb, var(--ink), transparent 15%);
-  font-size: 0.9rem;
+  font-size: 1rem;
   text-wrap: pretty;
 }
 
@@ -2606,7 +2715,6 @@ section,
   justify-content: center;
   padding: 20px;
   transition: 0.3s;
-  /* border: 1px solid color-mix(in srgb, var(--ink), transparent 90%); */
   position: relative;
   box-shadow: var(--elevation-1);
   border-radius: 16px;
@@ -2631,19 +2739,9 @@ section,
   font-family: var(--heading-font);
 }
 
-.interests .features-item h3 a {
-  color: var(--ink);
-  transition: 0.3s;
-  cursor: default !important;
-}
-
 .interests .features-item:hover {
   box-shadow: var(--elevation-2);
   transform: translateY(-4px);
-}
-
-.interests .features-item:hover h3 a {
-  color: var(--ink);
 }
 
 /*--------------------------------------------------------------
