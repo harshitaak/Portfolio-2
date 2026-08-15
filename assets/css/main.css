@@ -449,9 +449,9 @@ main {
   --paper: oklch(27% 0 0);
   --ink:   oklch(92% 0 0);
   --color: oklch(75% 0.08 240);
-  --color-2: oklch(60% 0.14 31);
-  --color-3: oklch(75% 0.08 180);
-  --color-4: oklch(55.117% 0.05403 196);
+  --color-2: oklch(75% 0.08 30);
+  --color-3: oklch(75% 0.08 150);
+  --color-4: oklch(75% 0.08 270);
   --shadow-color: oklch(0% 0 0);
   
   /* Elevation */
@@ -473,9 +473,9 @@ main {
   --paper: oklch(93% 0 0);
   --ink:   oklch(20% 0 0);
   --color: oklch(62.4% 0.11 240);
-  --color-2: oklch(62.4% 0.11 31);
-  --color-3: oklch(62.4% 0.11 180);
-  --color-4: oklch(55.117% 0.11 196);
+  --color-2: oklch(62% 0.11 30);
+  --color-3: oklch(62% 0.11 150);
+  --color-4: oklch(62% 0.11 270);
   --shadow-color: oklch(0% 0 0);
 }
 
@@ -1399,7 +1399,8 @@ ol li::marker {
 
 .resume .achievements {
   margin: 0;
-  padding-left: 0;
+  padding-left: 8px;
+  padding-top: 16px;
   list-style: none;
 }
 
