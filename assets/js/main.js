@@ -247,7 +247,10 @@ function reportThemeModeToGA(theme) {
       let current = self.strings[self.arrayPos] ?? '';
       // Ignore anything but a completely typed word: mid-type, or mid-backspace
       // after the hold was released, the displayed text won't match.
-      if (held || selectTyped.textContent !== current) {
+      // Trimmed: every item carries a leading space from the data-typed-items
+      // split, and typed.js writes through innerHTML. Mid-type and mid-backspace
+      // states are still rejected — the displayed text is a strict prefix there.
+      if (held || selectTyped.textContent.trim() !== current.trim()) {
         return;
       }
       held = true;
@@ -295,18 +298,79 @@ function reportThemeModeToGA(theme) {
     let typedInstance = new Typed('.typed', typed_options);
 
     if (typedLink) {
-      ['mouseenter', 'focus'].forEach(function(event) {
-        typedLink.addEventListener(event, function() {
-          hovering = true;
-          // Already sitting on a finished word? Hold it straight away.
-          holdRotation(typedInstance);
+      // The anchor only ever holds the current word, so its width — and with it
+      // its hit box — tracks the text character by character. Reserving the
+      // widest string keeps the box still. Measured rather than set in ch units
+      // because the font is Satoshi at a clamp() size with letter-spacing,
+      // which ch only approximates.
+      function reserveTypedWidth() {
+        let probe = document.createElement('span');
+        let styles = getComputedStyle(selectTyped);
+        probe.style.position = 'absolute';
+        probe.style.visibility = 'hidden';
+        probe.style.whiteSpace = 'pre';
+        // Set individually: the `font` shorthand reads back empty in some engines.
+        ['fontFamily', 'fontSize', 'fontWeight', 'fontStyle', 'letterSpacing'].forEach(function(prop) {
+          probe.style[prop] = styles[prop];
         });
+        selectTyped.parentNode.appendChild(probe);
+
+        let widest = 0;
+        typed_strings.forEach(function(string) {
+          probe.textContent = string;
+          widest = Math.max(widest, probe.getBoundingClientRect().width);
+        });
+        probe.remove();
+
+        // typed.js appends its own cursor inside the anchor (showCursor is left
+        // at its default), so that width is part of the box too.
+        let cursor = typedInstance.cursor;
+        if (cursor) {
+          widest += cursor.getBoundingClientRect().width;
+        }
+        typedLink.style.minWidth = Math.ceil(widest) + 'px';
+      }
+
+      // Wait for Satoshi: measuring against the fallback font sizes it wrong.
+      if (document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(reserveTypedWidth);
+      } else {
+        reserveTypedWidth();
+      }
+
+      // --hero-body is viewport-relative, so the reservation is width-dependent.
+      let resizeTimer = null;
+      window.addEventListener('resize', function() {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(reserveTypedWidth, 150);
       });
-      ['mouseleave', 'blur'].forEach(function(event) {
-        typedLink.addEventListener(event, function() {
+
+      typedLink.addEventListener('focus', function() {
+        hovering = true;
+        holdRotation(typedInstance);
+      });
+      typedLink.addEventListener('blur', function() {
+        hovering = false;
+        releaseRotation();
+      });
+
+      // Releasing on the first mouseleave means a single stray pixel across the
+      // edge costs a whole rotation, since re-entry lands mid-backspace and
+      // holdRotation rejects it. A short grace period absorbs that jitter.
+      // Keyboard focus has none, so focus/blur above release immediately.
+      let leaveTimer = null;
+      typedLink.addEventListener('mouseenter', function() {
+        clearTimeout(leaveTimer);
+        hovering = true;
+        // Already sitting on a finished word? Hold it straight away.
+        holdRotation(typedInstance);
+      });
+      typedLink.addEventListener('mouseleave', function() {
+        clearTimeout(leaveTimer);
+        leaveTimer = setTimeout(function() {
           hovering = false;
           releaseRotation();
-        });
+        }, 120);
       });
     }
   }
