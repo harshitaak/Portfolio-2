@@ -47,7 +47,7 @@
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
   <link href="assets/css/main.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lenis@1.2.3/dist/lenis.css">
-  <script src="https://cdn.jsdelivr.net/npm/lenis@1.2.3/dist/lenis.min.js"></script> 
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.2.3/dist/lenis.min.js"></script>
 
 </head>
 
@@ -161,9 +161,12 @@
                     <span class="btn-fly-icon"><i data-lucide="hammer"></i></span>
                     <span class="btn-fly-label">Digital tools?</span>
                   </a>
-                  <a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=harshit.ea@gmail.com&amp;su=Portfolio%20Contact" target="_blank" rel="noopener" class="btn-fly btn-fly--outline">
-                    <span class="btn-fly-icon"><i data-lucide="mail"></i></span>
-                    <span class="btn-fly-label">Let's Talk</span>
+                  <a id="hero-book-meeting" href="https://cal.com/harshit-taak-3dds6u/30min" target="_blank" rel="noopener" class="btn-fly btn-fly--outline"
+                     data-cal-link="harshit-taak-3dds6u/30min"
+                     data-cal-namespace="30min"
+                     data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'>
+                    <span class="btn-fly-icon"><i data-lucide="calendar"></i></span>
+                    <span class="btn-fly-label">Book a Meeting</span>
                   </a>
                 </div>
           </div>
@@ -174,8 +177,8 @@
                 <div class="floating-slot card-1">
                   <div class="floating-card-zoom" data-aos="zoom-in" data-aos-delay="300">
                     <div class="floating-card">
-                      <i data-lucide="palette"></i>
-                      <span>UX Design</span>
+                      <i data-lucide="mouse"></i>
+                      <span>Product Design</span>
                     </div>
                   </div>
                 </div>
@@ -190,24 +193,24 @@
                 <div class="floating-slot card-3">
                   <div class="floating-card-zoom" data-aos="zoom-in" data-aos-delay="500">
                     <div class="floating-card">
-                      <i data-lucide="graduation-cap"></i>
-                      <span>Mentorship</span>
+                      <i data-lucide="droplet"></i>
+                      <span>Timeless digital</span>
                     </div>
                   </div>
                 </div>
                 <div class="floating-slot card-4">
                   <div class="floating-card-zoom" data-aos="zoom-in" data-aos-delay="600">
                     <div class="floating-card">
-                      <i data-lucide="bike"></i>
-                      <span>Cycling</span>
+                      <i data-lucide="handshake"></i>
+                      <span>Humane</span>
                     </div>
                   </div>
                 </div>
                 <div class="floating-slot card-7">
                   <div class="floating-card-zoom" data-aos="zoom-in" data-aos-delay="700">
                     <div class="floating-card">
-                      <i data-lucide="armchair"></i>
-                      <span>Furniture</span>
+                      <i data-lucide="cpu"></i>
+                      <span>Tech</span>
                     </div>
                   </div>
                 </div>
@@ -291,6 +294,52 @@
   <script src="https://unpkg.com/lucide@1.31.0"></script>
   <script>
     lucide.createIcons();
+  </script>
+
+  <!-- Cal element-click embed code begins -->
+  <script type="text/javascript">
+    (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if (typeof namespace === "string") { cal.ns[namespace] = cal.ns[namespace] || api; p(cal.ns[namespace], ar); p(cal, ["initNamespace", namespace]); } else p(cal, ar); return; } p(cal, ar); }; })(window, "https://app.cal.com/embed/embed.js", "init");
+    Cal("init", "30min", { origin: "https://app.cal.com" });
+    Cal.config = Cal.config || {};
+    Cal.config.forwardQueryParams = true;
+
+    Cal.ns["30min"]("ui", { "hideEventTypeDetails": false, "layout": "month_view" });
+  </script>
+  <!-- Cal element-click embed code ends -->
+
+  <script>
+    // Keep the Cal popup in step with the site theme (.light-mode on <html>, dark otherwise),
+    // and stop the fallback href from navigating once Cal is available to handle the click.
+    (function () {
+      var cta = document.getElementById('hero-book-meeting');
+      if (!cta) return;
+
+      function currentTheme() {
+        return document.documentElement.classList.contains('light-mode') ? 'light' : 'dark';
+      }
+
+      function syncTheme() {
+        var theme = currentTheme();
+        // Cal reads data-cal-config at click time, so the attribute is the authoritative source.
+        var config = { layout: 'month_view', useSlotsViewOnSmallScreen: 'true', theme: theme };
+        cta.setAttribute('data-cal-config', JSON.stringify(config));
+        if (window.Cal && window.Cal.ns && window.Cal.ns['30min']) {
+          window.Cal.ns['30min']('ui', { theme: theme });
+        }
+      }
+
+      syncTheme();
+      new MutationObserver(syncTheme).observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ['class']
+      });
+
+      // Cal opens the popup itself; without this the href would also open a new tab.
+      // If Cal never loads, the click falls through and the href still works.
+      cta.addEventListener('click', function (e) {
+        if (window.Cal) e.preventDefault();
+      });
+    })();
   </script>
 
 </body>
