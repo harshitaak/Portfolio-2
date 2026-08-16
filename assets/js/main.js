@@ -40,11 +40,7 @@ function reportThemeModeToGA(theme) {
       if (window.lucide && typeof window.lucide.createIcons === 'function') {
         window.lucide.createIcons();
       }
-      return;
     }
-
-    // Fallback for pages still using Material Icons text glyphs.
-    mobileNavToggleBtn.textContent = isOpen ? 'close' : 'menu';
   }
 
   function mobileNavToogle() {
@@ -447,7 +443,7 @@ function reportThemeModeToGA(theme) {
 
   
   window.addEventListener('load', function() {
-    // Initialize all custom carousels with CSS-generated navigation
+    // Initialize all custom carousels with their own prev/next buttons
     const customCarousels = document.querySelectorAll('.custom-carousel-nav');
     customCarousels.forEach(function(customCarousel) {
       const swiper = new Swiper(customCarousel, {
@@ -460,21 +456,25 @@ function reportThemeModeToGA(theme) {
         spaceBetween: 30
       });
 
-      // Add click handlers for CSS-generated navigation
-      customCarousel.addEventListener('click', function(e) {
-        const rect = customCarousel.getBoundingClientRect();
-        const clickX = e.clientX - rect.left;
-        const carouselWidth = rect.width;
-        
-        // Left side click (prev)
-        if (clickX < carouselWidth * 0.2) {
+      // Real buttons replaced the old left-20%/right-20% coordinate hit test,
+      // so the arrows are now keyboard operable. stopPropagation keeps a click
+      // from also reaching any handler bound further up the tree.
+      const prevBtn = customCarousel.querySelector('.carousel-nav-btn--prev');
+      const nextBtn = customCarousel.querySelector('.carousel-nav-btn--next');
+
+      if (prevBtn) {
+        prevBtn.addEventListener('click', function(e) {
+          e.stopPropagation();
           swiper.slidePrev();
-        }
-        // Right side click (next)
-        else if (clickX > carouselWidth * 0.8) {
+        });
+      }
+
+      if (nextBtn) {
+        nextBtn.addEventListener('click', function(e) {
+          e.stopPropagation();
           swiper.slideNext();
-        }
-      });
+        });
+      }
     });
   });
 

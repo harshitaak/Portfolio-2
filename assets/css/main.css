@@ -783,8 +783,7 @@ ol li::marker {
     justify-content: center;
   }
 
-  /* Icon styling for navbar (Material Icons + Lucide) */
-  .navmenu a .material-icons,
+  /* Icon styling for navbar (Lucide) */
   .navmenu a .lucide {
     font-size: 18px;
     width: 18px;
@@ -975,7 +974,7 @@ ol li::marker {
     transform: translateY(-50%) !important;
   }
 
-  /* Enhanced Material Icons styling for mobile nav toggle */
+  /* Enhanced icon styling for mobile nav toggle */
   .mobile-nav-toggle:hover {
     color: var(--color);
     /* background-color: color-mix(in srgb, var(--color), transparent 90%); */
@@ -1091,7 +1090,7 @@ ol li::marker {
     background-color: color-mix(in srgb, var(--ink), transparent 83%);
   }
 
-  /* Ensure Material Icons work properly in dropdowns - optimized */
+  /* Ensure dropdown toggle icons animate properly - optimized */
   .navmenu .toggle-dropdown {
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     transform-origin: center;
@@ -1672,10 +1671,10 @@ ol li::marker {
   transform: translateY(20px);
 }
 
-.scroll-top i {
-  font-size: 24px;
+.scroll-top .lucide {
+  width: 24px;
+  height: 24px;
   color: var(--paper);
-  line-height: 0;
 }
 
 .scroll-top:hover {
@@ -1717,8 +1716,9 @@ ol li::marker {
   transform: translateY(-20px);
 }
 
-.floating-back-button i {
-  font-size: 20px;
+.floating-back-button .lucide {
+  width: 20px;
+  height: 20px;
   color: var(--ink);
   transition: color 0.3s var(--ease-smooth);
 }
@@ -1729,7 +1729,7 @@ ol li::marker {
   box-shadow: var(--elevation-2);
 }
 
-.floating-back-button:is(:hover, :focus-visible) i {
+.floating-back-button:is(:hover, :focus-visible) .lucide {
   color: var(--ink);
 }
 
@@ -2086,7 +2086,6 @@ section,
 }
 
 .hero .social-links a {
-  /* background-color: color-mix(in srgb, var(--ink), transparent 90%); */
   color: color-mix(in srgb, var(--ink), var(--paper) 50%);
   font-size: 24px;
   width: 24px;
@@ -2885,8 +2884,8 @@ section,
 .testimonials .testimonial-item .quote-icon-left,
 .testimonials .testimonial-item .quote-icon-right {
   color: var(--color);
-  font-size: 24px;
-  line-height: 0;
+  width: 24px;
+  height: 24px;
 }
 
 .testimonials .testimonial-item .quote-icon-left {
@@ -3464,41 +3463,51 @@ section,
   position: relative;
 }
 
-/* CSS-generated navigation buttons using pseudo-elements */
-.custom-carousel-nav::before,
-.custom-carousel-nav::after {
-  content: 'chevron_right';
+/* Real <button> navigation. These used to be ::before/::after pseudo-elements
+   drawing Material Icons ligature text; pseudo-elements have no DOM node, so
+   lucide.createIcons() could never reach them. Buttons are also keyboard
+   reachable, which the pseudo-elements were not. */
+.carousel-nav-btn {
   position: absolute;
   top: 50%;
+  transform: translateY(-50%);
   width: 40px;
   height: 40px;
+  padding: 0;
   border-radius: 50%;
+  border: 1px solid transparent;
   background: var(--paper);
-  font-family: 'Material Icons';
-  font-size: 24px;
   color: var(--color);
-  transform: translateY(-50%);
   z-index: 2;
   cursor: pointer;
-  transition: opacity 0.2s ease;
+  transition: border-color 0.2s ease, opacity 0.2s ease;
   display: flex;
   align-items: center;
   justify-content: center;
-
 }
 
-.custom-carousel-nav::before {
+.carousel-nav-btn--prev {
   left: 16px;
-  transform: translateY(-50%) rotate(180deg);
 }
 
-.custom-carousel-nav::after {
+.carousel-nav-btn--next {
   right: 16px;
 }
 
-.custom-carousel-nav:hover::before,
-.custom-carousel-nav:hover::after {
-  border: 1px solid var(--color);
+.carousel-nav-btn .lucide {
+  width: 24px;
+  height: 24px;
+}
+
+/* Transparent border by default so hover does not shift the icon by 1px. */
+.custom-carousel-nav:hover .carousel-nav-btn,
+.carousel-nav-btn:focus-visible {
+  border-color: var(--color);
+}
+
+.carousel-nav-btn:focus-visible {
+  outline: 2px solid var(--color);
+  outline-offset: 2px;
 }
 
 /* Pagination styling for custom carousel */

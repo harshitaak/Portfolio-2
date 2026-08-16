@@ -62,7 +62,7 @@ Hand-written HTML, CSS, and vanilla JavaScript. Vendor libraries are committed u
 
 **Vendored locally**
 
-- [Bootstrap 5](https://getbootstrap.com/) + [Bootstrap Icons](https://icons.getbootstrap.com/)
+- [Bootstrap 5](https://getbootstrap.com/) + [Bootstrap Icons](https://icons.getbootstrap.com/) — footer social marks only
 - [AOS](https://michalsnik.github.io/aos/) — animate on scroll
 - [Swiper](https://swiperjs.com/) — carousels
 - [Isotope](https://isotope.metafizzy.co/) + [imagesLoaded](https://imagesloaded.desandro.com/) — filterable grid
@@ -74,7 +74,7 @@ Hand-written HTML, CSS, and vanilla JavaScript. Vendor libraries are committed u
 
 - [GSAP](https://gsap.com/) 3.13 — animations and drawn SVG underlines
 - [Lenis](https://github.com/darkroomengineering/lenis) 1.2.3 — smooth scrolling
-- [Lucide](https://lucide.dev/) 1.31 + Material Icons
+- [Lucide](https://lucide.dev/) 1.31 — the only icon set, referenced via `data-lucide`
 - Google Fonts (Roboto, Poppins, Raleway)
 
 ### Tailwind (optional, currently unused)
@@ -125,7 +125,7 @@ Portfolio/
 
 - Typography: **Satoshi** by Deni Anggara
 - Hosting: **GitHub Pages**
-- Icons: Lucide, Bootstrap Icons, Material Icons
+- Icons: Lucide (all UI icons); Bootstrap Icons (footer social marks)
 - Animation and UI libraries listed above
 
 ## Contact
