@@ -3,36 +3,42 @@
 
 /*==============================================================
   TABLE OF CONTENTS — Ctrl+F the section name to jump to it
+  Entries are listed in file order, top to bottom.
 ================================================================
 
-  TOKENS & RESET
-    Global Design Tokens ............. fonts, colors, elevation, easing
-    General Styling & Shared Classes . body, headings, links, lists
+  View Transitions API ............... same-origin page nav; slide in/out
 
   LAYOUT UTILITIES
-    Three Column Grid ................ CSS masonry, 3-col
-    Two Column Grid .................. large image grid, 2-col
-    Two Column Grid with Text ........ image grid + sidebar text
-    Flex Image Grid .................. main image + stacked side images
+    Three Column Grid ................ 3-column CSS masonry
+    Two Column Grid - Large Image Layout
+    Two Column Grid with Text Component
+    Flex Image Grid - Main + Stacked Layout
+
+  TOKENS & BASE
+    Global design tokens ............. fonts, type scale, measure, colors, elevation, easing
+    Light mode color variables ....... .light-mode overrides
+    For text selection custom color .. ::selection / ::-moz-selection
+    .dots-bg ......................... fixed dotted backdrop + vignette
+    General Styling & Shared Classes . body, headings, links, list markers
     Responsive Image Grid ............ .image-area utility
+    Centered Container
 
   GLOBAL CHROME
     Global Header
     Navigation Menu .................. desktop + mobile
-    Global Footer
-    Navbar Right Container
-    Theme Toggle ..................... sun/moon icon button
+    Global Footer .................... minimal footer, .btn-fly CTA
 
   FLOATING UI
     Scroll Top Button
     Floating Back Button
     Floating Dark Mode Toggle
+    Disable aos animation delay on mobile devices
 
   PAGE SECTIONS
-    Page Title ....................... breadcrumb banner
+    Page Title ....................... breadcrumb banner + .project-intro
     Global Sections .................. shared section padding
     Global Section Titles
-    Hero Section ..................... floating cards, big text band
+    Hero Section ..................... copy, big text band, floating cards
     About Section
     Interests Section
     Testimonials Section
@@ -40,22 +46,27 @@
     Services Section
     Service Details Section
     Portfolio Section ................ filters + grid
-    Contact Section
+    Contact Section .................. incl. .color-chip palette chips
 
   PROJECT PAGE COMPONENTS
-    My Section ....................... media + text layout
-    Custom Carousel Navigation
+    My Section (media + text)
+    Custom Carousel Navigation (Reusable)
     GLightbox Fixes and Enhancements
-    Headline Draw .................... scroll-drawn SVG underline
-    Text Video Section
-    FigJam / Figma Embed
+
+  CHROME, CONTINUED
+    Navbar Right Container
+    Theme Toggle ..................... sun/moon icon button
 
   ANIMATIONS & UTILITIES
-    View Transitions API ............. disabled; re-enable in @view-transition
-    Disable AOS Animation Delay ...... mobile override
-    autoShow / animScale ............. scroll-timeline animations
-    Journey Intent Visual
-    Cursor
+    .cloneable ....................... draw-line block + [draw-line-box]
+    Ensure GIFs play properly ........ img[src$=".gif"]
+    Text Video Section - Custom layout for wide text with portrait video
+    .cursor .......................... custom follower cursor
+    FigJam / Figma embed
+    Element scroll animation ......... .autoShow / .animScale, view() timeline
+    Headline Draw .................... display headline + scroll-drawn underline
+    Infographic ...................... .image-infographic-holder
+    Long-form Essay (scrollytelling) . scoped to body.philosophy-page
 
 ================================================================*/
 
@@ -4052,55 +4063,6 @@ body:has( .mobile-nav-toggle:hover) .cursor{
   }
 }
 
-
-@media (prefers-reduced-motion: no-preference) {
-  @supports (animation-timeline: view()) {
-    .journey-track-dramatic .dramatic-fill {
-      animation: journey-bar-expand both linear;
-      animation-timeline: view();
-      animation-range: entry 10% cover 50%;
-    }
-
-    .journey-track-short .journey-fill {
-      animation: journey-bar-fill-short both linear;
-      animation-timeline: view();
-      animation-range: entry 10% cover 50%;
-    }
-
-    .journey-track-medium .journey-fill {
-      animation: journey-bar-fill-medium both linear;
-      animation-timeline: view();
-      animation-range: entry 10% cover 50%;
-    }
-  }
-}
-
-@keyframes journey-bar-expand {
-  from {
-    width: 100%;
-  }
-  to {
-    width: min(82vw, 64rem);
-  }
-}
-
-@keyframes journey-bar-fill-short {
-  from {
-    width: 0%;
-  }
-  to {
-    width: 22%;
-  }
-}
-
-@keyframes journey-bar-fill-medium {
-  from {
-    width: 0%;
-  }
-  to {
-    width: 32%;
-  }
-}
 
 /*--------------------------------------------------------------
 # FigJam / Figma embed
