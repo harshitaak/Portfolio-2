@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+Disallow: /node_modules/
+Disallow: /assets/vendor/
+Disallow: /service-details.html
+
+Sitemap: https://www.harshitaak.com/sitemap.xml
