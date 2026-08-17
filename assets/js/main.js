@@ -97,6 +97,145 @@ function reportThemeModeToGA(theme) {
     });
   });
 
+  /**
+   * Sliding surface behind the desktop nav items.
+   * One shadowed pill glides to whichever item is hovered or focused, and
+   * returns to the current page's .active item (or hides) when the nav is left.
+   */
+  function initNavPill() {
+    const list = document.querySelector('#navmenu > ul');
+    if (!list) return;
+
+    const desktop = window.matchMedia('(min-width: 768px)');
+
+    // Idempotent: a re-run must not stack pills.
+    list.querySelectorAll(':scope > .nav-pill').forEach(el => el.remove());
+
+    const pill = document.createElement('span');
+    pill.className = 'nav-pill no-anim';
+    pill.setAttribute('aria-hidden', 'true');
+    list.prepend(pill);
+
+    function isTrackable(li) {
+      if (!li || li.parentElement !== list) return false;
+      if (li.offsetParent === null) return false; // hidden, e.g. the d-md-none theme toggle
+      const link = li.querySelector('a');
+      return !!link && !link.classList.contains('nav-disabled');
+    }
+
+    function restingItem() {
+      const active = list.querySelector(':scope > li > a.active');
+      const li = active ? active.closest('li') : null;
+      return isTrackable(li) ? li : null;
+    }
+
+    function place(li) {
+      pill.style.setProperty('--nav-x', li.offsetLeft + 'px');
+      pill.style.setProperty('--nav-w', li.offsetWidth + 'px');
+    }
+
+    // Stretch the surface along its direction of travel, then let it settle.
+    let travelTimer = 0;
+    function flagTravel() {
+      pill.classList.add('is-travelling');
+      clearTimeout(travelTimer);
+      travelTimer = setTimeout(function() {
+        pill.classList.remove('is-travelling');
+      }, 170);
+    }
+
+    let currentLi = null;
+
+    function moveTo(li) {
+      if (li === currentLi) return; // pointerover re-fires on every child element
+      currentLi = li;
+
+      if (!li) {
+        pill.classList.remove('is-visible');
+        return;
+      }
+      if (pill.classList.contains('is-visible')) {
+        place(li); // already on screen: glide across
+        flagTravel();
+        return;
+      }
+      // Appearing from nothing: land on the item first, then fade in, so the
+      // pill never slides in from the left edge of the nav.
+      pill.classList.add('no-anim');
+      place(li);
+      void pill.offsetWidth; // flush the jump before transitions resume
+      pill.classList.remove('no-anim');
+      pill.classList.add('is-visible');
+    }
+
+    // Re-anchor without animating: initial paint, resize, font swap.
+    function settle() {
+      const li = restingItem();
+      currentLi = li;
+      pill.classList.add('no-anim');
+      pill.classList.remove('is-travelling');
+      if (li) {
+        place(li);
+        pill.classList.add('is-visible');
+      } else {
+        pill.classList.remove('is-visible');
+      }
+      void pill.offsetWidth;
+      pill.classList.remove('no-anim');
+    }
+
+    list.addEventListener('pointerover', function(e) {
+      if (!desktop.matches) return;
+      const li = e.target.closest('li');
+      if (isTrackable(li)) moveTo(li);
+    });
+
+    list.addEventListener('focusin', function(e) {
+      if (!desktop.matches) return;
+      const li = e.target.closest('li');
+      if (isTrackable(li)) moveTo(li);
+    });
+
+    list.addEventListener('pointerleave', function() {
+      if (!desktop.matches) return;
+      moveTo(restingItem());
+    });
+
+    list.addEventListener('focusout', function(e) {
+      if (!desktop.matches) return;
+      if (list.contains(e.relatedTarget)) return; // focus is still inside the nav
+      moveTo(restingItem());
+    });
+
+    settle();
+
+    if (typeof ResizeObserver === 'function') {
+      let firstObservation = true;
+      new ResizeObserver(function() {
+        if (firstObservation) {
+          firstObservation = false;
+          return;
+        }
+        settle();
+      }).observe(list);
+    } else {
+      window.addEventListener('resize', settle);
+    }
+
+    // Satoshi loads async; nav item widths shift once it lands.
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(settle);
+    }
+
+    desktop.addEventListener('change', settle);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initNavPill);
+  } else {
+    initNavPill();
+  }
+
 
 
   /**

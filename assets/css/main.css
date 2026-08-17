@@ -728,6 +728,12 @@ ol li::marker {
 /*--------------------------------------------------------------
 # Navigation Menu
 --------------------------------------------------------------*/
+/* The sliding nav surface is a desktop-only affordance; the mobile panel
+   keeps its existing styling and never renders the pill. */
+.navmenu .nav-pill {
+  display: none;
+}
+
 /* Desktop Navigation */
 @media (min-width: 768px) {
   .navmenu {
@@ -740,6 +746,7 @@ ol li::marker {
     display: flex;
     list-style: none;
     align-items: center;
+    position: relative;
   }
 
   .navmenu li {
@@ -748,8 +755,9 @@ ol li::marker {
 
   .navmenu>ul>li {
     white-space: nowrap;
-    padding: 16px 16px;
+    padding: 16px 18px;
     cursor: pointer;
+    z-index: 1;
   }
 
   .navmenu>ul>li:last-child {
@@ -767,7 +775,9 @@ ol li::marker {
     align-items: center;
     justify-content: space-between;
     white-space: nowrap;
-    transition: 0.3s;
+    transition:
+      color 0.3s var(--ease-smooth),
+      transform 0.35s var(--ease-snap);
     position: relative;
     cursor: pointer;
   }
@@ -803,35 +813,103 @@ ol li::marker {
     vertical-align: middle;
   }
 
-  .navmenu>ul>li>a:before {
-    content: "";
+  /* The label rises as the surface arrives under it. */
+  .navmenu>ul>li:hover>a,
+  .navmenu>ul>li>a:focus-visible {
+    transform: translateY(-1px);
+  }
+
+  /* ...and settles back down while the item is being pressed. */
+  .navmenu>ul>li:active>a {
+    transform: translateY(0);
+  }
+
+  /* Focus is drawn on the pill itself (it already tracks focus), so the link's
+     own outline is only suppressed where :has() can render that ring. */
+  @supports selector(:has(*)) {
+    .navmenu>ul>li>a:focus-visible {
+      outline: none;
+    }
+  }
+
+  /* Sliding "shadowy surface" that follows the hovered/focused nav item.
+     Injected by initNavPill() in main.js; --nav-x / --nav-w are set inline. */
+  .navmenu .nav-pill {
+    display: block;
     position: absolute;
-    height: 4px;
-    bottom: -6px;
+    /* Same 44px as the .theme-toggle circle, centred in the 56px row via
+       auto block margins so the transform stays free for x / squash. */
+    top: 0;
+    bottom: 0;
     left: 0;
-    border-radius: 4px;
+    margin-block: auto;
+    height: 44px;
+    width: var(--nav-w, 0px);
+    border-radius: 45px;
     background-color: var(--paper);
-    visibility: hidden;
-    width: 0px;
-    transition: 0.3s ease-in-out;
+    /* Composed in three slots so the pressed and focused treatments can each
+       change one layer without clobbering the others. The inset is a faint top
+       highlight — a shadow alone reads weakly against paper. */
+    --nav-lift: var(--elevation-1);
+    --nav-inset: inset 0 1px 0 color-mix(in srgb, var(--ink), transparent 88%);
+    --nav-ring: 0 0 0 0 transparent;
+    box-shadow: var(--nav-lift), var(--nav-inset), var(--nav-ring);
+    transform:
+      translate3d(var(--nav-x, 0px), 0, 0)
+      scaleX(var(--nav-sx, 1))
+      scaleY(var(--nav-sy, 1));
+    opacity: 0;
+    z-index: 0;
+    pointer-events: none;
+    will-change: transform, width;
+    transition:
+      transform 0.5s var(--ease-bounce-strong),
+      width 0.5s var(--ease-bounce-strong),
+      box-shadow 0.25s var(--ease-smooth),
+      opacity 0.25s var(--ease-smooth),
+      background-color 0.4s var(--ease-smooth);
   }
 
-  .navmenu a:focus-visible:before,
-  .navmenu a:focus:before,
-  .navmenu .active:before {
-    visibility: visible;
-    background-color: var(--color);
-    font-family: var(--nav-font);
-    width: 100%;
-    /* transition: 0.3s ease-in-out; */
+  .navmenu .nav-pill.is-visible {
+    opacity: 1;
   }
 
-  .navmenu li:hover>a,
-  .navmenu a:hover,
-  .navmenu .active,
-  .navmenu .active:focus {
-    color: var(--color);
-    /* font-weight: 600; */
+  /* Squash-and-stretch: JS flags the pill while it is travelling so it
+     elongates along the direction of motion, then settles back to 1. */
+  .navmenu .nav-pill.is-travelling {
+    --nav-sx: 1.05;
+    --nav-sy: 0.96;
+  }
+
+  /* Pressed: the surface sinks toward the page and its shadow tightens. */
+  .navmenu>ul:has(>li:active) .nav-pill {
+    --nav-sx: 0.985;
+    --nav-sy: 0.94;
+    --nav-lift: var(--elevation-1);
+  }
+
+  /* Keyboard focus ring, drawn on the pill rather than the link. */
+  .navmenu>ul:has(a:focus-visible) .nav-pill {
+    --nav-ring: 0 0 0 2px color-mix(in srgb, var(--color), transparent 40%);
+  }
+
+  /* First placement, resize and font swap: jump instead of sliding in from x: 0 */
+  .navmenu .nav-pill.no-anim {
+    transition: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .navmenu .nav-pill,
+    .navmenu .nav-pill.is-travelling {
+      --nav-sx: 1;
+      --nav-sy: 1;
+      transition: opacity 0.2s linear;
+    }
+
+    .navmenu>ul>li:hover>a,
+    .navmenu>ul>li>a:focus-visible {
+      transform: none;
+    }
   }
 
   /* Icon hover and active states */
@@ -1659,16 +1737,25 @@ ol li::marker {
   visibility: hidden;
   opacity: 0;
   right: 16px;
-  bottom: -60px;
+  bottom: 16px;
   z-index: 99999;
 
   background-color: var(--color);
   width: 44px;
   height: 44px;
   border-radius: 50px;
-  transition: all 0.3s ease-in-out;
+  /* `translate` carries the scroll entrance, `transform` the hover lift, so
+     each keeps its own curve and duration without fighting the other. */
+  translate: 0 80px;
+  transition:
+    translate 0.45s var(--ease-bounce-strong),
+    transform 0.2s var(--ease-snap),
+    opacity 0.3s var(--ease-smooth),
+    visibility 0.3s var(--ease-smooth),
+    box-shadow 0.3s var(--ease-smooth),
+    background-color 0.4s var(--ease-smooth),
+    border-color 0.4s var(--ease-smooth);
   box-shadow: var(--elevation-1);
-  transform: translateY(20px);
 }
 
 .scroll-top .lucide {
@@ -1678,20 +1765,14 @@ ol li::marker {
 }
 
 .scroll-top:hover {
-  transform: translateY(-2px);
+  transform: translateY(-4px);
   box-shadow: var(--elevation-2);
-  transition: 0.3s;
 }
 
 .scroll-top.active {
   visibility: visible;
   opacity: 1;
-  bottom: 16px;
-  transform: translateY(0);
-}
-
-.scroll-top.active:hover {
-  transform: translateY(-2px);
+  translate: 0 0;
 }
 
 /*--------------------------------------------------------------
@@ -1702,7 +1783,7 @@ ol li::marker {
   visibility: hidden;
   opacity: 0;
   left: 16px;
-  top: -60px;
+  top: 16px;
   z-index: 99999;
   background-color: var(--paper);
   width: 44px;
@@ -1710,10 +1791,17 @@ ol li::marker {
   border-radius: 50px;
   border: 1px var(--ink);
   outline: none;
-  transition: all 0.3s ease;
+  translate: 0 -80px;
+  transition:
+    translate 0.45s var(--ease-bounce-strong),
+    transform 0.2s var(--ease-snap),
+    opacity 0.3s var(--ease-smooth),
+    visibility 0.3s var(--ease-smooth),
+    box-shadow 0.3s var(--ease-smooth),
+    background-color 0.4s var(--ease-smooth),
+    border-color 0.4s var(--ease-smooth);
   box-shadow: var(--elevation-1);
   cursor: pointer;
-  transform: translateY(-20px);
 }
 
 .floating-back-button .lucide {
@@ -1725,7 +1813,7 @@ ol li::marker {
 
 .floating-back-button:is(:hover, :focus-visible) {
   background-color: var(--paper);
-  transform: translateY(-2px);
+  transform: translateY(-4px);
   box-shadow: var(--elevation-2);
 }
 
@@ -1736,12 +1824,7 @@ ol li::marker {
 .floating-back-button.active {
   visibility: visible;
   opacity: 1;
-  top: 16px;
-  transform: translateY(0);
-}
-
-.floating-back-button.active:is(:hover, :focus-visible) {
-  transform: translateY(-2px);
+  translate: 0 0;
 }
 
 /*--------------------------------------------------------------
@@ -1752,17 +1835,24 @@ ol li::marker {
   visibility: hidden;
   opacity: 0;
   right: 16px;
-  top: -60px;
+  top: 16px;
   z-index: 999;
   background-color: var(--paper);
   width: 44px;
   aspect-ratio: 1/1;
   border-radius: 50px;
   border: 1px var(--ink);
-  transition: all 0.3s ease;
+  translate: 0 -80px;
+  transition:
+    translate 0.45s var(--ease-bounce-strong),
+    transform 0.2s var(--ease-snap),
+    opacity 0.3s var(--ease-smooth),
+    visibility 0.3s var(--ease-smooth),
+    box-shadow 0.3s var(--ease-smooth),
+    background-color 0.4s var(--ease-smooth),
+    border-color 0.4s var(--ease-smooth);
   box-shadow: var(--elevation-1);
   cursor: pointer;
-  transform: translateY(-20px);
 }
 
 .floating-theme-toggle .sun-and-moon {
@@ -1788,7 +1878,7 @@ ol li::marker {
 
 .floating-theme-toggle:is(:hover, :focus-visible) {
   background-color: var(--paper);
-  transform: translateY(-2px);
+  transform: translateY(-4px);
   box-shadow: var(--elevation-2);
 }
 
@@ -1803,12 +1893,7 @@ ol li::marker {
 .floating-theme-toggle.active {
   visibility: visible;
   opacity: 1;
-  top: 16px;
-  transform: translateY(0);
-}
-
-.floating-theme-toggle.active:is(:hover, :focus-visible) {
-  transform: translateY(-2px);
+  translate: 0 0;
 }
 
 /* Dark theme styles (when light-mode class is NOT present) */
@@ -1864,6 +1949,28 @@ html:not(.light-mode) .floating-theme-toggle .sun-and-moon>.moon>circle {
   html:not(.light-mode) .floating-theme-toggle .sun-and-moon>.moon>circle {
     transition-duration: .5s;
     transition-delay: .25s;
+  }
+}
+
+/* The floating buttons fade in place instead of springing up. */
+@media (prefers-reduced-motion: reduce) {
+
+  .scroll-top,
+  .floating-back-button,
+  .floating-theme-toggle {
+    translate: none;
+    transition:
+      opacity 0.2s linear,
+      visibility 0.2s linear,
+      box-shadow 0.3s var(--ease-smooth),
+      background-color 0.4s var(--ease-smooth),
+      border-color 0.4s var(--ease-smooth);
+  }
+
+  .scroll-top:hover,
+  .floating-back-button:is(:hover, :focus-visible),
+  .floating-theme-toggle:is(:hover, :focus-visible) {
+    transform: none;
   }
 }
 
@@ -2885,6 +2992,7 @@ section,
   display: inline-block;
   left: -5px;
   position: relative;
+  transform: scale(-1, -1);
 }
 
 .testimonials .testimonial-item .quote-icon-right {
@@ -2892,7 +3000,6 @@ section,
   right: -5px;
   position: relative;
   top: 10px;
-  transform: scale(-1, -1);
 }
 
 .testimonials .testimonial-item p {
@@ -3710,8 +3817,9 @@ section,
   .theme-toggle {
     align-items: center;
     justify-content: center;
-    margin-left: 20px;
+    /* margin-left: 20px; */
   }
+
 }
 
 /* Mobile theme toggle styling */
@@ -3752,6 +3860,53 @@ section,
 .theme-toggle:is(:hover, :focus-visible) {
   background-color: var(--paper);
   /* outline: 2px solid var(--color); */
+}
+
+/* Desktop: the header toggle borrows the .nav-pill treatment exactly — nothing
+   at rest, then the same raised surface, tint, lift and press as the pill, so
+   hovering it feels like the shadowy surface arriving on one more nav item. */
+@media (min-width: 768px) {
+  .theme-toggle {
+    --size: 2.75rem;
+    background-color: transparent;
+    box-shadow: none;
+    transition:
+      background-color 0.3s var(--ease-smooth),
+      box-shadow 0.25s var(--ease-smooth),
+      transform 0.35s var(--ease-snap);
+  }
+
+  /* Keep the 20px glyph so the surface has the pill's breathing room. */
+  .theme-toggle .sun-and-moon {
+    inline-size: 20px;
+    block-size: 20px;
+  }
+
+  .theme-toggle:is(:hover, :focus-visible) {
+    background-color: var(--paper);
+    box-shadow: var(--elevation-2);
+    transform: translateY(-1px);
+  }
+
+  /* Mirrors the pill's dark treatment: shadow plus a faint top highlight,
+     no fill tint (see html:not(.light-mode) .navmenu .nav-pill). */
+  html:not(.light-mode) .theme-toggle:is(:hover, :focus-visible) {
+    box-shadow:
+      var(--elevation-2),
+      inset 0 1px 0 color-mix(in srgb, var(--ink), transparent 88%);
+  }
+
+  .theme-toggle:active {
+    box-shadow: var(--elevation-1);
+    transform: translateY(0) scale(0.94);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .theme-toggle:is(:hover, :focus-visible),
+    .theme-toggle:active {
+      transform: none;
+    }
+  }
 }
 
 .sun-and-moon {
