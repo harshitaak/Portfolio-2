@@ -4162,8 +4162,8 @@ body:has( a:hover) .cursor,
 body:has( button:hover) .cursor,
 body:has( [data-cursor]:hover) .cursor,
 body:has( .mobile-nav-toggle:hover) .cursor{
-  width: 3em;
-  height: 3em;
+  width: 0.5em;
+  height: 0.5em;
   background-color: oklch(from var(--color) l c h / 0.5);
   
 }
@@ -4178,8 +4178,8 @@ body:has( .mobile-nav-toggle:hover) .cursor{
   body:has( button:hover) .cursor,
   body:has( [data-cursor]:hover) .cursor,
   body:has( .mobile-nav-toggle:hover) .cursor {
-    width: 2.4em;
-    height: 2.4em;
+    width: 0.5em;
+    height: 0.5em;
   }
 }
 
