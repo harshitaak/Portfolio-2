@@ -470,6 +470,17 @@ main {
   --elevation-2: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
   --elevation-3: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
 
+  /* Stacking order for global chrome. These only beat each other if they share a
+     stacking context, so anything using them must be a direct child of <body>.
+     Layering inside a component stays a small local integer and isn't listed. */
+  --z-bg:       -1;
+  --z-footer:    1;
+  --z-header:   10;
+  --z-float:    20;  /* back / theme / scroll-top buttons */
+  --z-nav:      30;  /* open mobile menu */
+  --z-lightbox: 40;
+  --z-cursor:   50;
+
   /* Easing */
   --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
   --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
@@ -526,7 +537,7 @@ body *::after {
 
 .dots-bg {
   position: fixed;
-  z-index: -2;
+  z-index: var(--z-bg);
   inset: 0;
   height: 100%;
   width: 100%;
@@ -691,7 +702,7 @@ ol li::marker {
   background-color: var(--paper);
   height: 72px;
   align-content: center;
-  z-index: 997;
+  z-index: var(--z-header);
   position: relative;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
@@ -960,7 +971,8 @@ ol li::marker {
     opacity: 0;
     transition: 0.3s;
     border-radius: 4px;
-    z-index: 99;
+    /* Local only — the parent li (z-index: 1) already caps this subtree. */
+    z-index: 1;
     box-shadow: var(--elevation-1);
   }
 
@@ -1069,7 +1081,6 @@ ol li::marker {
 
   .navmenu {
     padding: 0;
-    z-index: 9997;
   }
 
   .navmenu ul {
@@ -1088,7 +1099,7 @@ ol li::marker {
     box-shadow: none;
     overflow-y: auto;
     transition: 0.3s;
-    z-index: 9998;
+    z-index: 1;
     height: auto;
   }
 
@@ -1186,7 +1197,6 @@ ol li::marker {
   .navmenu .dropdown ul {
     position: static;
     display: none;
-    z-index: 99;
     padding: 0;
     margin: 0;
     background-color: var(--paper);
@@ -1223,16 +1233,23 @@ ol li::marker {
     overflow: hidden;
   }
 
+  /* The overlay sits inside the header, so it's the header that has to clear the
+     floating buttons — the overlay's own value never reaches them. */
+  body.mobile-nav-active .header {
+    z-index: var(--z-nav);
+  }
 
+  /* Below here everything is inside .navbar-right and only orders against its
+     siblings: overlay 1, close button 2. */
   .mobile-nav-active .mobile-nav-toggle {
     color: var(--ink);
-    z-index: 10000;
+    z-index: 2;
   }
 
   /* Ensure navbar-right container doesn't interfere on mobile */
   .mobile-nav-active .navbar-right {
     position: relative;
-    z-index: 9998;
+    z-index: 1;
   }
 
   /* Fix mobile navigation positioning - optimized for performance */
@@ -1246,7 +1263,7 @@ ol li::marker {
     height: 100vh !important;
     background: color-mix(in srgb, var(--paper), transparent 85%) !important;
     box-shadow: var(--elevation-2) !important;
-    z-index: 9999 !important;
+    z-index: 1 !important;
     /* Prevent glitching */
     transform: translate3d(0, 0, 0);
     backface-visibility: hidden;
@@ -1275,7 +1292,7 @@ ol li::marker {
   .mobile-nav-active .navmenu>ul {
     display: block;
     position: relative;
-    z-index: 10000;
+    z-index: 1;
     padding-right: 0;
     margin: 0;
     overflow-x: hidden;
@@ -1293,7 +1310,7 @@ ol li::marker {
   text-align: center;
   padding: 0px 60px;
   position: relative;
-  z-index: 10;
+  z-index: var(--z-footer);
   box-shadow: var(--elevation-2);
   flex-direction: column;
 }
@@ -1738,7 +1755,7 @@ ol li::marker {
   opacity: 0;
   right: 16px;
   bottom: 16px;
-  z-index: 99999;
+  z-index: var(--z-float);
 
   background-color: var(--color);
   width: 44px;
@@ -1784,7 +1801,7 @@ ol li::marker {
   opacity: 0;
   left: 16px;
   top: 16px;
-  z-index: 99999;
+  z-index: var(--z-float);
   background-color: var(--paper);
   width: 44px;
   height: 44px;
@@ -1836,7 +1853,7 @@ ol li::marker {
   opacity: 0;
   right: 16px;
   top: 16px;
-  z-index: 999;
+  z-index: var(--z-float);
   background-color: var(--paper);
   width: 44px;
   aspect-ratio: 1/1;
@@ -3642,9 +3659,11 @@ section,
   backdrop-filter: blur(4px);
 }
 
-/* Lightbox container */
+/* Lightbox container. Vendor ships z-index:999999!important — override it so the
+   cursor can still sit on top. */
 .glightbox-container {
   background: transparent !important;
+  z-index: var(--z-lightbox) !important;
 }
 
 /* Lightbox image styling */
@@ -4147,7 +4166,7 @@ img[src$=".gif"] {
 }
 
 .cursor {
-  z-index: 10000;
+  z-index: var(--z-cursor);
   background-color: var(--color);
   border-radius: 100em;
   width: 1em;
