@@ -1377,7 +1377,8 @@ ol li::marker {
    centre whatever the label's length — no per-label travel tuning.
 
    Modifiers:
-     .btn-fly--plane    45deg tilt on take-off, for a paper-plane icon
+     .btn-fly--plane    45deg tilt on take-off — paper-plane, hammer, any
+                        glyph that should lean into the lift
      .btn-fly--outline  secondary weight — ringed and transparent at rest,
                         fills on hover. Combines with the others.
 
