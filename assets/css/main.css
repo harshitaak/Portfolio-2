@@ -958,63 +958,6 @@ ol li::marker {
     color: var(--ink);
     transform: none;
   }
-
-  .navmenu .dropdown ul {
-    margin: 0;
-    padding: 10px 0;
-    background: var(--paper);
-    display: block;
-    position: absolute;
-    visibility: hidden;
-    left: 14px;
-    top: 200%;
-    opacity: 0;
-    transition: 0.3s;
-    border-radius: 4px;
-    /* Local only — the parent li (z-index: 1) already caps this subtree. */
-    z-index: 1;
-    box-shadow: var(--elevation-1);
-  }
-
-  .navmenu .dropdown ul li {
-    min-width: 200px;
-  }
-
-  .navmenu .dropdown ul a {
-    padding: 10px 20px;
-    font-size: 15px;
-    text-transform: none;
-    color: var(--ink);
-  }
-
-  .navmenu .dropdown ul a i {
-    font-size: 12px;
-  }
-
-  .navmenu .dropdown ul a:hover,
-  .navmenu .dropdown ul .active:hover,
-  .navmenu .dropdown ul li:hover>a {
-    color: var(--color);
-  }
-
-  .navmenu .dropdown:hover>ul {
-    opacity: 1;
-    top: 100%;
-    visibility: visible;
-  }
-
-  .navmenu .dropdown .dropdown ul {
-    top: 0;
-    left: -90%;
-    visibility: hidden;
-  }
-
-  .navmenu .dropdown .dropdown:hover>ul {
-    opacity: 1;
-    top: 0;
-    left: -100%;
-    visibility: visible;
-  }
 }
 
 /* Mobile Navigation */
@@ -1177,52 +1120,6 @@ ol li::marker {
     color: var(--ink);
     transform: none;
     background-color: color-mix(in srgb, var(--ink), transparent 83%);
-  }
-
-  /* Ensure dropdown toggle icons animate properly - optimized */
-  .navmenu .toggle-dropdown {
-    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    transform-origin: center;
-    /* Prevent glitching */
-    transform: translate3d(0, 0, 0);
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
-  }
-
-  .navmenu .dropdown.active .toggle-dropdown {
-    transform: translate3d(0, 0, 0) rotate(180deg);
-    transform-origin: center;
-  }
-
-  .navmenu .dropdown ul {
-    position: static;
-    display: none;
-    padding: 0;
-    margin: 0;
-    background-color: var(--paper);
-    transition: all 0.5s ease-in-out;
-    height: auto;
-    max-height: none;
-    overflow: hidden;
-    width: 100%;
-  }
-
-  .navmenu .dropdown ul ul {
-    background-color: rgba(33, 37, 41, 0.1);
-    margin-left: 20px;
-    width: calc(100% - 20px);
-    overflow: hidden;
-  }
-
-  .navmenu .dropdown>.dropdown-active {
-    display: block;
-    background-color: rgba(33, 37, 41, 0.03);
-    height: auto;
-    max-height: none;
-    overflow: visible;
-    margin: 0;
-    padding: 0;
-    position: relative;
   }
 
   .mobile-nav-active {

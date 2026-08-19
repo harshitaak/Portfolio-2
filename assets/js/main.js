@@ -91,18 +91,6 @@ function reportThemeModeToGA(theme) {
   });
 
   /**
-   * Toggle mobile nav dropdowns
-   */
-  document.querySelectorAll('.navmenu .toggle-dropdown').forEach(navmenu => {
-    navmenu.addEventListener('click', function(e) {
-      e.preventDefault();
-      this.parentNode.classList.toggle('active');
-      this.parentNode.nextElementSibling.classList.toggle('dropdown-active');
-      e.stopImmediatePropagation();
-    });
-  });
-
-  /**
    * Sliding surface behind the desktop nav items.
    * One shadowed pill glides to whichever item is hovered or focused, and
    * returns to the current page's .active item (or hides) when the nav is left.
@@ -687,9 +675,6 @@ function reportThemeModeToGA(theme) {
   });
 
 })();
-
-// Old theme toggle implementation removed - replaced with modern data-theme approach below
-
 
 // Theme toggle using .light-mode on <html> and <body> (early init in theme-init.js)
 document.addEventListener('DOMContentLoaded', function() {
