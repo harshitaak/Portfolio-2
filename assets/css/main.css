@@ -765,22 +765,25 @@ ol li::marker {
     position: relative;
   }
 
+  /* The item's size comes from the link's own padding, not the li's, so the
+     whole area under the pill is clickable rather than just the label. */
   .navmenu>ul>li {
     white-space: nowrap;
-    padding: 16px 18px;
     cursor: pointer;
     z-index: 1;
   }
 
-  .navmenu>ul>li:last-child {
-    padding-right: 0;
+  .navmenu>ul>li:last-child>a {
+    padding-right: 2px;
   }
 
   .navmenu a,
   .navmenu a:focus {
     color: var(--ink);
     font-size: 16px;
-    padding: 0 2px;
+    /* 20px = the 18px the li used to carry plus the link's own 2px, so the
+       hit area grows to the full item without moving anything. */
+    padding: 16px 20px;
     font-family: var(--nav-font);
     font-weight: 400;
     display: flex;
@@ -828,7 +831,7 @@ ol li::marker {
   /* The label rises as the surface arrives under it. */
   .navmenu>ul>li:hover>a,
   .navmenu>ul>li>a:focus-visible {
-    transform: translateY(-1px);
+    transform: translateY(-2px);
   }
 
   /* ...and settles back down while the item is being pressed. */
