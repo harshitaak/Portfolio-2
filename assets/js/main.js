@@ -1,4 +1,37 @@
+/*==============================================================
+  TABLE OF CONTENTS — Ctrl+F the entry name to jump to it
+  Entries are listed in file order, top to bottom.
+================================================================
 
+  reportThemeModeToGA .............. mirror the active theme into GA user properties
+
+  MAIN IIFE ("use strict")
+    toggleScrolled ................. .scrolled on <body> once past the fold
+    Mobile nav toggle .............. open/close, icon swap, scroll-position restore
+    Hide mobile nav ................ nav links close the mobile menu (egg excluded)
+    initNavPill .................... sliding pill behind the desktop nav items
+    Scroll top button
+    Floating back button
+    Floating theme toggle button
+    aosInit ........................ Animate-On-Scroll
+    Init typed.js .................. rotating headline, optional per-item links
+    initSwiper ..................... .init-swiper sliders from data-config
+    initGLightbox .................. lightbox, re-inits on popstate
+    Init isotope layout and filters  portfolio grid
+    custom-carousel-nav ............ swiper with real prev/next buttons
+
+  TOP-LEVEL (each wires up its own DOMContentLoaded / load)
+    Theme toggle ................... .light-mode + localStorage (early init in theme-init.js)
+    Draw plugin .................... optional paid DrawSVGPlugin, registered only if present
+    svgVariants .................... shared underline paths, indexed by attribute
+    initDrawRandomUnderline ........ [draw-line] hover underlines
+    initHeadlineDrawLines .......... stamps a variant into .headline-draw__line
+    syncHeadlineDrawTitleGroupLineWidths  match SVG width to the rendered heading
+    initBasicCustomCursor .......... GSAP quickTo cursor follower
+    lenis .......................... smooth scroll, skipped for reduced motion
+    Slides easter egg .............. seven clicks on Philosophy reveal Slides
+
+================================================================*/
 
 function reportThemeModeToGA(theme) {
   if (typeof window.gtag !== 'function') return;
