@@ -75,8 +75,13 @@ function reportThemeModeToGA(theme) {
 
   /**
    * Hide mobile nav on same-page/hash links
+   *
+   * .js-deck-egg is excluded: it needs seven clicks to do anything, and
+   * closing the menu on the first one would make it unreachable on mobile.
+   * Excluding it here rather than stopping propagation from the egg's own
+   * handler keeps this independent of listener registration order.
    */
-  document.querySelectorAll('#navmenu a').forEach(navmenu => {
+  document.querySelectorAll('#navmenu a:not(.js-deck-egg)').forEach(navmenu => {
     navmenu.addEventListener('click', () => {
       if (document.querySelector('.mobile-nav-active')) {
         mobileNavToogle();
@@ -915,3 +920,83 @@ document.addEventListener('DOMContentLoaded', () => {
 const lenis = window.matchMedia("(prefers-reduced-motion: reduce)").matches
   ? null
   : new Lenis({ autoRaf: true });
+
+/**
+ * Slides easter egg — a restaging of Android's developer-mode unlock.
+ *
+ * Seven clicks on the already-active "Philosophy" nav item reveal a "Slides"
+ * item beside it, the way seven taps on Build number reveal Developer options.
+ * Follows AOSP BuildNumberPreferenceController: seven taps, the countdown only
+ * starts once fewer than TAPS - 2 remain (so the first two clicks are silent,
+ * which is what makes the third one land), and there is no time-based reset —
+ * the count lives until the page is reloaded.
+ *
+ * Only philosophy.html carries the hooks, so this no-ops on every other page.
+ */
+(function () {
+  const TAPS = 7;
+
+  // COPY SLOT: the three toast strings.
+  const UNLOCKED = 'You are now a presenter!';
+  const ALREADY = 'No need, you already have the slides.';
+  function countdownMessage(n) {
+    // AOSP uses an ICU plural here; "1 steps" reads broken.
+    return 'You are now ' + n + (n === 1 ? ' step' : ' steps') + ' away from the slides.';
+  }
+
+  function initDeckEgg() {
+    const trigger = document.querySelector('.js-deck-egg');
+    const item = document.getElementById('deck-egg');
+    const toast = document.getElementById('egg-toast');
+    if (!trigger || !item || !toast) return;
+
+    let countdown = TAPS;
+    let hideTimer = 0;
+
+    function say(message) {
+      toast.textContent = message;
+      toast.classList.add('is-visible');
+      // Restart the dismissal rather than letting messages stack.
+      clearTimeout(hideTimer);
+      hideTimer = setTimeout(function () {
+        toast.classList.remove('is-visible');
+      }, 2000);
+    }
+
+    function reveal() {
+      // Lifts the toast clear of the button — they share the bottom-centre slot.
+      document.body.classList.add('deck-unlocked');
+      item.classList.add('is-revealed');
+    }
+
+    trigger.addEventListener('click', function (e) {
+      // It links to the page you are already on, and the reload would reset
+      // the count on every click. Suppressing it is the whole mechanism.
+      e.preventDefault();
+
+      if (countdown < 0) {
+        say(ALREADY);
+        return;
+      }
+
+      countdown--;
+
+      if (countdown === 0) {
+        countdown = -1;
+        reveal();
+        say(UNLOCKED);
+        if (typeof gtag === 'function') {
+          gtag('event', 'easter_egg_deck');
+        }
+      } else if (countdown < TAPS - 2) {
+        say(countdownMessage(countdown));
+      }
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initDeckEgg);
+  } else {
+    initDeckEgg();
+  }
+})();

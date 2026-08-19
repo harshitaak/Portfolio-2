@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -89,7 +89,7 @@
         <nav id="navmenu" class="navmenu">
           <ul>
             <li><a href="about.html">About</a></li>
-            <li><a href="philosophy.html" class="active">Philosophy</a></li>
+            <li><a href="philosophy.html" class="active js-deck-egg">Philosophy</a></li>
             <li><a href="portfolio.html">Portfolio</a></li>
             <li class="d-md-none">
               <a href="#" class="theme-toggle-mobile d-flex align-items-center" onclick="document.getElementById('theme-toggle').click(); return false;">
@@ -949,6 +949,17 @@
       </g>
     </svg>
   </button>
+
+  <!-- COPY SLOT: the reward, revealed by the Philosophy-nav easter egg (7 clicks) -->
+  <div id="deck-egg" class="deck-egg">
+    <a href="https://www.figma.com/deck/mBs0xiFdPKgnoVQtiW6OXn" target="_blank" rel="noopener noreferrer" class="btn-fly btn-fly--icon-right">
+      <span class="btn-fly-label">Slides</span>
+      <span class="btn-fly-icon"><i data-lucide="external-link"></i></span>
+    </a>
+  </div>
+
+  <!-- Countdown/confirmation toast for the Philosophy-nav easter egg -->
+  <div id="egg-toast" class="egg-toast" role="status" aria-live="polite"></div>
 
 
   <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

@@ -1499,6 +1499,31 @@ ol li::marker {
   color: var(--color);
 }
 
+/* icon-right variant — the same flight, mirrored: the icon rests after the
+   label and flies left to centre, and the label clears off the left edge.
+   Must stay after the base rules above, which it ties with on specificity. */
+.btn-fly--icon-right {
+  padding-right: calc(var(--fly-pad) + var(--fly-size) + var(--fly-gap));
+  padding-left: var(--fly-pad);
+}
+
+.btn-fly--icon-right .btn-fly-icon {
+  left: auto;
+  right: var(--fly-pad);
+  transition: right 0.3s ease-in-out, color 0.4s;
+}
+
+.btn-fly--icon-right:hover .btn-fly-icon,
+.btn-fly--icon-right:focus-visible .btn-fly-icon {
+  left: auto;
+  right: calc(50% - var(--fly-size) / 2);
+}
+
+.btn-fly--icon-right:hover .btn-fly-label,
+.btn-fly--icon-right:focus-visible .btn-fly-label {
+  transform: translateX(calc(-100% - var(--fly-pad)));
+}
+
 /* keeps the -50% vertical centring while bobbing */
 @keyframes btn-fly-hover {
   from { transform: translateY(calc(-50% + 0.1em)); }
@@ -1510,6 +1535,14 @@ ol li::marker {
   .btn-fly:focus-visible .btn-fly-icon {
     left: var(--fly-pad);
     animation: none;
+  }
+
+  /* the rule above would otherwise re-anchor the mirrored icon to the left,
+     leaving both offsets set at once */
+  .btn-fly--icon-right:hover .btn-fly-icon,
+  .btn-fly--icon-right:focus-visible .btn-fly-icon {
+    left: auto;
+    right: var(--fly-pad);
   }
 
   .btn-fly-icon,
@@ -4658,6 +4691,111 @@ body.philosophy-page .essay-close p {
   font: var(--text-caption-font);
   color: color-mix(in oklch, var(--ink) 60%, transparent);
   margin-top: 1rem;
+}
+
+/* --- Slides easter egg --------------------------------------
+   Seven clicks on the already-active "Philosophy" nav item reveal a
+   floating "Slides" button, after Android's tap-Build-number-7-times
+   unlock. Only philosophy.html carries the hooks, so the rules below
+   never match anywhere else.
+
+   The button lands at the bottom of the viewport, where the countdown
+   toast has been playing out — by the seventh click that is where the
+   eye already is, not up in the nav where the clicking happened. */
+
+/* Positioning lives here so it never fights .btn-fly, which supplies the
+   appearance and owns its own hover transform. */
+body.philosophy-page .deck-egg {
+  position: fixed;
+  visibility: hidden;
+  opacity: 0;
+  left: 50%;
+  bottom: 32px;
+  /* Clears the open mobile menu, which raises .header to --z-nav. */
+  z-index: calc(var(--z-nav) + 1);
+
+  /* `transform` holds the centring, `translate` carries the entrance, so
+     neither overwrites the other. */
+  transform: translateX(-50%);
+  translate: 0 24px;
+  transition:
+    translate 0.45s var(--ease-bounce-strong),
+    opacity 0.3s var(--ease-smooth),
+    visibility 0.3s var(--ease-smooth);
+}
+
+body.philosophy-page .deck-egg.is-revealed {
+  visibility: visible;
+  opacity: 1;
+  translate: 0 0;
+}
+
+/* Seven rapid clicks would otherwise drag a selection across the label. */
+body.philosophy-page .js-deck-egg {
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* The open mobile menu raises .header to --z-nav (see the note by that
+   rule), and the overlay sits inside it — so --z-float, which the other
+   floating buttons use, would put this behind the menu. */
+body.philosophy-page .egg-toast {
+  position: fixed;
+  visibility: hidden;
+  opacity: 0;
+  left: 50%;
+  bottom: 32px;
+  z-index: calc(var(--z-nav) + 1);
+
+  max-width: min(90vw, 36ch);
+  padding: 0.7rem 1.15rem;
+  border-radius: 50px;
+  text-align: center;
+  background-color: var(--ink);
+  color: var(--paper);
+  font: var(--text-caption-font);
+  box-shadow: var(--elevation-2);
+  pointer-events: none;
+
+  /* `transform` holds the centring, `translate` carries the entrance, so
+     neither overwrites the other. */
+  transform: translateX(-50%);
+  translate: 0 16px;
+  transition:
+    translate 0.35s var(--ease-snap),
+    bottom 0.45s var(--ease-snap),
+    opacity 0.3s var(--ease-smooth),
+    visibility 0.3s var(--ease-smooth);
+}
+
+body.philosophy-page .egg-toast.is-visible {
+  visibility: visible;
+  opacity: 1;
+  translate: 0 0;
+}
+
+/* Once the button is out, the toast steps up to sit above it — both share
+   the same bottom-centre slot, and the "already have them" toast would
+   otherwise land straight on top of the button. */
+body.philosophy-page.deck-unlocked .egg-toast {
+  bottom: 92px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.philosophy-page .egg-toast {
+    translate: 0 0;
+    transition:
+      bottom 0.2s linear,
+      opacity 0.15s linear,
+      visibility 0.15s linear;
+  }
+
+  body.philosophy-page .deck-egg {
+    translate: 0 0;
+    transition:
+      opacity 0.15s linear,
+      visibility 0.15s linear;
+  }
 }
 
 @media (max-width: 767px) {
