@@ -785,7 +785,7 @@ ol li::marker {
     font-size: 16px;
     /* 20px = the 18px the li used to carry plus the link's own 2px, so the
        hit area grows to the full item without moving anything. */
-    padding: 16px 20px;
+    padding: 16px 18px;
     font-family: var(--nav-font);
     font-weight: 400;
     display: flex;
