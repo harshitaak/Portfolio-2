@@ -458,12 +458,12 @@ main {
   --text-caption-font:  400 var(--caption)/1.5   "Satoshi-Regular", sans-serif;
 
   /* Colors */
-  --paper: oklch(27% 0 0);
-  --ink:   oklch(92% 0 0);
-  --color: oklch(75% 0.08 240);
-  --color-2: oklch(75% 0.08 30);
-  --color-3: oklch(75% 0.08 150);
-  --color-4: oklch(75% 0.08 270);
+  --paper:   oklch(27% 0    0);
+  --ink:     oklch(92% 0    0);
+  --color:   oklch(70% 0.11 240);
+  --color-2: oklch(70% 0.11 30);
+  --color-3: oklch(70% 0.11 150);
+  --color-4: oklch(70% 0.11 270);
   --shadow-color: oklch(0% 0 0);
   
   /* Elevation */
@@ -493,12 +493,12 @@ main {
 
 /* Light mode color variables */
 .light-mode {
-  --paper: oklch(93% 0 0);
-  --ink:   oklch(20% 0 0);
-  --color: oklch(62% 0.11 240);
-  --color-2: oklch(62% 0.11 30);
-  --color-3: oklch(62% 0.11 150);
-  --color-4: oklch(62% 0.11 270);
+  --paper:   oklch(93% 0    0);
+  --ink:     oklch(20% 0    0);
+  --color:   oklch(62% 0.14 240);
+  --color-2: oklch(62% 0.14 30);
+  --color-3: oklch(62% 0.14 150);
+  --color-4: oklch(62% 0.14 270);
   --shadow-color: oklch(0% 0 0);
 }
 
@@ -1852,7 +1852,7 @@ ol li::marker {
 
 /* Dark theme styles (when light-mode class is NOT present) */
 html:not(.light-mode) .floating-theme-toggle .sun-and-moon>.sun {
-  transform: scale(1.75);
+  transform: scale(1.62);
 }
 
 html:not(.light-mode) .floating-theme-toggle .sun-and-moon>.sun-beams {
@@ -1892,7 +1892,7 @@ html:not(.light-mode) .floating-theme-toggle .sun-and-moon>.moon>circle {
   html:not(.light-mode) .floating-theme-toggle .sun-and-moon>.sun {
     transition-timing-function: var(--ease-smooth);
     transition-duration: .25s;
-    transform: scale(1.75);
+    transform: scale(1.62);
   }
 
   html:not(.light-mode) .floating-theme-toggle .sun-and-moon>.sun-beams {
@@ -3897,7 +3897,7 @@ section,
 
 /* Dark theme styles (when light-mode class is NOT present) */
 html:not(.light-mode) .sun-and-moon>.sun {
-  transform: scale(1.75);
+  transform: scale(1.62);
 }
 
 html:not(.light-mode) .sun-and-moon>.sun-beams {
@@ -3937,7 +3937,7 @@ html:not(.light-mode) .sun-and-moon>.moon>circle {
   html:not(.light-mode) .sun-and-moon>.sun {
     transition-timing-function: var(--ease-smooth);
     transition-duration: .25s;
-    transform: scale(1.75);
+    transform: scale(1.62);
   }
 
   html:not(.light-mode) .sun-and-moon>.sun-beams {
@@ -4469,7 +4469,7 @@ body.philosophy-page .essay__turn {
 
 body.philosophy-page .essay__turn p {
   margin-top: 2em;
-  color: color-mix(in oklch, var(--ink) 75%, transparent);
+  color: color-mix(in oklch, var(--ink) 62%, transparent);
 }
 
 body.philosophy-page .essay__turn p:first-child {
