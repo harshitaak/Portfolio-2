@@ -495,7 +495,7 @@ main {
 .light-mode {
   --paper: oklch(93% 0 0);
   --ink:   oklch(20% 0 0);
-  --color: oklch(62.4% 0.11 240);
+  --color: oklch(62% 0.11 240);
   --color-2: oklch(62% 0.11 30);
   --color-3: oklch(62% 0.11 150);
   --color-4: oklch(62% 0.11 270);
@@ -711,12 +711,14 @@ ol li::marker {
 
 .header .logo {
   max-height: 48px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .header .logo .logo-svg {
   height: 48px;
   width: 48px;
-  margin-right: 8px;
   display: block;
   object-fit: contain;
   color: var(--ink);
