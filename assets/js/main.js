@@ -381,6 +381,16 @@ function reportThemeModeToGA(theme) {
   window.addEventListener('load', aosInit);
 
   /**
+   * Navbar intro — fires on the same tick as the hero stagger so the slide reads
+   * as beat 0 of the ladder (navbar 0ms, hero 100ms, cards 300-700ms).
+   * The hidden state and the reduced-motion / no-JS fallbacks live in main.css.
+   */
+  window.addEventListener('load', function () {
+    const header = document.getElementById('header');
+    if (header) header.classList.add('nav-intro');
+  }, { once: true });
+
+  /**
    * Init typed.js
    */
   const selectTyped = document.querySelector('.typed');
