@@ -647,7 +647,32 @@ h4,
 h5,
 h6 {
   color: var(--ink);
-  font: var(--text-headline-font);
+  font-family: var(--heading-font);
+  text-wrap: balance;
+}
+
+h3 {
+  font-size: clamp(1.5rem, 5vw, 2rem);
+  line-height: 1.25;
+}
+
+h4 {
+  font-size: var(--section-title);
+  line-height: 1.3;
+}
+
+h5 {
+  font-family: "Satoshi-Bold", var(--heading-font);
+  font-size: var(--title);
+  line-height: 1.35;
+}
+
+h6 {
+  font-family: "Satoshi-Bold", var(--heading-font);
+  font-size: var(--subtitle);
+  line-height: 1.4;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
 }
 
 /* Global list bullet/number color */
@@ -4457,7 +4482,7 @@ body.philosophy-page .essay > h2 + * {
    plus the closing line of a turn, which gets it automatically. */
 body.philosophy-page .essay .essay__lead,
 body.philosophy-page .essay .essay__turn p:last-child {
-  font: var(--text-title-font);
+  /* font: var(--text-title-font); */
   line-height: 1.5;
 }
 
@@ -4620,7 +4645,6 @@ body.philosophy-page .essay-close {
 body.philosophy-page .essay-close p {
   font: var(--text-caption-font);
   color: color-mix(in oklch, var(--ink) 60%, transparent);
-  margin-top: 1rem;
 }
 
 /* --- Slides easter egg --------------------------------------
