@@ -3412,12 +3412,12 @@ section,
   color: inherit;
   text-decoration: underline;
 }
-
+/* 
 .project-description {
   color: var(--ink);
   font: var(--text-body-font);
   text-wrap: pretty;
-}
+} */
 
 /* Color chips for displaying color palette variables */
 .color-chip {
@@ -4475,7 +4475,7 @@ body.philosophy-page .essay > h2 {
 }
 
 body.philosophy-page .essay > h2 + * {
-  margin-top: 1.7em;
+  margin-top: 1.5em;
 }
 
 /* Emphasis tier: any paragraph carrying weight — lead-ins, punchlines —
