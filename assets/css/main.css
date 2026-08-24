@@ -4562,6 +4562,12 @@ body.philosophy-page .essay__logs {
   text-align: left;
 }
 
+/* Same card, on its own: one column, narrower measure */
+body.philosophy-page .essay__logs--single {
+  --fig-width: min(100vw - 3rem, 620px);
+  grid-template-columns: minmax(0, 1fr);
+}
+
 body.philosophy-page .log-card {
   border-radius: 8px;
   background: var(--paper);
