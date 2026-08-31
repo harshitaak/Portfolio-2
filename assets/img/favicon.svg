@@ -1,0 +1,23 @@
+<svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    /* Mirrors --ink in assets/css/main.css, as literal hex: a favicon is a separate
+       document, so the page's custom properties are not in scope here.
+       Light oklch(20% 0 0) = #161616 ... dark oklch(92% 0 0) = #e4e4e4.
+
+       Follows the OS theme, not the site's .light-mode class, because the tab strip
+       this is painted on is coloured by the browser rather than by the page.
+
+       This is the default the HTML link points at. The media query below only takes
+       effect in Firefox — Chrome ignores it for favicons (crbug.com/1311553) and
+       always paints the light-mode rule — so theme-init.js swaps the whole file for
+       favicon-dark.svg when the OS is dark. Keep the two files' paths in sync. */
+    path { fill: #161616; }
+
+    @media (prefers-color-scheme: dark) {
+      path { fill: #e4e4e4; }
+    }
+  </style>
+  <path d="M12.4502 5.22559L8.22559 9.4502L8.22461 9.44922L8.13477 31.4453L4.06152 27.3711L4 5.22461L8.22559 1.00098L12.4502 5.22559Z"/>
+  <path d="M24.5156 31.2168L20.2373 27.2471L20.2246 21.6953L24.5156 17.4043V31.2168Z"/>
+  <path d="M28.8633 5.22461L24.6387 9.44922L24.5156 17.4043H8.23535L12.1777 13.4619H20.415V5.22461L24.6387 1L28.8633 5.22461Z"/>
+</svg>
