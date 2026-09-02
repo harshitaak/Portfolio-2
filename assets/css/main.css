@@ -4533,16 +4533,18 @@ body.philosophy-page .essay__figure {
   /* Escape the reading column via margins, not transform — .essay-reveal
      owns transform on these elements. */
   --fig-width: min(100vw - 3rem, 1200px);
+  /* Side gutters inside the figure band. Override per-figure with a style
+     attr (e.g. --fig-inset: 0) for a diagram that should run full-bleed. */
+  --fig-inset: 15%;
   width: var(--fig-width);
-  padding-block: 15%;
-  margin-block: 5rem;
+  margin-block: clamp(6rem, 12vw, 11rem);
   margin-inline: calc(50% - var(--fig-width) / 2);
 }
 
 body.philosophy-page .essay__figure > svg,
 body.philosophy-page .essay__figure img {
-  width: 100%;
-  padding: 0 15%;
+  width: calc(100% - 2 * var(--fig-inset));
+  margin-inline: auto;
   height: auto;
   display: block;
 }
@@ -4557,6 +4559,8 @@ body.philosophy-page .essay__figure figcaption {
 /* --- Paired logs: two record cards, side by side ------------- */
 body.philosophy-page .essay__logs {
   --fig-width: min(100vw - 3rem, 920px);
+  /* Cards carry their own padding — keep the figure rhythm, not the media inset. */
+  margin-block: 6rem;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1.5rem;
@@ -4768,7 +4772,10 @@ body.philosophy-page.deck-unlocked .egg-toast {
 
   body.philosophy-page .essay__figure {
     --fig-width: calc(100vw - 2rem);
-    margin-block: 3rem;
+    /* No side gutters on a narrow screen — --fig-width already leaves a margin. */
+    --fig-inset: 0;
+    /* Matches the base clamp's floor, so there's no jump at the breakpoint. */
+    margin-block: 6rem;
   }
 
   body.philosophy-page .essay__logs {
