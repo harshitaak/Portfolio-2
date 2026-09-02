@@ -4211,12 +4211,11 @@ body:has( .mobile-nav-toggle:hover) .cursor{
 --------------------------------------------------------------*/
 .figjam-embed {
   position: relative;
-  width: 100%;
+  width: 70%;
   max-width: 100%;
-  margin: 0.5rem 0 0;
-  border-radius: 8px;
+  margin: 0.5rem auto 0;
+  border-radius: 16px;
   overflow: hidden;
-  border: 1px solid color-mix(in srgb, var(--ink), transparent 88%);
   background: var(--paper);
   aspect-ratio: 16 / 9;
 }
@@ -4542,6 +4541,7 @@ body.philosophy-page .essay__figure {
 body.philosophy-page .essay__figure > svg,
 body.philosophy-page .essay__figure img {
   width: 100%;
+  padding: 0 15%;
   height: auto;
   display: block;
 }
