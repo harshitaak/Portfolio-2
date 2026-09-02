@@ -4534,6 +4534,7 @@ body.philosophy-page .essay__figure {
      owns transform on these elements. */
   --fig-width: min(100vw - 3rem, 1200px);
   width: var(--fig-width);
+  padding-block: 15%;
   margin-block: 5rem;
   margin-inline: calc(50% - var(--fig-width) / 2);
 }
