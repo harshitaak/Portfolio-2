@@ -1,0 +1,89 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <style>
+    @font-face {
+      font-family: "Satoshi";
+      src: url(data:font/woff2;base64,__SATOSHI_WOFF2__) format("woff2");
+      font-weight: 300 900;
+      font-style: normal;
+      font-display: block;
+    }
+    body {
+      margin: 0;
+      font-family: "Satoshi", system-ui, -apple-system, "Segoe UI", sans-serif;
+      background: #262626;
+      color: #e4e4e4;
+    }
+    a { color: #58a7dc; text-decoration: none; }
+    a:hover { color: #7bbbe5; }
+    .pill { font-size: 14px; font-weight: 500; padding: 12px 24px; margin: 0 5px; background: #262626; color: #e4e4e4; border-radius: 30px; display: flex; align-items: center; gap: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); }
+    .pill svg { width: 20px; height: 20px; display: block; flex-shrink: 0; }
+    .card { position: relative; overflow: hidden; border-radius: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); }
+    .card img { display: block; width: 366px; height: 244px; object-fit: cover; }
+  </style>
+</helmet>
+
+<div style="width: 390px; height: 880px; overflow: hidden; background: #262626; color: #e4e4e4;">
+
+  <!-- Header -->
+  <div style="height: 72px; background: #262626; box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); position: relative; z-index: 2; display: flex; align-items: center; justify-content: space-between; padding: 0 12px; box-sizing: border-box;">
+    <div style="display: flex; align-items: center; gap: 8px;">
+      <svg width="48" height="48" viewBox="0 0 1000 1000" fill="none" style="display: block; color: #e4e4e4;">
+        <path d="M309.598 146.833L211.586 244.845L309.598 342.857L407.61 244.845L309.598 146.833Z" fill="currentColor" />
+        <path d="M690.412 146.83L592.4 244.842L690.412 342.854L788.425 244.842L690.412 146.83Z" fill="currentColor" />
+        <path d="M309.59 342.85L307.49 853.17L212.99 758.66L211.58 244.84L309.59 342.85Z" fill="currentColor" />
+        <path d="M592.4 244.84V435.95H401.3L309.83 527.42H687.53L690.41 342.85L592.4 244.84Z" fill="currentColor" />
+        <path d="M588.281 755.78L687.531 847.88V527.42L587.971 626.98L588.281 755.78Z" fill="currentColor" />
+      </svg>
+      <div style="font-size: 30px; font-weight: 700; color: #e4e4e4; line-height: 1.2;">Harshit Taak</div>
+    </div>
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#e4e4e4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: block;"><path d="M4 5h16"></path><path d="M4 12h16"></path><path d="M4 19h16"></path></svg>
+  </div>
+
+  <!-- Portfolio -->
+  <div style="padding: 40px 12px 0; box-sizing: border-box; background: #262626;">
+
+    <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 16px; margin-bottom: 40px;">
+      <div class="pill" style="background: #58a7dc; color: #262626;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#262626" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83z"></path><path d="M2 12a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 12"></path><path d="M2 17a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 17"></path></svg>
+        <span>All</span>
+      </div>
+      <div class="pill">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#858585" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h8"></path><path d="M10 19v-3.96 3.15"></path><path d="M7 19h5"></path><rect width="6" height="10" x="16" y="12" rx="2"></rect></svg>
+        <span>Digital</span>
+      </div>
+      <div class="pill">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#858585" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 9V6a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v3"></path><path d="M3 16a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-5a2 2 0 0 0-4 0v1.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V11a2 2 0 0 0-4 0z"></path><path d="M5 18v2"></path><path d="M19 18v2"></path></svg>
+        <span>Furniture</span>
+      </div>
+      <div class="pill">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#858585" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22a1 1 0 0 1 0-20 10 9 0 0 1 10 9 5 5 0 0 1-5 5h-2.25a1.75 1.75 0 0 0-1.4 2.8l.3.4a1.75 1.75 0 0 1-1.4 2.8z"></path><circle cx="13.5" cy="6.5" r=".5" fill="#858585"></circle><circle cx="17.5" cy="10.5" r=".5" fill="#858585"></circle><circle cx="6.5" cy="12.5" r=".5" fill="#858585"></circle><circle cx="8.5" cy="7.5" r=".5" fill="#858585"></circle></svg>
+        <span>Visual</span>
+      </div>
+      <div class="pill">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#858585" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m11 10 3 3"></path><path d="M6.5 21A3.5 3.5 0 1 0 3 17.5a2.62 2.62 0 0 1-.708 1.792A1 1 0 0 0 3 21z"></path><path d="M9.969 17.031 21.378 5.624a1 1 0 0 0-3.002-3.002L6.967 14.031"></path></svg>
+        <span>Art</span>
+      </div>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 54px;">
+      <div class="card"><img src="aquata.jpg" alt="Aquata"></div>
+      <div class="card"><img src="otg.jpg" alt="OnTheGO"></div>
+    </div>
+
+  </div>
+
+</div>
+</x-dc>
+<script data-dc-script data-props='{"$preview":{"width":390,"height":880}}'>
+class Component extends DCLogic {}
+</script>
+</body>
+</html>

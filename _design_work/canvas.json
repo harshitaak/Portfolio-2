@@ -1,0 +1,25 @@
+{
+  "pages": [
+    { "id": "page-1", "name": "Site" },
+    { "id": "page-2", "name": "Philosophy essay" }
+  ],
+  "artboards": [
+    { "file": "Main.dc.html",            "page": "page-1", "x": 0,    "y": 0,    "w": 1440, "h": 1060, "title": "Home — desktop 1440" },
+    { "file": "LightMode.dc.html",       "page": "page-1", "x": 1560, "y": 0,    "w": 1440, "h": 1060, "title": "Home — light mode" },
+    { "file": "PortfolioGrid.dc.html",   "page": "page-1", "x": 0,    "y": 1240, "w": 1440, "h": 1660, "title": "Portfolio — desktop 1440" },
+    { "file": "Tokens.dc.html",          "page": "page-1", "x": 1560, "y": 1240, "w": 1000, "h": 2180, "title": "Design tokens" },
+    { "file": "HomeMobile.dc.html",      "page": "page-1", "x": 0,    "y": 3080, "w": 390,  "h": 880,  "title": "Home — 390" },
+    { "file": "PortfolioMobile.dc.html", "page": "page-1", "x": 530,  "y": 3080, "w": 390,  "h": 880,  "title": "Portfolio — 390" },
+
+    { "file": "Philosophy.dc.html",       "page": "page-2", "x": 0,    "y": 0, "w": 1440, "h": 10100, "title": "Philosophy — desktop 1440", "print": "flow" },
+    { "file": "PhilosophyMobile.dc.html", "page": "page-2", "x": 1560, "y": 0, "w": 390,  "h": 1700,  "title": "Philosophy — 390" }
+  ],
+  "annotations": [
+    { "id": "note-hover",  "page": "page-1", "x": 1010, "y": 3080, "w": 300, "text": "On the portfolio artboard the second card (OnTheGO) is drawn in its hover state — year badge top-left, description bottom-centre over a black gradient. Every other card sits at rest." },
+    { "id": "note-mobile", "page": "page-1", "x": 1010, "y": 3320, "w": 300, "text": "The two 390-wide frames are viewport crops at 390x844 plus a little slack, not whole pages. The portfolio one keeps scrolling past the second card." },
+    { "id": "note-figs",   "page": "page-2", "x": 2100, "y": 0,    "w": 320, "text": "The three diagrams are the page's own inline SVGs, flattened to images at 1200px — the plotted one carries ~4 MB of embedded photos and would choke the canvas as live vector." },
+    { "id": "note-embed",  "page": "page-2", "x": 2100, "y": 280,  "w": 320, "text": "The FigJam board near the end is a live Figma embed on the real page. Nothing outside the canvas can load here, so it stands in as an empty framed panel at the same 16:9." },
+    { "id": "note-scroll", "page": "page-2", "x": 2100, "y": 560,  "w": 320, "text": "The 390-wide frame is a scroll strip — hero plus the opening section — not the whole essay. The desktop artboard is the full 10,000px page." }
+  ],
+  "launch": { "view": "canvas", "page": "page-2" }
+}

@@ -1,0 +1,181 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <style>
+    @font-face {
+      font-family: "Satoshi";
+      src: url(data:font/woff2;base64,__SATOSHI_WOFF2__) format("woff2");
+      font-weight: 300 900;
+      font-style: normal;
+      font-display: block;
+    }
+    body {
+      margin: 0;
+      font-family: "Satoshi", system-ui, -apple-system, "Segoe UI", sans-serif;
+      background: #262626;
+      color: #e4e4e4;
+    }
+    a { color: #58a7dc; text-decoration: none; }
+    a:hover { color: #7bbbe5; }
+    .sec { font-size: 12px; font-weight: 500; letter-spacing: 1.6px; text-transform: uppercase; color: #858585; padding-bottom: 14px; border-bottom: 1px solid #3a3a3a; margin-bottom: 28px; }
+    .mono { font-size: 12px; font-weight: 400; color: #858585; letter-spacing: 0.2px; }
+    .name { font-size: 14px; font-weight: 500; color: #e4e4e4; }
+    .sw { width: 100%; height: 84px; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); }
+  </style>
+</helmet>
+
+<div style="width: 1000px; background: #262626; color: #e4e4e4; padding: 64px 64px 72px; box-sizing: border-box;">
+
+  <div style="margin-bottom: 56px;">
+    <div style="font-size: 44px; font-weight: 700; line-height: 1.15; color: #e4e4e4;">Design tokens</div>
+    <div style="font-size: 20px; font-weight: 300; line-height: 1.6; color: #858585; margin-top: 8px;">The values in <span style="color: #e4e4e4;">assets/css/main.css</span>, as they resolve. Colors are authored in oklch; hex shown for reference.</div>
+  </div>
+
+  <!-- Colour -->
+  <div class="sec">Colour — dark (default)</div>
+  <div style="display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 20px; margin-bottom: 44px;">
+    <div><div class="sw" style="background: #262626; border: 1px solid #3a3a3a;"></div><div class="name" style="margin-top: 10px;">--paper</div><div class="mono">oklch(27% 0 0) · #262626</div></div>
+    <div><div class="sw" style="background: #e4e4e4;"></div><div class="name" style="margin-top: 10px;">--ink</div><div class="mono">oklch(92% 0 0) · #e4e4e4</div></div>
+    <div><div class="sw" style="background: #58a7dc;"></div><div class="name" style="margin-top: 10px;">--color</div><div class="mono">oklch(70% .11 240) · #58a7dc</div></div>
+    <div><div class="sw" style="background: #da8375;"></div><div class="name" style="margin-top: 10px;">--color-2</div><div class="mono">oklch(70% .11 30) · #da8375</div></div>
+    <div><div class="sw" style="background: #69b27a;"></div><div class="name" style="margin-top: 10px;">--color-3</div><div class="mono">oklch(70% .11 150) · #69b27a</div></div>
+    <div><div class="sw" style="background: #849be3;"></div><div class="name" style="margin-top: 10px;">--color-4</div><div class="mono">oklch(70% .11 270) · #849be3</div></div>
+  </div>
+
+  <div class="sec">Colour — light (.light-mode)</div>
+  <div style="display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 20px; margin-bottom: 56px;">
+    <div><div class="sw" style="background: #e8e8e8;"></div><div class="name" style="margin-top: 10px;">--paper</div><div class="mono">oklch(93% 0 0) · #e8e8e8</div></div>
+    <div><div class="sw" style="background: #161616;"></div><div class="name" style="margin-top: 10px;">--ink</div><div class="mono">oklch(20% 0 0) · #161616</div></div>
+    <div><div class="sw" style="background: #0a8fd1;"></div><div class="name" style="margin-top: 10px;">--color</div><div class="mono">oklch(62% .14 240) · #0a8fd1</div></div>
+    <div><div class="sw" style="background: #cd6151;"></div><div class="name" style="margin-top: 10px;">--color-2</div><div class="mono">oklch(62% .14 30) · #cd6151</div></div>
+    <div><div class="sw" style="background: #3d9257;"></div><div class="name" style="margin-top: 10px;">--color-3</div><div class="mono">oklch(62% .14 150) · #3d9257</div></div>
+    <div><div class="sw" style="background: #6f83d6;"></div><div class="name" style="margin-top: 10px;">--color-4</div><div class="mono">oklch(62% .14 270) · #6f83d6</div></div>
+  </div>
+
+  <!-- Type -->
+  <div class="sec">Type — Satoshi, one family, six roles</div>
+  <div style="display: flex; flex-direction: column; gap: 26px; margin-bottom: 56px;">
+    <div style="display: flex; align-items: baseline; gap: 28px;">
+      <div class="mono" style="width: 176px; flex-shrink: 0;">display · 300 / 1.05<br>clamp(40 → 72px)</div>
+      <div style="font-size: 72px; font-weight: 300; line-height: 1.05; color: #e4e4e4;">Digital Tools</div>
+    </div>
+    <div style="display: flex; align-items: baseline; gap: 28px;">
+      <div class="mono" style="width: 176px; flex-shrink: 0;">headline · 700 / 1.25<br>clamp(28 → 48px)</div>
+      <div style="font-size: 48px; font-weight: 700; line-height: 1.25; color: #e4e4e4;">Making order out of chaos</div>
+    </div>
+    <div style="display: flex; align-items: baseline; gap: 28px;">
+      <div class="mono" style="width: 176px; flex-shrink: 0;">title · 300 / 1.35<br>clamp(18 → 24px)</div>
+      <div style="font-size: 24px; font-weight: 300; line-height: 1.35; color: #e4e4e4;">A data transformation tool</div>
+    </div>
+    <div style="display: flex; align-items: baseline; gap: 28px;">
+      <div class="mono" style="width: 176px; flex-shrink: 0;">subtitle · 500 / 1.5<br>18px</div>
+      <div style="font-size: 18px; font-weight: 500; line-height: 1.5; color: #e4e4e4;">Platform for employee communication</div>
+    </div>
+    <div style="display: flex; align-items: baseline; gap: 28px;">
+      <div class="mono" style="width: 176px; flex-shrink: 0;">body · 300 / 1.6<br>clamp(16 → 20px) · 68ch</div>
+      <div style="font-size: 20px; font-weight: 300; line-height: 1.6; color: #e4e4e4; max-width: 560px;">An Eastern-philosophy based framework for humane technology.</div>
+    </div>
+    <div style="display: flex; align-items: baseline; gap: 28px;">
+      <div class="mono" style="width: 176px; flex-shrink: 0;">caption · 400 / 1.5<br>16px</div>
+      <div style="font-size: 16px; font-weight: 400; line-height: 1.5; color: #e4e4e4;">CMF internship with TI Cycles of India</div>
+    </div>
+  </div>
+
+  <!-- Elevation -->
+  <div class="sec">Elevation</div>
+  <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; margin-bottom: 56px;">
+    <div style="height: 104px; border-radius: 12px; background: #262626; box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;">
+      <div class="name">--elevation-1</div><div class="mono">cards, header, pills at rest</div>
+    </div>
+    <div style="height: 104px; border-radius: 12px; background: #262626; box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;">
+      <div class="name">--elevation-2</div><div class="mono">buttons, footer, hover</div>
+    </div>
+    <div style="height: 104px; border-radius: 12px; background: #262626; box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;">
+      <div class="name">--elevation-3</div><div class="mono">button hover</div>
+    </div>
+  </div>
+
+  <!-- Components -->
+  <div class="sec">Components</div>
+  <div style="display: flex; flex-wrap: wrap; align-items: flex-start; gap: 40px; margin-bottom: 40px;">
+
+    <div style="display: flex; flex-direction: column; gap: 12px;">
+      <div class="mono">.btn-fly · r12 · 700/16</div>
+      <div style="display: flex; gap: 12px;">
+        <div style="display: inline-flex; align-items: center; gap: 6.4px; padding: 11.2px 16px; border: 1.5px solid transparent; border-radius: 12px; background: #58a7dc; color: #262626; font-size: 16px; font-weight: 700; line-height: 1; box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: block;"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7"></path><rect x="2" y="4" width="20" height="16" rx="2"></rect></svg>
+          <span>Let's Talk</span>
+        </div>
+        <div style="display: inline-flex; align-items: center; gap: 6.4px; padding: 11.2px 16px; border: 1.5px solid #58a7dc; border-radius: 12px; background: transparent; color: #58a7dc; font-size: 16px; font-weight: 700; line-height: 1; box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: block;"><path d="M8 2v3"></path><path d="M16 2v3"></path><rect x="3" y="3" width="18" height="18" rx="2"></rect><path d="M3 9h18"></path></svg>
+          <span>Let's meet</span>
+        </div>
+      </div>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 12px;">
+      <div class="mono">filter pill · r30 · 500/15</div>
+      <div style="display: flex; gap: 16px;">
+        <div style="font-size: 15px; font-weight: 500; padding: 12px 24px; background: #58a7dc; color: #262626; border-radius: 30px; display: flex; align-items: center; gap: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#262626" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: block;"><path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83z"></path><path d="M2 12a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 12"></path><path d="M2 17a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 17"></path></svg>
+          <span>Active</span>
+        </div>
+        <div style="font-size: 15px; font-weight: 500; padding: 12px 24px; background: #262626; color: #e4e4e4; border-radius: 30px; display: flex; align-items: center; gap: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#858585" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: block;"><path d="M19 9V6a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v3"></path><path d="M3 16a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-5a2 2 0 0 0-4 0v1.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V11a2 2 0 0 0-4 0z"></path><path d="M5 18v2"></path><path d="M19 18v2"></path></svg>
+          <span>Rest</span>
+        </div>
+      </div>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 12px;">
+      <div class="mono">floating card · r12 · 500/14</div>
+      <div style="display: inline-flex; align-items: center; gap: 8px; background: #262626; border-radius: 12px; padding: 12px 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); width: max-content;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#58a7dc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: block;"><path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z"></path></svg>
+        <span style="font-size: 14px; font-weight: 500; color: #e4e4e4; white-space: nowrap;">Timeless digital</span>
+      </div>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 12px;">
+      <div class="mono">nav pill · r45 · h44</div>
+      <div style="height: 44px; width: 108px; border-radius: 45px; background: #262626; box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24), inset 0 1px 0 rgba(228,228,228,0.12); display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 400; color: #e4e4e4;">Philosophy</div>
+    </div>
+
+  </div>
+
+  <div style="display: flex; align-items: flex-start; gap: 40px;">
+    <div style="display: flex; flex-direction: column; gap: 12px;">
+      <div class="mono">project card · r16 · hover overlay</div>
+      <div style="position: relative; width: 320px; border-radius: 16px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);">
+        <img src="nu.jpg" alt="Nu" style="display: block; width: 320px; height: 213px; object-fit: cover;">
+        <div style="position: absolute; inset: 0; padding: 16px; background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.8) 100%);">
+          <div style="font-size: 14px; padding: 5px 10px; font-weight: 400; color: #262626; border-radius: 4px; display: inline-block; background: #58a7dc;">2021</div>
+          <div style="position: absolute; bottom: 10px; left: 0; right: 0; text-align: center; font-size: 16px; font-weight: 500; color: #ffffff; padding: 0 12px;">A brand identity for non-dualism</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 12px;">
+      <div class="mono">radii</div>
+      <div style="display: flex; align-items: flex-end; gap: 20px;">
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;"><div style="width: 64px; height: 64px; background: #3a3a3a; border-radius: 4px;"></div><div class="mono">4</div></div>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;"><div style="width: 64px; height: 64px; background: #3a3a3a; border-radius: 12px;"></div><div class="mono">12</div></div>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;"><div style="width: 64px; height: 64px; background: #3a3a3a; border-radius: 16px;"></div><div class="mono">16</div></div>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;"><div style="width: 64px; height: 64px; background: #3a3a3a; border-radius: 30px;"></div><div class="mono">30</div></div>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;"><div style="width: 64px; height: 64px; background: #3a3a3a; border-radius: 50%;"></div><div class="mono">50%</div></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</x-dc>
+<script data-dc-script data-props='{"$preview":{"width":1000,"height":2180}}'>
+class Component extends DCLogic {}
+</script>
+</body>
+</html>
