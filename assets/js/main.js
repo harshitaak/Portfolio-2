@@ -381,13 +381,25 @@ function reportThemeModeToGA(theme) {
   window.addEventListener('load', aosInit);
 
   /**
-   * Navbar intro — fires on the same tick as the hero stagger so the slide reads
-   * as beat 0 of the ladder (navbar 0ms, hero 100ms, cards 300-700ms).
-   * The hidden state and the reduced-motion / no-JS fallbacks live in main.css.
+   * Navbar intro — fires on the same tick as the hero stagger. The header is the
+   * last beat of the ladder, not the first: the class swaps in a longer-delayed
+   * animation that lands 1s after the final floating card. Timings, the hidden
+   * state and the reduced-motion / no-JS fallbacks all live in main.css.
    */
   window.addEventListener('load', function () {
     const header = document.getElementById('header');
-    if (header) header.classList.add('nav-intro');
+    if (!header) return;
+
+    // On a slow load the JS-free fallback animation may already have played out.
+    // Restarting the clock then would yank a settled header back up and re-slide
+    // it, so leave it where it is.
+    const fallbackDone = typeof header.getAnimations === 'function' &&
+      header.getAnimations().some(
+        (a) => a.animationName === 'nav-slide-down' && a.playState === 'finished'
+      );
+    if (fallbackDone) return;
+
+    header.classList.add('nav-intro');
   }, { once: true });
 
   /**

@@ -763,21 +763,44 @@ ol li::marker {
 }
 
 /* Navbar intro — homepage, first load of the session only (see theme-init.js).
-   Timed by main.js to land as beat 0 of the hero's AOS stagger ladder. */
+   The header is the *last* beat of the intro: the hero ladder runs first and the
+   navbar drops in a second after it settles. */
 @media (prefers-reduced-motion: no-preference) {
+  /* JS-free fallback: `backwards` holds the hidden state through the delay, and
+     the header still appears on its own if main.js never runs. */
   html.first-load body.index-page .header {
-    /* `backwards` holds the hidden state through the delay. The long delay is the
-       JS-free fallback: the header still appears if main.js never runs. */
-    animation: nav-slide-down 600ms var(--ease-smooth) 900ms backwards;
+    animation: nav-slide-down 800ms ease-in-out 900ms backwards;
   }
 
-  /* main.js collapses the delay once the hero stagger starts. */
+  /* main.js adds .nav-intro on window load — the same tick AOS starts its
+     stagger. A *different* animation name (not just a new delay) restarts the
+     animation clock from that tick, so the wait below is measured from when the
+     hero ladder actually begins rather than from first paint.
+
+     Ladder, relative to that tick: hero text 760ms, hero image 853ms, floating
+     cards 960/1054/1160/1254/1360ms. 1560ms delay + 800ms slide = 2360ms,
+     i.e. exactly 1000ms after the last card lands. Easing matches AOS's
+     ease-in-out so the drop reads as smooth as the hero, not as a snap. */
   html.first-load body.index-page .header.nav-intro {
-    animation-delay: 0ms;
+    animation: nav-slide-down-late 800ms ease-in-out 1560ms backwards;
   }
 }
 
 @keyframes nav-slide-down {
+  from {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Same motion as nav-slide-down; the separate name exists purely so applying
+   .nav-intro restarts the clock instead of re-positioning the running animation. */
+@keyframes nav-slide-down-late {
   from {
     opacity: 0;
     transform: translateY(-100%);
