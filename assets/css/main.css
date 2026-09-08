@@ -750,7 +750,7 @@ ol li::marker {
   fill: currentColor;
 }
 
-.header .logo h1 {
+.header .logo .sitename {
   font-size: 30px;
   margin: 0;
   font-weight: 700;
