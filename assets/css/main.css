@@ -611,6 +611,31 @@ body.philosophy-page main.main {
   flex: 1 0 auto;
 }
 
+/* Index: the page is header + one hero + footer. The hero was a flat 100vh, so
+   the 72px header and the footer stacked on top of a full viewport and the page
+   scrolled by exactly that much. Here the body owns the viewport height and the
+   hero takes whatever is left over, so nothing overflows — and dvh keeps it
+   honest while mobile browser chrome collapses. */
+body.index-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+body.index-page main.main {
+  flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+body.index-page .hero {
+  flex: 1 0 auto;
+  /* Zeroed so the viewport min-height the flex line already handles isn't
+     re-imposed on top of it; tall content still grows the hero past this. */
+  min-height: 0;
+}
+
 
 a {
   color: var(--color);
@@ -2154,16 +2179,17 @@ section,
   width: 100%;
 }
 
-/* Responsive container adjustments */
+/* Mobile gutter. The hero used to hardcode its own padding (15px, then 10px
+   under 576px), which both undercut Bootstrap's default and drifted off the
+   header's container — so the headline sat a few pixels inside the logo, and
+   the smallest screens got the tightest margin of all. Setting --bs-gutter-x
+   instead lets .container and the header's .container-fluid.container-xl
+   derive the same edge from one number, and it scales the right way: more
+   breathing room as the screen narrows, not less. */
 @media (max-width: 767px) {
-  .hero .container {
-    padding: 0 15px;
-  }
-}
-
-@media (max-width: 575px) {
-  .hero .container {
-    padding: 0 10px;
+  .hero .container,
+  .header > .container-fluid {
+    --bs-gutter-x: 48px;
   }
 }
 
@@ -2679,7 +2705,11 @@ section,
 
 @media (max-width: 767px) {
   .hero-image {
-    margin-top: 30px;
+    /* Stacked layout below lg: this is the gap between the hero copy and the
+       image. The floating cards sit outside the circle (card-1 rides the top
+       edge at -8px), so part of this margin is eaten before the image itself
+       starts — the gap has to be bigger than it looks to read as one. */
+    margin-top: 72px;
   }
 
   .image-container {
@@ -2734,7 +2764,7 @@ section,
 
 @media (max-width: 575px) {
   .hero-image {
-    margin-top: 20px;
+    margin-top: 64px;
   }
 
   .image-container {
@@ -2789,7 +2819,7 @@ section,
 
 @media (max-width: 575px) {
   .hero-image {
-    margin-top: 15px;
+    margin-top: 56px;
   }
 
   .image-container {

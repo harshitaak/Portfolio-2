@@ -107,6 +107,21 @@ function reportThemeModeToGA(theme) {
   });
 
   /**
+   * Close the mobile nav on a click outside the menu panel.
+   *
+   * The open overlay is .navmenu stretched over the viewport, with the links
+   * in its > ul; everything between the two is backdrop, so a tap there reads
+   * as "dismiss". Clicks on .mobile-nav-toggle are left alone — the listener
+   * above already toggles those, and closing here too would cancel it out.
+   */
+  document.addEventListener('click', function (e) {
+    if (!document.body.classList.contains('mobile-nav-active')) return;
+    if (e.target.closest('.mobile-nav-toggle')) return;
+    if (e.target.closest('#navmenu > ul')) return;
+    mobileNavToogle();
+  });
+
+  /**
    * Hide mobile nav on same-page/hash links
    *
    * .js-deck-egg is excluded: it needs seven clicks to do anything, and
