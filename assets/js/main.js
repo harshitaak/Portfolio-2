@@ -15,7 +15,6 @@
     Floating theme toggle button
     aosInit ........................ Animate-On-Scroll
     Init typed.js .................. rotating headline, optional per-item links
-    initSwiper ..................... .init-swiper sliders from data-config
     initGLightbox .................. lightbox, re-inits on popstate
     Init isotope layout and filters  portfolio grid
     custom-carousel-nav ............ swiper with real prev/next buttons
@@ -386,6 +385,10 @@ function reportThemeModeToGA(theme) {
    * Animation on scroll function and init
    */
   function aosInit() {
+    // Pages with no [data-aos] markup do not ship aos.js, so guard the global
+    // the way initGLightbox does — an unguarded call would halt the rest of main.js.
+    if (typeof AOS === 'undefined') return;
+
     AOS.init({
       duration: 600,
       easing: 'ease-in-out',
@@ -576,25 +579,6 @@ function reportThemeModeToGA(theme) {
       });
     }
   }
-
-  /**
-   * Init swiper sliders
-   */
-  function initSwiper() {
-    document.querySelectorAll(".init-swiper").forEach(function(swiperElement) {
-      let config = JSON.parse(
-        swiperElement.querySelector(".swiper-config").innerHTML.trim()
-      );
-
-      if (swiperElement.classList.contains("swiper-tab")) {
-        initSwiperWithCustomPagination(swiperElement, config);
-      } else {
-        new Swiper(swiperElement, config);
-      }
-    });
-  }
-
-  window.addEventListener("load", initSwiper);
 
   /**
    * Initiate glightbox with proper configuration
