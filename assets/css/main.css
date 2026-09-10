@@ -1248,6 +1248,13 @@ ol li::marker {
     z-index: 2;
   }
 
+  /* The theme toggle rides above the overlay too, so it stays tappable with the
+     menu open — otherwise it falls behind the full-screen .navmenu. */
+  .mobile-nav-active .theme-toggle {
+    position: relative;
+    z-index: 2;
+  }
+
   /* Ensure navbar-right container doesn't interfere on mobile */
   .mobile-nav-active .navbar-right {
     position: relative;
@@ -3837,14 +3844,19 @@ section,
 
 }
 
-/* Mobile theme toggle styling */
+/* Mobile: the same icon-only toggle the desktop uses, sitting in the navbar just
+   left of the hamburger. .navbar-right already reserves padding-right: 52px for
+   the absolutely-positioned hamburger, so this button lands in flow beside it. */
 @media (max-width: 767px) {
-  .theme-toggle-mobile {
-    transition: color 0.3s;
+  .theme-toggle {
+    /* 40px tap target around a glyph optically matched to the 32px hamburger. */
+    --size: 2.5rem;
+    margin-right: 0;
   }
 
-  .theme-toggle-mobile:hover {
-    color: var(--color) !important;
+  .theme-toggle .sun-and-moon {
+    inline-size: 24px;
+    block-size: 24px;
   }
 }
 
