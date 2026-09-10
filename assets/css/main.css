@@ -3395,6 +3395,21 @@ section,
     margin-inline: auto;
   }
 }
+
+/* Under ~430px a line can only hold two full-size pills, which would give
+   2 + 2 + 1. Tightening the pills (three widest ≈ 290px) keeps 3 + 2 down
+   to a ~340px viewport, narrower than any current phone. */
+@media (max-width: 429px) {
+  .portfolio .portfolio-filters {
+    gap: 10px;
+  }
+
+  .portfolio .portfolio-filters li {
+    font-size: 13px;
+    padding: 10px 14px;
+    gap: 6px;
+  }
+}
 .portfolio .portfolio-content {
   position: relative;
   overflow: hidden;
