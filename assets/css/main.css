@@ -2767,11 +2767,6 @@ section,
     margin-top: 64px;
   }
 
-  .image-container {
-    max-width: 300px;
-    height: 300px;
-  }
-
   .floating-card {
     padding: 8px 12px;
   }
@@ -2820,11 +2815,6 @@ section,
 @media (max-width: 575px) {
   .hero-image {
     margin-top: 56px;
-  }
-
-  .image-container {
-    max-width: 250px;
-    height: 250px;
   }
 
   .floating-card {
