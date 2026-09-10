@@ -1068,10 +1068,12 @@ ol li::marker {
 /* Mobile Navigation */
 @media (max-width: 767px) {
 
-  /* Reserve space so the menu button does not jump between flex and absolute when the overlay opens */
+  /* Reserve space so the menu button does not jump between flex and absolute when
+     the overlay opens. The 32px hamburger sits in this reserve; the remainder is
+     the gap to the theme toggle sitting in flow beside it. */
   .header .navbar-right {
     position: relative;
-    padding-right: 52px;
+    padding-right: 40px;
   }
 
   /* Prevent horizontal scroll when mobile nav is active */
@@ -3845,8 +3847,9 @@ section,
 }
 
 /* Mobile: the same icon-only toggle the desktop uses, sitting in the navbar just
-   left of the hamburger. .navbar-right already reserves padding-right: 52px for
-   the absolutely-positioned hamburger, so this button lands in flow beside it. */
+   left of the hamburger. .navbar-right reserves padding-right: 40px for the
+   absolutely-positioned 32px hamburger, so this button lands in flow 8px to its
+   left — 16px glyph to glyph, matching the navbar's 16px gap token. */
 @media (max-width: 767px) {
   .theme-toggle {
     /* 40px tap target around a glyph optically matched to the 32px hamburger. */
