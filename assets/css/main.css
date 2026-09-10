@@ -836,6 +836,56 @@ ol li::marker {
   }
 }
 
+/* Footer intro — the navbar's mirror image. Same beat in the ladder, same
+   duration and easing, but rising from below instead of dropping from above,
+   so the page closes its frame from both edges at once. Structure mirrors the
+   header rules above: a JS-free fallback plus a .footer-intro class that
+   main.js adds on load to restart the clock against the hero stagger.
+
+   The transform sits on the inner container rather than the footer itself: a
+   downward translate on the last element in the page would grow the scrollable
+   area and flash a taller scrollbar for the length of the animation. Clipping
+   the footer and sliding its contents through that box travels exactly the
+   footer's own height — the same distance the header covers going up. */
+@media (prefers-reduced-motion: no-preference) {
+  html.first-load body.index-page .footer {
+    overflow: hidden;
+  }
+
+  html.first-load body.index-page .footer > .container {
+    animation: footer-slide-up 800ms ease-in-out 900ms backwards;
+  }
+
+  html.first-load body.index-page .footer.footer-intro > .container {
+    animation: footer-slide-up-late 800ms ease-in-out 1560ms backwards;
+  }
+}
+
+@keyframes footer-slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Separate name for the same motion, for the clock-restart reason above. */
+@keyframes footer-slide-up-late {
+  from {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 
 
 /*--------------------------------------------------------------

@@ -399,25 +399,35 @@ function reportThemeModeToGA(theme) {
   window.addEventListener('load', aosInit);
 
   /**
-   * Navbar intro — fires on the same tick as the hero stagger. The header is the
-   * last beat of the ladder, not the first: the class swaps in a longer-delayed
-   * animation that lands 1s after the final floating card. Timings, the hidden
-   * state and the reduced-motion / no-JS fallbacks all live in main.css.
+   * Navbar and footer intro — both fire on the same tick as the hero stagger.
+   * They are the last beat of the ladder, not the first: the class swaps in a
+   * longer-delayed animation that lands 1s after the final floating card. The
+   * footer mirrors the header, rising from below as the header drops from
+   * above. Timings, the hidden state and the reduced-motion / no-JS fallbacks
+   * all live in main.css.
    */
   window.addEventListener('load', function () {
-    const header = document.getElementById('header');
-    if (!header) return;
-
-    // On a slow load the JS-free fallback animation may already have played out.
-    // Restarting the clock then would yank a settled header back up and re-slide
-    // it, so leave it where it is.
-    const fallbackDone = typeof header.getAnimations === 'function' &&
-      header.getAnimations().some(
-        (a) => a.animationName === 'nav-slide-down' && a.playState === 'finished'
+    // On a slow load the JS-free fallback animation may already have played
+    // out. Restarting the clock then would yank a settled bar back off screen
+    // and re-slide it, so leave it where it is.
+    const settled = (el, name) =>
+      typeof el.getAnimations === 'function' &&
+      el.getAnimations().some(
+        (a) => a.animationName === name && a.playState === 'finished'
       );
-    if (fallbackDone) return;
 
-    header.classList.add('nav-intro');
+    const header = document.getElementById('header');
+    if (header && !settled(header, 'nav-slide-down')) {
+      header.classList.add('nav-intro');
+    }
+
+    // The footer's transform runs on its inner container (see main.css), so
+    // that is where the fallback animation has to be checked for.
+    const footer = document.getElementById('footer');
+    const footerInner = footer && footer.querySelector(':scope > .container');
+    if (footerInner && !settled(footerInner, 'footer-slide-up')) {
+      footer.classList.add('footer-intro');
+    }
   }, { once: true });
 
   /**
