@@ -2244,10 +2244,12 @@ section,
    the smallest screens got the tightest margin of all. Setting --bs-gutter-x
    instead lets .container and the header's .container-fluid.container-xl
    derive the same edge from one number, and it scales the right way: more
-   breathing room as the screen narrows, not less. */
+   breathing room as the screen narrows, not less. The portfolio grid's
+   .container joins the same rule so its cards share the header's edge. */
 @media (max-width: 767px) {
   .hero .container,
-  .header > .container-fluid {
+  .header > .container-fluid,
+  .portfolio .container {
     --bs-gutter-x: 48px;
   }
 }
@@ -3330,7 +3332,7 @@ section,
   flex-wrap: wrap;
   gap: 16px;
   margin-bottom: 40px;
-
+  padding-left: 0px;
 }
 
 .portfolio .portfolio-filters li {  
@@ -3383,6 +3385,16 @@ section,
   margin-right: 0;
 }
 
+/* Below 768px the container can't hold all five pills, and flex-wrap fills
+   greedily, so it gave 4 + 1 with "Art" orphaned. Capping the list's width
+   so a line holds three pills at most (three widest ≈ 355px, four ≈ 470px)
+   turns that into 3 + 2 without touching the pills themselves. */
+@media (max-width: 767px) {
+  .portfolio .portfolio-filters {
+    max-width: 400px;
+    margin-inline: auto;
+  }
+}
 .portfolio .portfolio-content {
   position: relative;
   overflow: hidden;
