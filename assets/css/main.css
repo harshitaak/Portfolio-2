@@ -924,9 +924,6 @@ ol li::marker {
     z-index: 1;
   }
 
-  .navmenu>ul>li:last-child>a {
-  }
-
   .navmenu a,
   .navmenu a:focus {
     color: var(--ink);
