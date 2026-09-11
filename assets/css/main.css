@@ -925,7 +925,6 @@ ol li::marker {
   }
 
   .navmenu>ul>li:last-child>a {
-    padding-right: 2px;
   }
 
   .navmenu a,
