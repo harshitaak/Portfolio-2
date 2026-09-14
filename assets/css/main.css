@@ -2250,7 +2250,7 @@ section,
   }
 }
 
-.hero h2 {
+.hero h1 {
   /* No bottom margin: .heading-underline reserves the underline's own height
      in flow (see .heading-underline::after), so the gap tracks the SVG. */
   margin: 0;
