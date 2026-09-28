@@ -44,7 +44,6 @@
     Testimonials Section
     Resume Section
     Services Section
-    Service Details Section
     Portfolio Section ................ filters + grid
     Contact Section .................. incl. .color-chip palette chips
 
@@ -3218,74 +3217,6 @@ section,
 .services .service-item:hover h3,
 .services .service-item:hover p {
   color: var(--ink);
-}
-
-/*--------------------------------------------------------------
-# Service Details Section
---------------------------------------------------------------*/
-.service-details .services-list {
-  background-color: var(--paper);
-  padding: 10px 30px;
-  border: 1px solid color-mix(in srgb, var(--ink), transparent 90%);
-  margin-bottom: 20px;
-}
-
-.service-details .services-list a {
-  display: block;
-  line-height: 1;
-  padding: 8px 0 8px 15px;
-  border-left: 3px solid color-mix(in srgb, var(--ink), transparent 70%);
-  margin: 20px 0;
-  color: color-mix(in srgb, var(--ink), transparent 20%);
-  transition: 0.3s;
-}
-
-.service-details .services-list a.active {
-  color: var(--ink);
-  font-weight: 700;
-  border-color: var(--color);
-}
-
-.service-details .services-list a:hover {
-  border-color: var(--color);
-}
-
-.service-details .services-img {
-  margin-bottom: 20px;
-}
-
-.service-details h3 {
-  font-size: 26px;
-  font-weight: 700;
-  font-family: var(--heading-font);
-}
-
-.service-details h4 {
-  font-size: 20px;
-  font-weight: 700;
-  font-family: var(--heading-font);
-}
-
-.service-details p {
-  font-size: 15px;
-}
-
-.service-details ul {
-  list-style: none;
-  padding: 0;
-  font-size: 15px;
-}
-
-.service-details ul li {
-  padding: 5px 0;
-  display: flex;
-  align-items: center;
-}
-
-.service-details ul i {
-  font-size: 20px;
-  margin-right: 8px;
-  color: var(--color);
 }
 
 /*--------------------------------------------------------------
