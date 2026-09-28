@@ -46,5 +46,6 @@ npm run tailwind:watch
 ## Working conventions
 
 - Follow `.cursor/rules/karpathy-guidelines.mdc`: surgical diffs, no speculative abstractions, match existing style, mention (don't delete) unrelated dead code.
+- Always reuse existing CSS variables and classes from `main.css` before adding new ones — check for an existing token (color, type scale, spacing) or class that already does the job, and only introduce a new one when nothing fits.
 - Images: `assets/img/Hero/2.1.png` and `assets/img/Pilotis/untitled folder/1/Joinery 4.png` have load-bearing alpha and must stay PNG — never flatten to JPEG.
 - Verify visual changes in the browser in both themes (toggle in the header) and at mobile width; there is no other test surface.
