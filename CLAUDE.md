@@ -27,7 +27,7 @@ npm run tailwind:watch
 
 ## Architecture
 
-**Pages.** `index.html`, `about.html`, `philosophy.html`, `portfolio.html`, plus ~19 case-study pages named after the project (`Aquata.html`, `Bamboo Table.html`, … — spaces in filenames are intentional and referenced with `%20`). `service-details.html` is a dead Bootstrap-template leftover.
+**Pages.** `index.html`, `about.html`, `philosophy.html`, `portfolio.html`, plus ~19 case-study pages named after the project (`Aquata.html`, `Bamboo Table.html`, … — spaces in filenames are intentional and referenced with `%20`).
 
 **Shared chrome is copy-pasted, not templated.** The `<head>` (GA4 snippet, `theme-init.js`, vendor CSS, `main.css`, Lenis CSS), `<header id="header">`, `<footer id="footer">`, and the floating buttons appear verbatim in every page. A change to nav, footer, meta, or script includes must be applied to every HTML file — grep for the block and edit all of them.
 

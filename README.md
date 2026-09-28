@@ -43,8 +43,6 @@ Each project is its own standalone HTML page.
 | Visual / Branding | [`Pidah.html`](Pidah.html), [`Montra.html`](Montra.html), [`Samsung Fam.html`](Samsung%20Fam.html) |
 | Art | [`Doodles.html`](Doodles.html), [`Renders.html`](Renders.html), [`Letter.html`](Letter.html) |
 
-`service-details.html` is an unused leftover from the original Bootstrap template.
-
 ## Highlights
 
 - **Dark mode by default**, light mode opt-in. The preference is stored in `localStorage` and applied before first paint by [`assets/js/theme-init.js`](assets/js/theme-init.js) to avoid a flash; the toggle lives in the header (and in the mobile nav).
