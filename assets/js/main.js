@@ -29,6 +29,7 @@
     initBasicCustomCursor .......... GSAP quickTo cursor follower
     lenis .......................... smooth scroll, skipped for reduced motion
     Slides easter egg .............. seven clicks on Philosophy reveal Slides
+    Analytics events ............... contact clicks, portfolio cards/filters, case-study scroll depth
 
 ================================================================*/
 
@@ -1048,4 +1049,78 @@ const lenis = window.matchMedia("(prefers-reduced-motion: reduce)").matches
   } else {
     initDeckEgg();
   }
+})();
+
+/**
+ * Analytics events
+ * contact_click      method (email | linkedin | instagram), link_location (header | footer | page)
+ * select_content     a portfolio card was opened; item_id is the case-study filename
+ * portfolio_filter   filter_name is the filter's label (All, Digital, Furniture, ...)
+ * case_study_scroll  percent_scrolled 25/50/75/100, once each per page view
+ * project_name comes from the gtag('config') call in each case-study page's <head>.
+ */
+(function () {
+  function track(name, params) {
+    if (typeof window.gtag === 'function') {
+      window.gtag('event', name, params);
+    }
+  }
+
+  const CONTACT_METHODS = [
+    ['mail.google.com', 'email'],
+    ['mailto:', 'email'],
+    ['linkedin.com/in/harshitaak', 'linkedin'],
+    ['instagram.com/harshittaak', 'instagram']
+  ];
+
+  document.addEventListener('click', function (e) {
+    const link = e.target.closest('a[href]');
+    if (link) {
+      const href = link.getAttribute('href');
+      const match = CONTACT_METHODS.find(function (m) { return href.includes(m[0]); });
+      if (match) {
+        track('contact_click', {
+          method: match[1],
+          link_location: link.closest('#footer') ? 'footer' : link.closest('#header') ? 'header' : 'page'
+        });
+      }
+      if (link.classList.contains('portfolio-link')) {
+        // "Samsung%20Fam.html" -> "Samsung Fam", matching project_name on that page
+        track('select_content', {
+          content_type: 'case_study',
+          item_id: decodeURIComponent(href.split('/').pop().replace(/\.html$/, ''))
+        });
+      }
+    }
+
+    const filter = e.target.closest('.isotope-filters li');
+    if (filter) {
+      track('portfolio_filter', { filter_name: filter.textContent.trim() });
+    }
+  });
+
+  // Case-study scroll depth. GA4's built-in scroll event only fires at 90%.
+  const config = (window.dataLayer || []).find(function (args) {
+    return args[0] === 'config' && args[2] && args[2].project_name;
+  });
+  if (!config) return;
+
+  const projectName = config[2].project_name;
+  const thresholds = [25, 50, 75, 100];
+
+  function checkScrollDepth() {
+    const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+    const percent = scrollable > 0 ? (window.scrollY / scrollable) * 100 : 100;
+    while (thresholds.length && percent >= thresholds[0] - 1) {
+      track('case_study_scroll', {
+        project_name: projectName,
+        percent_scrolled: thresholds.shift()
+      });
+    }
+    if (!thresholds.length) {
+      window.removeEventListener('scroll', checkScrollDepth);
+    }
+  }
+
+  window.addEventListener('scroll', checkScrollDepth, { passive: true });
 })();
