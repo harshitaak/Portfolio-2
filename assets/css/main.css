@@ -1808,10 +1808,10 @@ ol li::marker {
   }
 
 
-  .resume .card-header {
+  /* .resume .card-header {
     flex-direction: column;
     gap: 0.8rem;
-  }
+  } */
 
   .resume .duration {
     align-self: flex-start;
