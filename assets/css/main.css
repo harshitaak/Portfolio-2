@@ -1641,16 +1641,20 @@ ol li::marker {
   }
 }
 
-.resume .section-header h2 {
+.resume .section-header {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.75rem;
 }
 
-.resume .section-header h2 .section-header__icon,
-.resume .section-header h2 .section-header__icon svg {
-  width: 48px;
-  height: 48px;
+.resume .section-header h2 {
+  margin-bottom: 0;
+}
+
+.resume .section-header__icon,
+.resume .section-header__icon svg {
+  width: 56px;
+  height: 56px;
   flex-shrink: 0;
 }
 
