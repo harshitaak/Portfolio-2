@@ -1653,14 +1653,15 @@ ol li::marker {
 
 .resume .section-header__icon,
 .resume .section-header__icon svg {
-  width: 56px;
-  height: 56px;
+  width: 64px;
+  height: 64px;
   flex-shrink: 0;
+  color: color-mix(in srgb, var(--ink), transparent 30%);
+
 }
 
 .resume .section-header .section-subtitle {
   color: color-mix(in srgb, var(--ink), transparent 30%);
-  font-size: 1rem;
   line-height: 1.6;
 }
 
@@ -2935,10 +2936,17 @@ section,
 /*--------------------------------------------------------------
 # Interests Section
 --------------------------------------------------------------*/
+.interests .interests__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
 .interests .features-item {
+  flex: 1 1 400px;
   background-color: var(--paper);
   flex-direction: column;
-  gap: 32px;
+  gap: 24px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2968,9 +2976,10 @@ section,
   font-family: var(--heading-font);
 }
 
-.interests .features-item:hover {
+.interests .features-item:hover,
+.interests .features-item[data-aos]:hover {
   box-shadow: var(--elevation-2);
-  transform: translateY(-4px);
+  transform: translateY(-4px) !important;
 }
 
 /*--------------------------------------------------------------
