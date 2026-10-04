@@ -1375,6 +1375,9 @@ ol li::marker {
 
   /* The sheet docks to the bottom edge, where thumbs already are */
   .mobile-nav-active .navmenu ul {
+    /* A vertical drag moves the sheet (drag to dismiss in main.js), not the
+       page or pull-to-refresh. Three links never need the sheet to scroll. */
+    touch-action: none;
     position: absolute !important;
     top: auto !important;
     bottom: 0 !important;

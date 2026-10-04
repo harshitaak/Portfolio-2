@@ -171,6 +171,93 @@ function reportThemeModeToGA(theme) {
   });
 
   /**
+   * Drag the bottom sheet down to dismiss it.
+   *
+   * Plain pointer events rather than GSAP's Draggable, which would need a
+   * script tag on every page. The drag offset is a GSAP `y` on top of the
+   * timeline's yPercent; finishMobileNavClose clears it with the rest.
+   */
+  function initMobileNavDrag() {
+    const sheet = document.querySelector('#navmenu > ul');
+    if (!sheet || typeof gsap === 'undefined') return;
+
+    const THRESHOLD = 6;      // px before a press counts as a drag, so taps stay taps
+    const DISMISS_RATIO = 0.3; // of the sheet's height
+    const FLICK_SPEED = 0.4;   // px/ms downward...
+    const FLICK_MIN = 20;      // ...over at least this many px
+    let pointerId = null;
+    let startY = 0, lastY = 0, lastT = 0, speed = 0, dy = 0;
+    let dragging = false;
+    let swallowClick = false;
+
+    function reduced() {
+      return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    }
+
+    sheet.addEventListener('pointerdown', function(e) {
+      if (!mobileNavOpen || pointerId !== null) return;
+      swallowClick = false;
+      if (mobileNavTl && mobileNavTl.progress() < 1) mobileNavTl.progress(1);
+      pointerId = e.pointerId;
+      startY = lastY = e.clientY;
+      lastT = e.timeStamp;
+      speed = dy = 0;
+      dragging = false;
+    });
+
+    sheet.addEventListener('pointermove', function(e) {
+      if (e.pointerId !== pointerId) return;
+      if (!dragging) {
+        if (Math.abs(e.clientY - startY) < THRESHOLD) return;
+        dragging = true;
+        sheet.setPointerCapture(pointerId);
+      }
+      dy = Math.max(0, e.clientY - startY);
+      let dt = e.timeStamp - lastT;
+      if (dt > 0) speed = (e.clientY - lastY) / dt;
+      lastY = e.clientY;
+      lastT = e.timeStamp;
+      gsap.set(sheet, { y: dy });
+      gsap.set(mobileNavBackdrop, { opacity: 1 - dy / sheet.offsetHeight });
+    });
+
+    function release(e) {
+      if (e.pointerId !== pointerId) return;
+      pointerId = null;
+      if (!dragging) return;
+      dragging = false;
+      // The click that follows a drag isn't a tap. On touch it can arrive a
+      // beat later, so the flag holds until the next press or 400ms.
+      swallowClick = true;
+      setTimeout(function() { swallowClick = false; }, 400);
+
+      let height = sheet.offsetHeight;
+      let instant = reduced();
+      if (dy > height * DISMISS_RATIO || (speed > FLICK_SPEED && dy > FLICK_MIN)) {
+        if (!instant) gsap.to(sheet, { y: height, duration: 0.2, ease: 'power2.in' });
+        mobileNavToogle();
+      } else if (instant) {
+        gsap.set(sheet, { y: 0 });
+        gsap.set(mobileNavBackdrop, { opacity: 1 });
+      } else {
+        gsap.to(sheet, { y: 0, duration: 0.35, ease: 'power3.out' });
+        gsap.to(mobileNavBackdrop, { opacity: 1, duration: 0.35, ease: 'power3.out' });
+      }
+    }
+    sheet.addEventListener('pointerup', release);
+    sheet.addEventListener('pointercancel', release);
+
+    // Capture phase, so a drag that starts on a link neither opens it nor
+    // reaches the outside-click handler.
+    sheet.addEventListener('click', function(e) {
+      if (!swallowClick) return;
+      e.preventDefault();
+      e.stopPropagation();
+    }, true);
+  }
+  initMobileNavDrag();
+
+  /**
    * Hide mobile nav on same-page/hash links
    *
    * .js-deck-egg is excluded: it needs seven clicks to do anything, and
