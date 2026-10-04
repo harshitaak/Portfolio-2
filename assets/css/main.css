@@ -1112,6 +1112,10 @@ ol li::marker {
 }
 
 /* Mobile Navigation */
+.mobile-nav-backdrop {
+  display: none;
+}
+
 @media (max-width: 767px) {
 
   /* Reserve space so the menu button does not jump between flex and absolute when
@@ -1187,34 +1191,62 @@ ol li::marker {
     left: 20px;
     right: 20px;
     max-height: calc(100vh - 100px);
-    padding: 10px 0;
+    /* Bottom sheet; the bottom padding clears the phone's home indicator */
+    padding: 12px 10px calc(16px + env(safe-area-inset-bottom, 0px));
     margin: 0;
-    border-radius: 6px;
+    border-radius: 22px 22px 0 0;
     background-color: var(--paper);
     border: 1px solid color-mix(in srgb, var(--ink), transparent 90%);
+    border-bottom: 0;
     box-shadow: none;
     overflow-y: auto;
-    transition: 0.3s;
+    /* No CSS transition: main.js slides the sheet up */
     z-index: 1;
     height: auto;
+  }
+
+  /* Grab handle */
+  .navmenu ul::before {
+    content: "";
+    display: block;
+    width: 38px;
+    height: 4px;
+    margin: 0 auto 8px;
+    border-radius: 4px;
+    background: color-mix(in srgb, var(--ink), transparent 80%);
   }
 
   .navmenu a,
   .navmenu a:focus {
     color: var(--ink);
-    padding: 10px 20px;
-    font-family: var(--nav-font);
-    font-size: 17px;
-    font-weight: 500;
+    padding: 14px;
+    border-radius: 12px;
+    font: var(--text-subtitle-font);
     display: flex;
     align-items: center;
     justify-content: space-between;
     white-space: normal;
     word-wrap: break-word;
-    transition: 0.3s;
+    transition: color 0.3s, background-color 0.3s;
     cursor: pointer;
     width: 100%;
     box-sizing: border-box;
+  }
+
+  /* Lucide arrow-right, drawn as a mask so it takes the link's colour */
+  .navmenu a::after {
+    content: "";
+    width: 20px;
+    height: 20px;
+    flex: none;
+    background-color: currentColor;
+    opacity: 0.6;
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h14'/%3E%3Cpath d='m12 5 7 7-7 7'/%3E%3C/svg%3E") center / contain no-repeat;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h14'/%3E%3Cpath d='m12 5 7 7-7 7'/%3E%3C/svg%3E") center / contain no-repeat;
+  }
+
+  .navmenu a:hover {
+    background-color: color-mix(in srgb, var(--ink), transparent 94%);
   }
 
   .navmenu a i,
@@ -1309,6 +1341,16 @@ ol li::marker {
     z-index: 1;
   }
 
+  /* Tint behind the open menu card. A body-level layer (added by main.js)
+     just under the header and above the floating buttons; main.js fades it in. */
+  body.mobile-nav-active .mobile-nav-backdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: calc(var(--z-nav) - 1);
+    background: color-mix(in srgb, var(--paper), transparent 45%);
+  }
+
   /* Fix mobile navigation positioning - optimized for performance */
   .mobile-nav-active .navmenu {
     position: fixed !important;
@@ -1318,30 +1360,32 @@ ol li::marker {
     bottom: 0 !important;
     width: 100% !important;
     height: 100vh !important;
-    background: color-mix(in srgb, var(--paper), transparent 85%) !important;
-    box-shadow: var(--elevation-2) !important;
+    /* Transparent: the tint lives on .mobile-nav-backdrop, a body-level layer
+       that also covers the floating buttons outside the header. */
+    background: transparent !important;
+    box-shadow: none !important;
     z-index: 1 !important;
     /* Prevent glitching */
     transform: translate3d(0, 0, 0);
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
+  /* The sheet docks to the bottom edge, where thumbs already are */
   .mobile-nav-active .navmenu ul {
-    position: relative !important;
-    top: 80px !important;
-    left: 20px !important;
-    right: 20px !important;
-    max-height: calc(100vh - 120px) !important;
+    position: absolute !important;
+    top: auto !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    max-height: 80vh !important;
     overflow-y: auto !important;
     overflow-x: hidden !important;
-    width: calc(100% - 40px) !important;
+    width: 100% !important;
     /* Prevent glitching */
     transform: translate3d(0, 0, 0);
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
 

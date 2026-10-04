@@ -7,7 +7,7 @@
 
   MAIN IIFE ("use strict")
     toggleScrolled ................. .scrolled on <body> once past the fold
-    Mobile nav toggle .............. open/close, icon swap, scroll-position restore
+    Mobile nav toggle .............. GSAP open/close + icon morph, scroll-position restore
     Hide mobile nav ................ nav links close the mobile menu (egg excluded)
     initNavPill .................... sliding pill behind the desktop nav items
     Scroll top button
@@ -64,18 +64,54 @@ function reportThemeModeToGA(theme) {
    * Mobile nav toggle
    */
   let mobileNavScrollY = 0;
+  let mobileNavOpen = false;
+  let mobileNavTl = null;
 
-  function setMobileToggleIcon(isOpen) {
-    const mobileNavToggleBtn = document.querySelector('.mobile-nav-toggle');
-    if (!mobileNavToggleBtn) return;
+  // A body-level tint behind the menu card (see .mobile-nav-backdrop in
+  // main.css), so it also covers the floating buttons, which sit outside
+  // the header.
+  const mobileNavBackdrop = document.createElement('div');
+  mobileNavBackdrop.className = 'mobile-nav-backdrop';
+  mobileNavBackdrop.setAttribute('aria-hidden', 'true');
+  document.body.appendChild(mobileNavBackdrop);
 
-    // Lucide icon swap for the mobile toggle.
-    if (mobileNavToggleBtn.hasAttribute('data-lucide')) {
-      mobileNavToggleBtn.setAttribute('data-lucide', isOpen ? 'x' : 'menu');
-      if (window.lucide && typeof window.lucide.createIcons === 'function') {
-        window.lucide.createIcons();
-      }
+  // Open: the tint fades in, the bottom sheet slides up, the links fade in one
+  // after another, and the Lucide "menu" lines fold into an X. Close plays it
+  // backwards, faster. Built per open so nothing lingers inline on desktop.
+  // Links only fade (no y): the sheet scrolls (overflow-y: auto), and a link
+  // moving inside it could flash a scroll bar.
+  function buildMobileNavTl(toggle) {
+    let lines = toggle.querySelectorAll('path, line');
+    let tl = gsap.timeline({ paused: true, onReverseComplete: finishMobileNavClose })
+      .fromTo(mobileNavBackdrop, { opacity: 0 }, { opacity: 1, duration: 0.35, ease: 'power1.out' }, 0)
+      .fromTo('#navmenu > ul', { yPercent: 100 },
+        { yPercent: 0, duration: 0.6, ease: 'expo.out' }, 0)
+      .fromTo('#navmenu > ul > li', { opacity: 0 },
+        { opacity: 1, duration: 0.4, ease: 'power2.out', stagger: 0.05 }, 0.12);
+
+    if (lines.length === 3) {
+      tl.to(lines[0], { y: 7, duration: 0.2, ease: 'power3.inOut' }, 0)
+        .to(lines[2], { y: -7, duration: 0.2, ease: 'power3.inOut' }, 0)
+        .to(lines[1], { scaleX: 0, opacity: 0, transformOrigin: '50% 50%', duration: 0.2 }, 0)
+        .to(lines[0], { rotation: 45, transformOrigin: '50% 50%', duration: 0.4, ease: 'power3.inOut' }, 0.18)
+        .to(lines[2], { rotation: -45, transformOrigin: '50% 50%', duration: 0.4, ease: 'power3.inOut' }, 0.18);
     }
+    return tl;
+  }
+
+  function finishMobileNavClose() {
+    if (mobileNavOpen) return; // re-opened mid-close
+    const body = document.querySelector('body');
+    if (mobileNavTl) {
+      mobileNavTl.kill();
+      mobileNavTl = null;
+      gsap.set([mobileNavBackdrop, '#navmenu > ul', '#navmenu > ul > li', '.mobile-nav-toggle path, .mobile-nav-toggle line'], { clearProps: 'all' });
+    }
+    body.style.top = '';
+    body.classList.remove('mobile-nav-active');
+    requestAnimationFrame(function () {
+      window.scrollTo(0, mobileNavScrollY);
+    });
   }
 
   function mobileNavToogle() {
@@ -83,26 +119,37 @@ function reportThemeModeToGA(theme) {
     if (!mobileNavToggleBtn) return;
 
     const body = document.querySelector('body');
-    const opening = !body.classList.contains('mobile-nav-active');
+    const opening = !mobileNavOpen;
+    const hasGsap = typeof gsap !== 'undefined';
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    mobileNavOpen = opening;
+
+    mobileNavToggleBtn.classList.toggle('menu', !opening);
+    mobileNavToggleBtn.classList.toggle('close', opening);
+    mobileNavToggleBtn.setAttribute('aria-label', opening ? 'Close menu' : 'Open menu');
+    mobileNavToggleBtn.setAttribute('aria-expanded', String(opening));
 
     if (opening) {
-      mobileNavScrollY = window.scrollY;
-      body.style.top = '-' + mobileNavScrollY + 'px';
+      // Not yet closed from a previous open? Then the page is still pinned.
+      if (!body.classList.contains('mobile-nav-active')) {
+        mobileNavScrollY = window.scrollY;
+        body.style.top = '-' + mobileNavScrollY + 'px';
+        body.classList.add('mobile-nav-active');
+      }
+      if (hasGsap) {
+        mobileNavTl = mobileNavTl || buildMobileNavTl(mobileNavToggleBtn);
+        // Reduced motion: jump straight to the open state (X icon included)
+        reduced ? mobileNavTl.progress(1) : mobileNavTl.timeScale(1).play();
+      }
+    } else if (mobileNavTl && !reduced) {
+      mobileNavTl.timeScale(1.6).reverse();
     } else {
-      body.style.top = '';
-    }
-
-    body.classList.toggle('mobile-nav-active');
-    mobileNavToggleBtn.classList.toggle('menu');
-    mobileNavToggleBtn.classList.toggle('close');
-    setMobileToggleIcon(opening);
-
-    if (!opening) {
-      requestAnimationFrame(function () {
-        window.scrollTo(0, mobileNavScrollY);
-      });
+      finishMobileNavClose();
     }
   }
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && mobileNavOpen) mobileNavToogle();
+  });
   document.addEventListener('click', function(e) {
     if (!e.target.closest('.mobile-nav-toggle')) return;
     mobileNavToogle();
@@ -117,7 +164,7 @@ function reportThemeModeToGA(theme) {
    * above already toggles those, and closing here too would cancel it out.
    */
   document.addEventListener('click', function (e) {
-    if (!document.body.classList.contains('mobile-nav-active')) return;
+    if (!mobileNavOpen) return;
     if (e.target.closest('.mobile-nav-toggle')) return;
     if (e.target.closest('#navmenu > ul')) return;
     mobileNavToogle();
@@ -133,7 +180,7 @@ function reportThemeModeToGA(theme) {
    */
   document.querySelectorAll('#navmenu a:not(.js-deck-egg)').forEach(navmenu => {
     navmenu.addEventListener('click', () => {
-      if (document.querySelector('.mobile-nav-active')) {
+      if (mobileNavOpen) {
         mobileNavToogle();
       }
     });
