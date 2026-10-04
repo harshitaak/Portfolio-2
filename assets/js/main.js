@@ -26,6 +26,7 @@
     initDrawRandomUnderline ........ [draw-line] hover underlines
     initHeadlineDrawLines .......... stamps a variant into .headline-draw__line
     syncHeadlineDrawTitleGroupLineWidths  match SVG width to the rendered heading
+    initHeroHeadline ............... SplitText word reveal on the index hero h1
     initBasicCustomCursor .......... GSAP quickTo cursor follower
     lenis .......................... smooth scroll, skipped for reduced motion
     Slides easter egg .............. seven clicks on Philosophy reveal Slides
@@ -943,6 +944,33 @@ document.addEventListener('DOMContentLoaded', initHeadlineDrawTitleGroupLineWidt
 setTimeout(initHeadlineDrawTitleGroupLineWidths, 100);
 document.addEventListener('DOMContentLoaded', initHeadlineDrawLines);
 setTimeout(initHeadlineDrawLines, 100);
+
+/**
+ * Hero headline: words rise out of a mask (SplitText, index only).
+ * Words, not chars, so the link inside the h1 stays readable.
+ * The underline then draws on its own 2s timer (initDrawRandomUnderline).
+ */
+function initHeroHeadline() {
+  const h1 = document.querySelector('.hero h1');
+  if (!h1 || !document.documentElement.classList.contains('hero-split')) return;
+  document.fonts.ready.then(() => {
+    try {
+      SplitText.create(h1, {
+        type: 'words',
+        mask: 'words',
+        // No hyphen: SplitText suffixes every \w+ run, so "hero-word" would become "hero-mask-word-mask"
+        wordsClass: 'heroword', // masks get .heroword-mask (descender padding in main.css)
+        aria: 'none',
+        onSplit(self) {
+          return gsap.from(self.words, { yPercent: 130, duration: 0.9, ease: 'power4.out', stagger: 0.08, delay: 0.2 });
+        }
+      });
+    } finally {
+      h1.style.visibility = 'visible';
+    }
+  });
+}
+document.addEventListener('DOMContentLoaded', initHeroHeadline);
 
 /* For basic custom cursor */
 function initBasicCustomCursor() {  

@@ -64,6 +64,7 @@
     FigJam / Figma embed
     Element scroll animation ......... .autoShow / .animScale, view() timeline
     Headline Draw .................... display headline + scroll-drawn underline
+    Diagram Build .................... inline SVG assembles on scroll (.diagram-build)
     Infographic ...................... .image-infographic-holder
     Long-form Essay (scrollytelling) . scoped to body.philosophy-page
       Slides easter egg .............. 7-click nav unlock; .deck-egg + .egg-toast
@@ -2264,6 +2265,18 @@ section,
   text-wrap: balance;
 }
 
+/* Held back until initHeroHeadline (main.js) splits it; class set in index.html <head> */
+.hero-split .hero h1 {
+  visibility: hidden;
+}
+
+/* SplitText masks clip at the line box, cutting off descenders ("g").
+   Extend the clip area down without shifting layout. */
+.hero h1 .heroword-mask {
+  padding-bottom: 0.2em;
+  margin-bottom: -0.2em;
+}
+
 .hero p {
   padding-bottom:  1em;
   font-size: var(--hero-body);
@@ -4392,6 +4405,78 @@ body:has( .mobile-nav-toggle:hover) .cursor{
   .headline-draw__line path {
     stroke-dashoffset: 0;
   }
+}
+
+
+/*--------------------------------------------------------------
+# Diagram Build — inline SVG that assembles itself on scroll
+  Same view-timeline pattern as Headline Draw. Groups carry
+  style="--step:N"; stroked elements carry pathLength="1" so
+  headline-line-draw works at any length. Browsers without
+  scroll timelines, and reduced motion, show the finished diagram.
+--------------------------------------------------------------*/
+.diagram-build {
+  view-timeline: --diagram;
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .diagram-build [pathLength] {
+      stroke-dasharray: 1;
+      animation-name: headline-line-draw;
+    }
+
+    .diagram-build :is(.db-title path, .db-label) {
+      animation-name: diagram-rise;
+    }
+
+    .diagram-build :is(.db-art, .db-pop) {
+      animation-name: diagram-pop;
+      transform-box: fill-box;
+      transform-origin: center;
+    }
+
+    /* Hand-drawn axes are filled shapes, so they wipe out from the centre */
+    .diagram-build .db-axis-x { animation-name: diagram-grow-x; }
+    .diagram-build .db-axis-y { animation-name: diagram-grow-y; }
+
+    .diagram-build :is([pathLength], .db-title path, .db-label, .db-art, .db-pop, .db-axis-x, .db-axis-y) {
+      animation-fill-mode: both;
+      animation-timing-function: linear;
+      animation-timeline: --diagram;
+      /* Tune these to shift when each step plays */
+      animation-range: cover calc(22% + var(--step) * 7%) cover calc(32% + var(--step) * 7%);
+    }
+
+    /* Ambient: sparkles' outer rays turn slowly once drawn */
+    .diagram-build .db-art-rays {
+      animation: diagram-spin 60s linear infinite;
+      transform-box: fill-box;
+      transform-origin: center;
+    }
+  }
+}
+
+@keyframes diagram-rise {
+  from { opacity: 0; transform: translateY(24px); }
+}
+
+@keyframes diagram-pop {
+  from { opacity: 0; transform: scale(0); }
+}
+
+@keyframes diagram-spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes diagram-grow-x {
+  from { clip-path: inset(0 50%); }
+  to   { clip-path: inset(0 0); }
+}
+
+@keyframes diagram-grow-y {
+  from { clip-path: inset(50% 0); }
+  to   { clip-path: inset(0 0); }
 }
 
 

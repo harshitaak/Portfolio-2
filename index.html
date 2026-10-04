@@ -69,6 +69,9 @@
   <script src="assets/js/theme-init.js"></script>
   <!-- GSAP (DrawSVGPlugin is paid; main.js uses stroke-dashoffset fallback if unavailable) -->
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+  <!-- SplitText (free since GSAP 3.13) — hero headline word reveal, index only -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js"></script>
+  <script>if (window.SplitText && !matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('hero-split');</script>
   <link href="assets/css/main.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lenis@1.2.3/dist/lenis.css">
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.2.3/dist/lenis.min.js"></script>
@@ -147,15 +150,15 @@
 
       <div class="container" data-aos-delay="0">
         <div class="row align-items-center">
-          <div class="col-lg-6 col-md-12 text-start" data-aos="fade-right" data-aos-delay="1000" draw-line="">
+          <div class="col-lg-6 col-md-12 text-start" draw-line="">
             <h1>I design <span class="heading-underline"><a href="philosophy.html" style="color: inherit;">Digital Tools</a><span draw-line-box=""
                   draw-line-style="4" class="text-draw__box heading-underline__line"></span></span></h1>
-                  <p>After making <a class="typed-link" href="portfolio.html#filter-app" aria-label="Apps"><span class="typed"
+                  <p data-aos="fade-up" data-aos-delay="900">After making <a class="typed-link" href="portfolio.html#filter-app" aria-label="Apps"><span class="typed"
                   data-typed-items="Apps, Data Platform, Furniture, Speculative Design, Digital Art, Branding, Strategy, Storytelling, Cycles, Whatsapp Plus, Food Truck"
                   data-typed-links="portfolio.html#filter-app, Aquata.html, portfolio.html#filter-product, Humane Technology.html, Renders.html, Nu.html, Samsung Fam.html, Letter.html, Montra.html, Whatsapp.html, Lettuce Love.html"></span></a></p>
 
 
-                <div class="hero-actions">
+                <div class="hero-actions" data-aos="fade-up" data-aos-delay="1100">
                   <a href="philosophy.html" class="btn-fly btn-fly--plane">
                     <span class="btn-fly-icon"><i data-lucide="hammer"></i></span>
                     <span class="btn-fly-label">Digital tools?</span>
