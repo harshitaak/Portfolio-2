@@ -1359,7 +1359,11 @@ ol li::marker {
     right: 0 !important;
     bottom: 0 !important;
     width: 100% !important;
+    /* dvh = the visible area. Plain vh on phones includes the space under
+       the browser toolbar, which hid the bottom of the sheet. vh stays as
+       the fallback for browsers without dvh. */
     height: 100vh !important;
+    height: 100dvh !important;
     /* Transparent: the tint lives on .mobile-nav-backdrop, a body-level layer
        that also covers the floating buttons outside the header. */
     background: transparent !important;
@@ -1379,6 +1383,7 @@ ol li::marker {
     left: 0 !important;
     right: 0 !important;
     max-height: 80vh !important;
+    max-height: 80dvh !important;
     overflow-y: auto !important;
     overflow-x: hidden !important;
     width: 100% !important;
