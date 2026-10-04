@@ -14,7 +14,7 @@
     Floating back button
     Floating theme toggle button
     aosInit ........................ Animate-On-Scroll
-    Init typed.js .................. rotating headline, optional per-item links
+    Hero rotating word ............. letter cascade (GSAP), optional per-item links
     initGLightbox .................. lightbox, re-inits on popstate
     Init isotope layout and filters  portfolio grid
     custom-carousel-nav ............ swiper with real prev/next buttons
@@ -27,6 +27,7 @@
     initHeadlineDrawLines .......... stamps a variant into .headline-draw__line
     syncHeadlineDrawTitleGroupLineWidths  match SVG width to the rendered heading
     initHeroHeadline ............... SplitText word reveal on the index hero h1
+    initDiagramTrigger ............. plays each .diagram-build once on view
     initBasicCustomCursor .......... GSAP quickTo cursor follower
     lenis .......................... smooth scroll, skipped for reduced motion
     Slides easter egg .............. seven clicks on Philosophy reveal Slides
@@ -433,161 +434,147 @@ function reportThemeModeToGA(theme) {
   }, { once: true });
 
   /**
-   * Init typed.js
+   * Hero rotating word: letter cascade (GSAP)
+   * The word's letters drop out one after another, the underline resizes to
+   * the next word, and its letters rise in. Markup contract is unchanged:
+   * .typed carries data-typed-items (+ optional data-typed-links, same order;
+   * "#" means "no link yet") inside an a.typed-link.
    */
   const selectTyped = document.querySelector('.typed');
   if (selectTyped) {
-    let typed_strings = selectTyped.getAttribute('data-typed-items');
-    typed_strings = typed_strings.split(',');
+    const items = selectTyped.getAttribute('data-typed-items').split(',').map(s => s.trim());
+    const links = (selectTyped.getAttribute('data-typed-links') ?? '').split(',').map(s => s.trim());
+    const typedLink = selectTyped.closest('.typed-link');
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const HOLD = 2.2; // seconds each word stays put
 
-    // Optional: each typed item can point at its own page via data-typed-links,
-    // listed in the same order as data-typed-items. "#" means "no link yet".
-    let typed_links = (selectTyped.getAttribute('data-typed-links') ?? '').split(',');
-    let typedLink = selectTyped.closest('.typed-link');
-
-    let typed_options = {
-      strings: typed_strings,
-      loop: true,
-      typeSpeed: 100,
-      backSpeed: 50,
-      backDelay: 2000
-    };
-
-    // Each item is only on screen for a few seconds, so the rotation is held
-    // while the visitor reaches for the link. It is only ever held on a fully
-    // typed word — pausing mid-word reads as a broken animation — so a hover
-    // that lands mid-word waits for the word to finish before holding.
+    let index = 0;
+    let nextCall = null;
     let hovering = false;
-    let held = false;
 
-    function holdRotation(self) {
-      let current = self.strings[self.arrayPos] ?? '';
-      // Ignore anything but a completely typed word: mid-type, or mid-backspace
-      // after the hold was released, the displayed text won't match.
-      // Trimmed: every item carries a leading space from the data-typed-items
-      // split, and typed.js writes through innerHTML. Mid-type and mid-backspace
-      // states are still rejected — the displayed text is a strict prefix there.
-      if (held || selectTyped.textContent.trim() !== current.trim()) {
-        return;
-      }
-      held = true;
-      // stop() alone only raises typed.js's pause flag; it leaves the queued
-      // backspace pending and records the resume point only once that fires.
-      // Dropping the timer and seeding the resume point ourselves makes both
-      // the hold and the release deterministic, however briefly it was held.
-      clearTimeout(self.timeout);
-      self.pause.typewrite = false;
-      self.pause.curString = current;
-      self.pause.curStrPos = current.length;
-      self.stop();
+    // Measured rather than set in ch units: Satoshi at a clamp() size with
+    // letter-spacing is only approximated by ch.
+    const probe = document.createElement('span');
+    probe.setAttribute('aria-hidden', 'true');
+    probe.style.cssText = 'position:absolute;visibility:hidden;white-space:pre;';
+    function measure(text) {
+      let styles = getComputedStyle(selectTyped);
+      // Set individually: the `font` shorthand reads back empty in some engines.
+      ['fontFamily', 'fontSize', 'fontWeight', 'fontStyle', 'letterSpacing'].forEach(function(prop) {
+        probe.style[prop] = styles[prop];
+      });
+      probe.textContent = text;
+      return probe.getBoundingClientRect().width;
     }
 
-    function releaseRotation() {
-      if (!held) {
-        return;
-      }
-      held = false;
-      typedInstance.start();
-    }
-
-    if (typedLink) {
-      typed_options.preStringTyped = function(index) {
-        let href = (typed_links[index] ?? '').trim() || '#';
-        typedLink.setAttribute('href', href);
-        typedLink.setAttribute('aria-label', (typed_strings[index] ?? '').trim());
-        if (href === '#') {
-          typedLink.setAttribute('tabindex', '-1');
-          typedLink.setAttribute('aria-disabled', 'true');
-        } else {
-          typedLink.removeAttribute('tabindex');
-          typedLink.removeAttribute('aria-disabled');
-        }
-      };
-
-      // Fires the moment the word is fully typed — the only safe point to hold
-      typed_options.onStringTyped = function(index, self) {
-        if (hovering) {
-          holdRotation(self);
-        }
-      };
-    }
-
-    let typedInstance = new Typed('.typed', typed_options);
-
-    if (typedLink) {
-      // The anchor only ever holds the current word, so its width — and with it
-      // its hit box — tracks the text character by character. Reserving the
-      // widest string keeps the box still. Measured rather than set in ch units
-      // because the font is Satoshi at a clamp() size with letter-spacing,
-      // which ch only approximates.
-      function reserveTypedWidth() {
-        let probe = document.createElement('span');
-        let styles = getComputedStyle(selectTyped);
-        probe.style.position = 'absolute';
-        probe.style.visibility = 'hidden';
-        probe.style.whiteSpace = 'pre';
-        // Set individually: the `font` shorthand reads back empty in some engines.
-        ['fontFamily', 'fontSize', 'fontWeight', 'fontStyle', 'letterSpacing'].forEach(function(prop) {
-          probe.style[prop] = styles[prop];
-        });
-        selectTyped.parentNode.appendChild(probe);
-
-        let widest = 0;
-        typed_strings.forEach(function(string) {
-          probe.textContent = string;
-          widest = Math.max(widest, probe.getBoundingClientRect().width);
-        });
-        probe.remove();
-
-        // typed.js appends its own cursor inside the anchor (showCursor is left
-        // at its default), so that width is part of the box too.
-        let cursor = typedInstance.cursor;
-        if (cursor) {
-          widest += cursor.getBoundingClientRect().width;
-        }
-        typedLink.style.minWidth = Math.ceil(widest) + 'px';
-      }
-
-      // Wait for Satoshi: measuring against the fallback font sizes it wrong.
-      if (document.fonts && document.fonts.ready) {
-        document.fonts.ready.then(reserveTypedWidth);
+    function setLink(i) {
+      if (!typedLink) return;
+      let href = links[i] || '#';
+      typedLink.setAttribute('href', href);
+      typedLink.setAttribute('aria-label', items[i]);
+      if (href === '#') {
+        typedLink.setAttribute('tabindex', '-1');
+        typedLink.setAttribute('aria-disabled', 'true');
       } else {
-        reserveTypedWidth();
+        typedLink.removeAttribute('tabindex');
+        typedLink.removeAttribute('aria-disabled');
+      }
+    }
+
+    function letters(text) {
+      selectTyped.textContent = '';
+      return Array.from(text).map(function(char) {
+        let span = document.createElement('span');
+        span.className = 'typed__ch';
+        span.textContent = char;
+        selectTyped.appendChild(span);
+        return span;
+      });
+    }
+
+    // A swap that starts while the visitor is on the link still finishes;
+    // the next one is simply never scheduled until they leave.
+    function schedule() {
+      nextCall = gsap.delayedCall(HOLD, swap);
+      if (hovering) nextCall.pause();
+    }
+
+    function swap() {
+      index = (index + 1) % items.length;
+      let word = items[index];
+      setLink(index);
+
+      if (reduceMotion) {
+        selectTyped.textContent = word;
+        gsap.set(selectTyped, { width: measure(word) });
+        schedule();
+        return;
       }
 
-      // --hero-body is viewport-relative, so the reservation is width-dependent.
+      // The new word starts rising as soon as the last old letter is out,
+      // while the underline is still resizing, so there is no empty beat.
+      let outgoing = selectTyped.querySelectorAll('.typed__ch');
+      let outEnd = 0.35 + 0.02 * Math.max(outgoing.length - 1, 0);
+      gsap.timeline()
+        .to(outgoing, { yPercent: -110, duration: 0.35, ease: 'power2.in', stagger: 0.02 }, 0)
+        .to(selectTyped, { width: measure(word), duration: 0.6, ease: 'power3.inOut' }, 0.15)
+        .add(function() {
+          gsap.fromTo(letters(word), { yPercent: 110 }, {
+            yPercent: 0, duration: 0.5, ease: 'power3.out', stagger: 0.025,
+            onComplete: schedule
+          });
+        }, outEnd);
+    }
+
+    // The anchor's hit box stays at the widest word so it never sweeps across
+    // the pointer; the anchor ends the paragraph, so the space costs nothing.
+    function reserveWidth() {
+      selectTyped.parentNode.appendChild(probe);
+      if (typedLink) {
+        typedLink.style.minWidth = Math.ceil(Math.max.apply(null, items.map(measure))) + 'px';
+      }
+      gsap.set(selectTyped, { width: measure(items[index]) });
+    }
+
+    if (typeof gsap !== 'undefined') {
+      letters(items[0]);
+      setLink(0);
+      // Wait for Satoshi: measuring against the fallback font sizes it wrong.
+      (document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve()).then(function() {
+        reserveWidth();
+        schedule();
+      });
+
+      // --hero-body is viewport-relative, so the measurements are width-dependent.
       let resizeTimer = null;
       window.addEventListener('resize', function() {
         clearTimeout(resizeTimer);
-        resizeTimer = setTimeout(reserveTypedWidth, 150);
+        resizeTimer = setTimeout(reserveWidth, 150);
       });
+    }
 
-      typedLink.addEventListener('focus', function() {
+    if (typedLink && typeof gsap !== 'undefined') {
+      function hold() {
         hovering = true;
-        holdRotation(typedInstance);
-      });
-      typedLink.addEventListener('blur', function() {
+        if (nextCall) nextCall.pause();
+      }
+      function release() {
         hovering = false;
-        releaseRotation();
-      });
+        if (nextCall) nextCall.resume();
+      }
+      typedLink.addEventListener('focus', hold);
+      typedLink.addEventListener('blur', release);
 
-      // Releasing on the first mouseleave means a single stray pixel across the
-      // edge costs a whole rotation, since re-entry lands mid-backspace and
-      // holdRotation rejects it. A short grace period absorbs that jitter.
+      // A short grace period absorbs a stray pixel across the edge.
       // Keyboard focus has none, so focus/blur above release immediately.
       let leaveTimer = null;
       typedLink.addEventListener('mouseenter', function() {
         clearTimeout(leaveTimer);
-        hovering = true;
-        // Already sitting on a finished word? Hold it straight away.
-        holdRotation(typedInstance);
+        hold();
       });
       typedLink.addEventListener('mouseleave', function() {
         clearTimeout(leaveTimer);
-        leaveTimer = setTimeout(function() {
-          hovering = false;
-          releaseRotation();
-        }, 120);
+        leaveTimer = setTimeout(release, 120);
       });
     }
   }
@@ -971,6 +958,32 @@ function initHeroHeadline() {
   });
 }
 document.addEventListener('DOMContentLoaded', initHeroHeadline);
+
+/**
+ * .diagram-build: play the build once, on a clock, when the figure scrolls
+ * into view (main.css holds it paused under .is-armed until .is-built).
+ * --scrub diagrams run off scroll position instead and are left alone.
+ */
+function initDiagramTrigger() {
+  const svgs = document.querySelectorAll('.diagram-build:not(.diagram-build--scrub)');
+  if (!svgs.length) return;
+  if (!('IntersectionObserver' in window)) {
+    svgs.forEach((svg) => svg.classList.add('is-armed', 'is-built'));
+    return;
+  }
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('is-built');
+      io.unobserve(entry.target);
+    });
+  }, { threshold: 0.4 });
+  svgs.forEach((svg) => {
+    svg.classList.add('is-armed');
+    io.observe(svg);
+  });
+}
+document.addEventListener('DOMContentLoaded', initDiagramTrigger);
 
 /* For basic custom cursor */
 function initBasicCustomCursor() {  

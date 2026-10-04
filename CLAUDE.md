@@ -41,6 +41,8 @@ npm run tailwind:watch
 
 **Portfolio grid.** Cards in `portfolio.html` are filtered by Isotope via `filter-app` / `filter-product` / `filter-branding` / `filter-books` classes (Digital / Furniture / Visual / Art). Adding a project = a card here + a new case-study page + images under `assets/img/<Project>/`.
 
+**Diagram Build (animated inline SVGs).** The philosophy diagrams are inline `<svg class="diagram-build">` that build once when scrolled into view (`initDiagramTrigger` in `main.js` adds `.is-armed`, then `.is-built`). Parts carry a role class (`db-rise`, `db-pop`, `db-gather`, `db-axis-x/y`, `db-spin`, or `pathLength="1"` on strokes to draw them on) plus `style="--step:N"` for order; the full guide is the "Diagram Build" header comment in `main.css`. This play-once trigger is the preferred default for new diagrams; `.diagram-build--scrub` (scroll-scrubbed) is an opt-in exception. Source SVGs come from Figma: export with "Include 'id' attribute" ticked or groups are flattened, and map colors to the theme tokens (`#EEFF00`→`--color`, `#FFBB00`→`--color-2`, `#00E6FF`→`--color-3`, `#DCDBCE`→`--ink`, black→`--paper`).
+
 **`_design_work/`** is not part of the site. It holds Claude Design canvas artboards (`*.dc.html`, `canvas.json`) and `build.mjs`, which inlines the Satoshi woff2 and derives `LightMode.dc.html` from `Main.dc.html` by hex substitution. Ignore it unless asked about design mockups.
 
 ## Working conventions

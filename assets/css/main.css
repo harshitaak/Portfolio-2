@@ -64,7 +64,7 @@
     FigJam / Figma embed
     Element scroll animation ......... .autoShow / .animScale, view() timeline
     Headline Draw .................... display headline + scroll-drawn underline
-    Diagram Build .................... inline SVG assembles on scroll (.diagram-build)
+    Diagram Build .................... inline SVG builds once when scrolled into view
     Infographic ...................... .image-infographic-holder
     Long-form Essay (scrollytelling) . scoped to body.philosophy-page
       Slides easter egg .............. 7-click nav unlock; .deck-egg + .egg-toast
@@ -2293,15 +2293,25 @@ section,
   gap: 12px;
 }
 
-/* :not() keeps the underline off typed.js's cursor. The cursor blinks via
-   opacity, so a border there blinks a 2px stub on and off after the word. */
-.hero p span:not(.typed-cursor) {
+/* Rotating word (letter cascade in main.js). It is a mask: letters slide
+   out of and into it, and main.js tweens its width so the underline
+   resizes between words. */
+.hero p span.typed {
+  display: inline-block;
+  vertical-align: bottom;
+  overflow: hidden;
+  white-space: nowrap;
   letter-spacing: 1px;
   border-bottom: 2px solid var(--color);
 }
 
-/* The typed word grows and shrinks a character at a time, so an inline anchor
-   sized to it sweeps its own right edge across the pointer and thrashes
+.hero p .typed__ch {
+  display: inline-block;
+  white-space: pre;
+}
+
+/* The word's width changes between items, so an inline anchor sized to it
+   would sweep its own right edge across the pointer and thrash
    mouseenter/mouseleave. min-width (measured in main.js) reserves the widest
    string so the hit box never moves; the anchor ends the paragraph, so the
    reserved space costs nothing visually. */
@@ -4409,52 +4419,112 @@ body:has( .mobile-nav-toggle:hover) .cursor{
 
 
 /*--------------------------------------------------------------
-# Diagram Build — inline SVG that assembles itself on scroll
-  Same view-timeline pattern as Headline Draw. Groups carry
-  style="--step:N"; stroked elements carry pathLength="1" so
-  headline-line-draw works at any length. Browsers without
-  scroll timelines, and reduced motion, show the finished diagram.
+# Diagram Build — inline SVG that builds itself once when scrolled into view
+  Opt in:  <svg class="diagram-build" …>. initDiagramTrigger (main.js)
+           adds .is-armed (parts held at their first frame), then
+           .is-built when 40% is in view. Plays once per page load.
+  Parts:   give a part (or a group, which its children inherit) a role
+           class and style="--step:N". N is unitless; fractions stagger
+           (e.g. 0, 0.08, 0.16…). Delay = N × --db-step.
+    [pathLength="1"]  any stroked path/line draws on (headline-line-draw)
+    .db-rise          text, labels: fade up
+    .db-pop           logos, sparkles, dots: scale in with overshoot
+    .db-gather        boxes that close in around a group
+    .db-axis-x/-y     filled hand-drawn axes: wipe out from the centre
+    .db-spin          ambient slow turn, starts once built
+  Knobs:   --db-step (gap per step) and --db-dur (each part's duration),
+           overridable per diagram via style on the <svg>.
+  Scrub:   .diagram-build--scrub ties the same --step markup to scroll
+           position instead (view timeline). Opt-in exception; the
+           trigger never arms it, so the two modes never mix.
+  Reduced motion, and scrub without scroll-timeline support, show
+  the finished diagram.
 --------------------------------------------------------------*/
 .diagram-build {
-  view-timeline: --diagram;
+  --db-step: 400ms;
+  --db-dur: 600ms;
 }
 
+@media (prefers-reduced-motion: no-preference) {
+  .diagram-build.is-armed :is([pathLength], .db-rise, .db-pop, .db-gather, .db-axis-x, .db-axis-y) {
+    animation-duration: var(--db-dur);
+    animation-delay: calc(var(--step, 0) * var(--db-step));
+    animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+    animation-fill-mode: both;
+    animation-play-state: paused;
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+
+  .diagram-build.is-armed [pathLength] {
+    stroke-dasharray: 1;
+    animation-name: headline-line-draw;
+  }
+
+  .diagram-build.is-armed .db-rise { animation-name: diagram-rise; }
+
+  .diagram-build.is-armed .db-pop {
+    animation-name: diagram-pop;
+    animation-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .diagram-build.is-armed .db-gather {
+    animation-name: diagram-gather;
+    animation-duration: calc(var(--db-dur) + 100ms);
+  }
+
+  .diagram-build.is-armed .db-axis-x { animation-name: diagram-grow-x; }
+  .diagram-build.is-armed .db-axis-y { animation-name: diagram-grow-y; }
+
+  .diagram-build.is-built :is([pathLength], .db-rise, .db-pop, .db-gather, .db-axis-x, .db-axis-y) {
+    animation-play-state: running;
+  }
+
+  .diagram-build.is-built .db-spin {
+    animation: diagram-spin 60s linear infinite;
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+}
+
+/* Scrub (opt-in): same parts, played by scroll position */
 @supports (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) {
-    .diagram-build [pathLength] {
+    .diagram-build--scrub {
+      view-timeline: --diagram;
+    }
+
+    .diagram-build--scrub [pathLength] {
       stroke-dasharray: 1;
       animation-name: headline-line-draw;
     }
 
-    .diagram-build :is(.db-title path, .db-label) {
-      animation-name: diagram-rise;
-    }
+    .diagram-build--scrub .db-rise { animation-name: diagram-rise; }
+    .diagram-build--scrub .db-pop { animation-name: diagram-pop; }
+    .diagram-build--scrub .db-gather { animation-name: diagram-gather; }
+    .diagram-build--scrub .db-axis-x { animation-name: diagram-grow-x; }
+    .diagram-build--scrub .db-axis-y { animation-name: diagram-grow-y; }
 
-    .diagram-build :is(.db-art, .db-pop) {
-      animation-name: diagram-pop;
-      transform-box: fill-box;
-      transform-origin: center;
-    }
-
-    /* Hand-drawn axes are filled shapes, so they wipe out from the centre */
-    .diagram-build .db-axis-x { animation-name: diagram-grow-x; }
-    .diagram-build .db-axis-y { animation-name: diagram-grow-y; }
-
-    .diagram-build :is([pathLength], .db-title path, .db-label, .db-art, .db-pop, .db-axis-x, .db-axis-y) {
+    .diagram-build--scrub :is([pathLength], .db-rise, .db-pop, .db-gather, .db-axis-x, .db-axis-y) {
       animation-fill-mode: both;
       animation-timing-function: linear;
       animation-timeline: --diagram;
+      transform-box: fill-box;
+      transform-origin: center;
       /* Tune these to shift when each step plays */
-      animation-range: cover calc(22% + var(--step) * 7%) cover calc(32% + var(--step) * 7%);
+      animation-range: cover calc(22% + var(--step, 0) * 7%) cover calc(32% + var(--step, 0) * 7%);
     }
 
-    /* Ambient: sparkles' outer rays turn slowly once drawn */
-    .diagram-build .db-art-rays {
+    .diagram-build--scrub .db-spin {
       animation: diagram-spin 60s linear infinite;
       transform-box: fill-box;
       transform-origin: center;
     }
   }
+}
+
+@keyframes diagram-gather {
+  from { opacity: 0; transform: scale(1.12); }
 }
 
 @keyframes diagram-rise {
