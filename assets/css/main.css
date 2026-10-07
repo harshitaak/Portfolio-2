@@ -1399,7 +1399,6 @@ ol li::marker {
     display: block;
     position: relative;
     z-index: 1;
-    padding-right: 0;
     margin: 0;
     overflow-x: hidden;
   }
