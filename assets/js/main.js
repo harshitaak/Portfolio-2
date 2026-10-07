@@ -75,26 +75,76 @@ function reportThemeModeToGA(theme) {
   mobileNavBackdrop.setAttribute('aria-hidden', 'true');
   document.body.appendChild(mobileNavBackdrop);
 
+  // GSAP takes a function as an ease, so the menu can move on the same
+  // cubic-bezier tokens as the CSS (--ease-smooth etc. in main.css) without
+  // the CustomEase plugin. x(t) is monotonic for these curves, so bisection
+  // finds t for a given progress.
+  function cssEase(name, fallback) {
+    let m = getComputedStyle(document.documentElement).getPropertyValue(name).match(/cubic-bezier\(([^)]+)\)/);
+    if (!m) return fallback;
+    let [x1, y1, x2, y2] = m[1].split(',').map(parseFloat);
+    let bez = (a, b, t) => 3 * (1 - t) * (1 - t) * t * a + 3 * (1 - t) * t * t * b + t * t * t;
+    return function(x) {
+      if (x <= 0 || x >= 1) return x;
+      let lo = 0, hi = 1, t = x;
+      for (let i = 0; i < 20; i++) {
+        let dx = bez(x1, x2, t) - x;
+        if (Math.abs(dx) < 1e-5) break;
+        if (dx > 0) hi = t; else lo = t;
+        t = (lo + hi) / 2;
+      }
+      return bez(y1, y2, t);
+    };
+  }
+  const easeSmooth = cssEase('--ease-smooth', 'power2.inOut');
+  const easeSnap = cssEase('--ease-snap', 'expo.out');
+
   // Open: the tint fades in, the bottom sheet slides up, the links fade in one
-  // after another, and the Lucide "menu" lines fold into an X. Close plays it
-  // backwards, faster. Built per open so nothing lingers inline on desktop.
+  // after another, and the Lucide "menu" lines fold into an X. Close is its own
+  // tween rather than the open one reversed — a reversed ease-out idles before
+  // it moves, which read as a delay. Both tween .to() from wherever things are,
+  // so a toggle mid-animation (or after a drag) carries on without a jump.
   // Links only fade (no y): the sheet scrolls (overflow-y: auto), and a link
   // moving inside it could flash a scroll bar.
-  function buildMobileNavTl(toggle) {
+  function playMobileNavOpen(toggle, fresh) {
     let lines = toggle.querySelectorAll('path, line');
-    let tl = gsap.timeline({ paused: true, onReverseComplete: finishMobileNavClose })
-      .fromTo(mobileNavBackdrop, { opacity: 0 }, { opacity: 1, duration: 0.35, ease: 'power1.out' }, 0)
-      .fromTo('#navmenu > ul', { yPercent: 100 },
-        { yPercent: 0, duration: 0.6, ease: 'expo.out' }, 0)
-      .fromTo('#navmenu > ul > li', { opacity: 0 },
-        { opacity: 1, duration: 0.4, ease: 'power2.out', stagger: 0.05 }, 0.12);
+    if (fresh) {
+      gsap.set(mobileNavBackdrop, { opacity: 0 });
+      gsap.set('#navmenu > ul', { yPercent: 100 });
+      gsap.set('#navmenu > ul > li', { opacity: 0 });
+    }
+    let tl = gsap.timeline()
+      .to(mobileNavBackdrop, { opacity: 1, duration: 0.35, ease: easeSmooth }, 0)
+      .to('#navmenu > ul', { yPercent: 0, y: 0, duration: 0.55, ease: easeSnap }, 0)
+      .to('#navmenu > ul > li', { opacity: 1, duration: 0.4, ease: easeSmooth, stagger: 0.05 }, 0.12);
 
     if (lines.length === 3) {
-      tl.to(lines[0], { y: 7, duration: 0.2, ease: 'power3.inOut' }, 0)
-        .to(lines[2], { y: -7, duration: 0.2, ease: 'power3.inOut' }, 0)
-        .to(lines[1], { scaleX: 0, opacity: 0, transformOrigin: '50% 50%', duration: 0.2 }, 0)
-        .to(lines[0], { rotation: 45, transformOrigin: '50% 50%', duration: 0.4, ease: 'power3.inOut' }, 0.18)
-        .to(lines[2], { rotation: -45, transformOrigin: '50% 50%', duration: 0.4, ease: 'power3.inOut' }, 0.18);
+      tl.to(lines[0], { y: 7, duration: 0.2, ease: easeSmooth }, 0)
+        .to(lines[2], { y: -7, duration: 0.2, ease: easeSmooth }, 0)
+        .to(lines[1], { scaleX: 0, opacity: 0, transformOrigin: '50% 50%', duration: 0.2, ease: easeSmooth }, 0)
+        .to(lines[0], { rotation: 45, transformOrigin: '50% 50%', duration: 0.4, ease: easeSmooth }, 0.18)
+        .to(lines[2], { rotation: -45, transformOrigin: '50% 50%', duration: 0.4, ease: easeSmooth }, 0.18);
+    }
+    return tl;
+  }
+
+  // The sheet leaves by yPercent only, so one already dragged down (a GSAP y)
+  // keeps going from where the finger let go.
+  function playMobileNavClose(toggle, onDone) {
+    let lines = toggle.querySelectorAll('path, line');
+    let tl = gsap.timeline({
+      onComplete: function() {
+        finishMobileNavClose();
+        if (onDone) onDone();
+      }
+    })
+      .to(mobileNavBackdrop, { opacity: 0, duration: 0.35, ease: easeSmooth }, 0)
+      .to('#navmenu > ul', { yPercent: 100, duration: 0.35, ease: easeSmooth }, 0);
+
+    if (lines.length === 3) {
+      tl.to([lines[0], lines[2]], { rotation: 0, duration: 0.2, ease: easeSmooth }, 0)
+        .to([lines[0], lines[2]], { y: 0, duration: 0.15, ease: easeSmooth }, 0.15)
+        .to(lines[1], { scaleX: 1, opacity: 1, duration: 0.15, ease: easeSmooth }, 0.15);
     }
     return tl;
   }
@@ -114,7 +164,8 @@ function reportThemeModeToGA(theme) {
     });
   }
 
-  function mobileNavToogle() {
+  // onClosed runs once the sheet has fully left (used to navigate after it).
+  function mobileNavToogle(onClosed) {
     const mobileNavToggleBtn = document.querySelector('.mobile-nav-toggle');
     if (!mobileNavToggleBtn) return;
 
@@ -131,20 +182,24 @@ function reportThemeModeToGA(theme) {
 
     if (opening) {
       // Not yet closed from a previous open? Then the page is still pinned.
-      if (!body.classList.contains('mobile-nav-active')) {
+      const fresh = !body.classList.contains('mobile-nav-active');
+      if (fresh) {
         mobileNavScrollY = window.scrollY;
         body.style.top = '-' + mobileNavScrollY + 'px';
         body.classList.add('mobile-nav-active');
       }
       if (hasGsap) {
-        mobileNavTl = mobileNavTl || buildMobileNavTl(mobileNavToggleBtn);
+        if (mobileNavTl) mobileNavTl.kill();
+        mobileNavTl = playMobileNavOpen(mobileNavToggleBtn, fresh);
         // Reduced motion: jump straight to the open state (X icon included)
-        reduced ? mobileNavTl.progress(1) : mobileNavTl.timeScale(1).play();
+        if (reduced) mobileNavTl.progress(1);
       }
-    } else if (mobileNavTl && !reduced) {
-      mobileNavTl.timeScale(1.6).reverse();
+    } else if (hasGsap && mobileNavTl && !reduced) {
+      mobileNavTl.kill();
+      mobileNavTl = playMobileNavClose(mobileNavToggleBtn, onClosed);
     } else {
       finishMobileNavClose();
+      if (onClosed) onClosed();
     }
   }
   document.addEventListener('keydown', function(e) {
@@ -234,7 +289,7 @@ function reportThemeModeToGA(theme) {
       let height = sheet.offsetHeight;
       let instant = reduced();
       if (dy > height * DISMISS_RATIO || (speed > FLICK_SPEED && dy > FLICK_MIN)) {
-        if (!instant) gsap.to(sheet, { y: height, duration: 0.2, ease: 'power2.in' });
+        // The close tween carries the sheet out from its dragged position.
         mobileNavToogle();
       } else if (instant) {
         gsap.set(sheet, { y: 0 });
@@ -264,14 +319,23 @@ function reportThemeModeToGA(theme) {
    * closing the menu on the first one would make it unreachable on mobile.
    * Excluding it here rather than stopping propagation from the egg's own
    * handler keeps this independent of listener registration order.
+   *
+   * A plain click to another page waits for the sheet to slide away before
+   * navigating. Otherwise the header's view-transition snapshot (animation:
+   * none) freezes the open sheet until the new page swaps it out of existence.
    */
-  document.querySelectorAll('#navmenu a:not(.js-deck-egg)').forEach(navmenu => {
-    navmenu.addEventListener('click', () => {
-      if (mobileNavOpen) {
+  document.querySelectorAll('#navmenu a:not(.js-deck-egg)').forEach(link => {
+    link.addEventListener('click', (e) => {
+      if (!mobileNavOpen) return;
+      const plain = e.button === 0 && !e.metaKey && !e.ctrlKey && !e.shiftKey && !e.altKey && link.target !== '_blank';
+      const samePage = link.pathname === location.pathname && link.hash;
+      if (plain && !samePage) {
+        e.preventDefault();
+        mobileNavToogle(() => { location.href = link.href; });
+      } else {
         mobileNavToogle();
       }
     });
-
   });
 
   /**
