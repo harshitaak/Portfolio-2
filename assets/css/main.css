@@ -767,8 +767,8 @@ ol li::marker {
 }
 
 .header .logo .logo-svg {
-  height: 48px;
-  width: 48px;
+  height: 32px;
+  width: 32px;
   display: block;
   object-fit: contain;
   color: var(--ink);
