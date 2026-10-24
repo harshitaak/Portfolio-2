@@ -3329,11 +3329,6 @@ section,
   stroke: currentColor;
 }
 
-.portfolio .portfolio-filters li:hover .portfolio-filter-icon,
-.portfolio .portfolio-filters li:hover > svg {
-  color: var(--color);
-}
-
 .portfolio .portfolio-filters li.filter-active .portfolio-filter-icon,
 .portfolio .portfolio-filters li.filter-active > svg {
   color: var(--paper);
