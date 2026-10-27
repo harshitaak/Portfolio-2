@@ -826,7 +826,7 @@ function reportThemeModeToGA(theme) {
     let filter = isotopeItem.getAttribute('data-default-filter') ?? '*';
     let sort = isotopeItem.getAttribute('data-sort') ?? 'original-order';
 
-    // Deep link support: portfolio.html#filter-product opens on the Furniture filter.
+    // Deep link support: projects.html#filter-product opens on the Furniture filter.
     // The hash is the data-filter class without its leading dot; an empty hash means "All".
     function filterButtonFromHash() {
       let selector = location.hash ? '.' + location.hash.slice(1) : '*';

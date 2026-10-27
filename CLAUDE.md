@@ -27,7 +27,7 @@ npm run tailwind:watch
 
 ## Architecture
 
-**Pages.** `index.html`, `about.html`, `philosophy.html`, `portfolio.html`, plus ~19 case-study pages named after the project (`Aquata.html`, `Bamboo Table.html`, … — spaces in filenames are intentional and referenced with `%20`).
+**Pages.** `index.html`, `about.html`, `philosophy.html`, `projects.html`, plus ~19 case-study pages named after the project (`Aquata.html`, `Bamboo Table.html`, … — spaces in filenames are intentional and referenced with `%20`).
 
 **Shared chrome is copy-pasted, not templated.** The `<head>` (GA4 snippet, `theme-init.js`, vendor CSS, `main.css`, Lenis CSS), `<header id="header">`, `<footer id="footer">`, and the floating buttons appear verbatim in every page. A change to nav, footer, meta, or script includes must be applied to every HTML file — grep for the block and edit all of them.
 
@@ -39,7 +39,7 @@ npm run tailwind:watch
 
 **Vendor.** Bootstrap 5, AOS, Swiper, Isotope + imagesLoaded, GLightbox, Typed.js are vendored under `assets/vendor/`. GSAP 3.13, Lenis 1.2.3, and Lucide come from CDN. Lucide (`data-lucide`) is the only UI icon set; Bootstrap Icons are used only for footer social marks.
 
-**Portfolio grid.** Cards in `portfolio.html` are filtered by Isotope via `filter-app` / `filter-product` / `filter-branding` / `filter-books` classes (Digital / Furniture / Visual / Art). Adding a project = a card here + a new case-study page + images under `assets/img/<Project>/`.
+**Portfolio grid.** Cards in `projects.html` are filtered by Isotope via `filter-app` / `filter-product` / `filter-branding` / `filter-books` classes (Digital / Furniture / Visual / Art). Adding a project = a card here + a new case-study page + images under `assets/img/<Project>/`.
 
 **Diagram Build (animated inline SVGs).** The philosophy diagrams are inline `<svg class="diagram-build">` that build once when scrolled into view (`initDiagramTrigger` in `main.js` adds `.is-armed`, then `.is-built`). Parts carry a role class (`db-rise`, `db-pop`, `db-gather`, `db-axis-x/y`, `db-spin`, or `pathLength="1"` on strokes to draw them on) plus `style="--step:N"` for order; the full guide is the "Diagram Build" header comment in `main.css`. This play-once trigger is the preferred default for new diagrams; `.diagram-build--scrub` (scroll-scrubbed) is an opt-in exception. Source SVGs come from Figma: export with "Include 'id' attribute" ticked or groups are flattened, and map colors to the theme tokens (`#EEFF00`→`--color`, `#FFBB00`→`--color-2`, `#00E6FF`→`--color-3`, `#DCDBCE`→`--ink`, black→`--paper`).
 

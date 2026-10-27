@@ -30,7 +30,7 @@ No bundler or dev server dependency is required. Because the pages load assets b
 | [`index.html`](index.html) | Landing page with hero, typed headline, and feature cards |
 | [`about.html`](about.html) | Bio, testimonials, professional + academic timeline, interests, and notes about the site |
 | [`philosophy.html`](philosophy.html) | The three kinds of digital "things" — static sites, linear-journey apps, and digital tools |
-| [`portfolio.html`](portfolio.html) | Filterable project gallery: All, Digital, Furniture, Visual, Art |
+| [`projects.html`](projects.html) | Filterable project gallery: All, Digital, Furniture, Visual, Art |
 
 ### Case studies
 
@@ -94,7 +94,7 @@ Portfolio/
 ├── index.html                  # Landing page
 ├── about.html                  # About, testimonials, timeline
 ├── philosophy.html             # Design philosophy
-├── portfolio.html              # Project gallery
+├── projects.html              # Project gallery
 ├── <project>.html              # Individual case studies
 ├── server.ps1                  # Local PowerShell static server (port 8000)
 ├── cname.txt                   # Custom domain
@@ -114,7 +114,7 @@ Portfolio/
 - **Content**: Edit text and images directly inside the HTML files.
 - **Theme colors**: Tweak the *Paper / Ink / Color* tokens in [`assets/css/main.css`](assets/css/main.css) — the dark values live in `:root`, the light values in `.light-mode`.
 - **Type scale**: Adjust the `--text-*-font` tokens in the same `:root` block.
-- **Projects**: Add a card in `portfolio.html` with the right `filter-app` / `filter-product` / `filter-branding` / `filter-books` class, then link it to a new case-study page.
+- **Projects**: Add a card in `projects.html` with the right `filter-app` / `filter-product` / `filter-branding` / `filter-books` class, then link it to a new case-study page.
 - **Analytics**: Replace the GA4 Measurement ID (`G-8TQZB3JJF8`) in each HTML file's `<head>`.
 - **Resume link**: Update the Google Drive link in [`about.html`](about.html).
 - **Domain**: Change [`cname.txt`](cname.txt) and the Pages settings for the repo.
