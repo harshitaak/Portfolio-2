@@ -1,0 +1,5 @@
+:HL["/fabrication-hub/_next/static/chunks/069e4n3q580d7.css","style"]
+:HL["/fabrication-hub/_next/static/chunks/1u4xyq39-_jmo.css","style"]
+2:[["children",{"s":"__PAGE__","h":160}]]
+1:[["children",{"s":"/_not-found","h":96,"c":"$Q2"}]]
+0:{"b":"Q0Ovjh_-1o8_y8YHZfx2L","t":{"t":{"s":"","h":80,"c":"$Q1"}}}
