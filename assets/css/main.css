@@ -2162,6 +2162,16 @@ html:not(.light-mode) .floating-theme-toggle .sun-and-moon>.moon>circle {
   background-color: var(--color);
 }
 
+.page-title .heading .container > * {
+  margin-inline: auto;
+}
+
+@media (min-width: 992px) {
+  .page-title .heading .container > * {
+    max-width: 66.6667%;
+  }
+}
+
 .page-title .heading h1 {
   font: var(--text-headline-font);
   font-size: var(--page-title);
