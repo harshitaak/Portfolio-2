@@ -4863,6 +4863,19 @@ body.philosophy-page .log-card {
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Lift on hover, same motion as .two-column-grid cards */
+@media (hover: hover) {
+  body.philosophy-page .log-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--elevation-3);
+  }
+
+  body.philosophy-page .log-card--highlight:hover {
+    box-shadow: 0 0 0 1px var(--color), 0 0 48px color-mix(in oklch, var(--color) 40%, transparent), var(--elevation-3);
+  }
 }
 
 body.philosophy-page .log-card__head {
