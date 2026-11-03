@@ -4484,6 +4484,7 @@ body:has( .mobile-nav-toggle:hover) .cursor{
     [pathLength="1"]  any stroked path/line draws on (headline-line-draw)
     .db-rise          text, labels: fade up
     .db-pop           logos, sparkles, dots: scale in with overshoot
+    .db-fly           logos landing in a box: fly up and settle
     .db-gather        boxes that close in around a group
     .db-axis-x/-y     filled hand-drawn axes: wipe out from the centre
     .db-spin          ambient slow turn, starts once built
@@ -4501,12 +4502,14 @@ body:has( .mobile-nav-toggle:hover) .cursor{
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .diagram-build.is-armed :is([pathLength], .db-rise, .db-pop, .db-gather, .db-axis-x, .db-axis-y) {
+  .diagram-build.is-armed :is([pathLength], .db-rise, .db-pop, .db-fly, .db-gather, .db-axis-x, .db-axis-y) {
     animation-duration: var(--db-dur);
     animation-delay: calc(var(--step, 0) * var(--db-step));
     animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
     animation-fill-mode: both;
-    animation-play-state: paused;
+    /* Inherited from the <svg> so flipping .is-built restyles every part;
+       Chrome skips [pathLength] matches when only an ancestor class changes */
+    animation-play-state: var(--db-play, paused);
     transform-box: fill-box;
     transform-origin: center;
   }
@@ -4523,6 +4526,11 @@ body:has( .mobile-nav-toggle:hover) .cursor{
     animation-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1);
   }
 
+  .diagram-build.is-armed .db-fly {
+    animation-name: diagram-fly;
+    animation-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
   .diagram-build.is-armed .db-gather {
     animation-name: diagram-gather;
     animation-duration: calc(var(--db-dur) + 100ms);
@@ -4531,8 +4539,8 @@ body:has( .mobile-nav-toggle:hover) .cursor{
   .diagram-build.is-armed .db-axis-x { animation-name: diagram-grow-x; }
   .diagram-build.is-armed .db-axis-y { animation-name: diagram-grow-y; }
 
-  .diagram-build.is-built :is([pathLength], .db-rise, .db-pop, .db-gather, .db-axis-x, .db-axis-y) {
-    animation-play-state: running;
+  .diagram-build.is-built {
+    --db-play: running;
   }
 
   .diagram-build.is-built .db-spin {
@@ -4556,11 +4564,12 @@ body:has( .mobile-nav-toggle:hover) .cursor{
 
     .diagram-build--scrub .db-rise { animation-name: diagram-rise; }
     .diagram-build--scrub .db-pop { animation-name: diagram-pop; }
+    .diagram-build--scrub .db-fly { animation-name: diagram-fly; }
     .diagram-build--scrub .db-gather { animation-name: diagram-gather; }
     .diagram-build--scrub .db-axis-x { animation-name: diagram-grow-x; }
     .diagram-build--scrub .db-axis-y { animation-name: diagram-grow-y; }
 
-    .diagram-build--scrub :is([pathLength], .db-rise, .db-pop, .db-gather, .db-axis-x, .db-axis-y) {
+    .diagram-build--scrub :is([pathLength], .db-rise, .db-pop, .db-fly, .db-gather, .db-axis-x, .db-axis-y) {
       animation-fill-mode: both;
       animation-timing-function: linear;
       animation-timeline: --diagram;
@@ -4588,6 +4597,10 @@ body:has( .mobile-nav-toggle:hover) .cursor{
 
 @keyframes diagram-pop {
   from { opacity: 0; transform: scale(0); }
+}
+
+@keyframes diagram-fly {
+  from { opacity: 0; transform: translateY(120px) scale(0.5); }
 }
 
 @keyframes diagram-spin {
