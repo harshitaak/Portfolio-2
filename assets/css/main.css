@@ -464,6 +464,9 @@ main {
   --color-2: oklch(70% 0.11 30);
   --color-3: oklch(70% 0.11 150);
   --color-4: oklch(70% 0.11 270);
+  --accent-fabrication: oklch(0.72 0.16 55);
+  --accent-otg:         hsl(258, 56%, 67%);
+  --accent-pilotis:     oklch(68% 0.2 23.3);
   --shadow-color: oklch(0% 0 0);
   
   /* Elevation */
@@ -499,6 +502,9 @@ main {
   --color-2: oklch(62% 0.14 30);
   --color-3: oklch(62% 0.14 150);
   --color-4: oklch(62% 0.14 270);
+  --accent-fabrication: oklch(0.6 0.17 45);
+  --accent-otg:         hsl(258, 56%, 50%);
+  --accent-pilotis:     oklch(68% 0.2 23.3);
   --shadow-color: oklch(0% 0 0);
 }
 
