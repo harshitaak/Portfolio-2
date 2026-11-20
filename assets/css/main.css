@@ -4869,7 +4869,11 @@ body.philosophy-page .log-card {
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  /* re-list the colour properties so the blanket `body *` theme cross-fade
+     isn't dropped by this override */
+  transition: transform 0.3s ease, box-shadow 0.4s var(--ease-smooth),
+    background-color 0.4s var(--ease-smooth), color 0.4s var(--ease-smooth),
+    border-color 0.4s var(--ease-smooth);
 }
 
 /* Lift on hover, same motion as .two-column-grid cards */
