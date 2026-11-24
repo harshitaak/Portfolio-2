@@ -4667,7 +4667,8 @@ body:has( .mobile-nav-toggle:hover) .cursor{
 # Diagram Build — inline SVG that builds itself once when scrolled into view
   Opt in:  <svg class="diagram-build" …>. initDiagramTrigger (main.js)
            adds .is-armed (parts held at their first frame), then
-           .is-built when 40% is in view. Plays once per page load.
+           .is-built when 40% is in view, or when it fills 40% of the
+           screen if it's taller than that. Plays once per page load.
   Parts:   give a part (or a group, which its children inherit) a role
            class and style="--step:N". N is unitless; fractions stagger
            (e.g. 0, 0.08, 0.16…). Delay = N × --db-step.

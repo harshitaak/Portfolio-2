@@ -1171,11 +1171,14 @@ function initDiagramTrigger() {
   }
   const io = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
-      if (!entry.isIntersecting) return;
+      // a diagram taller than the screen may never show 40% of itself, so
+      // filling 40% of the screen counts too
+      const fillsScreen = entry.intersectionRect.height >= window.innerHeight * 0.4;
+      if (entry.intersectionRatio < 0.4 && !fillsScreen) return;
       entry.target.classList.add('is-built');
       io.unobserve(entry.target);
     });
-  }, { threshold: 0.4 });
+  }, { threshold: [0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4] });
   svgs.forEach((svg) => {
     svg.classList.add('is-armed');
     io.observe(svg);
