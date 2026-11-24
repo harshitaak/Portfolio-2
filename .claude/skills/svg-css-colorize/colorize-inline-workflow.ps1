@@ -5,16 +5,16 @@ param(
     [string]$SvgPath = "",
     [string]$HtmlPath = "",
     [hashtable]$ColorMap = @{
-        "#FF0000" = "var(--color-2)"
-        "#FFBB00" = "var(--color-2)"
-        "#EEFF00" = "var(--color)"
-        "#00E6FF" = "var(--color-3)"
+        "#FF0000" = "var(--color-red)"
+        "#FFBB00" = "var(--color-workspace)"
+        "#EEFF00" = "var(--color-tech)"
+        "#00E6FF" = "var(--color-tool)"
         "white" = "var(--ink)"
     }
 )
 
 if (-not $SvgPath -or -not (Test-Path $SvgPath)) {
-    Write-Host "Usage: .\colorize-inline-workflow.ps1 -SvgPath 'path/to/Fig.svg' -HtmlPath 'path/to/page.html' -ColorMap @{'#FF0000'='var(--color)'}"
+    Write-Host "Usage: .\colorize-inline-workflow.ps1 -SvgPath 'path/to/Fig.svg' -HtmlPath 'path/to/page.html' -ColorMap @{'#FF0000'='var(--color-red)'}"
     exit 1
 }
 

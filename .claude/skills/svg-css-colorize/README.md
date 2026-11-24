@@ -82,8 +82,8 @@ $svgFile = "path/to/Fig.svg"
 $svgContent = Get-Content $svgFile -Raw
 
 # Map your hardcoded colors to CSS variables
-$svgContent = $svgContent -replace 'fill="#FF0000"', 'fill="var(--color-2)"'
-$svgContent = $svgContent -replace 'fill="#00E6FF"', 'fill="var(--color-3)"'
+$svgContent = $svgContent -replace 'fill="#FF0000"', 'fill="var(--color-red)"'
+$svgContent = $svgContent -replace 'fill="#00E6FF"', 'fill="var(--color-tool)"'
 $svgContent = $svgContent -replace 'fill="white"', 'fill="var(--ink)"'
 
 # Remove XML declaration (not valid in HTML)
@@ -104,7 +104,7 @@ $svgContent | Set-Content "path/to/Fig.inline.svg" -Encoding UTF8
 
 <!-- After: Paste the entire SVG inline -->
 <svg width="1840" height="985" viewBox="0 0 1840 985" fill="none" xmlns="...">
-  <!-- SVG content with var(--color-2), var(--ink), etc. -->
+  <!-- SVG content with var(--color-red), var(--ink), etc. -->
 </svg>
 ```
 
@@ -117,8 +117,8 @@ $svgContent | Set-Content "path/to/Fig.inline.svg" -Encoding UTF8
 
 Common mappings for this project:
 - `--ink` – Text color (adapts to light/dark theme)
-- `--color` – Primary accent color (blue hue 240)
-- `--color-2` – Secondary accent (orange hue 31)
-- `--color-3` – Tertiary accent (cyan hue 180)
-- `--color-4` – Muted accent (cyan hue 196)
+- `--color-primary` – Primary accent (blue)
+- `--color-red`, `--color-green` – Diagram fills
+- `--color-workspace` (amber), `--color-tech` (lime) – Principles diagram
+- `--color-tool` – Principles diagram (same as primary)
 - `--paper` – Background color (adapts to light/dark theme)

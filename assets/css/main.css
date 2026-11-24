@@ -460,13 +460,16 @@ main {
   /* Colors */
   --paper:   oklch(27% 0    0);
   --ink:     oklch(92% 0    0);
-  --color:   oklch(70% 0.11 240);
-  --color-2: oklch(70% 0.11 30);
-  --color-3: oklch(70% 0.11 150);
-  --color-4: oklch(70% 0.11 270);
+  --color-primary: oklch(70% 0.11 240);
+  --color-red:     oklch(67% 0.16 24);
+  --color-green:   oklch(77% 0.13 152);
   --accent-fabrication: oklch(0.72 0.16 55);
   --accent-otg:         hsl(258, 56%, 67%);
   --accent-pilotis:     oklch(68% 0.2 23.3);
+  /* Principles diagram, one per theme */
+  --color-workspace: oklch(83% 0.165 81);
+  --color-tech:      oklch(95% 0.21 115);
+  --color-tool:      var(--color-primary);
   --shadow-color: oklch(0% 0 0);
   
   /* Elevation */
@@ -498,13 +501,14 @@ main {
 .light-mode {
   --paper:   oklch(93% 0    0);
   --ink:     oklch(20% 0    0);
-  --color:   oklch(62% 0.14 240);
-  --color-2: oklch(62% 0.14 30);
-  --color-3: oklch(62% 0.14 150);
-  --color-4: oklch(62% 0.14 270);
-  --accent-fabrication: oklch(0.6 0.17 45);
+  --color-primary: oklch(51% 0.115 240);
+  --color-red:     oklch(49% 0.17 24);
+  --color-green:   oklch(60% 0.14 152);
+  --accent-fabrication: oklch(0.52 0.14 45);
   --accent-otg:         hsl(258, 56%, 50%);
-  --accent-pilotis:     oklch(68% 0.2 23.3);
+  --accent-pilotis:     oklch(53% 0.19 23.3);
+  --color-workspace: oklch(62% 0.15 55);
+  --color-tech:      oklch(50% 0.11 115);
   --shadow-color: oklch(0% 0 0);
 }
 
@@ -522,12 +526,12 @@ body *::after {
 
 /* For text selection custom color */
 ::selection {
-  background: var(--color);
+  background: var(--color-primary);
   color: var(--paper);
 }
 /* For Firefox compatibility for fallback*/
 ::-moz-selection {
-  background: var(--color);
+  background: var(--color-primary);
   color: var(--paper);
 }
 
@@ -644,14 +648,14 @@ body.index-page .hero {
 
 
 a {
-  color: var(--color);
+  color: var(--color-primary);
   text-decoration: none;
   transition: 0.3s;
 
 }
 
 a:hover {
-  color: var(--color);
+  color: var(--color-primary);
   text-decoration: none;
   cursor: pointer;
 }
@@ -709,7 +713,7 @@ h6 {
 /* Global list bullet/number color */
 ul li::marker,
 ol li::marker {
-  color: var(--color);
+  color: var(--color-primary);
 }
 
 
@@ -1058,7 +1062,7 @@ ol li::marker {
 
   /* Keyboard focus ring, drawn on the pill rather than the link. */
   .navmenu>ul:has(a:focus-visible) .nav-pill {
-    --nav-ring: 0 0 0 2px color-mix(in srgb, var(--color), transparent 40%);
+    --nav-ring: 0 0 0 2px color-mix(in srgb, var(--color-primary), transparent 40%);
   }
 
   /* First placement, resize and font swap: jump instead of sliding in from x: 0 */
@@ -1083,12 +1087,12 @@ ol li::marker {
   /* Icon hover and active states */
   .navmenu a:hover .lucide,
   .navmenu .active:focus .lucide {
-    color: var(--color);
+    color: var(--color-primary);
     transform: scale(1.1);
   }
 
   .navmenu li:hover>a .lucide {
-    color: var(--color);
+    color: var(--color-primary);
     transform: scale(1.1);
   }
 
@@ -1172,8 +1176,8 @@ ol li::marker {
 
   /* Enhanced icon styling for mobile nav toggle */
   .mobile-nav-toggle:hover {
-    color: var(--color);
-    /* background-color: color-mix(in srgb, var(--color), transparent 90%); */
+    color: var(--color-primary);
+    /* background-color: color-mix(in srgb, var(--color-primary), transparent 90%); */
     /* transform: scale(1.1); */
   }
 
@@ -1276,19 +1280,19 @@ ol li::marker {
 
   .navmenu a i:hover,
   .navmenu a:focus i:hover {
-    background-color: var(--color);
+    background-color: var(--color-primary);
     color: color-mix(in srgb, var(--ink), transparent 83%);
   }
 
   .navmenu a:hover,
   .navmenu .active,
   .navmenu .active:focus {
-    color: var(--color);
+    color: var(--color-primary);
   }
 
   .navmenu .active i,
   .navmenu .active:focus i {
-    background-color: var(--color);
+    background-color: var(--color-primary);
     color: var(--ink);
     transform: rotate(180deg);
     transform-origin: center;
@@ -1445,7 +1449,7 @@ ol li::marker {
 }
 
 .footer .social-links a:hover {
-  color: var(--color);
+  color: var(--color-primary);
 }
 
 /* Minimal footer theme adjustments */
@@ -1458,7 +1462,7 @@ ol li::marker {
 }
 
 .minimal-footer .social-links a:hover {
-  color: var(--color);
+  color: var(--color-primary);
 }
 
 /* Footer brand sizing */
@@ -1521,7 +1525,7 @@ ol li::marker {
      than the solid one beside it */
   border: var(--fly-ring) solid transparent;
   border-radius: 12px;
-  background: var(--color);
+  background: var(--color-primary);
   color: var(--paper);
   font-family: "Satoshi-Bold", var(--default-font);
   font-size: 16px;
@@ -1543,7 +1547,7 @@ ol li::marker {
 
 .btn-fly:hover,
 .btn-fly:focus-visible {
-  background: var(--color);
+  background: var(--color-primary);
   color: var(--paper);
   box-shadow: var(--elevation-3);
 }
@@ -1593,7 +1597,7 @@ ol li::marker {
 }
 
 .btn-fly:active {
-  background: var(--color);
+  background: var(--color-primary);
   transform: scale(0.95);
 }
 
@@ -1601,15 +1605,15 @@ ol li::marker {
    rest, fills to match the solid button once you're actually on it. */
 .btn-fly--outline {
   background: transparent;
-  border-color: var(--color);
-  color: var(--color);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
 }
 
 .btn-fly--outline:hover,
 .btn-fly--outline:focus-visible,
 .btn-fly--outline:active {
   background: transparent;
-  color: var(--color);
+  color: var(--color-primary);
 }
 
 /* icon-right variant — the same flight, mirrored: the icon rests after the
@@ -1769,8 +1773,8 @@ ol li::marker {
 }
 
 .resume .duration {
-  background: oklch(from var(--color) l c h / 10%);
-  color: var(--color);
+  background: oklch(from var(--color-primary) l c h / 10%);
+  color: var(--color-primary);
   padding: 0.4rem 0.8rem;
   border-radius: 20px;
   font-size: 0.85rem;
@@ -1799,7 +1803,7 @@ ol li::marker {
   position: absolute;
   left: 0;
   top: 0;
-  color: var(--color);
+  color: var(--color-primary);
   font-weight: bold;
 }
 
@@ -1833,7 +1837,7 @@ ol li::marker {
 }
 
 .resume .card-header h3 {
-  color: var(--color);
+  color: var(--color-primary);
   font-size: 1.25rem;
   font-weight: 600;
   margin-bottom: 0.25rem;
@@ -1909,7 +1913,7 @@ ol li::marker {
   bottom: 16px;
   z-index: var(--z-float);
 
-  background-color: var(--color);
+  background-color: var(--color-primary);
   width: 44px;
   height: 44px;
   border-radius: 50px;
@@ -2165,7 +2169,7 @@ html:not(.light-mode) .floating-theme-toggle .sun-and-moon>.moon>circle {
 .page-title .heading {
   padding: 20px 0 20px 0;
   color: var(--ink);
-  background-color: var(--color);
+  background-color: var(--color-primary);
 }
 
 .page-title .heading .container > * {
@@ -2268,7 +2272,7 @@ section,
   width: 120px;
   height: 1px;
   display: inline-block;
-  background: var(--color);
+  background: var(--color-primary);
   margin: 4px 10px;
 }
 
@@ -2368,7 +2372,7 @@ section,
   overflow: hidden;
   white-space: nowrap;
   letter-spacing: 1px;
-  border-bottom: 2px solid var(--color);
+  border-bottom: 2px solid var(--color-primary);
 }
 
 .hero p .typed__ch {
@@ -2392,7 +2396,7 @@ section,
 
 .hero p a.typed-link:hover span.typed,
 .hero p a.typed-link:focus-visible span.typed {
-  color: var(--color);
+  color: var(--color-primary);
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -2527,7 +2531,7 @@ section,
 
 .floating-card i {
   font-size: var(--float-icon);
-  color: var(--color);
+  color: var(--color-primary);
 }
 
 /* Lucide icons (SVG) – match Material icon size */
@@ -2535,7 +2539,7 @@ section,
 .floating-card svg {
   width: var(--float-icon);
   height: var(--float-icon);
-  color: var(--color);
+  color: var(--color-primary);
   stroke: currentColor;
   fill: none;
 }
@@ -3017,7 +3021,7 @@ section,
 .about .content ul i {
   font-size: 16px;
   margin-right: 8px;
-  color: var(--color);
+  color: var(--color-primary);
   line-height: 0;
   flex-shrink: 0;
 }
@@ -3134,7 +3138,7 @@ section,
 }
 
 .testimonials .testimonial-item h3 .testimonial-linkedin-link:hover {
-  color: var(--color);
+  color: var(--color-primary);
 }
 
 .testimonials .testimonial-item h3 .testimonial-linkedin-icon {
@@ -3157,7 +3161,7 @@ section,
 
 .testimonials .testimonial-item .quote-icon-left,
 .testimonials .testimonial-item .quote-icon-right {
-  color: var(--color);
+  color: var(--color-primary);
   width: 24px;
   height: 24px;
 }
@@ -3197,7 +3201,7 @@ section,
 .resume .resume-item {
   padding: 0 0 20px 20px;
   margin-top: -2px;
-  border-left: 2px solid var(--color);
+  border-left: 2px solid var(--color-primary);
   position: relative;
 }
 
@@ -3239,7 +3243,7 @@ section,
   left: -9px;
   top: 0;
   background: var(--paper);
-  border: 2px solid var(--color);
+  border: 2px solid var(--color-primary);
 }
 
 /*--------------------------------------------------------------
@@ -3257,7 +3261,7 @@ section,
   margin: 0 auto;
   width: 64px;
   height: 64px;
-  background: var(--color);
+  background: var(--color-primary);
   border-radius: 4px;
   display: flex;
   align-items: center;
@@ -3280,7 +3284,7 @@ section,
   top: -8px;
   height: 100%;
   width: 100%;
-  background: color-mix(in srgb, var(--color), transparent 80%);
+  background: color-mix(in srgb, var(--color-primary), transparent 80%);
   border-radius: 5px;
   transition: all 0.3s ease-out 0s;
   transform: translateZ(-1px);
@@ -3300,8 +3304,8 @@ section,
 }
 
 .services .service-item:hover {
-  background: var(--color);
-  border-color: var(--color);
+  background: var(--color-primary);
+  border-color: var(--color-primary);
 }
 
 .services .service-item:hover .icon {
@@ -3309,7 +3313,7 @@ section,
 }
 
 .services .service-item:hover .icon i {
-  color: var(--color);
+  color: var(--color-primary);
 }
 
 .services .service-item:hover .icon::before {
@@ -3377,7 +3381,7 @@ section,
 .portfolio .portfolio-filters li:hover {
   transform: translateY(-2px);
   box-shadow: var(--elevation-2);
-  background: color-mix(in srgb, var(--color), transparent 92%);
+  background: color-mix(in srgb, var(--color-primary), transparent 92%);
 }
 
 .portfolio .portfolio-filters li:active {
@@ -3397,7 +3401,7 @@ section,
 }
 
 .portfolio .portfolio-filters li.filter-active {
-  background: var(--color);
+  background: var(--color-primary);
   color: var(--paper);
 }
 
@@ -3470,7 +3474,7 @@ section,
   color: var(--paper);
   border-radius: 8px;
   display: inline-block;
-  background-color: var(--color);
+  background-color: var(--color-primary);
   font-family: var(--heading-font);
 }
 
@@ -3541,8 +3545,8 @@ section,
 }
 
 .color-chip--color::before {
-  background-color: var(--color);
-  border-color: color-mix(in srgb, var(--color), transparent 40%);
+  background-color: var(--color-primary);
+  border-color: color-mix(in srgb, var(--color-primary), transparent 40%);
 }
 
 .section-gap-80>*+* {
@@ -3630,7 +3634,7 @@ section,
 }
 
 .my-section__carousel .swiper-pagination-bullet-active {
-  background: var(--color) !important;
+  background: var(--color-primary) !important;
 }
 
 /*--------------------------------------------------------------
@@ -3655,7 +3659,7 @@ section,
   border-radius: 50%;
   border: 1px solid transparent;
   background: var(--paper);
-  color: var(--color);
+  color: var(--color-primary);
   z-index: 2;
   cursor: pointer;
   transition: border-color 0.2s ease, opacity 0.2s ease;
@@ -3680,11 +3684,11 @@ section,
 /* Transparent border by default so hover does not shift the icon by 1px. */
 .custom-carousel-nav:hover .carousel-nav-btn,
 .carousel-nav-btn:focus-visible {
-  border-color: var(--color);
+  border-color: var(--color-primary);
 }
 
 .carousel-nav-btn:focus-visible {
-  outline: 2px solid var(--color);
+  outline: 2px solid var(--color-primary);
   outline-offset: 2px;
 }
 
@@ -3712,7 +3716,7 @@ section,
 }
 
 .custom-carousel-nav .swiper-pagination-bullet-active {
-  background: var(--color) !important;
+  background: var(--color-primary) !important;
 }
 
 /* Image styling for custom carousel - handles any aspect ratio */
@@ -3965,7 +3969,7 @@ section,
 
 .theme-toggle:is(:hover, :focus-visible) {
   background-color: var(--paper);
-  /* outline: 2px solid var(--color); */
+  /* outline: 2px solid var(--color-primary); */
 }
 
 /* Desktop: the header toggle borrows the .nav-pill treatment exactly — nothing
@@ -4112,7 +4116,7 @@ html:not(.light-mode) .sun-and-moon>.moon>circle {
 }
 
 .text-draw {
-  color: var(--color);
+  color: var(--color-primary);
   margin-left: 1em;
   margin-right: 1em;
   font-size: 3.5vw;
@@ -4140,7 +4144,7 @@ html:not(.light-mode) .sun-and-moon>.moon>circle {
 }
 
 .text-draw__box {
-  color: var(--color);
+  color: var(--color-primary);
   width: 100%;
   height: .625em;
   position: relative;
@@ -4254,7 +4258,7 @@ img[src$=".gif"] {
 
 .cursor {
   z-index: var(--z-cursor);
-  background-color: var(--color);
+  background-color: var(--color-primary);
   border-radius: 100em;
   width: 1em;
   height: 1em;
@@ -4270,7 +4274,7 @@ body:has( [data-cursor]:hover) .cursor,
 body:has( .mobile-nav-toggle:hover) .cursor{
   width: 0.5em;
   height: 0.5em;
-  background-color: oklch(from var(--color) l c h / 0.5);
+  background-color: oklch(from var(--color-primary) l c h / 0.5);
   
 }
 
@@ -4432,7 +4436,7 @@ body:has( .mobile-nav-toggle:hover) .cursor{
 }
 
 .headline-draw__line {
-  color: var(--color);
+  color: var(--color-primary);
   width: min(100%, 520px);
   min-width: 0;
   aspect-ratio: 310 / 40;
@@ -4758,7 +4762,7 @@ body.philosophy-page .essay__break {
   border: 0;
   height: 2px;
   width: 120px;
-  background: var(--color);
+  background: var(--color-primary);
   /* opacity: 0.6; */
   margin: 5rem auto;
 }
@@ -4884,7 +4888,7 @@ body.philosophy-page .log-card {
   }
 
   body.philosophy-page .log-card--highlight:hover {
-    box-shadow: 0 0 0 1px var(--color), 0 0 48px color-mix(in oklch, var(--color) 40%, transparent), var(--elevation-3);
+    box-shadow: 0 0 0 1px var(--color-primary), 0 0 48px color-mix(in oklch, var(--color-primary) 40%, transparent), var(--elevation-3);
   }
 }
 
@@ -4905,7 +4909,7 @@ body.philosophy-page .log-card__dot {
   width: 0.5em;
   height: 0.5em;
   border-radius: 50%;
-  background: var(--color);
+  background: var(--color-primary);
   flex: none;
 }
 
@@ -4953,7 +4957,7 @@ body.philosophy-page .log-card--muted .log-card__dot {
 }
 
 body.philosophy-page .log-card--highlight {
-  box-shadow: 0 0 0 1px var(--color), 0 0 32px color-mix(in oklch, var(--color) 25%, transparent);
+  box-shadow: 0 0 0 1px var(--color-primary), 0 0 32px color-mix(in oklch, var(--color-primary) 25%, transparent);
 }
 
 /* --- Closing section ---------------------------------------- */

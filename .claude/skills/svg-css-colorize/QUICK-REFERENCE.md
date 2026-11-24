@@ -26,9 +26,9 @@ For this portfolio project, use these CSS variables:
 | What it is | CSS Variable | Usage |
 |-----------|--------------|-------|
 | Text/outlines | `var(--ink)` | Replace `white`, `#000000` |
-| Primary accent | `var(--color)` | Replace blue-ish colors, `#0099FF` |
-| Secondary accent | `var(--color-2)` | Replace orange, `#FFBB00`, `#FF9900` |
-| Tertiary accent | `var(--color-3)` | Replace cyan, `#00E6FF`, `#00CCFF` |
+| Primary accent | `var(--color-primary)` | Replace blue-ish colors, `#0099FF` |
+| Workspace (amber) | `var(--color-workspace)` | Replace orange, `#FFBB00`, `#FF9900` |
+| Tool | `var(--color-tool)` | Replace cyan, `#00E6FF`, `#00CCFF` |
 | Background | `var(--paper)` | Replace light/dark backgrounds |
 
 ---
@@ -41,8 +41,8 @@ For this portfolio project, use these CSS variables:
   -SvgPath "assets/img/diagram.svg" `
   -HtmlPath "about.html" `
   -ColorMap @{
-    "#FF0000" = "var(--color-2)"      # red → orange
-    "#00E6FF" = "var(--color-3)"      # cyan → cyan var
+    "#FF0000" = "var(--color-red)"    # red → theme red
+    "#00E6FF" = "var(--color-tool)"   # cyan → tool
     "white" = "var(--ink)"            # white text → theme text
   }
 ```
@@ -67,7 +67,7 @@ After running the script:
 
 - [ ] SVG is now inline in the HTML (`<svg>...</svg>` tags, not `<img>`)
 - [ ] Check dark mode toggle works — colors should adapt
-- [ ] Open DevTools → verify `var(--color)` etc. resolve to actual colors
+- [ ] Open DevTools → verify `var(--color-primary)` etc. resolve to actual colors
 - [ ] If colors look wrong, CSS variables may not be in scope (usually defined on `:root`)
 
 ---
@@ -80,16 +80,16 @@ After running the script:
 ```css
 :root {
   --ink: #ffffff;
-  --color: #0099ff;
-  --color-2: #ffbb00;
-  --color-3: #00e6ff;
+  --color-primary: #0099ff;
+  --color-workspace: #ffbb00;
+  --color-tool: #00e6ff;
   --paper: #1a1a1a;
 }
 
 @media (prefers-color-scheme: light) {
   .light-mode {
     --ink: #000000;
-    --color: #0077cc;
+    --color-primary: #0077cc;
     /* etc */
   }
 }
