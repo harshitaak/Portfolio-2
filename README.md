@@ -46,7 +46,7 @@ Each project is its own standalone HTML page.
 ## Highlights
 
 - **Dark mode by default**, light mode opt-in. The preference is stored in `localStorage` and applied before first paint by [`assets/js/theme-init.js`](assets/js/theme-init.js) to avoid a flash; the toggle lives in the header (and in the mobile nav).
-- **Minimal three-token palette** inspired by print design: `--paper`, `--ink`, and `--color-primary`, defined in OKLCH with additional named hues for diagrams (`--color-red`, `--color-green`, `--color-workspace`, `--color-tech`, `--color-tool`).
+- **Minimal three-token palette** inspired by print design: `--paper`, `--ink`, and `--color`, defined in OKLCH with three additional accent hues (`--color-2/3/4`).
 - **Semantic type scale** — display / headline / title / subtitle / body / caption tokens, all set in **Satoshi**, self-hosted from [`assets/fonts/`](assets/fonts/).
 - **Scroll-driven and hover animations** — GSAP-drawn SVG underlines (with a `stroke-dashoffset` fallback, since the DrawSVG plugin is paid), AOS reveals, and Lenis smooth scrolling.
 - **Respects `prefers-reduced-motion`** — Lenis is skipped entirely so scroll-driven sections stay consistent for visitors who ask for less motion.

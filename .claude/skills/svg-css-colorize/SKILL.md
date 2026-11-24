@@ -89,9 +89,9 @@ For large SVGs (4MB+) with embedded images and hardcoded hex colors like
   -SvgPath "path/to/Fig.svg" `
   -HtmlPath "path/to/page.html" `
   -ColorMap @{
-    "#FF0000" = "var(--color-red)"
-    "#EEFF00" = "var(--color-tech)"
-    "#00E6FF" = "var(--color-tool)"
+    "#FF0000" = "var(--color-2)"
+    "#EEFF00" = "var(--color)"
+    "#00E6FF" = "var(--color-3)"
     "white" = "var(--ink)"
   }
 ```
